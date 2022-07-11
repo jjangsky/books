@@ -1,4 +1,4 @@
-package com.bukkeubook.book.manage.model.dto.empAnnual;
+package com.bukkeubook.book.manage.model.dto;
 
 import java.io.Serializable;
 import java.sql.Date;

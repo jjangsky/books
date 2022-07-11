@@ -1,4 +1,4 @@
-package com.bukkeubook.book.manage.model.dto.labor;
+package com.bukkeubook.book.manage.model.dto;
 
 import java.io.Serializable;
 import java.sql.Date;
