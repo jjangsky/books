@@ -1,0 +1,19 @@
+package com.bukkeubook.book.document.model.dto;
+
+public class DocumentDTO {
+//	DOC_NO	NUMBER
+//	DOC_TITLE	NVARCHAR2(255 CHAR)
+//	DOC_CONT_1	NVARCHAR2(2000 CHAR)
+//	DOC_DEL_YN	VARCHAR2(3 BYTE)
+//	DOC_STATUS	NVARCHAR2(15 CHAR)
+//	DOC_CR_DATE	DATE
+//	DOC_MOD_DATE	DATE
+//	APP_PATH_NO	NUMBER
+//	DOC_CONT_2	NVARCHAR2(2000 CHAR)
+//	EMP_NO	NUMBER
+//	FORM_NO	NUMBER
+//	DOC_FINAL_DAY	DATE
+	
+	private int docNo;
+	private String docTitle;
+}
