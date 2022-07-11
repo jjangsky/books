@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 //@RequestMapping("manage/*")
-public class employeeController {
+public class EmployeeController {
 
 	@GetMapping("empList")
 	public String  main() {
@@ -15,6 +15,11 @@ public class employeeController {
 	@GetMapping("leaveEmpList")
 	public String  main1() {
 		return "manage/employee/leaveEmpList";
+	}
+	
+	@GetMapping("personnelSelect")
+	public String perconnelList() {
+		return "manage/employee/personnelSelect";
 	}
 	
 	
