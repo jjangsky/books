@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <link rel="stylesheet"  th:href="@{/css/document/draftStyle2.css}">
+<title>Write Draft</title>
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<h4 class="mb-4" id="main-text">기안서 작성</h4>
+    <hr><br><br>
+    
+    <div class="total">
+        <h4>결재라인 지정</h4>
+        <table>
+            <tr>
+                <th>1단계</th>
+                <td>
+                    <select name="">
+                        <option value="">None</option>
+                        <option value="인사부">인사부</option>
+                        <option value="총무부">총무부</option>
+                        <option value="물류부">물류부</option>
+                        <option value="재무부">재무부</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="" id="account1">
+                        <option value="">None</option>
+                        <option value="인사부">인사부</option>
+                        <option value="총무부">총무부</option>
+                        <option value="물류부">물류부</option>
+                        <option value="재무부">재무부</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>2단계</th>
+                <td>
+                    <select name="">
+                        <option value="">None</option>
+                        <option value="인사부">인사부</option>
+                        <option value="총무부">총무부</option>
+                        <option value="물류부">물류부</option>
+                        <option value="재무부">재무부</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="" id="account2">
+                        <option value="">None</option>
+                        <option value="인사부">인사부</option>
+                        <option value="총무부">총무부</option>
+                        <option value="물류부">물류부</option>
+                        <option value="재무부">재무부</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>3단계</th>
+                <td>
+                    <select name="">
+                        <option value="">None</option>
+                        <option value="인사부">인사부</option>
+                        <option value="총무부">총무부</option>
+                        <option value="물류부">물류부</option>
+                        <option value="재무부">재무부</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="" id="account3">
+                        <option value="">None</option>
+                        <option value="인사부">인사부</option>
+                        <option value="총무부">총무부</option>
+                        <option value="물류부">물류부</option>
+                        <option value="재무부">재무부</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <button type="button" onclick="selectacc()">결재라인 지정</button>
+    </div>
+    <div class="total">
+        <h4>참조자 설정</h4>
+        <table>
+            <tr>
+                <th>1번</th>
+                <td>
+                    <select name="">
+                        <option value="">None</option>
+                        <option value="인사부">인사부</option>
+                        <option value="총무부">총무부</option>
+                        <option value="물류부">물류부</option>
+                        <option value="재무부">재무부</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="" id="ref1">
+                        <option value="">None</option>
+                        <option value="인사부">인사부</option>
+                        <option value="총무부">총무부</option>
+                        <option value="물류부">물류부</option>
+                        <option value="재무부">재무부</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>2번</th>
+                <td>
+                    <select name="">
+                        <option value="">None</option>
+                        <option value="인사부">인사부</option>
+                        <option value="총무부">총무부</option>
+                        <option value="물류부">물류부</option>
+                        <option value="재무부">재무부</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="" id="ref2">
+                        <option value="">None</option>
+                        <option value="인사부">인사부</option>
+                        <option value="총무부">총무부</option>
+                        <option value="물류부">물류부</option>
+                        <option value="재무부">재무부</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>3번</th>
+                <td>
+                    <select name="">
+                        <option value="">None</option>
+                        <option value="인사부">인사부</option>
+                        <option value="총무부">총무부</option>
+                        <option value="물류부">물류부</option>
+                        <option value="재무부">재무부</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="" id="ref3">
+                        <option value="">None</option>
+                        <option value="인사부">인사부</option>
+                        <option value="총무부">총무부</option>
+                        <option value="물류부">물류부</option>
+                        <option value="재무부">재무부</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <button type="button" onclick="selectref()">참조자 지정</button>
+    </div>
+    <br clear="both">
+    <div class="total" >
+        <table border="1px solid black" class="tbl">
+            <tr class="tbl">
+                <th class="tbl th">문서 양식</th>
+                <td class="tbl"></td>
+            </tr>
+            <tr class="tbl">
+                <th class="tbl th">제목</th>
+                <td class="tbl"><input type="text" id="title" required></td>
+            </tr>
+            <tr class="tbl">
+                <th class="tbl th">내용</th>
+                <td class="tbl">
+                <!-- <textarea id="cnt" cols="30" rows="10"></textarea> -->
+                <!-- <div id="summernote" contenteditable="true"></div> -->
+                <textarea class="description" id="desc"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="total draft">
+        <table class="tbl">
+            <tr class="tbl">
+                <th class="tbl th coloring" colspan="7"><h4>기안서</h4></th>
+            </tr>
+            <tr class="tbl">
+                <th class="tbl th coloring">문서번호</th>
+                <th class="tbl th read">1</th>
+                <th rowspan="4" class="th coloring">결재</th>
+                <th class="tbl th coloring">담당</th>
+                <th class="tbl th coloring" id="selacc1">결재1</th>
+                <th class="tbl th coloring" id="selacc2">결재2</th>
+                <th class="tbl th coloring" id="selacc3">결재3</th>
+            </tr>
+            <tr class="tbl">
+                <th class="tbl th coloring">작성일자</th>
+                <th class="tbl th" id="date2"><p id="day"></p></th>
+                <th rowspan="3" class="tbl th sign"></th>
+                <th rowspan="3" class="tbl th sign"></th>
+                <th rowspan="3" class="tbl th sign"></th>
+                <th rowspan="3" class="tbl th sign"></th>
+            </tr>
+            <tr class="tbl">
+                <th class="tbl th coloring">부서명</th>
+                <th class="tbl th" id="dept2"></th>
+                
+            </tr>
+            <tr class="tbl">
+                <th class="tbl th coloring">작성자</th>
+                <th class="tbl th" id="writer2"></th>
+            </tr>
+            <tr class="tbl">
+                <th class="tbl th coloring">제목</th>
+                <td class="tbl" colspan="6" id="title2">제목을 입력해주세요</td>
+            </tr>
+            <tr class="tbl">
+                <th class="tbl th cnt coloring">내용</th>
+                <td class="tbl cnt" colspan="6" id="cnt2">
+                    <div id="result">내용을 입력해주세요</div>
+                </td>
+            </tr>
+        </table>
+        
+    </div>
+    <div><button type="button" onclick="sendData()">상신</button><input type="hidden" id="draftcnt"></div>
+    
+</body>
+
+<script>
+        let user = "hyejun";
+        $("#writer").val(user);
+        let date = $("#date").val();
+        let writer = $("#writer").val();
+        let dept = $("#dept").val();
+
+        $(document).ready(function(){
+            let now = new Date();
+            // $("h6").text(now); //전체
+
+            let year=now.getFullYear();//연도
+            let month=now.getMonth()+1;//월
+            let date=now.getDate();//일
+
+            let todayString = now.getFullYear() + "-";
+            let todayMonth = now.getMonth() + 1;
+            if (todayMonth < 10) {
+                todayString += "0";
+            }
+            todayString += todayMonth + "-";
+            let todayDate = now.getDate();
+            if (todayDate < 10) {
+                todayString += "0";
+            }
+            todayString += todayDate;
+
+            $("#date2").text(todayString); 
+        });
+
+        $("#title").keyup(function(){
+            let title = $("#title").val();
+            // console.log(title);
+            $("#title2").text(title);
+        })
+        
+         $('.description').summernote({
+            height: 200,
+            width: 350,
+            toolbar: [
+		    // 표만들기
+		    ['table', ['table']],
+		    // 글머리 기호, 번호매기기, 문단정렬
+		    ['para', ['ul', 'ol', 'paragraph']],
+		    // 코드보기, 확대해서보기, 도움말
+		    ['view', ['codeview','fullscreen', 'help']]
+		  ],
+            callbacks: {
+                onKeyup: function(e) {
+                setTimeout(function(){
+                    $("#result").html($('.description').val());
+                },200);
+                }
+            }
+        });
+
+        function sendData(){
+            if($("#title").val().length < 1 || $("#title").val() == "" || $("#title").val() == "  "){
+                alert("문서의 제목을 입력해주세요.");
+            } else if($("#title").val().length < 5 || $("#title").val().length < 5 ){
+                alert("문서의 제목을 5글자 이상 입력해주세요.");
+            }
+            
+            console.log($(".note-editable").text());
+            if($(".note-editable").text().length < 1 || $(".note-editable").text() == "" || $(".note-editable").text() == "  "){
+                alert("문서의 내용을 입력해주세요.");
+            }else if($(".note-editable").text().length < 10 ){
+                alert("문서의 내용을 10글자 이상 입력해주세요.");
+            } 
+            
+            else{
+                let sendDraft = $(".draft").html();
+                console.log(sendDraft);
+                $("#draftcnt").val(sendDraft);
+            }
+            
+        }
+
+        function selectacc(){
+            let account1 = $("#account1").val();
+            let account2 = $("#account2").val();
+            let account3 = $("#account3").val();
+
+            if(account1 == ""){
+                alert("최소 결재라인을 지정해주세요!")
+            }else if(account2 == "" && account3 == ""){
+                let con = confirm("결재라인이 1단계로 종료됩니다. 맞으시면 확인을 눌러주세요.");
+                if(con){
+                    $("#selacc1").text(account1);
+                    $("#selacc2").text(account2);
+                    $("#selacc3").text(account3);
+                }
+            }else if(account3 == ""){
+                let con = confirm("결재라인이 2단계로 종료됩니다. 맞으시면 확인을 눌러주세요.");
+                if(con){
+                    $("#selacc1").text(account1);
+                    $("#selacc2").text(account2);
+                    $("#selacc3").text(account3);
+                }
+            }else{
+                let con = confirm("결재라인이 3단계로 종료됩니다. 맞으시면 확인을 눌러주세요.");
+                if(con){
+                    $("#selacc1").text(account1);
+                    $("#selacc2").text(account2);
+                    $("#selacc3").text(account3);
+                }
+            }
+        }
+    </script>
+</html>
