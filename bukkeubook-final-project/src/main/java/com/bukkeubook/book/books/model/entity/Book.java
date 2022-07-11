@@ -60,8 +60,10 @@ public class Book {
 	@Column(name = "BK_CATE")
 	private String cate;					// 카테고리
 
+
 	public Book() {
 	}
+
 
 	public Book(int no, String name, String author, String pub, int price, int storeSt, int whSt,
 			java.util.Date pubDate, java.util.Date lastDate, String isbn, String sellYn, String cate) {
@@ -173,10 +175,12 @@ public class Book {
 
 	public void setCate(String cate) {
 		this.cate = cate;
+
 	}
 
 	@Override
 	public String toString() {
+
 		return "Book [no=" + no + ", name=" + name + ", author=" + author + ", pub=" + pub + ", price=" + price
 				+ ", storeSt=" + storeSt + ", whSt=" + whSt + ", pubDate=" + pubDate + ", lastDate=" + lastDate
 				+ ", isbn=" + isbn + ", sellYn=" + sellYn + ", cate=" + cate + "]";
@@ -185,5 +189,20 @@ public class Book {
 	
 
 	
-	
-}
+}	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

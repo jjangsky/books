@@ -1,5 +1,6 @@
 package com.bukkeubook.book.books.model.dto;
 
+
 import java.sql.Date;
 
 public class BookDTO {
@@ -29,6 +30,7 @@ public class BookDTO {
 	private String isbn;				// ISBN
 	private String sellYn;				// 판매여부
 	private String cate;					// 카테고리
+
 	
 	public BookDTO() {
 	}
@@ -143,17 +145,15 @@ public class BookDTO {
 
 	public void setCate(String cate) {
 		this.cate = cate;
+
 	}
 
 	@Override
 	public String toString() {
+
 		return "BookDTO [no=" + no + ", name=" + name + ", author=" + author + ", pub=" + pub + ", price=" + price
 				+ ", storeSt=" + storeSt + ", whSt=" + whSt + ", pubDate=" + pubDate + ", lastDate=" + lastDate
 				+ ", isbn=" + isbn + ", sellYn=" + sellYn + ", cate=" + cate + "]";
 	}
-	
-	
-	
-	
-	
+
 }
