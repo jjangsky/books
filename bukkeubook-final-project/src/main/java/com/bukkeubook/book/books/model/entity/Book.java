@@ -25,10 +25,10 @@ public class Book {
 			generator = "BOOK_SEQ_GENERATOR"
 	)
 	@Column(name = "BK_NO")
-	private int no;						// 도서코드
+	private String no;					// 도서코드
 	
 	@Column(name = "BK_NAME")
-	private String name;					// 도서명
+	private String name;				// 도서명
 	
 	@Column(name = "BK_AUTHOR")
 	private String author;				// 저자
@@ -52,21 +52,22 @@ public class Book {
 	private java.util.Date lastDate;	// 최근입고일
 	
 	@Column(name = "BK_ISBN")
-	private String isbn;					// ISBN
+	private String isbn;				// ISBN
 	
 	@Column(name = "BK_SELL_YN")
 	private String sellYn;				// 판매여부
 	
 	@Column(name = "BK_CATE")
-	private String cate;					// 카테고리
+	private String cate;				// 카테고리
 
 
 	public Book() {
 	}
 
 
-	public Book(int no, String name, String author, String pub, int price, int storeSt, int whSt,
+	public Book(String no, String name, String author, String pub, int price, int storeSt, int whSt,
 			java.util.Date pubDate, java.util.Date lastDate, String isbn, String sellYn, String cate) {
+		super();
 		this.no = no;
 		this.name = name;
 		this.author = author;
@@ -81,113 +82,134 @@ public class Book {
 		this.cate = cate;
 	}
 
-	public int getNo() {
+
+	public String getNo() {
 		return no;
 	}
 
-	public void setNo(int no) {
+
+	public void setNo(String no) {
 		this.no = no;
 	}
+
 
 	public String getName() {
 		return name;
 	}
 
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 
 	public String getAuthor() {
 		return author;
 	}
 
+
 	public void setAuthor(String author) {
 		this.author = author;
 	}
+
 
 	public String getPub() {
 		return pub;
 	}
 
+
 	public void setPub(String pub) {
 		this.pub = pub;
 	}
+
 
 	public int getPrice() {
 		return price;
 	}
 
+
 	public void setPrice(int price) {
 		this.price = price;
 	}
+
 
 	public int getStoreSt() {
 		return storeSt;
 	}
 
+
 	public void setStoreSt(int storeSt) {
 		this.storeSt = storeSt;
 	}
+
 
 	public int getWhSt() {
 		return whSt;
 	}
 
+
 	public void setWhSt(int whSt) {
 		this.whSt = whSt;
 	}
+
 
 	public java.util.Date getPubDate() {
 		return pubDate;
 	}
 
+
 	public void setPubDate(java.util.Date pubDate) {
 		this.pubDate = pubDate;
 	}
+
 
 	public java.util.Date getLastDate() {
 		return lastDate;
 	}
 
+
 	public void setLastDate(java.util.Date lastDate) {
 		this.lastDate = lastDate;
 	}
+
 
 	public String getIsbn() {
 		return isbn;
 	}
 
+
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
+
 
 	public String getSellYn() {
 		return sellYn;
 	}
 
+
 	public void setSellYn(String sellYn) {
 		this.sellYn = sellYn;
 	}
+
 
 	public String getCate() {
 		return cate;
 	}
 
+
 	public void setCate(String cate) {
 		this.cate = cate;
-
 	}
+
 
 	@Override
 	public String toString() {
-
 		return "Book [no=" + no + ", name=" + name + ", author=" + author + ", pub=" + pub + ", price=" + price
 				+ ", storeSt=" + storeSt + ", whSt=" + whSt + ", pubDate=" + pubDate + ", lastDate=" + lastDate
 				+ ", isbn=" + isbn + ", sellYn=" + sellYn + ", cate=" + cate + "]";
 	}
 	
-	
-
 	
 }	
 

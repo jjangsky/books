@@ -80,4 +80,9 @@ public class BookController {
 		return mv;
 	}
 	
+	@GetMapping("/bookInfo")
+	public String bookInfo() {
+		return "books/bookList/bookInfo";
+	}
+	
 }
