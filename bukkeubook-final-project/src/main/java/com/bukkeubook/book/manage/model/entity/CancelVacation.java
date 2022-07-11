@@ -1,4 +1,4 @@
-package com.bukkeubook.book.manage.entity;
+package com.bukkeubook.book.manage.model.entity;
 
 import java.sql.Date;
 

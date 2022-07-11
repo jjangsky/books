@@ -1,4 +1,4 @@
-package com.bukkeubook.book.manage.entity;
+package com.bukkeubook.book.manage.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
