@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -40,78 +40,22 @@
                 <th class="th1">가격</th>
                 <th class="th1">보유재고 </th>
               </tr>
-              <tr>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
+              <tr th:each="book : ${ bookList }">
+                <td th:text="${ book.no }"></td>
+                <td th:text="${ book.name }"></td>
+                <td th:text="${ book.author }"></td>
+                <td th:text="${ book.pub }"></td>
+                <td th:text="${ book.price }"></td>
+                <td th:text="${ book.storeSt }"></td>
               </tr>
-              <tr>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-              </tr>
-              <tr>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-              </tr>
-              <tr>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-              </tr>
-              <tr>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-              </tr>
-              <tr>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-              </tr>
-              <tr>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-              </tr>
-              <tr>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-              </tr>
-              <tr>
+              <!-- <tr>
                 <td class="td2">샘플입니다.</td>
                 <td class="td2">샘플입니다.</td>
                 <td class="td2">샘플입니다.</td>
                 <td class="td2">샘플입니다.</td>
                 <td class="td2">샘플입니다.</td>
                 <td class="td2">샘플입니다.</td>
-              </tr>
+              </tr> -->
           </table>
           <br>
           <div id="newBookDiv">
