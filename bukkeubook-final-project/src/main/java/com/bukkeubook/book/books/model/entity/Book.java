@@ -25,7 +25,7 @@ public class Book {
 			generator = "BOOK_SEQ_GENERATOR"
 	)
 	@Column(name = "BK_NO")
-	private int no;						// 도서코드
+	private String no;						// 도서코드
 	
 	@Column(name = "BK_NAME")
 	private String name;					// 도서명
@@ -60,12 +60,10 @@ public class Book {
 	@Column(name = "BK_CATE")
 	private String cate;					// 카테고리
 
-
 	public Book() {
 	}
 
-
-	public Book(int no, String name, String author, String pub, int price, int storeSt, int whSt,
+	public Book(String no, String name, String author, String pub, int price, int storeSt, int whSt,
 			java.util.Date pubDate, java.util.Date lastDate, String isbn, String sellYn, String cate) {
 		this.no = no;
 		this.name = name;
@@ -81,11 +79,11 @@ public class Book {
 		this.cate = cate;
 	}
 
-	public int getNo() {
+	public String getNo() {
 		return no;
 	}
 
-	public void setNo(int no) {
+	public void setNo(String no) {
 		this.no = no;
 	}
 
@@ -175,20 +173,15 @@ public class Book {
 
 	public void setCate(String cate) {
 		this.cate = cate;
-
 	}
 
 	@Override
 	public String toString() {
-
 		return "Book [no=" + no + ", name=" + name + ", author=" + author + ", pub=" + pub + ", price=" + price
 				+ ", storeSt=" + storeSt + ", whSt=" + whSt + ", pubDate=" + pubDate + ", lastDate=" + lastDate
 				+ ", isbn=" + isbn + ", sellYn=" + sellYn + ", cate=" + cate + "]";
 	}
-	
-	
 
-	
 }	
 
 
