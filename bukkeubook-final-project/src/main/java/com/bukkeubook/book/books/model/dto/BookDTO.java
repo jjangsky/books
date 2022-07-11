@@ -5,20 +5,20 @@ import java.sql.Date;
 
 public class BookDTO {
 	
-//	BK_NO	NUMBER
-//	BK_NAME	VARCHAR2(255 BYTE)
-//	BK_AUTHOR	VARCHAR2(255 BYTE)
-//	BK_PUB	NVARCHAR2(255 CHAR)
-//	BK_PRICE	NUMBER
-//	BK_STORE_ST	NUMBER
-//	BK_WH_ST	NUMBER
-//	BK_PUB_DATE	DATE
-//	BK_LAST_DATE	DATE
-//	BK_ISBN	VARCHAR2(31 BYTE)
-//	BK_SELL_YN	VARCHAR2(3 BYTE)
-//	BK_CATE	VARCHAR2(100 BYTE)
+//	BK_NO	VARCHAR2(100 BYTE)	도서코드
+//	BK_NAME	VARCHAR2(255 BYTE)	도서명
+//	BK_AUTHOR	VARCHAR2(255 BYTE)	저자
+//	BK_PUB	NVARCHAR2(255 CHAR)	출판사
+//	BK_PRICE	NUMBER	가격
+//	BK_STORE_ST	NUMBER	판매재고수량
+//	BK_WH_ST	NUMBER	창고재고수량
+//	BK_PUB_DATE	DATE	발행일
+//	BK_LAST_DATE	DATE	최근입고일
+//	BK_ISBN	VARCHAR2(31 BYTE)	ISBN
+//	BK_SELL_YN	VARCHAR2(3 BYTE)	판매여부
+//	BK_CATE	VARCHAR2(100 BYTE)	카테고리
 	
-	private int no;						// 도서코드
+	private String no;						// 도서코드
 	private String name;				// 도서명
 	private String author;				// 저자
 	private String pub;					// 출판사
@@ -29,13 +29,12 @@ public class BookDTO {
 	private java.util.Date lastDate;	// 최근입고일
 	private String isbn;				// ISBN
 	private String sellYn;				// 판매여부
-	private String cate;					// 카테고리
-
+	private String cate;				// 카테고리
 	
 	public BookDTO() {
 	}
 
-	public BookDTO(int no, String name, String author, String pub, int price, int storeSt, int whSt,
+	public BookDTO(String no, String name, String author, String pub, int price, int storeSt, int whSt,
 			java.util.Date pubDate, java.util.Date lastDate, String isbn, String sellYn, String cate) {
 		this.no = no;
 		this.name = name;
@@ -51,11 +50,11 @@ public class BookDTO {
 		this.cate = cate;
 	}
 
-	public int getNo() {
+	public String getNo() {
 		return no;
 	}
 
-	public void setNo(int no) {
+	public void setNo(String no) {
 		this.no = no;
 	}
 
@@ -145,12 +144,10 @@ public class BookDTO {
 
 	public void setCate(String cate) {
 		this.cate = cate;
-
 	}
 
 	@Override
 	public String toString() {
-
 		return "BookDTO [no=" + no + ", name=" + name + ", author=" + author + ", pub=" + pub + ", price=" + price
 				+ ", storeSt=" + storeSt + ", whSt=" + whSt + ", pubDate=" + pubDate + ", lastDate=" + lastDate
 				+ ", isbn=" + isbn + ", sellYn=" + sellYn + ", cate=" + cate + "]";
