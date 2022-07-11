@@ -1,8 +1,21 @@
 package com.bukkeubook.book.manage.model.dto.empAnnual;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class AppVacationDTO {
+public class AppVacationDTO implements Serializable {
+	
+	private static final long serialVersionUID = 6732206787548796035L;
+//	
+//	VAC_APP_NO	DATE	No	SYSDATE 	1	신청일자
+//	VAC_START_DATE	DATE	No		2	휴가시작일
+//	VAC_END_DATE	DATE	No		3	휴가종료일
+//	VAC_EMER	VARCHAR2(31 BYTE)	No		4	비상연락처
+//	VAC_REASON	NVARCHAR2(255 CHAR)	No		5	휴가사유
+//	VAC_STATUS	NVARCHAR2(15 CHAR)	No	'대기중' 	6	휴가상태
+//	VAC_NO	NUMBER	No		7	신청서번호
+//	EMP_NO	NUMBER	No		8	사원번호
+//	VAC_COMPANION	NVARCHAR2(2000 CHAR)	Yes		9	
 	
 	private java.sql.Date vacAppNo;			// 신청일자
 	private java.sql.Date vacStartDate;		// 휴가시작일

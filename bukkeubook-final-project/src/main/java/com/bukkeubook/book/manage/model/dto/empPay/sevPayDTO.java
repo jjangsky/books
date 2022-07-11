@@ -1,7 +1,16 @@
 package com.bukkeubook.book.manage.model.dto.empPay;
 
-public class sevPayDTO {
+import java.io.Serializable;
 
+public class sevPayDTO implements Serializable{
+
+	private static final long serialVersionUID = -1761663321375303346L;
+	
+//	SEV_MONTH_PAY	NUMBER	No		1	3개월급여총액
+//	SEV_AVG_PAY	NUMBER	No		2	평균임금
+//	SEV_REAL_PAY	NUMBER	No		3	실지급액
+//	EMP_NO	NUMBER	No		4	사원번호
+	
 	private int sevMonthPay;	// 3개월급여총액
 	private int sevAvgPay;		// 평균임금
 	private int sevRealPay;		// 실지급액
