@@ -7,12 +7,12 @@ public class AppVacationDTO implements Serializable {
 	
 	private static final long serialVersionUID = 6732206787548796035L;
 	
-//	VAC_APP_NO	DATE						신청일자
+//	VAC_APP_NO		DATE					신청일자
 //	VAC_START_DATE	DATE					휴가시작일
 //	VAC_END_DATE	DATE					휴가종료일
-//	VAC_EMER	VARCHAR2(31 BYTE)			비상연락처
-//	VAC_REASON	NVARCHAR2(255 CHAR)			휴가사유
-//	VAC_STATUS	NVARCHAR2(15 CHAR)			휴가상태
+//	VAC_EMER		VARCHAR2(31 BYTE)		비상연락처
+//	VAC_REASON		NVARCHAR2(255 CHAR)		휴가사유
+//	VAC_STATUS		NVARCHAR2(15 CHAR)		휴가상태
 //	VAC_NO			NUMBER					신청서번호
 //	EMP_NO			NUMBER					사원번호
 //	VAC_COMPANION	NVARCHAR2(2000 CHAR)	휴가사유
