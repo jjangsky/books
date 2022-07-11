@@ -1,15 +1,15 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-  <head>
+<head>
   	<title>Sidebar 01</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet"  th:href="@{/css/common/style.css}">
-  </head>
-  <body>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/common/style.css}">
+</head>
+<body>
 
     
 		<div class="wrapper d-flex align-items-stretch">
@@ -44,13 +44,13 @@
 	            <a href="#approval" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">전자결재</a>
 	            <ul class="collapse list-unstyled" id="approval">
                 <li>
-                    <a href="#">결재작성</a>
+                    <a href="/document/insert">결재작성</a>
                 </li>
                 <li>
-                    <a href="#">결재내역</a>
+                    <a href="/document/docList">결재내역</a>
                 </li>
                 <li>
-                    <a href="#">임시저장 내역</a>
+                    <a href="/document/docTempList">임시저장 내역</a>
                 </li>
 	            </ul>
 	          </li>
@@ -175,7 +175,7 @@
                   </ul>
                 </li>
                 <li>
-                  <a href="#">재고관리</a>
+                  <a href="/lookupList">재고관리</a>
                 </li>
                 <li>
                   <a href="#">발주관리</a>
@@ -239,15 +239,6 @@
         </nav>
         <!-- 헤더 종료 -->
 
-
-        <!------------------------ 본문 시작---------------------------->
-        <!-- 본문 제목은 용도에 맞게 수정해주세요.-->
-        <h2 class="mb-4" id="main-text">전자결재</h2>
-        <hr><br><br>
-        <h5 class="mb-4" id="sub-text">결재내역</h5>
-        <br>
-
-        
       <!--</div> ---------------------- 본문 종료--------------------------
       </div> 헤더 포함 본문 종료 div -->
 
