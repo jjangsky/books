@@ -6,13 +6,13 @@ public class LaborContFileDTO implements Serializable {
 	
 	private static final long serialVersionUID = 4956459758570618817L;
 	
-//	C_FILE_NO	NUMBER	No		1	파일번호
-//	C_FILE_ORIG_NAME	VARCHAR2(255 BYTE)	No		2	파일본명
-//	C_FILE_SAVED_NAME	VARCHAR2(255 BYTE)	No		3	변경된파일명
-//	C_FILE_STATE	VARCHAR2(31 BYTE)	No		4	파일상태
-//	C_FILE_PATH	VARCHAR2(255 BYTE)	No		5	저장경로
-//	C_FILE_EXT	VARCHAR2(15 BYTE)	No		6	확장자
-//	CONT_NO	NUMBER	No		7	근로계약번호
+//	C_FILE_NO			NUMBER				파일번호
+//	C_FILE_ORIG_NAME	VARCHAR2(255 BYTE)	파일본명
+//	C_FILE_SAVED_NAME	VARCHAR2(255 BYTE)	변경된파일명
+//	C_FILE_STATE		VARCHAR2(31 BYTE)	파일상태
+//	C_FILE_PATH			VARCHAR2(255 BYTE)	저장경로
+//	C_FILE_EXT			VARCHAR2(15 BYTE)	확장자
+//	CONT_NO				NUMBER				근로계약번호
 	
 	private int cfileNo;				// 파일번호
 	private String cfileOrigName;		// 파일본명

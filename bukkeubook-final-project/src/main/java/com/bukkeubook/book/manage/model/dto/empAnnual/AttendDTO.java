@@ -7,11 +7,11 @@ public class AttendDTO implements Serializable{
 	
 	private static final long serialVersionUID = 685111264582119468L;
 	
-//	ATT_NO	NUMBER	No		1	근태번호
-//	ATT_DATE	DATE	No		2	근무날짜
-//	ATT_START	DATE	No	SYSDATE 	3	출근시간
-//	ATT_END	DATE	Yes		4	퇴근시간
-//	EMP_NO	NUMBER	No		5	사원번호
+//	ATT_NO		NUMBER	근태번호
+//	ATT_DATE	DATE	근무날짜
+//	ATT_START	DATE	출근시간
+//	ATT_END		DATE	퇴근시간
+//	EMP_NO		NUMBER	사원번호
 	
 	private int attNo;					// 근태번호
 	private java.sql.Date attDate;		// 근무날짜
