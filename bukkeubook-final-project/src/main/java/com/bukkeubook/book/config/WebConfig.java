@@ -14,4 +14,11 @@ public class WebConfig implements WebMvcConfigurer{
 	  public void addResourceHandlers(ResourceHandlerRegistry registry) {
 	    registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
 	  }
+	 
+	 @Override
+		public void addCorsMappings(CorsRegistry registry) {
+			registry.addMapping("/**")
+					.allowedOrigins("*");							//모든 외부 리소스 허용
+//					.allowedOrigins("http://127.0.0.1:8888","","");	// 특정 허용
+		}
 }
