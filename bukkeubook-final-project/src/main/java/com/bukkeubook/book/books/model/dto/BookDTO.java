@@ -1,166 +1,159 @@
 package com.bukkeubook.book.books.model.dto;
 
-import java.io.Serializable;
+
 import java.sql.Date;
 
-public class BookDTO implements Serializable{
+public class BookDTO {
+	
+//	BK_NO	NUMBER
+//	BK_NAME	VARCHAR2(255 BYTE)
+//	BK_AUTHOR	VARCHAR2(255 BYTE)
+//	BK_PUB	NVARCHAR2(255 CHAR)
+//	BK_PRICE	NUMBER
+//	BK_STORE_ST	NUMBER
+//	BK_WH_ST	NUMBER
+//	BK_PUB_DATE	DATE
+//	BK_LAST_DATE	DATE
+//	BK_ISBN	VARCHAR2(31 BYTE)
+//	BK_SELL_YN	VARCHAR2(3 BYTE)
+//	BK_CATE	VARCHAR2(100 BYTE)
+	
+	private int no;						// 도서코드
+	private String name;				// 도서명
+	private String author;				// 저자
+	private String pub;					// 출판사
+	private int price;					// 가격
+	private int storeSt;				// 판매재고수량
+	private int whSt;					// 창고재고수량
+	private java.util.Date pubDate;		// 발행일
+	private java.util.Date lastDate;	// 최근입고일
+	private String isbn;				// ISBN
+	private String sellYn;				// 판매여부
+	private String cate;					// 카테고리
 
-	private static final long serialVersionUID = -2284216042772057397L;
-
-	/*
-	 * DB 자료형
-	 * 
-	 * BK_NO	NUMBER	도서코드
-		BK_NAME	VARCHAR2(255 BYTE)	도서명
-		BK_AUTHOR	VARCHAR2(255 BYTE)	저자
-		BK_PUB	NVARCHAR2(255 CHAR)	출판사
-		BK_PRICE	NUMBER	가격
-		BK_STORE_ST	NUMBER	판매재고수량
-		BK_WH_ST	NUMBER	창고재고수량
-		BK_PUB_DATE	DATE	발행일
-		BK_LAST_DATE	DATE	최근입고일
-		BK_ISBN	VARCHAR2(31 BYTE)	ISBN
-		BK_SELL_YN	VARCHAR2(3 BYTE)	판매여부
-		BK_CATE	VARCHAR2(100 BYTE)	카테고리
-	 */
-	private int bkNo;					// 도서코드
-	private String bkName;				// 도서명
-	private String bkAuthor;			// 저자
-	private String bkPub;				// 출판사
-	private int bkPrice;				// 가격
-	private int bkStoreSt;				// 판매재고수량
-	private int bkWhSt;					// 창고재고수량
-	private java.sql.Date bkPubDate;	// 발행일
-	private java.sql.Date bkLastDate;	// 최근입고일
-	private String bkIsbn;				// ISBN
-	private String bkSellYn;			// 판매여부
-	private String bkCate;				// 카테고리
 	
 	public BookDTO() {
 	}
 
-	public BookDTO(int bkNo, String bkName, String bkAuthor, String bkPub, int bkPrice, int bkStoreSt, int bkWhSt,
-			Date bkPubDate, Date bkLastDate, String bkIsbn, String bkSellYn, String bkCate) {
-		this.bkNo = bkNo;
-		this.bkName = bkName;
-		this.bkAuthor = bkAuthor;
-		this.bkPub = bkPub;
-		this.bkPrice = bkPrice;
-		this.bkStoreSt = bkStoreSt;
-		this.bkWhSt = bkWhSt;
-		this.bkPubDate = bkPubDate;
-		this.bkLastDate = bkLastDate;
-		this.bkIsbn = bkIsbn;
-		this.bkSellYn = bkSellYn;
-		this.bkCate = bkCate;
+	public BookDTO(int no, String name, String author, String pub, int price, int storeSt, int whSt,
+			java.util.Date pubDate, java.util.Date lastDate, String isbn, String sellYn, String cate) {
+		this.no = no;
+		this.name = name;
+		this.author = author;
+		this.pub = pub;
+		this.price = price;
+		this.storeSt = storeSt;
+		this.whSt = whSt;
+		this.pubDate = pubDate;
+		this.lastDate = lastDate;
+		this.isbn = isbn;
+		this.sellYn = sellYn;
+		this.cate = cate;
 	}
 
-	public int getBkNo() {
-		return bkNo;
+	public int getNo() {
+		return no;
 	}
 
-	public void setBkNo(int bkNo) {
-		this.bkNo = bkNo;
+	public void setNo(int no) {
+		this.no = no;
 	}
 
-	public String getBkName() {
-		return bkName;
+	public String getName() {
+		return name;
 	}
 
-	public void setBkName(String bkName) {
-		this.bkName = bkName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getBkAuthor() {
-		return bkAuthor;
+	public String getAuthor() {
+		return author;
 	}
 
-	public void setBkAuthor(String bkAuthor) {
-		this.bkAuthor = bkAuthor;
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
-	public String getBkPub() {
-		return bkPub;
+	public String getPub() {
+		return pub;
 	}
 
-	public void setBkPub(String bkPub) {
-		this.bkPub = bkPub;
+	public void setPub(String pub) {
+		this.pub = pub;
 	}
 
-	public int getBkPrice() {
-		return bkPrice;
+	public int getPrice() {
+		return price;
 	}
 
-	public void setBkPrice(int bkPrice) {
-		this.bkPrice = bkPrice;
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
-	public int getBkStoreSt() {
-		return bkStoreSt;
+	public int getStoreSt() {
+		return storeSt;
 	}
 
-	public void setBkStoreSt(int bkStoreSt) {
-		this.bkStoreSt = bkStoreSt;
+	public void setStoreSt(int storeSt) {
+		this.storeSt = storeSt;
 	}
 
-	public int getBkWhSt() {
-		return bkWhSt;
+	public int getWhSt() {
+		return whSt;
 	}
 
-	public void setBkWhSt(int bkWhSt) {
-		this.bkWhSt = bkWhSt;
+	public void setWhSt(int whSt) {
+		this.whSt = whSt;
 	}
 
-	public java.sql.Date getBkPubDate() {
-		return bkPubDate;
+	public java.util.Date getPubDate() {
+		return pubDate;
 	}
 
-	public void setBkPubDate(java.sql.Date bkPubDate) {
-		this.bkPubDate = bkPubDate;
+	public void setPubDate(java.util.Date pubDate) {
+		this.pubDate = pubDate;
 	}
 
-	public java.sql.Date getBkLastDate() {
-		return bkLastDate;
+	public java.util.Date getLastDate() {
+		return lastDate;
 	}
 
-	public void setBkLastDate(java.sql.Date bkLastDate) {
-		this.bkLastDate = bkLastDate;
+	public void setLastDate(java.util.Date lastDate) {
+		this.lastDate = lastDate;
 	}
 
-	public String getBkIsbn() {
-		return bkIsbn;
+	public String getIsbn() {
+		return isbn;
 	}
 
-	public void setBkIsbn(String bkIsbn) {
-		this.bkIsbn = bkIsbn;
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
 
-	public String getBkSellYn() {
-		return bkSellYn;
+	public String getSellYn() {
+		return sellYn;
 	}
 
-	public void setBkSellYn(String bkSellYn) {
-		this.bkSellYn = bkSellYn;
+	public void setSellYn(String sellYn) {
+		this.sellYn = sellYn;
 	}
 
-	public String getBkCate() {
-		return bkCate;
+	public String getCate() {
+		return cate;
 	}
 
-	public void setBkCate(String bkCate) {
-		this.bkCate = bkCate;
-	}
+	public void setCate(String cate) {
+		this.cate = cate;
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	@Override
 	public String toString() {
-		return "BookDTO [bkNo=" + bkNo + ", bkName=" + bkName + ", bkAuthor=" + bkAuthor + ", bkPub=" + bkPub
-				+ ", bkPrice=" + bkPrice + ", bkStoreSt=" + bkStoreSt + ", bkWhSt=" + bkWhSt + ", bkPubDate="
-				+ bkPubDate + ", bkLastDate=" + bkLastDate + ", bkIsbn=" + bkIsbn + ", bkSellYn=" + bkSellYn
-				+ ", bkCate=" + bkCate + "]";
+
+		return "BookDTO [no=" + no + ", name=" + name + ", author=" + author + ", pub=" + pub + ", price=" + price
+				+ ", storeSt=" + storeSt + ", whSt=" + whSt + ", pubDate=" + pubDate + ", lastDate=" + lastDate
+				+ ", isbn=" + isbn + ", sellYn=" + sellYn + ", cate=" + cate + "]";
 	}
-	
+
 }
