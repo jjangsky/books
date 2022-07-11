@@ -1,4 +1,4 @@
-package com.bukkeubook.book.manage.model.dto;
+package com.bukkeubook.book.manage.model.dto.employee;
 
 import java.io.Serializable;
 
