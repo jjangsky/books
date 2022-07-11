@@ -1,8 +1,18 @@
 package com.bukkeubook.book.manage.model.dto.labor;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class EmpContDTO {
+public class EmpContDTO implements Serializable {
+	
+	private static final long serialVersionUID = 8102008608138672369L;
+
+//	CONT_NO			UMBER				근로계약번호
+//	CONT_NAME		NVARCHAR2(63 CHAR)	계약서명
+//	CONT_DATE		DATE				개시일
+//	CONT_WRITER		NVARCHAR2(31 CHAR)	작성자
+//	CONT_EXP_DATE	DATE				만료일
+//	EMP_NO			NUMBER				사원번호
 	
 	private int contNo;					// 근로계약번호
 	private String contName;			// 계약서명
