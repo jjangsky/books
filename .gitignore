@@ -9,6 +9,7 @@ tmp/
 *.bak
 *.swp
 *~.nib
+*.yml
 local.properties
 .settings/
 .loadpath
