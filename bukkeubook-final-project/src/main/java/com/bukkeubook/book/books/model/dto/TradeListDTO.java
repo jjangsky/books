@@ -15,7 +15,7 @@ public class TradeListDTO implements Serializable{
 		TL_AMOUNT	NUMBER	도서수량
 		TL_DETAIL	NVARCHAR2(255 CHAR)	상세내용
 		CNT_NO	NUMBER	거래처번호
-		BK_NO	NUMBER	도서코드
+		BK_NO	VARCHAR2(100 BYTE)	도서코드
 		EMP_NO	NUMBER	사원번호
 	 */
 	private int tlNo;					// 거래번호
@@ -23,13 +23,13 @@ public class TradeListDTO implements Serializable{
 	private int tlAmount;				// 도서수량
 	private String tlDetail;			// 상세내용
 	private int cntNo;					// 거래처번호
-	private int bkNo;					// 도서코드
+	private String bkNo;					// 도서코드
 	private int empNo;					// 사원번호
 	
 	public TradeListDTO() {
 	}
 
-	public TradeListDTO(int tlNo, Date tlDate, int tlAmount, String tlDetail, int cntNo, int bkNo, int empNo) {
+	public TradeListDTO(int tlNo, Date tlDate, int tlAmount, String tlDetail, int cntNo, String bkNo, int empNo) {
 		this.tlNo = tlNo;
 		this.tlDate = tlDate;
 		this.tlAmount = tlAmount;
@@ -79,11 +79,11 @@ public class TradeListDTO implements Serializable{
 		this.cntNo = cntNo;
 	}
 
-	public int getBkNo() {
+	public String getBkNo() {
 		return bkNo;
 	}
 
-	public void setBkNo(int bkNo) {
+	public void setBkNo(String bkNo) {
 		this.bkNo = bkNo;
 	}
 
