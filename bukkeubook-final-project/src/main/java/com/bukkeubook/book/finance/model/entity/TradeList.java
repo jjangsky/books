@@ -1,4 +1,4 @@
-package com.bukkeubook.book.books.model.entity;
+package com.bukkeubook.book.finance.model.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
