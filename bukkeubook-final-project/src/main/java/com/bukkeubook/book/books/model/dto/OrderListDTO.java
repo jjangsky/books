@@ -19,60 +19,60 @@ public class OrderListDTO implements Serializable{
 		EMP_NO	NUMBER	사원번호
 		OR_APP_DATE	DATE	승인날짜
 	 */
-	private int orNo;					// 발주번호
-	private java.sql.Date orDate;		// 등록날짜
-	private String orApprYn;			// 승인현황
-	private int orAmount;				// 발주수량
+	private int orderNo;					// 발주번호
+	private java.sql.Date orderDate;		// 등록날짜
+	private String orderApprYn;			// 승인현황
+	private int orderAmount;				// 발주수량
 	private int cntNo;					// 거래처번호
 	private String bkNo;					// 도서코드
 	private int empNo;					// 사원번호
-	private java.sql.Date orAppDate;	// 승인날짜
+	private java.sql.Date orderAppDate;	// 승인날짜
 	
 	public OrderListDTO() {
 	}
 
-	public OrderListDTO(int orNo, Date orDate, String orApprYn, int orAmount, int cntNo, String bkNo, int empNo,
-			Date orAppDate) {
-		this.orNo = orNo;
-		this.orDate = orDate;
-		this.orApprYn = orApprYn;
-		this.orAmount = orAmount;
+	public OrderListDTO(int orderNo, Date orderDate, String orderApprYn, int orderAmount, int cntNo, String bkNo,
+			int empNo, Date orderAppDate) {
+		this.orderNo = orderNo;
+		this.orderDate = orderDate;
+		this.orderApprYn = orderApprYn;
+		this.orderAmount = orderAmount;
 		this.cntNo = cntNo;
 		this.bkNo = bkNo;
 		this.empNo = empNo;
-		this.orAppDate = orAppDate;
+		this.orderAppDate = orderAppDate;
 	}
 
-	public int getOrNo() {
-		return orNo;
+	public int getOrderNo() {
+		return orderNo;
 	}
 
-	public void setOrNo(int orNo) {
-		this.orNo = orNo;
+	public void setOrderNo(int orderNo) {
+		this.orderNo = orderNo;
 	}
 
-	public java.sql.Date getOrDate() {
-		return orDate;
+	public java.sql.Date getOrderDate() {
+		return orderDate;
 	}
 
-	public void setOrDate(java.sql.Date orDate) {
-		this.orDate = orDate;
+	public void setOrderDate(java.sql.Date orderDate) {
+		this.orderDate = orderDate;
 	}
 
-	public String getOrApprYn() {
-		return orApprYn;
+	public String getOrderApprYn() {
+		return orderApprYn;
 	}
 
-	public void setOrApprYn(String orApprYn) {
-		this.orApprYn = orApprYn;
+	public void setOrderApprYn(String orderApprYn) {
+		this.orderApprYn = orderApprYn;
 	}
 
-	public int getOrAmount() {
-		return orAmount;
+	public int getOrderAmount() {
+		return orderAmount;
 	}
 
-	public void setOrAmount(int orAmount) {
-		this.orAmount = orAmount;
+	public void setOrderAmount(int orderAmount) {
+		this.orderAmount = orderAmount;
 	}
 
 	public int getCntNo() {
@@ -99,12 +99,12 @@ public class OrderListDTO implements Serializable{
 		this.empNo = empNo;
 	}
 
-	public java.sql.Date getOrAppDate() {
-		return orAppDate;
+	public java.sql.Date getOrderAppDate() {
+		return orderAppDate;
 	}
 
-	public void setOrAppDate(java.sql.Date orAppDate) {
-		this.orAppDate = orAppDate;
+	public void setOrderAppDate(java.sql.Date orderAppDate) {
+		this.orderAppDate = orderAppDate;
 	}
 
 	public static long getSerialversionuid() {
@@ -113,8 +113,9 @@ public class OrderListDTO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "OrderListDTO [orNo=" + orNo + ", orDate=" + orDate + ", orApprYn=" + orApprYn + ", orAmount=" + orAmount
-				+ ", cntNo=" + cntNo + ", bkNo=" + bkNo + ", empNo=" + empNo + ", orAppDate=" + orAppDate + "]";
+		return "OrderListDTO [orderNo=" + orderNo + ", orderDate=" + orderDate + ", orderApprYn=" + orderApprYn
+				+ ", orderAmount=" + orderAmount + ", cntNo=" + cntNo + ", bkNo=" + bkNo + ", empNo=" + empNo
+				+ ", orderAppDate=" + orderAppDate + "]";
 	}
 	
 }

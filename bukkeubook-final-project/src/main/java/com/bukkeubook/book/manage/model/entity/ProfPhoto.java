@@ -10,12 +10,6 @@ import javax.persistence.Table;
 
 @Entity(name="ProfPhoto")
 @Table(name = "TBL_PROF_PHOTO")
-@SequenceGenerator(
-		name = "PROF_PHOTO_SEQ_GENERATOR",  
-		sequenceName = "SEQ_PHOTO_NO",
-		initialValue = 1,
-		allocationSize = 1
-)
 public class ProfPhoto {
 	
 //	PHOTO_NO	NUMBER	파일번호
@@ -29,10 +23,6 @@ public class ProfPhoto {
 //	EMP_NO	NUMBER	사원번호
 	
 	@Id
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator = "PROF_PHOTO_SEQ_GENERATOR"
-	)
 	@Column(name = "SAL_NO")
 	private int photoNo;
 	
