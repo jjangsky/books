@@ -1,6 +1,7 @@
 package com.bukkeubook.book.manage.model.entity;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,89 +10,71 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.TypedQuery;
 
-@Entity(name="Emp")
+import com.bukkeubook.book.manage.model.dto.joinDTO.DeptAndEmpDTO;
+
+@Entity(name="EmpAndDept")
 @Table(name = "TBL_EMP")
-
-public class Emp {
-   
-//	EMP_NO	NUMBER	사원번호
-//	EMP_NAME	NVARCHAR2(31 CHAR)	사원명
-//	EMP_PHONE_1	VARCHAR2(10 BYTE)	연락처1
-//	EMP_PHONE_2	VARCHAR2(10 BYTE)	연락처2
-//	EMP_PHONE_3	VARCHAR2(10 BYTE)	연락처3
-//	EMP_BIRTH	DATE	생년월일
-//	EMP_GENDER	VARCHAR2(15 BYTE)	성별
-//	EMP_EMAIL	VARCHAR2(63 BYTE)	이메일
-//	EMP_JOB_CODE	NVARCHAR2(31 CHAR)	직급
-//	EMP_ADDRESS	NVARCHAR2(255 CHAR)	주소
-//	EMP_D_ADDRESS	NVARCHAR2(255 CHAR)	상세주소
-//	EMP_ENT_DATE	DATE	입사일자
-//	EMP_END_DATE	DATE	퇴사일자
-//	EMP_END_YN	VARCHAR2(3 BYTE)	퇴사여부
-//	EMP_PWD	VARCHAR2(255 BYTE)	비밀번호
-//	DEPT_CODE	NUMBER	부서코드
+public class EmpAndDept {
 	
-   @Id
-   @Column(name = "EMP_NO")
-   private int empNo;
-   
-   @Column(name = "EMP_NAME")
-   private String empName;
-   
-   @Column(name = "EMP_PHONE_1")
-   private String empPhone1;
-   
-   @Column(name = "EMP_PHONE_2")
-   private String empPhone2;
-   
-   @Column(name = "EMP_PHONE_3")
-   private String empPhone3;
-   
-   @Column(name = "EMP_BIRTH")
-   private java.sql.Date empBirth;
-   
-   @Column(name = "EMP_GENDER")
-   private String empGender;
-   
-   @Column(name = "EMP_JOB_CODE")
-   private String empJobCode;
-   
-   @Column(name = "EMP_EMAIL")
-   private String empEmail;
-   
-   @Column(name = "EMP_ADDRESS")
-   private String empAddress;
-   
-   @Column(name = "EMP_D_ADDRESS")
-   private String empDAdreess;
-   
-   @Column(name = "EMP_ENT_DATE")
-   private java.sql.Date empEntDate;
-   
-   @Column(name = "EMP_END_DATE")
-   private java.sql.Date empEndDate;
-   
-   @Column(name = "EMP_END_YN")
-   private String empEndYn;
-   
-   @Column(name = "EMP_PWD")
-   private String empPwd;
-   
-   @Column(name = "DEPT_CODE")
-   private int deptCode;
+	   @Id
+	   @Column(name = "EMP_NO")
+	   private int empNo;
+	   
+	   @Column(name = "EMP_NAME")
+	   private String empName;
+	   
+	   @Column(name = "EMP_PHONE_1")
+	   private String empPhone1;
+	   
+	   @Column(name = "EMP_PHONE_2")
+	   private String empPhone2;
+	   
+	   @Column(name = "EMP_PHONE_3")
+	   private String empPhone3;
+	   
+	   @Column(name = "EMP_BIRTH")
+	   private java.sql.Date empBirth;
+	   
+	   @Column(name = "EMP_GENDER")
+	   private String empGender;
+	   
+	   @Column(name = "EMP_JOB_CODE")
+	   private String empJobCode;
+	   
+	   @Column(name = "EMP_EMAIL")
+	   private String empEmail;
+	   
+	   @Column(name = "EMP_ADDRESS")
+	   private String empAddress;
+	   
+	   @Column(name = "EMP_D_ADDRESS")
+	   private String empDAdreess;
+	   
+	   @Column(name = "EMP_ENT_DATE")
+	   private java.sql.Date empEntDate;
+	   
+	   @Column(name = "EMP_END_DATE")
+	   private java.sql.Date empEndDate;
+	   
+	   @Column(name = "EMP_END_YN")
+	   private String empEndYn;
+	   
+	   @Column(name = "EMP_PWD")
+	   private String empPwd;
+	   
+	   @ManyToOne //다대일 관계일때 사용
+	   @JoinColumn(name = "DEPT_CODE")
+	   private DeptAndEmp dept;
 
-
-	public Emp() {
+	public EmpAndDept() {
 		super();
 	}
 
-	public Emp(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3, Date empBirth,
+	public EmpAndDept(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3, Date empBirth,
 			String empGender, String empJobCode, String empEmail, String empAddress, String empDAdreess,
-			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, int deptCode) {
+			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, DeptAndEmp dept) {
 		super();
 		this.empNo = empNo;
 		this.empName = empName;
@@ -108,7 +91,7 @@ public class Emp {
 		this.empEndDate = empEndDate;
 		this.empEndYn = empEndYn;
 		this.empPwd = empPwd;
-		this.deptCode = deptCode;
+		this.dept = dept;
 	}
 
 	public int getEmpNo() {
@@ -231,27 +214,26 @@ public class Emp {
 		this.empPwd = empPwd;
 	}
 
-	public int getDeptCode() {
-		return deptCode;
+	public DeptAndEmp getDept() {
+		return dept;
 	}
 
-	public void setDeptCode(int deptCode) {
-		this.deptCode = deptCode;
+	public void setDept(DeptAndEmp dept) {
+		this.dept = dept;
 	}
 
 	@Override
 	public String toString() {
-		return "Emp [empNo=" + empNo + ", empName=" + empName + ", empPhone1=" + empPhone1 + ", empPhone2=" + empPhone2
-				+ ", empPhone3=" + empPhone3 + ", empBirth=" + empBirth + ", empGender=" + empGender + ", empJobCode="
-				+ empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress + ", empDAdreess=" + empDAdreess
-				+ ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate + ", empEndYn=" + empEndYn + ", empPwd="
-				+ empPwd + ", deptCode=" + deptCode + "]";
+		return "EmpAndDept [empNo=" + empNo + ", empName=" + empName + ", empPhone1=" + empPhone1 + ", empPhone2="
+				+ empPhone2 + ", empPhone3=" + empPhone3 + ", empBirth=" + empBirth + ", empGender=" + empGender
+				+ ", empJobCode=" + empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress
+				+ ", empDAdreess=" + empDAdreess + ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate
+				+ ", empEndYn=" + empEndYn + ", empPwd=" + empPwd + ", dept=" + dept + "]";
 	}
 
 
-
-
- }
 	
+	   
 
 
+}

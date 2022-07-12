@@ -12,12 +12,6 @@ import javax.persistence.Table;
 
 @Entity(name="Salary")
 @Table(name = "TBL_SALARY")
-@SequenceGenerator(
-		name = "SALARY_SEQ_GENERATOR",  
-		sequenceName = "SEQ_SAL_NO",
-		initialValue = 1,
-		allocationSize = 1
-)
 public class Salary {
 	
 //	SAL_NO	NUMBER	목록번호
@@ -34,10 +28,6 @@ public class Salary {
 //	EMP_NO	NUMBER	사원번호
 	
 	@Id
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator = "SALARY_SEQ_GENERATOR"
-	)
 	@Column(name = "SAL_NO")
 	private int salNo;
 	
