@@ -67,4 +67,12 @@ public class MypageService{
 		
 		
 	}
+	
+	/* 일정 상세 조회 */
+	public CalendarDTO findMyCalendarDetail(int calCode) {
+		
+		Calendar CalendarDetail = calendarRepository.findById(calCode).get();
+		
+		return modelMapper.map(CalendarDetail, CalendarDTO.class);
+	}
 }

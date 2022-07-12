@@ -6,6 +6,7 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -62,6 +63,18 @@ public class MypageController {
 		
 		return mv;
 	}
+	/* 캘린더 일정 상세 조회 */
+	@GetMapping("/detailCal/{calCode}")
+	public ModelAndView findMyCalendarDetail(ModelAndView mv, @PathVariable int calCode) {
+		
+		CalendarDTO detailCal = mypageService.findMyCalendarDetail(calCode);
+		
+		mv.addObject("detailCal", detailCal);
+		mv.setViewName("/mypage/calendarDetail");
+		
+		return mv;
+	}
+	
 	
 	
 	/* 마이페이지 연차 조회 */
