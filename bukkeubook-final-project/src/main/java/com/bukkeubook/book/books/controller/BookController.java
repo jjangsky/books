@@ -2,6 +2,7 @@ package com.bukkeubook.book.books.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import com.bukkeubook.book.common.paging.SelectCriteria;
 
 @Controller
 @RequestMapping("/book")
-public class BookController {
+public class BookController extends HttpServlet{
 	
 	private final BookService bookService;
 	
@@ -30,8 +31,9 @@ public class BookController {
 	 * @GetMapping("/lookupList") public ModelAndView findBookList(ModelAndView mv)
 	 * {
 	 * 
-	 * List<BookDTO> bookList = bookService.findBookList(); mv.addObject("bookList",
-	 * bookList); mv.setViewName("books/bookList/lookupList");
+	 * List<BookDTO> bookList = bookService.findBookList();
+	 *  mv.addObject("bookList", bookList); 
+	 *  mv.setViewName("books/bookList/lookupList");
 	 * 
 	 * return mv; }
 	 */
@@ -81,8 +83,18 @@ public class BookController {
 	}
 	
 	@GetMapping("/bookInfo")
-	public String bookInfo() {
-		return "books/bookList/bookInfo";
+	public ModelAndView bookInfo(HttpServletRequest request, String no, ModelAndView mv){
+		
+		no = request.getParameter("no");
+		
+		List<BookDTO> bookList = bookService.findBookByNo(no);
+		
+		mv.addObject("bookList", bookList);
+		mv.setViewName("books/bookList/bookInfo");
+		return mv;
 	}
+	
+//	@GetMapping("/bookInfoUpdate")
+//	public String updateBookInfo
 	
 }

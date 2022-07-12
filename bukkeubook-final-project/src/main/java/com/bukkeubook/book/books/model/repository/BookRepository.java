@@ -23,6 +23,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
 	List<Book> findByNoContaining(String searchValue, Pageable paging);
 
+	List<Book> findBookByNo(String no);
+
 	
 	
 	
