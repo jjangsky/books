@@ -15,11 +15,11 @@
     <hr><br><br>
     <div id="textTable" style="text-align:-webkit-center">
         <h5 class="mb-4" id="sub-text"></h5>
-        	<form>
+        <form action="/book/bookInfoUpdate2" method="post">
             <table id="bookInfoTable" border="1">
                 <tr th:each="book : ${ bookList }">
                     <th>도서코드</th>
-                    <td th:text="${ book.no }"></td>
+                    <td><input class="updateInputNo" type="text" th:value="${ book.no }" name="no"></td>
                 </tr>
                 <tr th:each="book : ${ bookList }">
                     <th>저자</th>
@@ -35,15 +35,15 @@
                 </tr>
                 <tr th:each="book : ${ bookList }">
                     <th>가격</th>
-                    <td th:text="${ book.price }"></td>
+                    <td><input class="updateInput" type="text" th:value="${ book.price }" name="price"></td>
                 </tr>
                 <tr th:each="book : ${ bookList }">
                     <th>매장 재고수량</th>
-                    <td th:text="${ book.storeSt }"></td>
+                    <td><input class="updateInput" type="text" th:value="${ book.storeSt }" name="storeSt"></td>
                 </tr>
                 <tr th:each="book : ${ bookList }">
                     <th>창고 재고수량</th>
-                    <td th:text="${ book.whSt }"></td>
+                    <td><input class="updateInput" type="text" th:value="${ book.whSt }" name="whSt"></td>
                 </tr>
                 <tr th:each="book : ${ bookList }">
                     <th>최근입고일</th>
@@ -55,29 +55,36 @@
                 </tr>
                 <tr th:each="book : ${ bookList }">
                     <th>판매여부</th>
-                    <td th:text="${ book.sellYn }"></td>
+                    <td>
+                    	<!-- <button type="button" class="btnYn btnY">Y</button>
+                        <button type="button" class="btnYn btnN">N</button> -->
+                        <label for="Y">Y&nbsp;</label><input type="radio" value="Y" id="Y" name="sellYn">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label for="N">N&nbsp;</label><input type="radio" value="N" id="N" name="sellYn">
+                    </td>
                 </tr>
             </table>
-            </form>
+            
           <br>
           <div id="newBookDiv">
             <button type="button" class="productBtn newBookBtn">발주신청</button>
             <button type="button" class="productBtn newBookBtn">훼손등록</button>
-            <button type="button" class="productBtn newBookBtn updateBtn">수정하기</button>
+            <button type="submit" class="productBtn newBookBtn updateBtn">수정완료</button>
             <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
           </div>
+          </form>
         </div> <!------------------------ 본문 종료---------------------------->
       </div> <!-- 헤더 포함 본문 종료 div-->
       <script th:inline="javascript">
-    	 $('.backBtn').click(function(){
+      
+      	  if([[${bookList[0].sellYn}]] == 'Y'){
+      		  $('#Y').attr('checked', true);
+      	  } else if([[${bookList[0].sellYn}]] == 'N'){
+      		  $('#N').attr('checked', true);
+      	  }
+      	        	  
+          $('.backBtn').click(function(){
     		window.history.back(); 
-    	 });
-    	 
-    	 var bb = [[${bookList[0].no}]];
-    	 
-    	 $('.updateBtn').click(function(){
-    		 location.href='/book/bookInfoUpdate?no=' + bb;
-     	 });
+    	  });
       </script>
 </body>
 </html>
