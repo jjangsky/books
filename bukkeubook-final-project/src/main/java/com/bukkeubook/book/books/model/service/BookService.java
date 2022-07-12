@@ -86,6 +86,11 @@ public class BookService {
 		/* 자바의 Stream API와 ModelMapper를 이용하여 entity를 DTO로 변환 후 List<MenuDTO>로 반환 */
 		return bookList.stream().map(book -> modelMapper.map(book, BookDTO.class)).collect(Collectors.toList());
 	}
+
+	public List<BookDTO> findBookByNo(String no) {
+		List<Book> bookList = bookRepository.findBookByNo(no);
+		return bookList.stream().map(book -> modelMapper.map(book, BookDTO.class)).collect(Collectors.toList());
+	}
 	
 	
 }
