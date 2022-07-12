@@ -253,15 +253,9 @@ public String toString() {
 			+ empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress + ", empDAdreess=" + empDAdreess
 			+ ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate + ", empEndYn=" + empEndYn + ", empPwd="
 			+ empPwd + ", deptCode=" + deptCode + "]";
+	}
+   
 }
-   
-   
-
-  
-
-
-   
- }
 	
 
 
