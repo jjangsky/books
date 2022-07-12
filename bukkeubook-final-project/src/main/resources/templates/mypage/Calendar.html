@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html >
+<html xmlns:th="http://www.thymleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -35,7 +35,7 @@
 	
 	       <div id='calendar'>
 	       </div>  
-	       <script>
+	       <script th:inline="javascript">
 	
 	      document.addEventListener('DOMContentLoaded', function() {
 	        var calendarEl = document.getElementById('calendar');
@@ -50,15 +50,9 @@
 	          navLinks: true, // can click day/week names to navigate views
 	          selectable: true,
 	          selectMirror: true,
-	          select: function(arg) {
-	            var title = prompt('일정 뭐 추가?');
-	            if (title) {
-	              calendar.addEvent({
-	                title: title,
-	                start: arg.start,
-	                end: arg.end,
-	                allDay: arg.allDay
-	              })
+	          select: function(arg) { 
+	            if (confirm('일정을 추가하시겠습니까?')) {
+	              location.href="/mypage/registCalendar"
 	            }
 	            calendar.unselect()
 	          },
@@ -69,28 +63,29 @@
 	          },
 	          editable: false,        // 툴바 이동 금지
 	          dayMaxEvents: true, // allow "more" link when too many events
+	          
+	          
 	          events: [
+	        	  
+	          /*[# th:each="cal : ${ calendar }"]*/
 	            {
-	              title: 'All Day Event',
-	              start: '2022-07-27',
+	              title: /*[[${cal.title}]]*/,
+	              start: /*[[${cal.start}]]*/,
+	              end: /*[[${cal.end}]]*/
 	            },
-	            {
-	              title: 'Long Event',
-	              start: '2020-07-07',
-	              end: '2020-07-8'
-	            }
-	      
+	          /*[/]*/
+	          
 	          ]
 	        });
-	         calendar.batchRendering(function() {
-	         calendar.changeView('dayGridMonth');
-	         calendar.addEvent({ title: 'new event', start: '2022-07-01' });
-	            });
 	    
 	        calendar.render();
 	      });
 	    
 	    </script>
+	    <script>
+			const successMessage = "[[${ registSuccessMessage }]]";
+			successMessage && alert(successMessage);
+		</script>
 	
 </body>
 </html>
