@@ -6,13 +6,17 @@ import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity(name="OrderList")
-@Table(name="TBL_ORDER_LIST")
-public class OrderList implements Serializable{
+import com.bukkeubook.book.manage.model.entity.Emp;
 
-	private static final long serialVersionUID = -7371954659998907223L;
+@Entity
+@Table(name="TBL_ORDER_LIST")
+public class OrderAndEmpAndBook implements Serializable{
+
+	private static final long serialVersionUID = -9067766925393245784L;
 
 	/*
 	 * DB 자료형
@@ -42,27 +46,29 @@ public class OrderList implements Serializable{
 	@Column(name="CNT_NO")
 	private int cntNo;				// 거래처번호
 	
-	@Column(name="BK_NO")
-	private String bkNo;				// 도서코드
+	@ManyToOne
+	@JoinColumn(name="BK_NO")
+	private Book book;				// 도서코드
 	
-	@Column(name="EMP_NO")
-	private int empNo;				// 사원번호
+	@ManyToOne
+	@JoinColumn(name="EMP_NO")
+	private Emp emp;				// 사원번호
 	
 	@Column(name="OR_APP_DATE")
 	private java.sql.Date orderAppDate;	// 승인날짜
 
-	public OrderList() {
+	public OrderAndEmpAndBook() {
 	}
 
-	public OrderList(int orderNo, Date orderDate, String orderApprYn, int orderAmount, int cntNo, String bkNo,
-			int empNo, Date orderAppDate) {
+	public OrderAndEmpAndBook(int orderNo, Date orderDate, String orderApprYn, int orderAmount, int cntNo, Book book,
+			Emp emp, Date orderAppDate) {
 		this.orderNo = orderNo;
 		this.orderDate = orderDate;
 		this.orderApprYn = orderApprYn;
 		this.orderAmount = orderAmount;
 		this.cntNo = cntNo;
-		this.bkNo = bkNo;
-		this.empNo = empNo;
+		this.book = book;
+		this.emp = emp;
 		this.orderAppDate = orderAppDate;
 	}
 
@@ -106,20 +112,20 @@ public class OrderList implements Serializable{
 		this.cntNo = cntNo;
 	}
 
-	public String getBkNo() {
-		return bkNo;
+	public Book getBook() {
+		return book;
 	}
 
-	public void setBkNo(String bkNo) {
-		this.bkNo = bkNo;
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
-	public int getEmpNo() {
-		return empNo;
+	public Emp getEmp() {
+		return emp;
 	}
 
-	public void setEmpNo(int empNo) {
-		this.empNo = empNo;
+	public void setEmp(Emp emp) {
+		this.emp = emp;
 	}
 
 	public java.sql.Date getOrderAppDate() {
@@ -136,21 +142,9 @@ public class OrderList implements Serializable{
 
 	@Override
 	public String toString() {
-		return "OrderList [orderNo=" + orderNo + ", orderDate=" + orderDate + ", orderApprYn=" + orderApprYn
-				+ ", orderAmount=" + orderAmount + ", cntNo=" + cntNo + ", bkNo=" + bkNo + ", empNo=" + empNo
+		return "OrderAndEmpAndBook [orderNo=" + orderNo + ", orderDate=" + orderDate + ", orderApprYn=" + orderApprYn
+				+ ", orderAmount=" + orderAmount + ", cntNo=" + cntNo + ", book=" + book + ", emp=" + emp
 				+ ", orderAppDate=" + orderAppDate + "]";
 	}
-
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-

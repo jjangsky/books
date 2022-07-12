@@ -3,22 +3,12 @@ package com.bukkeubook.book.books.model.dto;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class OrderListDTO implements Serializable{
+import com.bukkeubook.book.manage.model.dto.EmpDTO;
 
-	private static final long serialVersionUID = 4913387832743442477L;
-	
-	/*
-	 * DB 자료형
-	 * 
-	 * OR_NO	NUMBER	발주번호
-		OR_DATE	DATE	등록날짜
-		OR_APPR_YN	VARCHAR2(6 BYTE)	승인현황
-		OR_AMOUNT	NUMBER	발주수량
-		CNT_NO	NUMBER	거래처번호
-		BK_NO	VARCHAR2(100 BYTE)	도서코드
-		EMP_NO	NUMBER	사원번호
-		OR_APP_DATE	DATE	승인날짜
-	 */
+public class OrderAndEmpAndBookDTO implements Serializable{
+
+	private static final long serialVersionUID = 2422088674252560622L;
+
 	private int orderNo;					// 발주번호
 	private java.sql.Date orderDate;		// 등록날짜
 	private String orderApprYn;			// 승인현황
@@ -27,12 +17,14 @@ public class OrderListDTO implements Serializable{
 	private String bkNo;					// 도서코드
 	private int empNo;					// 사원번호
 	private java.sql.Date orderAppDate;	// 승인날짜
+	private EmpDTO emp;
+	private BookDTO book;
 	
-	public OrderListDTO() {
+	public OrderAndEmpAndBookDTO() {
 	}
 
-	public OrderListDTO(int orderNo, Date orderDate, String orderApprYn, int orderAmount, int cntNo, String bkNo,
-			int empNo, Date orderAppDate) {
+	public OrderAndEmpAndBookDTO(int orderNo, Date orderDate, String orderApprYn, int orderAmount, int cntNo,
+			String bkNo, int empNo, Date orderAppDate, EmpDTO emp, BookDTO book) {
 		this.orderNo = orderNo;
 		this.orderDate = orderDate;
 		this.orderApprYn = orderApprYn;
@@ -41,6 +33,8 @@ public class OrderListDTO implements Serializable{
 		this.bkNo = bkNo;
 		this.empNo = empNo;
 		this.orderAppDate = orderAppDate;
+		this.emp = emp;
+		this.book = book;
 	}
 
 	public int getOrderNo() {
@@ -107,15 +101,31 @@ public class OrderListDTO implements Serializable{
 		this.orderAppDate = orderAppDate;
 	}
 
+	public EmpDTO getEmp() {
+		return emp;
+	}
+
+	public void setEmp(EmpDTO emp) {
+		this.emp = emp;
+	}
+
+	public BookDTO getBook() {
+		return book;
+	}
+
+	public void setBook(BookDTO book) {
+		this.book = book;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	@Override
 	public String toString() {
-		return "OrderListDTO [orderNo=" + orderNo + ", orderDate=" + orderDate + ", orderApprYn=" + orderApprYn
+		return "OrderAndEmpAndBookDTO [orderNo=" + orderNo + ", orderDate=" + orderDate + ", orderApprYn=" + orderApprYn
 				+ ", orderAmount=" + orderAmount + ", cntNo=" + cntNo + ", bkNo=" + bkNo + ", empNo=" + empNo
-				+ ", orderAppDate=" + orderAppDate + "]";
+				+ ", orderAppDate=" + orderAppDate + ", emp=" + emp + ", book=" + book + "]";
 	}
 	
 }
