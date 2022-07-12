@@ -1,16 +1,47 @@
 package com.bukkeubook.book.document.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.bukkeubook.book.document.model.dto.FormCateDTO;
+import com.bukkeubook.book.document.model.service.DocService;
 
 @Controller
 @RequestMapping("document/*")
 public class DocumentController {
+	
+	private DocService docService;
+	
+	@Autowired
+	public DocumentController(DocService docService) {
+		this.docService = docService;
+	}
 
 	@GetMapping("insert")
-	public String toDocWrite() {
-		return "/document/insert";
+	public ModelAndView toDocWrite(ModelAndView mv) {
+		
+		List<FormCateDTO> formList = docService.findDocFormList();
+		mv.addObject("formList", formList);
+		mv.setViewName("document/insert");
+		
+		return mv;
+	}
+	
+	@GetMapping("insertTo/{formNo}")
+	public ModelAndView toSelectByFormNo(ModelAndView mv, @PathVariable String formNo) {
+		
+		System.out.println("fffffffffffffffffffffffffffffffffffff" + formNo);
+		
+		mv.setViewName("document/insert"+formNo);
+		
+		return mv;
+		
 	}
 	
 	@GetMapping("docList")

@@ -40,14 +40,13 @@ public class EmpDTO implements Serializable{
 	private String empEndYn;
 	private String empPwd;
 	private int deptCode;
+	
 	public EmpDTO() {
-		super();
 	}
 	public EmpDTO(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3,
 			java.sql.Date empBirth, String empGender, String empEmail, String empJobCode, String empAddress1,
 			String empAddress2, java.sql.Date empEntDate, java.sql.Date empEndDate, String empEndYn, String empPwd,
 			int deptCode) {
-		super();
 		this.empNo = empNo;
 		this.empName = empName;
 		this.empPhone1 = empPhone1;

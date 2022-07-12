@@ -10,5 +10,14 @@ public class EmpPayController {
 	public String  main() {
 		return "manage/empPay/empPayList";
 	}
-
+	
+	@GetMapping("severancePay")
+	public String severancePayList() {
+		return "manage/empPay/severancePay";
+	}
+	
+	@GetMapping("severancePayDetail")
+	public String severancePayDetail() {
+		return "";
+	}
 }

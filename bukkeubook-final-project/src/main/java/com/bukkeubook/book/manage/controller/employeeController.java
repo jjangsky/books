@@ -51,6 +51,11 @@ private final EmpService empService;
 		return mv;
 	}
 	
+	@GetMapping("personnelSelect")
+	public String perconnelList() {
+		return "manage/employee/personnelSelect";
+	}
+	
 	
 }
  

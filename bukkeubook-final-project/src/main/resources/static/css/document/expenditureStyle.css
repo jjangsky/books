@@ -1,0 +1,45 @@
+.tbl{
+    border: 2   px solid gray;
+    border-collapse: collapse;
+}
+
+tr,th,td{
+    padding: 10px;
+    border: 1.5px solid gray;
+}
+
+td,th{
+    height: 35px;
+    text-align: center;
+}
+
+th{
+    font-size: large;
+}
+
+.sign{
+    width: 100px;
+}
+
+.read{
+    width: 300px;
+}
+
+.coloring{
+    background-color: rgb(211, 245, 255);
+}
+
+.total{
+    margin-top: 5em;
+    margin-left: 10em;
+    margin-right: 10em;
+    width: 76%;
+    height: 76%;
+    border: 2px solid gray;
+    padding: 5%;
+}
+
+.imgs{
+    width: 90px;
+    height: 100px;
+}

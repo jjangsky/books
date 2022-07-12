@@ -218,4 +218,13 @@
   margin-left: 45%; 
   margin-top: 20px;
 }
+.bor{
+  text-align: center;
+}
+.tabbor{
+  border-radius: 16px;
+  box-shadow: inset 0 0 8px #8a8a8a;
+  width: 160px;
+  height: 160p;
+}
 
