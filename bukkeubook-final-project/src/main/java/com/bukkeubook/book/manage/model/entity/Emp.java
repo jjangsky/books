@@ -20,7 +20,6 @@ import javax.persistence.Table;
 		initialValue = 1,
 		allocationSize = 1
 )
-
 public class Emp {
    
 //	EMP_NO	NUMBER	사원번호
