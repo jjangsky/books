@@ -7,43 +7,41 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity(name="Emp")
 @Table(name = "TBL_EMP")
 @SequenceGenerator(
-		name = "EMP_SEQ_GENERATOR",
-		sequenceName = "SEQ_EMP_NO",
-		initialValue = 1,
-		allocationSize = 1
+      name = "EMP_SEQ_GENERATOR",
+      sequenceName = "SEQ_EMP_NO",
+      initialValue = 1,
+      allocationSize = 1
 )
 public class Emp {
    
-//	EMP_NO			NUMBER				사원번호
-//	EMP_NAME		NVARCHAR2(31 CHAR)	사원명
-//	EMP_PHONE_1		VARCHAR2(10 BYTE)	연락처1
-//	EMP_PHONE_2		VARCHAR2(10 BYTE)	연락처2
-//	EMP_PHONE_3		VARCHAR2(10 BYTE)	연락처3
-//	EMP_BIRTH		DATE				생년월일
-//	EMP_GENDER		VARCHAR2(15 BYTE)	성별
-//	EMP_EMAIL		VARCHAR2(63 BYTE)	이메일
-//	EMP_JOB_CODE	NVARCHAR2(31 CHAR)	직급
-//	EMP_ADDRESS		NVARCHAR2(255 CHAR)	주소
-//	EMP_D_ADDRESS	NVARCHAR2(255 CHAR)	상세주소
-//	EMP_ENT_DATE	DATE				입사일자
-//	EMP_END_DATE	DATE				퇴사일자
-//	EMP_END_YN		VARCHAR2(3 BYTE)	퇴사여부
-//	EMP_PWD			VARCHAR2(255 BYTE)	비밀번호
-//	DEPT_CODE		NUMBER				부서코드
-	
+//   EMP_NO         NUMBER            사원번호
+//   EMP_NAME      NVARCHAR2(31 CHAR)   사원명
+//   EMP_PHONE_1      VARCHAR2(10 BYTE)   연락처1
+//   EMP_PHONE_2      VARCHAR2(10 BYTE)   연락처2
+//   EMP_PHONE_3      VARCHAR2(10 BYTE)   연락처3
+//   EMP_BIRTH      DATE            생년월일
+//   EMP_GENDER      VARCHAR2(15 BYTE)   성별
+//   EMP_EMAIL      VARCHAR2(63 BYTE)   이메일
+//   EMP_JOB_CODE   NVARCHAR2(31 CHAR)   직급
+//   EMP_ADDRESS      NVARCHAR2(255 CHAR)   주소
+//   EMP_D_ADDRESS   NVARCHAR2(255 CHAR)   상세주소
+//   EMP_ENT_DATE   DATE            입사일자
+//   EMP_END_DATE   DATE            퇴사일자
+//   EMP_END_YN      VARCHAR2(3 BYTE)   퇴사여부
+//   EMP_PWD         VARCHAR2(255 BYTE)   비밀번호
+//   DEPT_CODE      NUMBER            부서코드
+   
    @Id
    @GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator = "EMP_SEQ_GENERATOR"
-	)
+         strategy = GenerationType.SEQUENCE,
+         generator = "EMP_SEQ_GENERATOR"
+   )
    @Column(name = "EMP_NO")
    private int empNo;
    
@@ -93,169 +91,174 @@ public class Emp {
    private int deptCode;
 
 public Emp() {
-	super();
+   super();
 }
 
 public Emp(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3, Date empBirth,
-		String empGender, String empJobCode, String empEmail, String empAddress, String empDAdreess, Date empEntDate,
-		Date empEndDate, String empEndYn, String empPwd, int deptCode) {
-	super();
-	this.empNo = empNo;
-	this.empName = empName;
-	this.empPhone1 = empPhone1;
-	this.empPhone2 = empPhone2;
-	this.empPhone3 = empPhone3;
-	this.empBirth = empBirth;
-	this.empGender = empGender;
-	this.empJobCode = empJobCode;
-	this.empEmail = empEmail;
-	this.empAddress = empAddress;
-	this.empDAdreess = empDAdreess;
-	this.empEntDate = empEntDate;
-	this.empEndDate = empEndDate;
-	this.empEndYn = empEndYn;
-	this.empPwd = empPwd;
-	this.deptCode = deptCode;
+      String empGender, String empJobCode, String empEmail, String empAddress, String empDAdreess, Date empEntDate,
+      Date empEndDate, String empEndYn, String empPwd, int deptCode) {
+   super();
+   this.empNo = empNo;
+   this.empName = empName;
+   this.empPhone1 = empPhone1;
+   this.empPhone2 = empPhone2;
+   this.empPhone3 = empPhone3;
+   this.empBirth = empBirth;
+   this.empGender = empGender;
+   this.empJobCode = empJobCode;
+   this.empEmail = empEmail;
+   this.empAddress = empAddress;
+   this.empDAdreess = empDAdreess;
+   this.empEntDate = empEntDate;
+   this.empEndDate = empEndDate;
+   this.empEndYn = empEndYn;
+   this.empPwd = empPwd;
+   this.deptCode = deptCode;
 }
 
 public int getEmpNo() {
-	return empNo;
+   return empNo;
 }
 
 public void setEmpNo(int empNo) {
-	this.empNo = empNo;
+   this.empNo = empNo;
 }
 
 public String getEmpName() {
-	return empName;
+   return empName;
 }
 
 public void setEmpName(String empName) {
-	this.empName = empName;
+   this.empName = empName;
 }
 
 public String getEmpPhone1() {
-	return empPhone1;
+   return empPhone1;
 }
 
 public void setEmpPhone1(String empPhone1) {
-	this.empPhone1 = empPhone1;
+   this.empPhone1 = empPhone1;
 }
 
 public String getEmpPhone2() {
-	return empPhone2;
+   return empPhone2;
 }
 
 public void setEmpPhone2(String empPhone2) {
-	this.empPhone2 = empPhone2;
+   this.empPhone2 = empPhone2;
 }
 
 public String getEmpPhone3() {
-	return empPhone3;
+   return empPhone3;
 }
 
 public void setEmpPhone3(String empPhone3) {
-	this.empPhone3 = empPhone3;
+   this.empPhone3 = empPhone3;
 }
 
 public java.sql.Date getEmpBirth() {
-	return empBirth;
+   return empBirth;
 }
 
 public void setEmpBirth(java.sql.Date empBirth) {
-	this.empBirth = empBirth;
+   this.empBirth = empBirth;
 }
 
 public String getEmpGender() {
-	return empGender;
+   return empGender;
 }
 
 public void setEmpGender(String empGender) {
-	this.empGender = empGender;
+   this.empGender = empGender;
 }
 
 public String getEmpJobCode() {
-	return empJobCode;
+   return empJobCode;
 }
 
 public void setEmpJobCode(String empJobCode) {
-	this.empJobCode = empJobCode;
+   this.empJobCode = empJobCode;
 }
 
 public String getEmpEmail() {
-	return empEmail;
+   return empEmail;
 }
 
 public void setEmpEmail(String empEmail) {
-	this.empEmail = empEmail;
+   this.empEmail = empEmail;
 }
 
 public String getEmpAddress() {
-	return empAddress;
+   return empAddress;
 }
 
 public void setEmpAddress(String empAddress) {
-	this.empAddress = empAddress;
+   this.empAddress = empAddress;
 }
 
 public String getEmpDAdreess() {
-	return empDAdreess;
+   return empDAdreess;
 }
 
 public void setEmpDAdreess(String empDAdreess) {
-	this.empDAdreess = empDAdreess;
+   this.empDAdreess = empDAdreess;
 }
 
 public java.sql.Date getEmpEntDate() {
-	return empEntDate;
+   return empEntDate;
 }
 
 public void setEmpEntDate(java.sql.Date empEntDate) {
-	this.empEntDate = empEntDate;
+   this.empEntDate = empEntDate;
 }
 
 public java.sql.Date getEmpEndDate() {
-	return empEndDate;
+   return empEndDate;
 }
 
 public void setEmpEndDate(java.sql.Date empEndDate) {
-	this.empEndDate = empEndDate;
+   this.empEndDate = empEndDate;
 }
 
 public String getEmpEndYn() {
-	return empEndYn;
+   return empEndYn;
 }
 
 public void setEmpEndYn(String empEndYn) {
-	this.empEndYn = empEndYn;
+   this.empEndYn = empEndYn;
 }
 
 public String getEmpPwd() {
-	return empPwd;
+   return empPwd;
 }
 
 public void setEmpPwd(String empPwd) {
-	this.empPwd = empPwd;
+   this.empPwd = empPwd;
 }
 
 public int getDeptCode() {
-	return deptCode;
+   return deptCode;
 }
 
 public void setDeptCode(int deptCode) {
-	this.deptCode = deptCode;
+   this.deptCode = deptCode;
 }
 
 @Override
 public String toString() {
-	return "Emp [empNo=" + empNo + ", empName=" + empName + ", empPhone1=" + empPhone1 + ", empPhone2=" + empPhone2
-			+ ", empPhone3=" + empPhone3 + ", empBirth=" + empBirth + ", empGender=" + empGender + ", empJobCode="
-			+ empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress + ", empDAdreess=" + empDAdreess
-			+ ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate + ", empEndYn=" + empEndYn + ", empPwd="
-			+ empPwd + ", deptCode=" + deptCode + "]";
-	}
-   
+   return "Emp [empNo=" + empNo + ", empName=" + empName + ", empPhone1=" + empPhone1 + ", empPhone2=" + empPhone2
+         + ", empPhone3=" + empPhone3 + ", empBirth=" + empBirth + ", empGender=" + empGender + ", empJobCode="
+         + empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress + ", empDAdreess=" + empDAdreess
+         + ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate + ", empEndYn=" + empEndYn + ", empPwd="
+         + empPwd + ", deptCode=" + deptCode + "]";
 }
-	
+   
+   
 
+  
+
+
+   
+ }
+   
 

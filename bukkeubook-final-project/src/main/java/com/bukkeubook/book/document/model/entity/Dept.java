@@ -1,20 +1,15 @@
-package com.bukkeubook.book.manage.model.entity;
-
-import java.io.Serializable;
+package com.bukkeubook.book.document.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/* TBL_DEPT 테이블에 매칭될 Dept 엔티티 클래스도 만들어 보기 */
-@Entity
+@Entity(name = "DocDept")
 @Table(name = "TBL_DEPT")
-public class Dept implements Serializable {
+public class Dept {
 
-	private static final long serialVersionUID = 541840903128253305L;
-
-	/* DB 자료형 */
+/* DB 자료형 */
 	
 //	DEPT_CODE		NUMBER				부서코드
 //	DEPT_NAME		NVARCHAR2(31 CHAR)	부서명
@@ -31,9 +26,11 @@ public class Dept implements Serializable {
 	private String deptRepPhone;
 
 	public Dept() {
+		super();
 	}
 
 	public Dept(int deptCode, String deptName, String deptRepPhone) {
+		super();
 		this.deptCode = deptCode;
 		this.deptName = deptName;
 		this.deptRepPhone = deptRepPhone;
@@ -63,15 +60,11 @@ public class Dept implements Serializable {
 		this.deptRepPhone = deptRepPhone;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	@Override
 	public String toString() {
 		return "Dept [deptCode=" + deptCode + ", deptName=" + deptName + ", deptRepPhone=" + deptRepPhone + "]";
 	}
 	
 	
+	
 }
-

@@ -1,16 +1,19 @@
 package com.bukkeubook.book.manage.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /* TBL_DEPT 테이블에 매칭될 Dept 엔티티 클래스도 만들어 보기 */
-@Entity
+@Entity(name="DeptAndDept")
 @Table(name = "TBL_DEPT")
-public class Dept implements Serializable {
+public class DeptAndEmp implements Serializable {
 
 	private static final long serialVersionUID = 541840903128253305L;
 
@@ -29,11 +32,14 @@ public class Dept implements Serializable {
 	
 	@Column(name = "DEPT_REP_PHONE")
 	private String deptRepPhone;
+	
+	@OneToMany(mappedBy ="dept")
+	private List<EmpAndDept> empList = new ArrayList<>();
 
-	public Dept() {
+	public DeptAndEmp() {
 	}
 
-	public Dept(int deptCode, String deptName, String deptRepPhone) {
+	public DeptAndEmp(int deptCode, String deptName, String deptRepPhone) {
 		this.deptCode = deptCode;
 		this.deptName = deptName;
 		this.deptRepPhone = deptRepPhone;
@@ -74,4 +80,3 @@ public class Dept implements Serializable {
 	
 	
 }
-

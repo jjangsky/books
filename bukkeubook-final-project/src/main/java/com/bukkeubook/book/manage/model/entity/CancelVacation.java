@@ -12,12 +12,6 @@ import javax.persistence.Table;
 
 @Entity(name="CancelVacation")
 @Table(name = "TBL_CANCEL_VACATION")
-@SequenceGenerator(
-		name = "CANCEL_VACATION_SEQ_GENERATOR",
-		sequenceName = "SEQ_VAC_CANC_NO",
-		initialValue = 1,
-		allocationSize = 1
-)
 public class CancelVacation {
 	
 //	VAC_CANC_NO	NUMBER	취소신청서번호
@@ -26,11 +20,7 @@ public class CancelVacation {
 //	VAC_CANC_STATUS	NVARCHAR2(15 CHAR)	문서상태
 //	EMP_NO	NUMBER	사원번호
 	
-	   @Id
-	   @GeneratedValue(
-				strategy = GenerationType.SEQUENCE,
-				generator = "CANCEL_VACATION_SEQ_GENERATOR"
-		)
+	@Id
 	@Column(name = "VAC_CANC_NO")
 	private int vacCancNo;
 	   
