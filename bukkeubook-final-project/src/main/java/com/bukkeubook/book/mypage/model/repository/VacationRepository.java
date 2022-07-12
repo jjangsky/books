@@ -6,9 +6,13 @@ import java.util.Locale.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.bukkeubook.book.manage.model.dto.AppVacationDTO;
+import com.bukkeubook.book.manage.model.entity.AppVacation;
 
-public interface MypageRepository extends JpaRepository<Category, Integer>{
+public interface VacationRepository extends JpaRepository<AppVacation, Integer>{
 
-	List<AppVacationDTO> findMyAnnualList();
+
+	List<AppVacation> findAllByEmpNoAndVacStatus(int memberCode, String approve);
+
+
 
 }

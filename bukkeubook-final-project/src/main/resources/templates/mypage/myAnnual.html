@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html >
+<html xmlns:th="http://www.thymleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -26,10 +26,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="bor tabbor">
-                        <td class="annualTable3">12</td>
-                        <td>2</td>
-                        <td>10</td>
+                    <tr class="bor tabbor" th:each="day : ${ dayoffList }">
+                        <td class="annualTable3" th:text="${ day.doffAmount }"></td>
+                        <td th:text="${ day.doffUse }"></td>
+                        <td th:text="${ day.doffRemain }"></td>
                     </tr>
                 </tbody>
             </table>
@@ -55,13 +55,13 @@
                 <th class="th1">휴가 시작일</th>
                 <th class="th1">휴가 종료일</th>
                 <th class="th1">신청 일자</th>
-                <th class="th1">사용 연차 횟수</th>
+ 
               </tr>
-              <tr class="hover">
-                <td>2022-08-10</td>
-                <td>2022-08-15</td>
-                <td>2022-07-10</td>
-                <td>6개</td>
+              <tr class="hover" th:each="vac : ${ vacationList }">
+                <td th:text="${ vac.vacAppNo }"></td>
+                <td th:text="${ vac.vacStartDate }"></td>
+                <td th:text="${ vac.vacEndDate }"></td>
+  
               </tr>
           </table>
         </div> 
