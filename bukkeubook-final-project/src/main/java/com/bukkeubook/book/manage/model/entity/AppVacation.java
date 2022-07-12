@@ -17,17 +17,20 @@ public class AppVacation implements Serializable{
 
 	/* DB 자료형 */
 	
+//	VAC_NO			NUMBER					신청서번호(PK)
 //	VAC_APP_NO		DATE					신청일자
 //	VAC_START_DATE	DATE					휴가시작일
 //	VAC_END_DATE	DATE					휴가종료일
-//	VAC_EMER		VARCHAR2(31 BYTE)		비상연락처
 //	VAC_REASON		NVARCHAR2(255 CHAR)		휴가사유
 //	VAC_STATUS		NVARCHAR2(15 CHAR)		휴가상태
-//	VAC_NO			NUMBER					신청서번호
 //	EMP_NO			NUMBER					사원번호
-//	VAC_COMPANION	NVARCHAR2(2000 CHAR)	휴가사유
+//	VAC_EMER		VARCHAR2(31 BYTE)		비상연락처
+//	VAC_COMPANION	NVARCHAR2(2000 CHAR)	휴가반려사유
 	
 	@Id
+	@Column(name = "VAC_NO")
+	private int vacNo;
+	
 	@Column(name = "VAC_APP_NO")
 	private java.sql.Date vacAppNo;
 	
@@ -37,20 +40,17 @@ public class AppVacation implements Serializable{
 	@Column(name = "VAC_END_DATE")
 	private java.sql.Date vacEndDate;
 	
-	@Column(name = "VAC_EMER")
-	private String vacEmer;
-	
 	@Column(name = "VAC_REASON")
 	private String vacReason;
 	
 	@Column(name = "VAC_STATUS")
 	private String vacStatus;
 	
-	@Column(name = "VAC_NO")
-	private int vacNo;
-	
 	@Column(name = "EMP_NO")
 	private int empNo;
+	
+	@Column(name = "VAC_EMER")
+	private int vacEmer;
 	
 	@Column(name = "VAC_COMPANION")
 	private String vacCompanion;
@@ -58,17 +58,25 @@ public class AppVacation implements Serializable{
 	public AppVacation() {
 	}
 
-	public AppVacation(Date vacAppNo, Date vacStartDate, Date vacEndDate, String vacEmer, String vacReason,
-			String vacStatus, int vacNo, int empNo, String vacCompanion) {
+	public AppVacation(int vacNo, Date vacAppNo, Date vacStartDate, Date vacEndDate, String vacReason, String vacStatus,
+			int empNo, int vacEmer, String vacCompanion) {
+		this.vacNo = vacNo;
 		this.vacAppNo = vacAppNo;
 		this.vacStartDate = vacStartDate;
 		this.vacEndDate = vacEndDate;
-		this.vacEmer = vacEmer;
 		this.vacReason = vacReason;
 		this.vacStatus = vacStatus;
-		this.vacNo = vacNo;
 		this.empNo = empNo;
+		this.vacEmer = vacEmer;
 		this.vacCompanion = vacCompanion;
+	}
+
+	public int getVacNo() {
+		return vacNo;
+	}
+
+	public void setVacNo(int vacNo) {
+		this.vacNo = vacNo;
 	}
 
 	public java.sql.Date getVacAppNo() {
@@ -95,14 +103,6 @@ public class AppVacation implements Serializable{
 		this.vacEndDate = vacEndDate;
 	}
 
-	public String getVacEmer() {
-		return vacEmer;
-	}
-
-	public void setVacEmer(String vacEmer) {
-		this.vacEmer = vacEmer;
-	}
-
 	public String getVacReason() {
 		return vacReason;
 	}
@@ -119,20 +119,20 @@ public class AppVacation implements Serializable{
 		this.vacStatus = vacStatus;
 	}
 
-	public int getVacNo() {
-		return vacNo;
-	}
-
-	public void setVacNo(int vacNo) {
-		this.vacNo = vacNo;
-	}
-
 	public int getEmpNo() {
 		return empNo;
 	}
 
 	public void setEmpNo(int empNo) {
 		this.empNo = empNo;
+	}
+
+	public int getVacEmer() {
+		return vacEmer;
+	}
+
+	public void setVacEmer(int vacEmer) {
+		this.vacEmer = vacEmer;
 	}
 
 	public String getVacCompanion() {
@@ -149,8 +149,9 @@ public class AppVacation implements Serializable{
 
 	@Override
 	public String toString() {
-		return "AppVacation [vacAppNo=" + vacAppNo + ", vacStartDate=" + vacStartDate + ", vacEndDate=" + vacEndDate
-				+ ", vacEmer=" + vacEmer + ", vacReason=" + vacReason + ", vacStatus=" + vacStatus + ", vacNo=" + vacNo
-				+ ", empNo=" + empNo + ", vacCompanion=" + vacCompanion + "]";
+		return "AppVacation [vacNo=" + vacNo + ", vacAppNo=" + vacAppNo + ", vacStartDate=" + vacStartDate
+				+ ", vacEndDate=" + vacEndDate + ", vacReason=" + vacReason + ", vacStatus=" + vacStatus + ", empNo="
+				+ empNo + ", vacEmer=" + vacEmer + ", vacCompanion=" + vacCompanion + "]";
 	}
+	
 }

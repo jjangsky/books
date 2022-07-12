@@ -1,11 +1,18 @@
-package com.bukkeubook.book.books.model.dto;
+package com.bukkeubook.book.finance.model.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
 
-public class TradeListDTO implements Serializable{
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-	private static final long serialVersionUID = 7259115047051463544L;
+@Entity
+@Table(name="TBL_TRADE_LIST")
+public class TradeList implements Serializable{
+
+	private static final long serialVersionUID = -3608341261312641532L;
 
 	/*
 	 * DB 자료형
@@ -15,21 +22,35 @@ public class TradeListDTO implements Serializable{
 		TL_AMOUNT	NUMBER	도서수량
 		TL_DETAIL	NVARCHAR2(255 CHAR)	상세내용
 		CNT_NO	NUMBER	거래처번호
-		BK_NO	NUMBER	도서코드
+		BK_NO	VARCHAR2(100 BYTE)	도서코드
 		EMP_NO	NUMBER	사원번호
 	 */
-	private int tlNo;					// 거래번호
-	private java.sql.Date tlDate;		// 거래일자
-	private int tlAmount;				// 도서수량
-	private String tlDetail;			// 상세내용
-	private int cntNo;					// 거래처번호
-	private int bkNo;					// 도서코드
-	private int empNo;					// 사원번호
+	@Id
+	@Column(name="TL_NO")
+	private int tlNo;				// 거래번호
 	
-	public TradeListDTO() {
+	@Column(name="TL_DATE")
+	private java.sql.Date tlDate;	// 거래일자
+	
+	@Column(name="TL_AMOUNT")
+	private int tlAmount;			// 도서수량
+	
+	@Column(name="TL_DETAIL")
+	private String tlDetail;		// 상세내용
+	
+	@Column(name="CNT_NO")
+	private int cntNo;				// 거래처번호
+	
+	@Column(name="BK_NO")
+	private String bkNo;			// 도서코드
+	
+	@Column(name="EMP_NO")
+	private int empNo;				// 사원번호
+
+	public TradeList() {
 	}
 
-	public TradeListDTO(int tlNo, Date tlDate, int tlAmount, String tlDetail, int cntNo, int bkNo, int empNo) {
+	public TradeList(int tlNo, Date tlDate, int tlAmount, String tlDetail, int cntNo, String bkNo, int empNo) {
 		this.tlNo = tlNo;
 		this.tlDate = tlDate;
 		this.tlAmount = tlAmount;
@@ -79,11 +100,11 @@ public class TradeListDTO implements Serializable{
 		this.cntNo = cntNo;
 	}
 
-	public int getBkNo() {
+	public String getBkNo() {
 		return bkNo;
 	}
 
-	public void setBkNo(int bkNo) {
+	public void setBkNo(String bkNo) {
 		this.bkNo = bkNo;
 	}
 
@@ -101,7 +122,7 @@ public class TradeListDTO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "TradeListDTO [tlNo=" + tlNo + ", tlDate=" + tlDate + ", tlAmount=" + tlAmount + ", tlDetail=" + tlDetail
+		return "TradeList [tlNo=" + tlNo + ", tlDate=" + tlDate + ", tlAmount=" + tlAmount + ", tlDetail=" + tlDetail
 				+ ", cntNo=" + cntNo + ", bkNo=" + bkNo + ", empNo=" + empNo + "]";
 	}
 	

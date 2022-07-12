@@ -36,3 +36,14 @@
 .newBookBtn:hover {
     background-color: #FEFCC6;
 }
+.updateInput {
+	text-align: center;
+}
+.btnYn {
+	border: 1px solid;
+}
+.updateInputNo {
+	border-style: none;
+	cursor: default;
+	color: #808080;
+}

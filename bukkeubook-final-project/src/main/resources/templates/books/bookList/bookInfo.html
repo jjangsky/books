@@ -15,60 +15,69 @@
     <hr><br><br>
     <div id="textTable" style="text-align:-webkit-center">
         <h5 class="mb-4" id="sub-text"></h5>
+        	<form>
             <table id="bookInfoTable" border="1">
-                <tr>
+                <tr th:each="book : ${ bookList }">
                     <th>도서코드</th>
-                    <td>도서코드</td>
+                    <td th:text="${ book.no }"></td>
                 </tr>
-                <tr>
+                <tr th:each="book : ${ bookList }">
                     <th>저자</th>
-                    <td>샘플입니다.</td>
+                    <td th:text="${ book.author }"></td>
                 </tr>
-                <tr>
+                <tr th:each="book : ${ bookList }">
                     <th>출판사</th>
-                    <td>샘플입니다.</td>
+                    <td th:text="${ book.pub }"></td>
                 </tr>
-                <tr>
+                <tr th:each="book : ${ bookList }">
                     <th>장르</th>
-                    <td>샘플입니다.</td>
+                    <td th:text="${ book.cate }"></td>
                 </tr>
-                <tr>
+                <tr th:each="book : ${ bookList }">
                     <th>가격</th>
-                    <td>샘플입니다.</td>
+                    <td th:text="${ book.price }"></td>
                 </tr>
-                <tr>
+                <tr th:each="book : ${ bookList }">
                     <th>매장 재고수량</th>
-                    <td>샘플입니다.</td>
+                    <td th:text="${ book.storeSt }"></td>
                 </tr>
-                <tr>
+                <tr th:each="book : ${ bookList }">
                     <th>창고 재고수량</th>
-                    <td>샘플입니다.</td>
+                    <td th:text="${ book.whSt }"></td>
                 </tr>
-                <tr>
+                <tr th:each="book : ${ bookList }">
                     <th>최근입고일</th>
-                    <td>샘플입니다.</td>
+                    <td th:text="${#dates.format(book.lastDate, 'yyyy-MM-dd')}"></td>
                 </tr>
-                <tr>
+                <tr th:each="book : ${ bookList }">
                     <th>ISBN</th>
-                    <td>샘플입니다.</td>
+                    <td th:text="${ book.isbn }"></td>
                 </tr>
-                <tr>
-                    <th>베스트셀러</th>
-                    <td>샘플입니다.</td>
-                </tr>
-                <tr>
+                <tr th:each="book : ${ bookList }">
                     <th>판매여부</th>
-                    <td>샘플입니다.</td>
+                    <td th:text="${ book.sellYn }"></td>
                 </tr>
             </table>
+            </form>
           <br>
           <div id="newBookDiv">
             <button type="button" class="productBtn newBookBtn">발주신청</button>
             <button type="button" class="productBtn newBookBtn">훼손등록</button>
-            <button type="button" class="productBtn newBookBtn">수정하기</button>
-            <button type="button" class="productBtn newBookBtn">목록으로</button>
+            <button type="button" class="productBtn newBookBtn updateBtn">수정하기</button>
+            <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
           </div>
         </div> <!------------------------ 본문 종료---------------------------->
       </div> <!-- 헤더 포함 본문 종료 div-->
+      <script th:inline="javascript">
+    	 $('.backBtn').click(function(){
+    		window.history.back(); 
+    	 });
+    	 
+    	 var bb = [[${bookList[0].no}]];
+    	 
+    	 $('.updateBtn').click(function(){
+    		 location.href='/book/bookInfoUpdate?no=' + bb;
+     	 });
+      </script>
 </body>
 </html>

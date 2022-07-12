@@ -21,16 +21,6 @@
         -->
         <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/book/lookupList">재고조회</a></h5>
         <br>
-        <!-- <div id="productFind">
-          <select id="selectFind">
-            <option value="">전체보기</option>
-            <option value="">도서코드</option>
-            <option value="">제목</option>
-            <option value="">저자</option>
-          </select>
-          <input type="text" value="" id="inputFind" placeholder="검색어를 입력해주세요.">
-          <button type="button" class="productBtn findBtn">검색하기</button>
-        </div> -->
 		
 		<div class="search-area" align="center">
 			<form id="loginForm" action="/book/lookupList" method="get" style="display: inline-block">
@@ -47,7 +37,6 @@
 				<button onclick="findTest()" class="productBtn findBtn" id="findBtn" type="button">검색하기</button>
 			</form>
 		</div>
-		
         <br>
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
@@ -62,8 +51,8 @@
                 <th class="th1">창고재고</th>
                 <th class="th1">매장재고</th>
               </tr>
-              <tr class="tr1" th:each="book : ${ bookList }" onclick="location.href='/book/bookInfo'">
-                <td th:text="${ book.no }"></td>
+              <tr class="tr1" th:each="book : ${ bookList }" th:onclick="'location.href = \'' + @{/book/bookInfo/(no=${book.no})} + '\''">
+            	<td th:text="${ book.no }"></td>
                 <td th:text="${ book.name }"></td>
                 <td th:text="${ book.author }"></td>
                 <td th:text="${ #numbers.formatInteger(book.price, 3, 'COMMA') + '원' }"></td>
@@ -71,9 +60,7 @@
                 <td th:text="${ book.whSt } + ' ea'"></td>
                 <td th:text="${ book.storeSt } + ' ea'"></td>
               </tr>
-              
           </table>
-          
           <br>          
           <div id="newBookDiv">
             <button type="button" class="productBtn newBookBtn">신규도서등록</button>
@@ -115,6 +102,8 @@
 				$('#loginForm').submit();
 			}
 		}
+		
 	</script>
+
 </body>
 </html>

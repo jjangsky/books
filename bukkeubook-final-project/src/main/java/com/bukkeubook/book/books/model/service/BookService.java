@@ -1,6 +1,5 @@
 package com.bukkeubook.book.books.model.service;
 
-import java.awt.Menu;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bukkeubook.book.books.model.dto.BookDTO;
 import com.bukkeubook.book.books.model.entity.Book;
@@ -86,6 +86,26 @@ public class BookService {
 		/* 자바의 Stream API와 ModelMapper를 이용하여 entity를 DTO로 변환 후 List<MenuDTO>로 반환 */
 		return bookList.stream().map(book -> modelMapper.map(book, BookDTO.class)).collect(Collectors.toList());
 	}
+
+	@Transactional
+	public List<BookDTO> findBookByNo(String no) {
+		List<Book> bookList = bookRepository.findBookByNo(no);
+		return bookList.stream().map(book -> modelMapper.map(book, BookDTO.class)).collect(Collectors.toList());
+	}
+	
+	@Transactional	
+	public void modifyBookInfo(BookDTO bookDTO) {
+		
+		Book book = bookRepository.findBookByNo(bookDTO.getNo()).get(0);
+		book.setNo(bookDTO.getNo());
+		book.setPrice(bookDTO.getPrice());
+		book.setStoreSt(bookDTO.getStoreSt());
+		book.setWhSt(bookDTO.getWhSt());
+		book.setSellYn(bookDTO.getSellYn());
+
+	}
+	
+	
 	
 	
 }

@@ -10,19 +10,19 @@ public class ReleaseBookListDTO implements Serializable{
 	 * DB 자료형
 	 * 
 	 * REL_BK_CODE	NUMBER	목록번호
-		BK_NO	NUMBER	도서코드
+		BK_NO	VARCHAR2(100 BYTE)	도서코드
 		REL_NO	NUMBER	출고번호
 		REL_BK_AMOUNT	NUMBER	출고수량
 	 */
 	private int relBkCode;		// 목록번호
-	private int bkNo;			// 도서코드
+	private String bkNo;			// 도서코드
 	private int relNo;			// 출고번호
 	private int relBkAmount;	// 출고수량
 	
 	public ReleaseBookListDTO() {
 	}
 
-	public ReleaseBookListDTO(int relBkCode, int bkNo, int relNo, int relBkAmount) {
+	public ReleaseBookListDTO(int relBkCode, String bkNo, int relNo, int relBkAmount) {
 		this.relBkCode = relBkCode;
 		this.bkNo = bkNo;
 		this.relNo = relNo;
@@ -37,11 +37,11 @@ public class ReleaseBookListDTO implements Serializable{
 		this.relBkCode = relBkCode;
 	}
 
-	public int getBkNo() {
+	public String getBkNo() {
 		return bkNo;
 	}
 
-	public void setBkNo(int bkNo) {
+	public void setBkNo(String bkNo) {
 		this.bkNo = bkNo;
 	}
 
