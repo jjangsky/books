@@ -1,11 +1,13 @@
-package com.bukkeubook.book.manage.model.dto;
+package com.bukkeubook.book.manage.model.dto.joinDTO;
 
 import java.io.Serializable;
 import java.sql.Date;
 
-public class EmpDTO implements Serializable{
-	
-	private static final long serialVersionUID = 7337230106671385102L;
+import com.bukkeubook.book.manage.model.dto.DeptDTO;
+
+public class EmpAndDeptDTO implements Serializable{
+
+	private static final long serialVersionUID = -8761483055447032722L;
 	
 //	EMP_NO		NUMBER					사원번호
 //	EMP_NAME	NVARCHAR2(31 CHAR)		사원명
@@ -40,13 +42,14 @@ public class EmpDTO implements Serializable{
 	private String empEndYn;
 	private String empPwd;
 	private int deptCode;
+	private DeptDTO dept;
 	
-	public EmpDTO() {
+	public EmpAndDeptDTO() {
 	}
-	public EmpDTO(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3,
-			java.sql.Date empBirth, String empGender, String empEmail, String empJobCode, String empAddress1,
-			String empAddress2, java.sql.Date empEntDate, java.sql.Date empEndDate, String empEndYn, String empPwd,
-			int deptCode) {
+	
+	public EmpAndDeptDTO(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3, Date empBirth,
+			String empGender, String empEmail, String empJobCode, String empAddress1, String empAddress2,
+			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, int deptCode, DeptDTO dept) {
 		this.empNo = empNo;
 		this.empName = empName;
 		this.empPhone1 = empPhone1;
@@ -63,7 +66,9 @@ public class EmpDTO implements Serializable{
 		this.empEndYn = empEndYn;
 		this.empPwd = empPwd;
 		this.deptCode = deptCode;
+		this.dept = dept;
 	}
+	
 	public int getEmpNo() {
 		return empNo;
 	}
@@ -160,19 +165,23 @@ public class EmpDTO implements Serializable{
 	public void setDeptCode(int deptCode) {
 		this.deptCode = deptCode;
 	}
+	public DeptDTO getDept() {
+		return dept;
+	}
+	public void setDept(DeptDTO dept) {
+		this.dept = dept;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 	@Override
 	public String toString() {
-		return "EmpDTO [empNo=" + empNo + ", empName=" + empName + ", empPhone1=" + empPhone1 + ", empPhone2="
+		return "EmpAndDeptDTO [empNo=" + empNo + ", empName=" + empName + ", empPhone1=" + empPhone1 + ", empPhone2="
 				+ empPhone2 + ", empPhone3=" + empPhone3 + ", empBirth=" + empBirth + ", empGender=" + empGender
 				+ ", empEmail=" + empEmail + ", empJobCode=" + empJobCode + ", empAddress1=" + empAddress1
 				+ ", empAddress2=" + empAddress2 + ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate
-				+ ", empEndYn=" + empEndYn + ", empPwd=" + empPwd + ", deptCode=" + deptCode + "]";
+				+ ", empEndYn=" + empEndYn + ", empPwd=" + empPwd + ", deptCode=" + deptCode + ", dept=" + dept + "]";
 	}
 	
-	
-	
-
 }
