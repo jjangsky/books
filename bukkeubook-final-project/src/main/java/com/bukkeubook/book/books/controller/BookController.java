@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -94,7 +95,23 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
-//	@GetMapping("/bookInfoUpdate")
-//	public String updateBookInfo
+	@GetMapping("/bookInfoUpdate")
+	public ModelAndView updateBookInfo(BookDTO bookDTO, String no, ModelAndView mv) {
+		
+		List<BookDTO> bookList = bookService.findBookByNo(no);
+		
+		mv.addObject("bookList", bookList);
+		mv.setViewName("books/bookList/bookInfoUpdate");
+		return mv;
+	}
+	
+	@PostMapping("/bookInfoUpdate2")
+	public String modifyBookInfo(BookDTO bookDTO) {
+		
+		bookService.modifyBookInfo(bookDTO);
+		
+		return "/main";
+	};
+	
 	
 }
