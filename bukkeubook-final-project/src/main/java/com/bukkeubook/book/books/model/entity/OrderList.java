@@ -22,7 +22,7 @@ public class OrderList implements Serializable{
 		OR_APPR_YN	VARCHAR2(6 BYTE)	승인현황
 		OR_AMOUNT	NUMBER	발주수량
 		CNT_NO	NUMBER	거래처번호
-		BK_NO	NUMBER	도서코드
+		BK_NO	VARCHAR2(100 BYTE)	도서코드
 		EMP_NO	NUMBER	사원번호
 		OR_APP_DATE	DATE	승인날짜
 	 */
@@ -43,7 +43,7 @@ public class OrderList implements Serializable{
 	private int cntNo;				// 거래처번호
 	
 	@Column(name="BK_NO")
-	private int bkNo;				// 도서코드
+	private String bkNo;				// 도서코드
 	
 	@Column(name="EMP_NO")
 	private int empNo;				// 사원번호
@@ -54,7 +54,7 @@ public class OrderList implements Serializable{
 	public OrderList() {
 	}
 
-	public OrderList(int orNo, Date orDate, String orApprYn, int orAmount, int cntNo, int bkNo, int empNo,
+	public OrderList(int orNo, Date orDate, String orApprYn, int orAmount, int cntNo, String bkNo, int empNo,
 			Date orAppDate) {
 		this.orNo = orNo;
 		this.orDate = orDate;
@@ -106,11 +106,11 @@ public class OrderList implements Serializable{
 		this.cntNo = cntNo;
 	}
 
-	public int getBkNo() {
+	public String getBkNo() {
 		return bkNo;
 	}
 
-	public void setBkNo(int bkNo) {
+	public void setBkNo(String bkNo) {
 		this.bkNo = bkNo;
 	}
 

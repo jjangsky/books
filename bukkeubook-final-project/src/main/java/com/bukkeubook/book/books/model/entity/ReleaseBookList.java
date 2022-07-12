@@ -1,10 +1,17 @@
-package com.bukkeubook.book.books.model.dto;
+package com.bukkeubook.book.books.model.entity;
 
 import java.io.Serializable;
 
-public class ReleaseBookListDTO implements Serializable{
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-	private static final long serialVersionUID = 3162215724507161378L;
+@Entity
+@Table(name="TBL_REL_BK_LIST")
+public class ReleaseBookList implements Serializable{
+
+	private static final long serialVersionUID = -2977006736812694507L;
 
 	/* 
 	 * DB 자료형
@@ -14,15 +21,23 @@ public class ReleaseBookListDTO implements Serializable{
 		REL_NO	NUMBER	출고번호
 		REL_BK_AMOUNT	NUMBER	출고수량
 	 */
+	@Id
+	@Column(name="REL_BK_CODE")
 	private int relBkCode;		// 목록번호
-	private String bkNo;			// 도서코드
-	private int relNo;			// 출고번호
-	private int relBkAmount;	// 출고수량
 	
-	public ReleaseBookListDTO() {
+	@Column(name="BK_NO")
+	private String bkNo;			// 도서코드
+	
+	@Column(name="REL_NO")
+	private int relNo;			// 출고번호
+	
+	@Column(name="REL_BK_AMOUNT")
+	private int relBkAmount;	// 출고수량
+
+	public ReleaseBookList() {
 	}
 
-	public ReleaseBookListDTO(int relBkCode, String bkNo, int relNo, int relBkAmount) {
+	public ReleaseBookList(int relBkCode, String bkNo, int relNo, int relBkAmount) {
 		this.relBkCode = relBkCode;
 		this.bkNo = bkNo;
 		this.relNo = relNo;
@@ -67,7 +82,7 @@ public class ReleaseBookListDTO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "ReleaseBookListDTO [relBkCode=" + relBkCode + ", bkNo=" + bkNo + ", relNo=" + relNo + ", relBkAmount="
+		return "ReleaseBookList [relBkCode=" + relBkCode + ", bkNo=" + bkNo + ", relNo=" + relNo + ", relBkAmount="
 				+ relBkAmount + "]";
 	}
 	
