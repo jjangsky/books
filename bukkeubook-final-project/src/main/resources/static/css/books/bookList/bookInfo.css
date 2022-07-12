@@ -42,3 +42,8 @@
 .btnYn {
 	border: 1px solid;
 }
+.updateInputNo {
+	border-style: none;
+	cursor: default;
+	color: #808080;
+}
