@@ -8,14 +8,15 @@
 <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"  th:href="@{/css/books/bookList/bookInfo.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
 <div th:replace="/common/topSideBar.html"></div>
-	<h2 class="mb-4" id="main-text">재고관리</h2>
+	<h2 class="mb-4" id="main-text"><a id="sub-a" href="/book/lookupList">재고관리</a></h2>
     <hr><br><br>
     <div id="textTable" style="text-align:-webkit-center">
         <h5 class="mb-4" id="sub-text"></h5>
-        <form action="/book/bookInfoUpdate2" method="post">
+        <form action="/book/bookInfoUpdate2" method="post" id="updateForm">
             <table id="bookInfoTable" border="1">
                 <tr th:each="book : ${ bookList }">
                     <th>도서코드</th>
@@ -68,8 +69,8 @@
           <div id="newBookDiv">
             <button type="button" class="productBtn newBookBtn">발주신청</button>
             <button type="button" class="productBtn newBookBtn">훼손등록</button>
-            <button type="submit" class="productBtn newBookBtn updateBtn">수정완료</button>
-            <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
+            <button type="button" class="productBtn newBookBtn updateBtn">수정완료</button>
+            <button type="button" class="productBtn newBookBtn backBtn">뒤로가기</button>
           </div>
           </form>
         </div> <!------------------------ 본문 종료---------------------------->
@@ -81,10 +82,38 @@
       	  } else if([[${bookList[0].sellYn}]] == 'N'){
       		  $('#N').attr('checked', true);
       	  }
-      	        	  
-          $('.backBtn').click(function(){
-    		window.history.back(); 
-    	  });
-      </script>
+      
+         
+    	  $().ready(function () {
+		    $(".backBtn").click(function () {
+		        Swal.fire({
+		            title: '작성내용이 모두 사라집니다.',
+		            text: "진행 하시겠습니까?",
+		            icon: 'warning',
+		            showCancelButton: true,
+		            confirmButtonColor: '#c5bfbf',
+		            cancelButtonColor: '#c5bfbf',
+		            confirmButtonText: '승인',
+		            cancelButtonText: '취소'
+		        }).then((result) => {
+		            if (result.isConfirmed) {
+		                window.history.back();
+		            }
+		        })
+		    });
+		});
+		
+        $(".updateBtn").click(function () {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '수정이 성공적으로 완료되었습니다!',
+            }).then(function(){
+
+			$("#updateForm").submit();
+			});
+        });
+      </script>  
+      
 </body>
 </html>
