@@ -19,7 +19,7 @@
             <table id="bookInfoTable" border="1">
                 <tr th:each="book : ${ bookList }">
                     <th>도서코드</th>
-                    <td><input class="updateInputNo" type="text" th:value="${ book.no }" name="no"></td>
+                    <td><input class="updateInput updateInputNo" type="text" th:value="${ book.no }" name="no" readonly></td>
                 </tr>
                 <tr th:each="book : ${ bookList }">
                     <th>저자</th>
