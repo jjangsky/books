@@ -7,9 +7,9 @@
 </head>
 <body>
 	<div class="pagingArea" align="center">
-	<!-- 맨 앞으로 이동 버튼 -->
+		<!-- 맨 앞으로 이동 버튼 -->
 	    <button id="startPage"><<</button>
-
+		
 		<!-- 이전 페이지 버튼 -->
 		<th:block th:if="${ selectCriteria.pageNo <= 1 }">
 			<button disabled><</button>
@@ -23,7 +23,7 @@
                     last = ${selectCriteria.endPage}">
 			<th:block th:each="p : ${#numbers.sequence(start,last)}">
 				<th:block th:if="${ selectCriteria.pageNo eq p }">
-					<button th:text="${p}" disabled></button>
+					<button th:text="${p}" disabled style="border: 2px solid; border-color: black;"></button>
 				</th:block>
 				<th:block th:if="${ selectCriteria.pageNo ne p }">
 					<button th:text="${p}" onclick="pageButtonAction(this.innerText);"></button>

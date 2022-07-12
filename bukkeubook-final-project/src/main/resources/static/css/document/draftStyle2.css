@@ -1,0 +1,43 @@
+.tbl{
+    border: 1px solid gray;
+    border-collapse: collapse;
+    padding: 1%;
+}
+
+.th{
+    width: 60px;
+    text-align: center;
+    font-size: x-small;
+}
+
+td{
+    font-weight: lighter;
+}
+
+.sign{
+    width: 60px;
+}
+
+.read{
+    width: 110px;
+}
+
+.cnt{
+    height: 300px;
+}
+
+.coloring{
+    background-color: rgb(211, 245, 255);
+}
+
+.total{
+    float: left;
+    margin-top: 5em;
+    border: 2px solid gray;
+    padding: 1%;
+}
+
+.imgs{
+    width: 55px;
+    height: 70px;
+}
