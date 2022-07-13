@@ -21,7 +21,7 @@
 	       <h5 class="mb-4" id="sub-text">일정관리</h5>
 	       <br>
 	       
-	        <div class="leftMar20">
+	      <div class="leftMar20">
          	 <table class="type03">
             <tr>
               <th>일정 제목</th>
@@ -39,10 +39,11 @@
               <td colspan="2" style="height: 500px;" th:text="${ detailCal.content }"></td>
             </tr>
           </table>
-          <button class="btn btn-info leftMar500p" type="submit">수정하기</button>
-          <button class="btn btn-dark leftMar20p" type="submit">삭제하기</button>
+          <button class="btn btn-info leftMar500p" type="submit" th:onclick="'location.href = \'' +  @{/mypage/calendar/update/(no=${detailCal.code})} + '\''">수정하기</button>
+          <button class="btn btn-dark leftMar20p" type="button" th:onclick="'location.href = \'' +  @{/mypage/calendar/delete/(no=${detailCal.code})} + '\''">삭제하기</button>
 
       </div>
+	        
 	
 </body>
 </html>

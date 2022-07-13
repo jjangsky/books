@@ -75,4 +75,22 @@ public class MypageService{
 		
 		return modelMapper.map(CalendarDetail, CalendarDTO.class);
 	}
+	
+	/* 일정 수정 */
+	@Transactional
+	public void modifyMyCalendar(CalendarDTO newCalendar) {
+		
+		Calendar updateCal = calendarRepository.findById(newCalendar.getCode()).get();
+		updateCal.setTitle(newCalendar.getTitle());
+		updateCal.setStart(newCalendar.getStart());
+		updateCal.setEnd(newCalendar.getEnd());
+		updateCal.setContent(newCalendar.getContent());
+	}
+
+	/* 일정 삭제 */
+	public void deleteCalendar(int calCode) {
+		
+		calendarRepository.deleteById(calCode);
+		
+	}
 }
