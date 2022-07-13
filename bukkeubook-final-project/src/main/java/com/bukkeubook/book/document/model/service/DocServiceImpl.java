@@ -105,5 +105,28 @@ public class DocServiceImpl implements DocService{
 		return modelMapper.map(oneTempDoc, DocumentAndEmpAndFormCateDTO.class);
 	}
 
+	@Override
+	@Transactional
+	public void updateTempDocument(DocumentDTO updateDoc) {
+		
+		Document foundDoc = docRepository.findById(updateDoc.getDocNo()).get();
+		
+		System.out.println("서비스에서 찾은 수정할 아이  " + foundDoc);
+		
+		foundDoc.setCnt(updateDoc.getCnt());
+		foundDoc.setTagCnt(updateDoc.getTagCnt());
+		foundDoc.setDocTitle(updateDoc.getDocTitle());
+		foundDoc.setWrDate(updateDoc.getWrDate());
+		
+	}
+
+	@Override
+	@Transactional
+	public void deleteTempDoc(int docNo) {
+
+		docRepository.deleteById(docNo);
+		
+	}
+
 	
 }

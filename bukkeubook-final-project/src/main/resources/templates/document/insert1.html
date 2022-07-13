@@ -10,6 +10,7 @@
 
 	<script src="/js/summernote/summernote-lite.js"></script>
 	<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	
     <link rel="stylesheet"  th:href="@{/css/document/draftwriteStyle.css}">
     <link rel="stylesheet"  th:href="@{/css/summernote/summernote-lite.css}">
@@ -25,6 +26,10 @@
     <hr><br><br>
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div>
+        	<button style="float:right; margin-right:5%;"class="btnin" type="button" id="back">목록으로</button>
+        </div>
+        
         <div class="totals left">
           <h4>결재라인 지정</h4>
           <table class="tbl2" border="1px solid gray">
@@ -169,5 +174,24 @@
 <script>
         $("#writer").val();
         let writer = $("#writer").val();
+        
+        
+        /* 버튼 눌렀을 때 알림창 */
+         /* Swal.fire({
+                  title: '작성내용이 모두 사라집니다.',
+                  text: "진행 하시겠습니까?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#c5bfbf',
+                  cancelButtonColor: '#c5bfbf',
+                  confirmButtonText: '승인',
+                  cancelButtonText: '취소'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      window.history.back();
+                  }
+              }) */
+
+        
 </script>
 </html>
