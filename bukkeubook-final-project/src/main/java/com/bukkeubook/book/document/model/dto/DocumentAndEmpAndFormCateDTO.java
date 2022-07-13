@@ -1,27 +1,9 @@
-package com.bukkeubook.book.document.model.entity;
+package com.bukkeubook.book.document.model.dto;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
-@Entity(name = "Document")
-@Table(name = "TBL_DOCUMENT")
-@SequenceGenerator(
-		name = "DOCUMENT_SEQ_DOC_NO",
-		sequenceName = "SEQ_DOC_NO",
-		initialValue = 1,
-		allocationSize = 1
-)
-public class Document {
+public class DocumentAndEmpAndFormCateDTO implements Serializable{
 	
 //	DOC_NO	문서번호	NUMBER
 //	EMP_NO	사원번호	NUMBER
@@ -32,43 +14,23 @@ public class Document {
 //	DOC_STATUS	문서상태	VARCHAR2(30 BYTE)
 //	FORM_NO	문서양식번호	NUMBER
 	
-	@Id
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator = "DOCUMENT_SEQ_DOC_NO"
-	)
-	@Column(name = "DOC_NO")
+	private static final long serialVersionUID = -3088008793203223975L;
 	private int docNo;
-	
-	@Column(name = "EMP_NO")
 	private int empNo;
-	
-	@Column(name = "DOC_TITLE")
 	private String docTitle;
-	
-	@Column(name = "TAG_CNT")
-	@Lob
 	private String tagCnt;
-	
-	@Column(name = "CNT")
-	@Lob
 	private String cnt;
-	
-	@Column(name = "WR_DATE")
 	private java.sql.Date wrDate;
-	
-	@Column(name = "DOC_STATUS")
 	private String docStatus;
-	
-	@Column(name = "FORM_NO")
 	private int formNo;
-
-	public Document() {
+	
+	private EmpDTO emp;
+	private FormCateDTO formCate;
+	public DocumentAndEmpAndFormCateDTO() {
 		super();
 	}
-
-	public Document(int docNo, int empNo, String docTitle, String tagCnt, String cnt, Date wrDate, String docStatus,
-			int formNo) {
+	public DocumentAndEmpAndFormCateDTO(int docNo, int empNo, String docTitle, String tagCnt, String cnt, Date wrDate,
+			String docStatus, int formNo, EmpDTO emp, FormCateDTO formCate) {
 		super();
 		this.docNo = docNo;
 		this.empNo = empNo;
@@ -78,77 +40,78 @@ public class Document {
 		this.wrDate = wrDate;
 		this.docStatus = docStatus;
 		this.formNo = formNo;
+		this.emp = emp;
+		this.formCate = formCate;
 	}
-
 	public int getDocNo() {
 		return docNo;
 	}
-
 	public void setDocNo(int docNo) {
 		this.docNo = docNo;
 	}
-
 	public int getEmpNo() {
 		return empNo;
 	}
-
 	public void setEmpNo(int empNo) {
 		this.empNo = empNo;
 	}
-
 	public String getDocTitle() {
 		return docTitle;
 	}
-
 	public void setDocTitle(String docTitle) {
 		this.docTitle = docTitle;
 	}
-
 	public String getTagCnt() {
 		return tagCnt;
 	}
-
 	public void setTagCnt(String tagCnt) {
 		this.tagCnt = tagCnt;
 	}
-
 	public String getCnt() {
 		return cnt;
 	}
-
 	public void setCnt(String cnt) {
 		this.cnt = cnt;
 	}
-
 	public java.sql.Date getWrDate() {
 		return wrDate;
 	}
-
 	public void setWrDate(java.sql.Date wrDate) {
 		this.wrDate = wrDate;
 	}
-
 	public String getDocStatus() {
 		return docStatus;
 	}
-
 	public void setDocStatus(String docStatus) {
 		this.docStatus = docStatus;
 	}
-
 	public int getFormNo() {
 		return formNo;
 	}
-
 	public void setFormNo(int formNo) {
 		this.formNo = formNo;
 	}
-
+	public EmpDTO getEmp() {
+		return emp;
+	}
+	public void setEmp(EmpDTO emp) {
+		this.emp = emp;
+	}
+	public FormCateDTO getFormCate() {
+		return formCate;
+	}
+	public void setFormCate(FormCateDTO formCate) {
+		this.formCate = formCate;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	@Override
 	public String toString() {
-		return "Document [docNo=" + docNo + ", empNo=" + empNo + ", docTitle=" + docTitle + ", tagCnt=" + tagCnt
-				+ ", cnt=" + cnt + ", wrDate=" + wrDate + ", docStatus=" + docStatus + ", formNo=" + formNo + "]";
+		return "DocumentAndEmpAndFormCateDTO [docNo=" + docNo + ", empNo=" + empNo + ", docTitle=" + docTitle
+				+ ", tagCnt=" + tagCnt + ", cnt=" + cnt + ", wrDate=" + wrDate + ", docStatus=" + docStatus
+				+ ", formNo=" + formNo + ", emp=" + emp + ", formCate=" + formCate + "]";
 	}
-
+	
 	
 }
