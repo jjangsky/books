@@ -10,7 +10,7 @@ import com.bukkeubook.book.books.model.entity.RelBkListAndRelList;
 
 public interface OutputRepository extends JpaRepository<RelBkListAndRelList, Integer> {
 	
-//	List<RelBkListAndRelList> findByNameContaining(String searchValue, Pageable paging);
-//
-//	List<RelBkListAndRelList> findByNoContaining(String searchValue, Pageable paging);
+//	List<RelBkListAndRelList> findAllByREL_NO(String searchValue, Pageable paging);
+
+//	List<RelBkListAndRelList> findBybookNoContaining(String searchValue, Pageable paging);
 }

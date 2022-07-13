@@ -146,13 +146,10 @@ public class BookController extends HttpServlet{
 
 		int totalCount = bookService.selectTotalCount(searchCondition, searchValue);
 
-		/* 한 페이지에 보여 줄 게시물 수 */
-		int limit = 10;		//얘도 파라미터로 전달받아도 된다.
+		int limit = 10;		
 
-		/* 한 번에 보여질 페이징 버튼의 갯수 */
 		int buttonAmount = 5;
 
-		/* 페이징 처리를 위한 로직 호출 후 페이징 처리에 관한 정보를 담고 있는 인스턴스를 반환받는다. */
 		SelectCriteria selectCriteria = null;
 		if(searchValue != null && !"".equals(searchValue)) {
 			selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount, searchCondition, searchValue);
@@ -167,7 +164,7 @@ public class BookController extends HttpServlet{
 			System.out.println(book);
 		}
 		
-		mv.addObject("bookList", relBkListAndRelListDTO);
+		mv.addObject("outputList", relBkListAndRelListDTO);
 		
 		mv.addObject("selectCriteria", selectCriteria);
 		mv.setViewName("books/bookList/outputList");
