@@ -50,7 +50,7 @@
 	          navLinks: true, // can click day/week names to navigate views
 	          selectable: true,
 	          selectMirror: true,
-	          select: function(arg) { 
+	          select: function(arg) { 		// 빈 셀 선택시
 	            if (confirm('일정을 추가하시겠습니까?')) {
 	              location.href="/mypage/registCalendar"
 	            }
@@ -64,8 +64,8 @@
 	          /*[# th:each="cal : ${ calendar }"]*/
 	            {
 	              title: /*[[${cal.title}]]*/,
-	              url: /*{@}**[[${cal.code}]]*/,
 	              start: /*[[${cal.start}]]*/,
+	              url: '/mypage/detailCal/'+/*[[${cal.code}]]*/,
 	              end: /*[[${cal.end}]]*/
 	            },
 	          /*[/]*/
