@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,14 +20,19 @@ import com.bukkeubook.book.manage.model.entity.EmpAndDept;
 public interface EmpRepository extends JpaRepository<EmpAndDept, Integer>{
 	
 	/* 퇴사여부 Y 인 사원 조회 */
-//	@Query("SELECT u FROM EmpAndDept u WHERE u.empEndYn = 'Y'")
-//	List<EmpAndDept> findLeaveEmpList(String empEndYn);
-	
-//	String jpql = "SELECT m.EMP_END_YN FROM EmpAndDept as m WHERE m.EMP_END_YN = 'Y'";
-//	TypedQuery<EmpAndDept> query = Emp.createQuery(jpql,EmpAndDept.class);
-//	List<EmpAndDept> leaveEmpList = query.getResultList();
-
 	List<EmpAndDept> findByEmpEndYn(String empEndYn);
+
+	/* 검색기능 & 페이징처리 */
+	int countByEmpNameContaining(String searchValue);
+	
+	int countByempJobCodeContaining(String searchValue);
+
+	List<EmpAndDept> findByEmpNameContaining(String searchValue, Pageable paging);
+
+	List<EmpAndDept> findByEmpJobCodeContaining(String searchValue, Pageable paging);
+
+
+
 
 
 
