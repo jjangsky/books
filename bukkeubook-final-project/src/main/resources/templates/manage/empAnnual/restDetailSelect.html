@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" th:href="@{/css/manage/empAnnual/rest.css}">
+<link rel="stylesheet" th:href="@{/css/manage/employee/HR.css}">
+<link rel="stylesheet" th:href="@{/css/manage/employee/Listdetail.css}">
+</head>
+<body>
+
+<div th:replace="/common/topSideBar.html"></div>
+
+        <!-- 본문 제목은 용도에 맞게 수정해주세요.-->
+        <h2 class="mb-4" id="main-text">사원관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">휴가 신청 상세 내역 조회</h5>
+        <br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div class="emp detail list">
+          <table border="1px">
+            <tbody>
+              <tr>
+                <td class="deemp3">휴가번호</td>
+                <td th:text="${ appvacAndEmp.vacNo }"></td>
+              </tr>
+              <tr>
+                <td class="deemp3">사원번호</td>
+                <td th:text="${ appvacAndEmp.empAndDept.getEmpNo() }"></td>
+              </tr>
+              <tr>
+                <td class="deemp3">직책</td>
+                <td th:text="${ appvacAndEmp.empAndDept.getEmpJobCode() }"></td>
+              </tr>
+              <tr>
+                <td class="deemp3">사원명</td>
+                <td th:text="${ appvacAndEmp.empAndDept.getEmpName() }"></td> 
+              </tr>
+              <tr>
+                <td class="deemp3">시작일</td>
+                <td th:text="${ appvacAndEmp.vacStartDate  }"></td>
+              </tr>
+              <tr>
+              	<td class="deemp3">종료일</td>
+                <td th:text="${ appvacAndEmp.vacEndDate }"></td>
+              </tr>
+              <tr>
+              <tr>
+                <td class="deemp3">사유</td>
+                <td id="reason" th:text="${ appvacAndEmp.getVacCompanion() }"></td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
+	          <button type="button" class="access btn" onclick="accessClick()">승인</button>
+	          <button type="button" class="cancle btn" onclick="location.href='restSelect.html'">목록으로</button>
+	          <button type="button" class="cancle btn" onclick="delayClick()">반려</button>
+          <script>
+            function accessClick() {
+              var txt;
+              if (confirm("승인하시겠습니까?")) {
+                alert("승인되었습니다.");
+              } else {
+                alert("승인이 취소되었습니다.");
+              }
+            }
+  
+            function delayClick() {
+              var reason = document.getElementById("reason");
+              let text;
+              if(confirm("반려하시겠습니까?")) {
+                let delayReson = prompt("반려 사유를 입력해주세요");
+                if(delayReson.length == 0) {
+                  alert("사유를 입력하지 않아 반려 사유 등록이 취소되었습니다.")
+                } else {
+                  alert("반려 사유가 등록되었습니다.")
+                  reason.innerText = delayReson;
+                }
+              } else {
+                alert("반려가 취소되었습니다.")
+              }
+            }
+            
+          </script>
+</body>
+</html>

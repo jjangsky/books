@@ -2,6 +2,8 @@ package com.bukkeubook.book.manage.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +47,19 @@ public class EmpAnnualController {
 		return mv;
 	}
 	
+	/* 휴가 신청 상세 내역 조회 */
+	@GetMapping("/restDetailSelect")
+	public ModelAndView restDetail (HttpServletRequest request, ModelAndView mv) {
+		
+		int vacNo = Integer.valueOf(request.getParameter("vacNo"));
+		
+		AppVacationAndEmpDTO appvacAndEmp = empAnnualService.restDetailSelect(vacNo);
+		
+		mv.addObject("appvacAndEmp", appvacAndEmp);
+		mv.setViewName("manage/empAnnual/restDetailSelect");
+		
+		return mv;
+	}
 
 }
 

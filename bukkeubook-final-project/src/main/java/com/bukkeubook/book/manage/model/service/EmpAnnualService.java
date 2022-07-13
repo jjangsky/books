@@ -33,6 +33,14 @@ public class EmpAnnualService {
 		return restList.stream().map(rest -> modelMapper.map(rest, AppVacationAndEmpDTO.class)).collect(Collectors.toUnmodifiableList());
 	}
 	
+	/* 휴가 상세 내역 조회 */
+	public AppVacationAndEmpDTO restDetailSelect(int vacNo) {
+		
+		AppVacationAndEmp appvacAndEmp = empAnnualRepository.findById(vacNo).get();
+		
+		return modelMapper.map(appvacAndEmp, AppVacationAndEmpDTO.class);
+	}
+	
 
 
 }
