@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -12,22 +14,28 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.bukkeubook.book.books.model.dto.OrderAndEmpAndBookDTO;
+import com.bukkeubook.book.books.model.dto.OrderListDTO;
 import com.bukkeubook.book.books.model.entity.OrderAndEmpAndBook;
+import com.bukkeubook.book.books.model.entity.OrderList;
 import com.bukkeubook.book.books.model.repository.OrderRepository;
+import com.bukkeubook.book.books.model.repository.SimpleOrderRepository;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 
 @Service
 public class OrderService {
 
 	private final OrderRepository orderRepository;
+	private final SimpleOrderRepository simpleOrderRepository;
 	private final ModelMapper modelMapper;
 	
 	@Autowired
-	public OrderService(OrderRepository orderRepository, ModelMapper modelMapper) {
+	public OrderService(OrderRepository orderRepository, SimpleOrderRepository simpleOrderRepository, ModelMapper modelMapper) {
 		this.orderRepository = orderRepository;
+		this.simpleOrderRepository = simpleOrderRepository;
 		this.modelMapper = modelMapper;
 	}
 	
+	@Transactional
 	public int selectTotalCount(String searchCondition, String searchValue) {
 		int count = 0;
 		if(searchValue != null) {
@@ -39,6 +47,7 @@ public class OrderService {
 		return count;
 	}
 
+	@Transactional
 	public List<OrderAndEmpAndBookDTO> searchOrderList(SelectCriteria selectCriteria) {
 
 		int index = selectCriteria.getPageNo() - 1;
@@ -58,11 +67,18 @@ public class OrderService {
 		return orderHistoryList.stream().map(OrderList -> modelMapper.map(OrderList, OrderAndEmpAndBookDTO.class)).collect(Collectors.toList());
 	}
 
+	@Transactional
 	public OrderAndEmpAndBookDTO searchOrderDetail(int orderNo) {
 		
 		OrderAndEmpAndBook order = orderRepository.findById(orderNo).get();
 		
 		return modelMapper.map(order, OrderAndEmpAndBookDTO.class);
+	}
+
+	@Transactional
+	public void registOrder(OrderListDTO order) {
+		
+		simpleOrderRepository.save(modelMapper.map(order, OrderList.class));
 	}
 
 }
