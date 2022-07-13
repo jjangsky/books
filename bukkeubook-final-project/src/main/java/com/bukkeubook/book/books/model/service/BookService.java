@@ -12,20 +12,28 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bukkeubook.book.books.controller.NativeRepository;
 import com.bukkeubook.book.books.model.dto.BookDTO;
+import com.bukkeubook.book.books.model.dto.RelBkListAndRelListDTO;
 import com.bukkeubook.book.books.model.entity.Book;
+import com.bukkeubook.book.books.model.entity.RelBkListAndRelList;
 import com.bukkeubook.book.books.model.repository.BookRepository;
+import com.bukkeubook.book.books.model.repository.OutputRepository;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 
 @Service
 public class BookService {
 	
 	private final BookRepository bookRepository;
+	private final NativeRepository nativeRepository; 
+	private final OutputRepository outputRepository;
 	private final ModelMapper modelMapper;			// modelMapper 빈을 선언
 	
 	@Autowired
-	public BookService(BookRepository bookRepository, ModelMapper modelMapper) {
+	public BookService(BookRepository bookRepository, ModelMapper modelMapper, NativeRepository nativeRepository, OutputRepository outputRepository) {
 		this.bookRepository = bookRepository;
+		this.outputRepository = outputRepository;
+		this.nativeRepository = nativeRepository;
 		this.modelMapper = modelMapper;
 	}
 	
@@ -96,13 +104,49 @@ public class BookService {
 	@Transactional	
 	public void modifyBookInfo(BookDTO bookDTO) {
 		
-		Book book = bookRepository.findBookByNo(bookDTO.getNo()).get(0);
+		Book book = bookRepository.findByNo(bookDTO.getNo());
 		book.setNo(bookDTO.getNo());
 		book.setPrice(bookDTO.getPrice());
 		book.setStoreSt(bookDTO.getStoreSt());
 		book.setWhSt(bookDTO.getWhSt());
 		book.setSellYn(bookDTO.getSellYn());
 
+	}
+
+	public String newBookCode() {
+		String bookCode = nativeRepository.newBookCode();
+		return bookCode;
+	}
+	
+	@Transactional
+	public void insertBook(BookDTO bookDTO) {
+		bookRepository.save(modelMapper.map(bookDTO, Book.class));
+	}
+
+	public List<RelBkListAndRelListDTO> searchBookList2(SelectCriteria selectCriteria) {
+
+		int index = selectCriteria.getPageNo() - 1;
+		int count = selectCriteria.getLimit();
+		String searchValue = selectCriteria.getSearchValue();
+
+		Pageable paging = PageRequest.of(index, count);
+
+		List<RelBkListAndRelList> bookList = new ArrayList<RelBkListAndRelList>();
+//		if(searchValue != null) {
+//
+//			if("name".equals(selectCriteria.getSearchCondition())) {
+//				bookList = outputRepository.findByNameContaining(selectCriteria.getSearchValue(), paging);
+//			}
+//
+//			if("no".equals(selectCriteria.getSearchCondition())) {
+//				bookList = outputRepository.findByNoContaining(selectCriteria.getSearchValue(), paging);
+//			}
+//		} else {
+			bookList = outputRepository.findAll(paging).toList();
+//		}
+
+		/* 자바의 Stream API와 ModelMapper를 이용하여 entity를 DTO로 변환 후 List<MenuDTO>로 반환 */
+		return bookList.stream().map(book -> modelMapper.map(book, RelBkListAndRelListDTO.class)).collect(Collectors.toList());
 	}
 	
 	
