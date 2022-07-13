@@ -3,9 +3,6 @@ package com.bukkeubook.book.manage.model.dto.joinDTO;
 import java.io.Serializable;
 import java.sql.Date;
 
-import com.bukkeubook.book.manage.model.dto.EmpDTO;
-
-
 public class AppVacationAndEmpDTO implements Serializable{
 
 	private static final long serialVersionUID = -5032316440698393421L;

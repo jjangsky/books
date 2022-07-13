@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bukkeubook.book.manage.model.dto.joinDTO.AppVacationAndEmpDTO;
+import com.bukkeubook.book.manage.model.dto.joinDTO.CancleVacAndAppVacDTO;
 import com.bukkeubook.book.manage.model.service.EmpAnnualService;
 
 @Controller
@@ -57,6 +58,19 @@ public class EmpAnnualController {
 		
 		mv.addObject("appvacAndEmp", appvacAndEmp);
 		mv.setViewName("manage/empAnnual/restDetailSelect");
+		
+		return mv;
+	}
+	
+	/* 휴가 취소 신청 조회 */
+	@GetMapping("/cancleVacSelect")
+	public ModelAndView findCancleVacList(ModelAndView mv) {
+		System.out.println("여긴 오니?");
+		
+		List<CancleVacAndAppVacDTO> cancleRestList = empAnnualService.findCancleRestList();
+		
+		mv.addObject("cancleRestList", cancleRestList);
+		mv.setViewName("manage/empAnnual/cancleVacSelect");
 		
 		return mv;
 	}

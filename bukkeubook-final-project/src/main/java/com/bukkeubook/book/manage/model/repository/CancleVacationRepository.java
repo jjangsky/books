@@ -6,11 +6,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.bukkeubook.book.manage.model.entity.AppVacationAndEmp;
+import com.bukkeubook.book.manage.model.entity.CancleVacAndAppVac;
 
 @Repository
-public interface EmpAnnualRepository extends JpaRepository<AppVacationAndEmp, Integer> {
+public interface CancleVacationRepository extends JpaRepository<CancleVacAndAppVac, Integer>{
 
-	List<AppVacationAndEmp> findAll(Sort by);
+	List<CancleVacAndAppVac> findAllCancleRest(Sort by);
 
 }

@@ -1,12 +1,12 @@
-package com.bukkeubook.book.manage.model.dto;
+package com.bukkeubook.book.manage.model.dto.joinDTO;
 
 import java.io.Serializable;
 import java.sql.Date;
 
-public class CancelVacationDTO implements Serializable {
+public class CancleVacAndAppVacDTO implements Serializable{
 
-	private static final long serialVersionUID = 4441129064376804159L;
-	
+	private static final long serialVersionUID = 6672157616918668876L;
+
 //	VAC_CANC_NO		NUMBER				취소신청서번호
 //	VAC_CANC_DATE	DATE				신청일자
 //	VAC_CANC_REASON	NVARCHAR2(255 CHAR)	취소사유
@@ -18,18 +18,20 @@ public class CancelVacationDTO implements Serializable {
 	private String vacCancReason;
 	private String vacCancStatus;
 	private int empNo;
+	private AppVacationAndEmpDTO appVacAndEmp;
 	
-	public CancelVacationDTO() {
+	public CancleVacAndAppVacDTO() {
 	}
 	
-	public CancelVacationDTO(int vacCancNo, Date vacCancDate, String vacCancReason, String vacCancStatus, int empNo) {
+	public CancleVacAndAppVacDTO(int vacCancNo, Date vacCancDate, String vacCancReason, String vacCancStatus, int empNo,
+			AppVacationAndEmpDTO appVacAndEmp) {
 		this.vacCancNo = vacCancNo;
 		this.vacCancDate = vacCancDate;
 		this.vacCancReason = vacCancReason;
 		this.vacCancStatus = vacCancStatus;
 		this.empNo = empNo;
+		this.appVacAndEmp = appVacAndEmp;
 	}
-	
 	public int getVacCancNo() {
 		return vacCancNo;
 	}
@@ -60,14 +62,21 @@ public class CancelVacationDTO implements Serializable {
 	public void setEmpNo(int empNo) {
 		this.empNo = empNo;
 	}
+	public AppVacationAndEmpDTO getAppVacAndEmp() {
+		return appVacAndEmp;
+	}
+	public void setAppVacAndEmp(AppVacationAndEmpDTO appVacAndEmp) {
+		this.appVacAndEmp = appVacAndEmp;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	
 	@Override
 	public String toString() {
-		return "CancelVacationDTO [vacCancNo=" + vacCancNo + ", vacCancDate=" + vacCancDate + ", vacCancReason="
-				+ vacCancReason + ", vacCancStatus=" + vacCancStatus + ", empNo=" + empNo + "]";
+		return "CancleVacAndAppVacDTO [vacCancNo=" + vacCancNo + ", vacCancDate=" + vacCancDate + ", vacCancReason="
+				+ vacCancReason + ", vacCancStatus=" + vacCancStatus + ", empNo=" + empNo + ", appVacAndEmp="
+				+ appVacAndEmp + "]";
 	}
 	
 }

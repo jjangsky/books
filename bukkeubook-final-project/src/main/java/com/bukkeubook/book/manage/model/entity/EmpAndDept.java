@@ -62,9 +62,9 @@ public class EmpAndDept {
 	   private String empEndYn;
 	   
 	   @Column(name = "EMP_PWD")
-	   private String empPwd;
+	   private String empPwd;                                                                        
 	   
-	   @ManyToOne //다대일 관계일때 사용
+	   @ManyToOne // 다대일 관계일때 사용
 	   @JoinColumn(name = "DEPT_CODE")
 	   private DeptAndEmp dept;
 
