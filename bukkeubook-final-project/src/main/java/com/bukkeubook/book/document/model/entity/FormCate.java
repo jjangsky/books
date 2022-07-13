@@ -11,7 +11,6 @@ public class FormCate{
 
 //	FORM_NO	NUMBER
 //	FORM_NAME	NVARCHAR2(255 CHAR)
-//	FORM_CONTENT	NVARCHAR2(2000 CHAR)
 	
 	@Id
 	@Column(name = "FORM_NO")
@@ -20,18 +19,14 @@ public class FormCate{
 	@Column(name = "FORM_NAME")
 	private String formName;
 	
-	@Column(name = "FORM_CONTENT")
-	private String formContent;
-
 	public FormCate() {
 		super();
 	}
 
-	public FormCate(int formNo, String formName, String formContent) {
+	public FormCate(int formNo, String formName) {
 		super();
 		this.formNo = formNo;
 		this.formName = formName;
-		this.formContent = formContent;
 	}
 
 	public int getFormNo() {
@@ -50,18 +45,11 @@ public class FormCate{
 		this.formName = formName;
 	}
 
-	public String getFormContent() {
-		return formContent;
-	}
-
-	public void setFormContent(String formContent) {
-		this.formContent = formContent;
-	}
-
 	@Override
 	public String toString() {
-		return "FormCate [formNo=" + formNo + ", formName=" + formName + ", formContent=" + formContent + "]";
+		return "FormCate [formNo=" + formNo + ", formName=" + formName + "]";
 	}
+
 	
 	
 	
