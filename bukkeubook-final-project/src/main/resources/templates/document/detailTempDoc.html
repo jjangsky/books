@@ -20,7 +20,7 @@
 	<script> 
      $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
     </script> 
-	<script src="/js/document/draftWrite.js"></script>
+	<script src="/js/document/draftUpdate.js"></script>
 	<h4 class="mb-4" id="main-text">기안서 작성</h4>
     <hr><br><br>
 
@@ -97,65 +97,25 @@
           <table border="1px solid black" class="tbl">
               <tr class="tbl">
                   <th class="tbl th">제목</th>
-                  <td class="tbl"><input type="text" id="title" name="docTitle" required></td>
+                  <td class="tbl"><input type="text" id="title" name="docTitle" th:value="${oneTempDoc.docTitle}"></td>
               </tr>
               <tr class="tbl">
                   <th class="tbl th">내용</th>
                   <td class="tbl wid">
-                    <textarea class="description" id="desc"></textarea>
+                    <textarea class="description" id="desc" th:utext="${oneTempDoc.cnt}"></textarea>
                     <input type="hidden" name="formNo" value="1" >
                     <input type="hidden" id="draftcnt" name="tagCnt">
                     <input type="hidden" id="wrDate" name="wrDate">
                     <input type="hidden" id="docStatus" name="docStatus">
-                    <input type="text" value="10" id="empNo" name="empNo">
-                    <input type="text" id="cnttt" name="cnt" readonly>
+                    <input type="text" value="10" id="empNo" name="empNo"readonly>
+                    <input type="hidden" id="cnttt" name="cnt" readonly>
                   </td>
               </tr>
           </table>
       	</form>
       </div>
       <div class="totals draft">
-          <table class="tbl">
-              <tr class="tbl">
-                  <th class="tbl th coloring" colspan="7"><h4>기안서</h4></th>
-              </tr>
-              <tr class="tbl">
-                  <th class="tbl th coloring">문서번호</th>
-                  <th class="tbl th read">1</th>
-                  <th rowspan="4" class="th coloring">결재</th>
-                  <th class="tbl th coloring">담당</th>
-                  <th class="tbl th coloring" id="selacc1">결재1</th>
-                  <th class="tbl th coloring" id="selacc2">결재2</th>
-                  <th class="tbl th coloring" id="selacc3">결재3</th>
-              </tr>
-              <tr class="tbl">
-                  <th class="tbl th coloring">작성일자</th>
-                  <th class="tbl th" id="date2"><p id="day"></p></th>
-                  <th rowspan="3" class="tbl th sign"></th>
-                  <th rowspan="3" class="tbl th sign"></th>
-                  <th rowspan="3" class="tbl th sign"></th>
-                  <th rowspan="3" class="tbl th sign"></th>
-              </tr>
-              <tr class="tbl">
-                  <th class="tbl th coloring">부서명</th>
-                  <th class="tbl th" id="dept2"></th>
-                  
-              </tr>
-              <tr class="tbl">
-                  <th class="tbl th coloring">작성자</th>
-                  <th class="tbl th" id="writer2"></th>
-              </tr>
-              <tr class="tbl">
-                  <th class="tbl th coloring">제목</th>
-                  <td class="tbl" colspan="6" id="title2">제목을 입력해주세요</td>
-              </tr>
-              <tr class="tbl">
-                  <th class="tbl th cnt coloring">내용</th>
-                  <td class="tbl cnt" colspan="6" id="cnt2">
-                      <div id="result">내용을 입력해주세요</div>
-                  </td>
-              </tr>
-          </table>
+          <table th:utext = "${oneTempDoc.tagCnt}">
           <br>
           
       </div>
@@ -169,5 +129,8 @@
 <script>
         $("#writer").val();
         let writer = $("#writer").val();
+        let content = "[[${oneTempDoc.cnt}]"
+        	
+        	console.log(content);
 </script>
 </html>

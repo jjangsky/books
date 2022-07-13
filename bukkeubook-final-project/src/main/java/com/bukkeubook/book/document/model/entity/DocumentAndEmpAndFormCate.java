@@ -10,33 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-@Entity(name = "Document")
+@Entity(name = "TempDocList")
 @Table(name = "TBL_DOCUMENT")
-@SequenceGenerator(
-		name = "DOCUMENT_SEQ_DOC_NO",
-		sequenceName = "SEQ_DOC_NO",
-		initialValue = 1,
-		allocationSize = 1
-)
-public class Document {
-	
-//	DOC_NO	문서번호	NUMBER
-//	EMP_NO	사원번호	NUMBER
-//	DOC_TITLE	제목	VARCHAR2(500 BYTE)
-//	TAG_CNT	태그내용	CLOB
-//	CNT	작성내용	CLOB
-//	WR_DATE	작성일자	DATE
-//	DOC_STATUS	문서상태	VARCHAR2(30 BYTE)
-//	FORM_NO	문서양식번호	NUMBER
+public class DocumentAndEmpAndFormCate {
 	
 	@Id
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator = "DOCUMENT_SEQ_DOC_NO"
-	)
 	@Column(name = "DOC_NO")
 	private int docNo;
 	
@@ -46,11 +26,11 @@ public class Document {
 	@Column(name = "DOC_TITLE")
 	private String docTitle;
 	
-	@Column(name = "TAG_CNT")
+	@Column(name = "TAG_CNT" , columnDefinition="CLOB")
 	@Lob
 	private String tagCnt;
 	
-	@Column(name = "CNT")
+	@Column(name = "CNT" , columnDefinition="CLOB")
 	@Lob
 	private String cnt;
 	
@@ -62,13 +42,21 @@ public class Document {
 	
 	@Column(name = "FORM_NO")
 	private int formNo;
+	
+	@ManyToOne
+	@JoinColumn(name = "FORM_NO", insertable=false, updatable=false)
+	private FormCate formCate;
+	
+	@ManyToOne
+	@JoinColumn(name = "EMP_NO" , insertable=false, updatable=false)
+	private Emp emp;
 
-	public Document() {
+	public DocumentAndEmpAndFormCate() {
 		super();
 	}
 
-	public Document(int docNo, int empNo, String docTitle, String tagCnt, String cnt, Date wrDate, String docStatus,
-			int formNo) {
+	public DocumentAndEmpAndFormCate(int docNo, int empNo, String docTitle, String tagCnt, String cnt, Date wrDate,
+			String docStatus, int formNo, FormCate formCate, Emp emp) {
 		super();
 		this.docNo = docNo;
 		this.empNo = empNo;
@@ -78,6 +66,8 @@ public class Document {
 		this.wrDate = wrDate;
 		this.docStatus = docStatus;
 		this.formNo = formNo;
+		this.formCate = formCate;
+		this.emp = emp;
 	}
 
 	public int getDocNo() {
@@ -144,11 +134,28 @@ public class Document {
 		this.formNo = formNo;
 	}
 
-	@Override
-	public String toString() {
-		return "Document [docNo=" + docNo + ", empNo=" + empNo + ", docTitle=" + docTitle + ", tagCnt=" + tagCnt
-				+ ", cnt=" + cnt + ", wrDate=" + wrDate + ", docStatus=" + docStatus + ", formNo=" + formNo + "]";
+	public FormCate getFormCate() {
+		return formCate;
 	}
 
+	public void setFormCate(FormCate formCate) {
+		this.formCate = formCate;
+	}
+
+	public Emp getEmp() {
+		return emp;
+	}
+
+	public void setEmp(Emp emp) {
+		this.emp = emp;
+	}
+
+	@Override
+	public String toString() {
+		return "DocumentAndEmpAndFormCate [docNo=" + docNo + ", empNo=" + empNo + ", docTitle=" + docTitle + ", tagCnt="
+				+ tagCnt + ", cnt=" + cnt + ", wrDate=" + wrDate + ", docStatus=" + docStatus + ", formNo=" + formNo
+				+ ", formCate=" + formCate + ", emp=" + emp + "]";
+	}
+	
 	
 }

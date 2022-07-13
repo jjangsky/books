@@ -11,7 +11,10 @@
 	<div th:replace="/common/topSideBar.html"></div>
 	<h2 class="mb-4" id="main-text">임시저장 내역</h2>
         <hr><br><br>
-
+	<script>
+		const successMessage = "[[${ insertSuccess }]]";
+		successMessage && alert(successMessage);
+	</script>
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
         <div>
@@ -29,22 +32,24 @@
         <div>
           <table id="sampleTable">
               <tr>
-                <th class="th1">번호</th>
+                <th class="th1">문서번호</th>
                 <th class="th1">제목</th>
                 <th class="th1">작성일자</th>
-                <th class="th1">수정일자</th>
                 <th class="th1">작성자</th>
                 <th class="th1">문서종류</th>
                 <th class="th1"></th>
               </tr>
-              <tr class="hover">
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td><button type="button" class="select btn" onclick="location.href=''">보기</button></td>
+              <tr class="hover" th:each="temp : ${ tempDocList }">
+                <td class="td1" th:text="${temp.docNo}"></th>
+                <td class="td1" th:text="${temp.docTitle}"></th>
+                <td class="td1" th:text="${temp.wrDate}"></th>
+                <td class="td1" th:text="${temp.emp.empName}"></th>
+                <td class="td1" th:text="${temp.formCate.formName}"></th>
+                <td>
+                	<a th:href="@{/document/tempInfo/{docNo}/(docNo=${temp.docNo})}"> 
+                		<button type="button" class="select btn" onclick="location.href=''">보기</button>
+                	</a>
+                </td>
               </tr>
           </table>
           <br>

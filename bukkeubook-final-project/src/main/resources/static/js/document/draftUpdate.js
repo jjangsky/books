@@ -96,8 +96,15 @@ window.onload = function() {
 			}
 		});
 	});
-
-	$('.description').summernote({
+	
+	let c = $("#c").val();
+	$("#content").val(c);
+	let content = $("#content").val();
+	
+	console.log(content);
+	
+	$('.description').summernote(
+		{
 		height: 500,
 		width: 440,
 		toolbar: [
@@ -152,7 +159,6 @@ window.onload = function() {
 	if(con){
 		$("#docStatus").val("임시저장");
 		let cnt = $(".description").val();
-		console.log(cnt)
 		$("#cnttt").val(cnt);
 		
 		let sendDraft = $(".draft").html();
