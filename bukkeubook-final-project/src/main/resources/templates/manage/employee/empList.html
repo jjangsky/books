@@ -45,7 +45,7 @@
                 <td th:text="${ emp.empName }"></td>
                 <td th:text="${ emp.dept.deptName }"></td>
                 <td th:text="${ emp.empJobCode }"></td>
-                <td><button type="button" class="select btn" onclick="location.href='manage/empDetail'">확인</button></td>
+      <td><button type="button" class="select btn"  th:onclick="'location.href = \'' + @{/manage/empDetail/(empNo=${emp.empNo})} + '\''">확인</button></td>
               </tr>
           </table><br>
           <button type="button" class="insert btn" onclick="location.href='empInsert.html'">등록</button>

@@ -3,6 +3,7 @@ package com.bukkeubook.book.manage.controller;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bukkeubook.book.books.model.dto.BookDTO;
+import com.bukkeubook.book.books.model.dto.OrderAndEmpAndBookDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.EmpAndDept;
 import com.bukkeubook.book.manage.model.service.EmpService;
@@ -56,6 +59,20 @@ private final EmpService empService;
 		return "manage/employee/personnelSelect";
 	}
 	
+	/* 사원 상세조회 */
+	@GetMapping("/empDetail")
+	public ModelAndView empDetail(HttpServletRequest request, ModelAndView mv){
+		
+		String no = request.getParameter("empNo");
+		int empNo = Integer.valueOf(no);
+		
+		EmpAndDeptDTO emp  = empService.searchEmpDetail(empNo);
+		
+		mv.addObject("emp", emp);
+		mv.setViewName("manage/employee/empDetail");
+		return mv;
+	}
 	
+
 }
  

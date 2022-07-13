@@ -1,15 +1,22 @@
 package com.bukkeubook.book.manage.model.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.EntityManager;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bukkeubook.book.books.model.dto.BookDTO;
+import com.bukkeubook.book.books.model.dto.OrderAndEmpAndBookDTO;
+import com.bukkeubook.book.books.model.entity.Book;
+import com.bukkeubook.book.books.model.entity.OrderAndEmpAndBook;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.Emp;
@@ -40,12 +47,18 @@ public class EmpService {
 		List<EmpAndDept> leaveEmpList = empRepository.findByEmpEndYn(empEndYn);   //List<Emp>  = 앤티티 담기
 		return leaveEmpList.stream().map(emp -> modelMapper.map(emp, EmpAndDeptDTO.class)).toList(); 
 	}
-
-
 	
-
+	/* 사원 상세조회 */
+	public EmpAndDeptDTO searchEmpDetail(int empNo) {
+		
+		EmpAndDept emp = empRepository.findById(empNo).get();
+		
+		return modelMapper.map(empNo, EmpAndDeptDTO.class);
+	}
 	
-
-	
-
 }
+
+
+	
+
+	
