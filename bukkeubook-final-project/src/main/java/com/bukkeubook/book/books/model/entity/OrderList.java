@@ -3,13 +3,16 @@ package com.bukkeubook.book.books.model.entity;
 import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity(name="OrderList")
 @Table(name="TBL_ORDER_LIST")
+@SequenceGenerator(
+		name = "ORDER_SEQ_GENERATOR",
+		sequenceName = "SEQ_OR_NO",
+		initialValue = 21,
+		allocationSize = 1
+)
 public class OrderList implements Serializable{
 
 	private static final long serialVersionUID = -7371954659998907223L;
@@ -27,6 +30,10 @@ public class OrderList implements Serializable{
 		OR_APP_DATE	DATE	승인날짜
 	 */
 	@Id
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "ORDER_SEQ_GENERATOR"
+	)
 	@Column(name="OR_NO")
 	private int orderNo;				// 발주번호
 	
