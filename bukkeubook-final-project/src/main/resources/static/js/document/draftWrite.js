@@ -218,16 +218,21 @@ function selectacc() {
 	let account2 = $("#empList2 option:selected").text();
 	let account3 = $("#empList3 option:selected").text();
 
-	if (empList == "") {
+	if (account1 == "") {
 		alert("최소 결재라인을 지정해주세요!")
-	} else if (empList2 == "" && empList3 == "") {
+	} else if (account2 == "" && account3 == "") {
+		Swal.fire({
+			icon: 'info',
+			title: '결재라인이 1단계로 종료됩니다.',
+			text: '맞으시면 확인을 눌러주세요.',
+		})
 		let con = confirm("결재라인이 1단계로 종료됩니다. 맞으시면 확인을 눌러주세요.");
 		if (con) {
 			$("#selacc1").text(account1);
 			$("#selacc2").text(account2);
 			$("#selacc3").text(account3);
 		}
-	} else if (empList3 == "") {
+	} else if (account3 == "") {
 		let con = confirm("결재라인이 2단계로 종료됩니다. 맞으시면 확인을 눌러주세요.");
 		if (con) {
 			$("#selacc1").text(account1);
