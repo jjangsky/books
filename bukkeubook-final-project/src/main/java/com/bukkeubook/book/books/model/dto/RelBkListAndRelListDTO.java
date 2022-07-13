@@ -8,22 +8,23 @@ public class RelBkListAndRelListDTO {
 	
 	private int relBkCode;		// 목록번호
 	private int relBkAmount;	// 출고수량
-	private String no;
+	private String bkNo;
 	private int relNo;
-	private BookDTO bookDTO;		
-	private RelListAndEmpDTO relListAndEmpDTO;		// 출고번호
+	private RelListAndEmpDTO relListAndEmp;		// 출고번호
+	private BookDTO book;		
 	
 	public RelBkListAndRelListDTO() {
 	}
 
-	public RelBkListAndRelListDTO(int relBkCode, int relBkAmount, String no, int relNo, BookDTO bookDTO,
-			RelListAndEmpDTO relListAndEmpDTO) {
+	public RelBkListAndRelListDTO(int relBkCode, int relBkAmount, String bkNo, int relNo, BookDTO book,
+			RelListAndEmpDTO relListAndEmp) {
+		super();
 		this.relBkCode = relBkCode;
 		this.relBkAmount = relBkAmount;
-		this.no = no;
+		this.bkNo = bkNo;
 		this.relNo = relNo;
-		this.bookDTO = bookDTO;
-		this.relListAndEmpDTO = relListAndEmpDTO;
+		this.book = book;
+		this.relListAndEmp = relListAndEmp;
 	}
 
 	public int getRelBkCode() {
@@ -42,12 +43,12 @@ public class RelBkListAndRelListDTO {
 		this.relBkAmount = relBkAmount;
 	}
 
-	public String getNo() {
-		return no;
+	public String getBkNo() {
+		return bkNo;
 	}
 
-	public void setNo(String no) {
-		this.no = no;
+	public void setBkNo(String bkNo) {
+		this.bkNo = bkNo;
 	}
 
 	public int getRelNo() {
@@ -58,30 +59,26 @@ public class RelBkListAndRelListDTO {
 		this.relNo = relNo;
 	}
 
-	public BookDTO getBookDTO() {
-		return bookDTO;
+	public BookDTO getBook() {
+		return book;
 	}
 
-	public void setBookDTO(BookDTO bookDTO) {
-		this.bookDTO = bookDTO;
+	public void setBook(BookDTO book) {
+		this.book = book;
 	}
 
-	public RelListAndEmpDTO getRelListAndEmpDTO() {
-		return relListAndEmpDTO;
+	public RelListAndEmpDTO getRelListAndEmp() {
+		return relListAndEmp;
 	}
 
-	public void setRelListAndEmpDTO(RelListAndEmpDTO relListAndEmpDTO) {
-		this.relListAndEmpDTO = relListAndEmpDTO;
+	public void setRelListAndEmp(RelListAndEmpDTO relListAndEmp) {
+		this.relListAndEmp = relListAndEmp;
 	}
 
 	@Override
 	public String toString() {
-		return "RelBkListAndRelListDTO [relBkCode=" + relBkCode + ", relBkAmount=" + relBkAmount + ", no=" + no
-				+ ", relNo=" + relNo + ", bookDTO=" + bookDTO + ", relListAndEmpDTO=" + relListAndEmpDTO + "]";
+		return "RelBkListAndRelListDTO [relBkCode=" + relBkCode + ", relBkAmount=" + relBkAmount + ", bkNo=" + bkNo
+				+ ", relNo=" + relNo + ", book=" + book + ", relListAndEmp=" + relListAndEmp + "]";
 	}
-
-	
-	
-
 	
 }

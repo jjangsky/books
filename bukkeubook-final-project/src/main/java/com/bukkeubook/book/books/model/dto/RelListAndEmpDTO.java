@@ -12,16 +12,16 @@ public class RelListAndEmpDTO {
 	private int relNo;				// 출고번호
 	private java.sql.Date relDate;	// 출고날짜
 	private int empNo;
-	private EmpDTO empDTO;			// 사원번호
+	private EmpDTO emp;			// 사원번호
 	
 	public RelListAndEmpDTO() {
 	}
 
-	public RelListAndEmpDTO(int relNo, Date relDate, int empNo, EmpDTO empDTO) {
+	public RelListAndEmpDTO(int relNo, Date relDate, int empNo, EmpDTO emp) {
 		this.relNo = relNo;
 		this.relDate = relDate;
 		this.empNo = empNo;
-		this.empDTO = empDTO;
+		this.emp = emp;
 	}
 
 	public int getRelNo() {
@@ -48,19 +48,19 @@ public class RelListAndEmpDTO {
 		this.empNo = empNo;
 	}
 
-	public EmpDTO getEmpDTO() {
-		return empDTO;
+	public EmpDTO getEmp() {
+		return emp;
 	}
 
-	public void setEmpDTO(EmpDTO empDTO) {
-		this.empDTO = empDTO;
+	public void setEmp(EmpDTO emp) {
+		this.emp = emp;
 	}
 
 	@Override
 	public String toString() {
-		return "RelListAndEmpDTO [relNo=" + relNo + ", relDate=" + relDate + ", empNo=" + empNo + ", empDTO=" + empDTO
-				+ "]";
+		return "RelListAndEmpDTO [relNo=" + relNo + ", relDate=" + relDate + ", empNo=" + empNo + ", emp=" + emp + "]";
 	}
+
 	
 	
 	

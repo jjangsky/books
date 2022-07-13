@@ -132,19 +132,19 @@ public class BookService {
 		Pageable paging = PageRequest.of(index, count);
 
 		List<RelBkListAndRelList> bookList = new ArrayList<RelBkListAndRelList>();
-//		if(searchValue != null) {
-//
-//			if("name".equals(selectCriteria.getSearchCondition())) {
-//				bookList = outputRepository.findByNameContaining(selectCriteria.getSearchValue(), paging);
-//			}
-//
-//			if("no".equals(selectCriteria.getSearchCondition())) {
-//				bookList = outputRepository.findByNoContaining(selectCriteria.getSearchValue(), paging);
-//			}
-//		} else {
-			bookList = outputRepository.findAll(paging).toList();
-//		}
+		if(searchValue != null) {
 
+//			if("name".equals(selectCriteria.getSearchCondition())) {
+//				bookList = outputRepository.findAllByREL_NO(selectCriteria.getSearchValue(), paging);
+//			}
+
+//			if("no".equals(selectCriteria.getSearchCondition())) {
+//				bookList = outputRepository.outputNoSearch(selectCriteria.getSearchValue(), paging);
+//			}
+		} else {
+			bookList = outputRepository.findAll(paging).toList();
+		}
+		System.out.println(bookList);
 		/* 자바의 Stream API와 ModelMapper를 이용하여 entity를 DTO로 변환 후 List<MenuDTO>로 반환 */
 		return bookList.stream().map(book -> modelMapper.map(book, RelBkListAndRelListDTO.class)).collect(Collectors.toList());
 	}

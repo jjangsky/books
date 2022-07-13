@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -23,16 +24,17 @@ public class RelBkListAndRelList implements Serializable{
 	@Column(name="REL_BK_CODE")
 	private int relBkCode;		// 목록번호
 	
-	@ManyToOne
-	@JoinColumn(name="BK_NO")
-	private Book book;		// 도서코드
-	
 	@Column(name="REL_BK_AMOUNT")
 	private int relBkAmount;	// 출고수량
 	
 	@ManyToOne
 	@JoinColumn(name="REL_NO")
 	private RelListAndEmp relListAndEmp;	// 출고번호
+	
+	@ManyToOne
+	@JoinColumn(name="BK_NO")
+	private Book book;		// 도서코드
+
 
 	public RelBkListAndRelList() {
 	}
