@@ -5,12 +5,21 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /* TBL_ATTEND 테이블에 매칭될 Attend 엔티티 클래스도 만들어 보기 */
 @Entity
 @Table(name = "TBL_ATTEND")
+@SequenceGenerator(
+		name = "ATT_SEQ_GENERATOR",
+		sequenceName = "SEQ_ATT_NO",
+		initialValue = 300,
+		allocationSize = 1
+		)
 public class Attend implements Serializable{
 
 	private static final long serialVersionUID = -8294719377269665831L;
@@ -24,6 +33,10 @@ public class Attend implements Serializable{
 //	EMP_NO		NUMBER	사원번호
 	
 	@Id
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "ATT_SEQ_GENERATOR"
+	)
 	@Column(name = "ATT_NO")
 	private int attNo;
 	
