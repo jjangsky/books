@@ -17,6 +17,7 @@ public class DeptAndEmpDTO {
 	public DeptAndEmpDTO() {
 		super();
 	}
+	
 	public DeptAndEmpDTO(int deptCode, String deptName, String deptRepPhone, List<EmpAndDeptDTO> empList) {
 		super();
 		this.deptCode = deptCode;
@@ -48,6 +49,7 @@ public class DeptAndEmpDTO {
 	public void setEmpList(List<EmpAndDeptDTO> empList) {
 		this.empList = empList;
 	}
+	
 	@Override
 	public String toString() {
 		return "DeptAndEmpDTO [deptCode=" + deptCode + ", deptName=" + deptName + ", deptRepPhone=" + deptRepPhone

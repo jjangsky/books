@@ -32,7 +32,7 @@ public class BookController extends HttpServlet{
 	 * @GetMapping("/lookupList") public ModelAndView findBookList(ModelAndView mv)
 	 * {
 	 * 
-	 * List<BookDTO> bookList = bookService.findBookList();
+	 * List<BookDTO> bookList = bookSe rvice.findBookList();
 	 *  mv.addObject("bookList", bookList); 
 	 *  mv.setViewName("books/bookList/lookupList");
 	 * 

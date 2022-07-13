@@ -23,7 +23,17 @@ public class AppVacationAndEmp implements Serializable{
 //	VAC_END_DATE	DATE					휴가종료일
 //	EMP_NO			NUMBER					사원번호
 //	EMP_NAME		NVARCHAR2(31 CHAR)		사원명
+
 	
+//	VAC_END_DATE	DATE				휴가종료일
+//	VAC_START_DATE	DATE				휴가시작일
+//	VAC_STATUS		NVARCHAR2(15 CHAR)	휴가상태
+//	VAC_REASON		NVARCHAR2(255 CHAR)	휴가사유
+//	VAC_APP_NO		DATE				신청일자
+//	VAC_NO			NUMBER				신청서번호
+//	EMP_NO			NUMBER				사원번호
+//	VAC_EMER		VARCHAR2(31 BYTE)	비상연락처	
+
 	@Id
 	@Column(name = "VAC_NO")
 	private int vacNo;

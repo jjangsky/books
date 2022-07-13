@@ -15,10 +15,8 @@ import com.bukkeubook.book.manage.model.service.EmpAnnualService;
 @RequestMapping("/empAnnual")
 public class EmpAnnualController {
 	
-	/* 다른 객체 바꿔치기를 방지 및 서비스 연결 */
 	private final EmpAnnualService empAnnualService;
 	
-	/* 의존성 자동 주입 */
 	@Autowired
 	public EmpAnnualController(EmpAnnualService empAnnualService) {
 		this.empAnnualService = empAnnualService;
@@ -37,7 +35,8 @@ public class EmpAnnualController {
 	/* 휴가 신청 조회 */
 	@GetMapping("/restSelect")
 	public ModelAndView findRestList(ModelAndView mv) {
-		System.out.println("여긴오니");
+//		System.out.println("여긴오니");
+		
 		List<AppVacationAndEmpDTO> restList = empAnnualService.findRestList();
 		
 		mv.addObject("restList", restList);
@@ -45,6 +44,7 @@ public class EmpAnnualController {
 		
 		return mv;
 	}
+	
 
 }
 

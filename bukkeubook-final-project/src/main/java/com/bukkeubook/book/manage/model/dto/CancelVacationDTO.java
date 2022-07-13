@@ -11,24 +11,24 @@ public class CancelVacationDTO implements Serializable {
 //	VAC_CANC_DATE	DATE				신청일자
 //	VAC_CANC_REASON	NVARCHAR2(255 CHAR)	취소사유
 //	VAC_CANC_STATUS	NVARCHAR2(15 CHAR)	문서상태
-//	EMP_NO	NUMBER	사원번호
+//	EMP_NO			NUMBER				사원번호
 	
 	private int vacCancNo;
 	private java.sql.Date vacCancDate;
 	private String vacCancReason;
 	private String vacCancStatus;
 	private int empNo;
+	
 	public CancelVacationDTO() {
-		super();
 	}
 	public CancelVacationDTO(int vacCancNo, Date vacCancDate, String vacCancReason, String vacCancStatus, int empNo) {
-		super();
 		this.vacCancNo = vacCancNo;
 		this.vacCancDate = vacCancDate;
 		this.vacCancReason = vacCancReason;
 		this.vacCancStatus = vacCancStatus;
 		this.empNo = empNo;
 	}
+	
 	public int getVacCancNo() {
 		return vacCancNo;
 	}
@@ -62,11 +62,11 @@ public class CancelVacationDTO implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 	@Override
 	public String toString() {
 		return "CancelVacationDTO [vacCancNo=" + vacCancNo + ", vacCancDate=" + vacCancDate + ", vacCancReason="
 				+ vacCancReason + ", vacCancStatus=" + vacCancStatus + ", empNo=" + empNo + "]";
 	}
-	
 	
 }
