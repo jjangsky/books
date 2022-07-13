@@ -12,15 +12,13 @@ public class FormCateDTO implements Serializable{
 	
 	private int formNo;
 	private String formName;
-	private String formContent;
 	public FormCateDTO() {
 		super();
 	}
-	public FormCateDTO(int formNo, String formName, String formContent) {
+	public FormCateDTO(int formNo, String formName) {
 		super();
 		this.formNo = formNo;
 		this.formName = formName;
-		this.formContent = formContent;
 	}
 	public int getFormNo() {
 		return formNo;
@@ -34,19 +32,14 @@ public class FormCateDTO implements Serializable{
 	public void setFormName(String formName) {
 		this.formName = formName;
 	}
-	public String getFormContent() {
-		return formContent;
-	}
-	public void setFormContent(String formContent) {
-		this.formContent = formContent;
-	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	@Override
 	public String toString() {
-		return "FormCateDTO [formNo=" + formNo + ", formName=" + formName + ", formContent=" + formContent + "]";
+		return "FormCateDTO [formNo=" + formNo + ", formName=" + formName + "]";
 	}
+	
 	
 	
 }

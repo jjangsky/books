@@ -106,11 +106,12 @@ public class BookController extends HttpServlet{
 	}
 	
 	@PostMapping("/bookInfoUpdate2")
-	public String modifyBookInfo(BookDTO bookDTO) {
+	public ModelAndView modifyBookInfo(BookDTO bookDTO, ModelAndView mv) {
 		
 		bookService.modifyBookInfo(bookDTO);
 		
-		return "/main";
+		mv.setViewName("redirect:/book/lookupList");
+		return mv;
 	};
 	
 	

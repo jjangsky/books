@@ -37,7 +37,7 @@
                   <th>1단계 : </th>
                   <td id="selectDept">
                       <select name="deptCode" id="deptCode">
-                      	<option value=""></option>
+                      	<option value="">선택</option>
 					  	<!-- ajax -->
                       </select>
                   </td>
@@ -51,7 +51,7 @@
                   <th>2단계 : </th>
                   <td>
                       <select name="deptCode2" id="deptCode2">
-                          <option value=""></option>
+                          <option value="">선택</option>
                       </select>
                   </td>
                   <td>
@@ -64,7 +64,7 @@
                   <th>3단계 : </th>
                   <td>
                       <select name="deptCode3" id="deptCode3">
-                          <option value=""></option>
+                          <option value="">선택</option>
                       </select>
                   </td>
                   <td>
@@ -87,68 +87,33 @@
               <th>부서명</th>
               <th>사원명</th>
             </tr>
-              <tr>
-                  <th>1번</th>
-                  <td>
-                      <select name="deptCode4" id="deptCode4">
-                          <option value=""> </option>
-
-                      </select>
-                  </td>
-                  <td>
-                      <select name="selacc1" id="empList4">
-                          <option value=""></option>
-                      </select>
-                  </td>
-              </tr>
-              <tr>
-                  <th>2번</th>
-                  <td>
-                      <select name="deptCode5" id="deptCode5">
-					      <option value=""></option>
-                      </select>
-                  </td>
-                  <td>
-                      <select name="selacc2" id="empList5">
-                          <option value=""></option>
-                      </select>
-                  </td>
-              </tr>
-              <tr>
-                  <th>3번</th>
-                  <td>
-                      <select name="selacc3" id="deptCode6">
-                      	<option value=""></option>
-                      </select>
-                  </td>
-                  <td>
-                      <select name="empList6" id="empList6">
-                          <option value=""></option>
-                      </select>
-                  </td>
-              </tr>
           </table>
           <br>
-          <button class="btnin  " type="button" onclick="selectref()">참조자 지정</button><br><br>
+          <button class="btnin" type="button">참조자 지정</button><br><br>
       </div>
       <br clear="both">
+      	<form action="document/tempStore" method="post" id="temp">
       <div class="totals left" >
-        <h4>양식 작성</h4>
           <table border="1px solid black" class="tbl">
               <tr class="tbl">
                   <th class="tbl th">제목</th>
-                  <td class="tbl"><input type="text" id="title" required></td>
+                  <td class="tbl"><input type="text" id="title" name="docTitle" required></td>
               </tr>
               <tr class="tbl">
                   <th class="tbl th">내용</th>
                   <td class="tbl wid">
-                    <textarea class="description" id="desc"></textarea>
+                    <textarea class="description" id="desc" name="cnt"></textarea>
+                    <input type="hidden" name="formNo" value="1" >
+                    <input type="hidden" id="draftcnt" name="tagCnt">
+                    <input type="hidden" id="wrDate" name="wrDate">
+                    <input type="hidden" id="docStatus" name="docStatus">
+                    <input type="text" value="10" id="empNo" name="empNo">
                   </td>
               </tr>
           </table>
+      	
       </div>
       <div class="totals draft">
-        <h4>미리보기</h4>
           <table class="tbl">
               <tr class="tbl">
                   <th class="tbl th coloring" colspan="7"><h4>기안서</h4></th>
@@ -196,103 +161,15 @@
       <br clear="both">
       <div class="right">
         <button class="buto" type="button" onclick="sendData()">상신</button>
-        <input type="hidden" id="draftcnt">
-        <button class="buto" type="button">임시저장</button>
+        <button class="buto" type="button" id="tempStore">임시저장</button>
       </div>
+      </form>
 </body>
 
 <script>
-        let user = "hyejun";
-        $("#writer").val(user);
+        $("#writer").val();
         let date = $("#date").val();
         let writer = $("#writer").val();
         let dept = $("#dept").val();
-
-        $(document).ready(function(){
-            let now = new Date();
-            // $("h6").text(now); //전체
-
-            let year=now.getFullYear();//연도
-            let month=now.getMonth()+1;//월
-            let date=now.getDate();//일
-
-            let todayString = now.getFullYear() + "-";
-            let todayMonth = now.getMonth() + 1;
-            if (todayMonth < 10) {
-                todayString += "0";
-            }
-            todayString += todayMonth + "-";
-            let todayDate = now.getDate();
-            if (todayDate < 10) {
-                todayString += "0";
-            }
-            todayString += todayDate;
-
-            $("#date2").text(todayString); 
-        });
-
-        $("#title").keyup(function(){
-            let title = $("#title").val();
-            // console.log(title);
-            $("#title2").text(title);
-        })
-        
-        $(document).ready(function() {
-	         $('.description').summernote({
-	            height: 200,
-	            width: 350,
-	            toolbar: [
-			    // 표만들기
-			    ['table', ['table']],
-			    // 글머리 기호, 번호매기기, 문단정렬
-			    ['para', ['ul', 'ol', 'paragraph']],
-			    // 코드보기, 확대해서보기, 도움말
-			    ['view', ['codeview','fullscreen', 'help']]
-			  ],
-	            callbacks: {
-	                onKeyup: function(e) {
-	                setTimeout(function(){
-	                    $("#result").html($('.description').val());
-	                },200);
-	                }
-	            }
-	        });
-        });
-
-        function sendData() {
-    		if ($("#title").val().length < 1 || $("#title").val() == "" || $("#title").val() == "  ") {
-    			alert("문서의 제목을 입력해주세요.");
-    		} else if ($("#title").val().length < 5 || $("#title").val().length < 5) {
-    			alert("문서의 제목을 5글자 이상 입력해주세요.");
-    		}
-
-    		console.log($(".note-editable").text());
-    		if ($(".note-editable").text().length < 1 || $(".note-editable").text() == "" || $(".note-editable").text() == "  ") {
-    			alert("문서의 내용을 입력해주세요.");
-    		} else if ($(".note-editable").text().length < 10) {
-    			alert("문서의 내용을 10글자 이상 입력해주세요.");
-    		}
-
-    		else {
-    			let sendDraft = $(".draft").html();
-    			console.log(sendDraft);
-    			$("#draftcnt").val(sendDraft);
-    		}
-
-    	}
-
-    	function selectacc() {
-    		let account1 = $("#empList option:selected").text();
-    		let account2 = $("#empList option:selected").text();
-    		let account3 = $("#empList option:selected").text();
-    		
-    		if (account1 == "") {
-    			alert("최소 결재라인을 지정해주세요!")
-    		} else {
-    			$("#selacc1").text($("#empList option:selected").text());
-				$("#selacc2").text($("#empList2 option:selected").text());
-				$("#selacc3").text($("#empList3 option:selected").text());
-    		}
-    	}
-    </script>
+</script>
 </html>
