@@ -92,8 +92,8 @@
           <button class="btnin" type="button">참조자 지정</button><br><br>
       </div>
       <br clear="both">
-      	<form action="document/tempStore" method="post" id="temp">
       <div class="totals left" >
+      	<form action="/document/tempStore" method="post" id="temp">
           <table border="1px solid black" class="tbl">
               <tr class="tbl">
                   <th class="tbl th">제목</th>
@@ -102,16 +102,17 @@
               <tr class="tbl">
                   <th class="tbl th">내용</th>
                   <td class="tbl wid">
-                    <textarea class="description" id="desc" name="cnt"></textarea>
+                    <textarea class="description" id="desc"></textarea>
                     <input type="hidden" name="formNo" value="1" >
                     <input type="hidden" id="draftcnt" name="tagCnt">
                     <input type="hidden" id="wrDate" name="wrDate">
                     <input type="hidden" id="docStatus" name="docStatus">
                     <input type="text" value="10" id="empNo" name="empNo">
+                    <input type="text" id="cnttt" name="cnt" readonly>
                   </td>
               </tr>
           </table>
-      	
+      	</form>
       </div>
       <div class="totals draft">
           <table class="tbl">
@@ -163,13 +164,10 @@
         <button class="buto" type="button" onclick="sendData()">상신</button>
         <button class="buto" type="button" id="tempStore">임시저장</button>
       </div>
-      </form>
 </body>
 
 <script>
         $("#writer").val();
-        let date = $("#date").val();
         let writer = $("#writer").val();
-        let dept = $("#dept").val();
 </script>
 </html>

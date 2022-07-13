@@ -151,7 +151,13 @@ window.onload = function() {
 	let con = confirm("작성하신 문서를 임시저장 하시겠습니까?\n맞으시면 '확인'을 눌러주세요.")
 	if(con){
 		$("#docStatus").val("임시저장");
-		$("temp").submit();
+		let cnt = $(".note-editable").text();
+		$("#cnttt").val(cnt);
+		
+		let sendDraft = $(".draft").html();
+		console.log(sendDraft);
+		$("#draftcnt").val(sendDraft);
+		$("#temp").submit();
 	}
 });
 

@@ -74,7 +74,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 		
 		list = docService.findDept();
 		
-		System.out.println(list);
+//		System.out.println(list);
 		
 		return list;
 	}
@@ -101,7 +101,10 @@ public class DocumentController {		// 전자결재 컨트롤러
 	@PostMapping("tempStore")
 	public ModelAndView tempSave(DocumentDTO doc, RedirectAttributes rttr, ModelAndView mv) {
 		
+		System.out.println("djhkfghdjsgkfdjdfjdffffffffffffffffffffffffffffffffffffffffff");
 		System.out.println(doc);
+		
+		mv.setViewName("document/docTempList");
 		
 		return mv;
 	}

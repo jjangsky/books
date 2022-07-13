@@ -50,7 +50,7 @@ public class DocServiceImpl implements DocService{
 
 		List<Dept> deptList = docDeptRepository.findAll(Sort.by("deptCode"));
 		
-		System.out.println("ssssssssssssssssssssssssssssssss" + deptList);
+//		System.out.println("ssssssssssssssssssssssssssssssss" + deptList);
 		
 		return deptList.stream().map(dept -> modelMapper.map(dept, DeptDTO.class)).toList();
 	}
