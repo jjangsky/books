@@ -33,20 +33,20 @@ public class EmpDTO implements Serializable{
 	private String empGender;
 	private String empEmail;   
 	private String empJobCode;
-	private String empAddress1;
-	private String empAddress2;
+	private String empAddress;
+	private String empDAddress;
 	private java.sql.Date empEntDate;
 	private java.sql.Date empEndDate;
 	private String empEndYn;
 	private String empPwd;
 	private int deptCode;
-	
 	public EmpDTO() {
+		super();
 	}
-	public EmpDTO(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3,
-			java.sql.Date empBirth, String empGender, String empEmail, String empJobCode, String empAddress1,
-			String empAddress2, java.sql.Date empEntDate, java.sql.Date empEndDate, String empEndYn, String empPwd,
-			int deptCode) {
+	public EmpDTO(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3, Date empBirth,
+			String empGender, String empEmail, String empJobCode, String empAddress, String empDAddress,
+			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, int deptCode) {
+		super();
 		this.empNo = empNo;
 		this.empName = empName;
 		this.empPhone1 = empPhone1;
@@ -56,8 +56,8 @@ public class EmpDTO implements Serializable{
 		this.empGender = empGender;
 		this.empEmail = empEmail;
 		this.empJobCode = empJobCode;
-		this.empAddress1 = empAddress1;
-		this.empAddress2 = empAddress2;
+		this.empAddress = empAddress;
+		this.empDAddress = empDAddress;
 		this.empEntDate = empEntDate;
 		this.empEndDate = empEndDate;
 		this.empEndYn = empEndYn;
@@ -118,17 +118,17 @@ public class EmpDTO implements Serializable{
 	public void setEmpJobCode(String empJobCode) {
 		this.empJobCode = empJobCode;
 	}
-	public String getEmpAddress1() {
-		return empAddress1;
+	public String getEmpAddress() {
+		return empAddress;
 	}
-	public void setEmpAddress1(String empAddress1) {
-		this.empAddress1 = empAddress1;
+	public void setEmpAddress(String empAddress) {
+		this.empAddress = empAddress;
 	}
-	public String getEmpAddress2() {
-		return empAddress2;
+	public String getEmpDAddress() {
+		return empDAddress;
 	}
-	public void setEmpAddress2(String empAddress2) {
-		this.empAddress2 = empAddress2;
+	public void setEmpDAddress(String empDAddress) {
+		this.empDAddress = empDAddress;
 	}
 	public java.sql.Date getEmpEntDate() {
 		return empEntDate;
@@ -167,10 +167,12 @@ public class EmpDTO implements Serializable{
 	public String toString() {
 		return "EmpDTO [empNo=" + empNo + ", empName=" + empName + ", empPhone1=" + empPhone1 + ", empPhone2="
 				+ empPhone2 + ", empPhone3=" + empPhone3 + ", empBirth=" + empBirth + ", empGender=" + empGender
-				+ ", empEmail=" + empEmail + ", empJobCode=" + empJobCode + ", empAddress1=" + empAddress1
-				+ ", empAddress2=" + empAddress2 + ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate
+				+ ", empEmail=" + empEmail + ", empJobCode=" + empJobCode + ", empAddress=" + empAddress
+				+ ", empDAddress=" + empDAddress + ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate
 				+ ", empEndYn=" + empEndYn + ", empPwd=" + empPwd + ", deptCode=" + deptCode + "]";
 	}
+	
+	
 	
 	
 	

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,7 +30,7 @@ private final EmpService empService;
 		this.empService = empService;
 	}
 	
-/* 사원조회 , 페이징, 검색기능 */
+	/* 사원조회 , 페이징, 검색기능 */
 	@GetMapping("/empList")
 	public ModelAndView searchPage(HttpServletRequest request, ModelAndView mv) {  //ModelAndView 뷰 리졸버의 역할 _리턴할 페이지 설정 , 보내는객체
 		System.out.println("ddddddddddddddddddddddddddddddddddddd");
@@ -87,18 +88,41 @@ private final EmpService empService;
 	}
 		
 	/* 사원 상세조회 */
-	@GetMapping("/empDetail")
-	public ModelAndView empDetail(HttpServletRequest request, ModelAndView mv){
+	@GetMapping("/oneEmp/{empNo}")
+	public ModelAndView empDetail(ModelAndView mv, @PathVariable String empNo){
 		
-		String no = request.getParameter("empNo");
-		int empNo = Integer.valueOf(no);
+		int number = Integer.valueOf(empNo);
 		
-		EmpAndDeptDTO emp  = empService.searchEmpDetail(empNo);
+		System.out.println("컨트롤러에서       " + empNo);
+		System.out.println("컨트롤러에서       " + number);
+		
+		EmpAndDeptDTO emp  = empService.searchEmpDetail(number);
+		
+		System.out.println("컨트롤러에서       " + emp);
 		
 		mv.addObject("emp", emp);
-		mv.setViewName("manage/employee/empDetail");
+		mv.setViewName("/manage/employee/empDetail");
 		return mv;
 	}
+	
+	/* 퇴사사원 상세조회 */
+	@GetMapping("/oneLeaveEmp/{empNo}")
+	public ModelAndView leaveEmpDetail(ModelAndView mv, @PathVariable String empNo){
+		
+		int number = Integer.valueOf(empNo);
+		
+		System.out.println("컨트롤러에서       " + empNo);
+		System.out.println("컨트롤러에서       " + number);
+		
+		EmpAndDeptDTO emp  = empService.searchEmpDetail(number);
+		
+		System.out.println("컨트롤러에서       " + emp);
+		
+		mv.addObject("emp", emp);
+		mv.setViewName("/manage/employee/leaveEmpDetail");
+		return mv;
+	}
+	
 	
 	@GetMapping("personnelSelect")
 	public String perconnelList() {
