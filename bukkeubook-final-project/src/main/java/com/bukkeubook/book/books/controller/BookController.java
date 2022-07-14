@@ -14,7 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bukkeubook.book.books.model.dto.BookDTO;
-import com.bukkeubook.book.books.model.dto.RelBkListAndRelListDTO;
+import com.bukkeubook.book.books.model.dto.RelBkListAndBookAndRelListDTO;
+import com.bukkeubook.book.books.model.dto.RelListAndEmpDTO;
 import com.bukkeubook.book.books.model.service.BookService;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
@@ -158,16 +159,27 @@ public class BookController extends HttpServlet{
 		}
 		System.out.println(selectCriteria);
 
-		List<RelBkListAndRelListDTO> relBkListAndRelListDTO = bookService.searchBookList2(selectCriteria);
+		List<RelListAndEmpDTO> relListAndEmpDTO = bookService.searchBookList2(selectCriteria);
 
-		for(RelBkListAndRelListDTO book : relBkListAndRelListDTO) {
+		for(RelListAndEmpDTO book : relListAndEmpDTO) {
 			System.out.println(book);
 		}
 		
-		mv.addObject("outputList", relBkListAndRelListDTO);
+		mv.addObject("outputList", relListAndEmpDTO);
 		
 		mv.addObject("selectCriteria", selectCriteria);
 		mv.setViewName("books/bookList/outputList");
+		return mv;
+	}
+	
+	@GetMapping("/outputDetail")
+	public ModelAndView outputDetail(HttpServletRequest request, String no, ModelAndView mv){
+//		int no2 = Integer.valueOf(request.getParameter("no"));
+		
+		List<RelBkListAndBookAndRelListDTO> outputList = bookService.outputDetail(/* no2 */);
+		System.out.println("여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다" + outputList);
+		mv.addObject("outputList", outputList);
+		mv.setViewName("books/bookList/outputListDetail");
 		return mv;
 	}
 	

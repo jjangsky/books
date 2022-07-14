@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
+@Entity(name="RelBkList")
 @Table(name="TBL_REL_BK_LIST")
 public class RelBkList {
 //	REL_BK_CODE	NUMBER
