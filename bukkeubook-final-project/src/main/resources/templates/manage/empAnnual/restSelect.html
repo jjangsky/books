@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>Insert title here</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -22,18 +23,19 @@
     <br>
     
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+          <form action="/manage/empAnnual/restSelect" method="get">
         <div>
-          <form action="">
-            <button class="search btn" type="submit">검색</button> 
+             <button class="search btn" type="submit">검색</button> 
             <input class="search in" type="text" placeholder="검색어 입력" required>
             <select class="search select" required>
               <option value="">None</option>
+              <option value="dept">부서</option>
               <option value="empCode">사원번호</option>
               <option value="empName">사원명</option>
-              <option value="dept">부서</option>
             </select>
-          </form>
+          
         </div><br><br>
+        
 
         <div id="restTable" style="text-align:-webkit-center">
           <table id="sampleTable">
@@ -47,7 +49,7 @@
                 <th class="th1">상세보기</th>
               </tr>
               
-              <tr th:each="appVac : ${ restList }">
+               <tr th:each="appVac : ${ restList }">
                 <td th:text="${ appVac.vacNo }"></td>
                 <td th:text="${ appVac.empAndDept.getDept().getDeptName() }"></td>
                 <td th:text="${ appVac.empAndDept.getEmpNo() }"></td>
@@ -56,19 +58,16 @@
                 <td th:text="${ appVac.vacEndDate }"></td>
                 <td><button type="button" class="detail contents" th:onclick="'location.href = \'' + @{/empAnnual/restDetailSelect/(vacNo=${appVac.vacNo})} + '\''">상세보기</button></td>
               </tr>
-              
           </table><br><br>
-<!--           <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#">1</a>
-            <a class="active" href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#">6</a>
-            <a href="#">&raquo;</a>
-          </div> -->
         </div>
-     
+        </form>
+	<button type="submit" class="productBtn newBookBtn">신규도서등록</button>
+	<div th:replace="/manage/empAnnual/empAnnualpaging.html"></div>
+      
+        <br><br>
+	
+	<script>
+
+	</script>
 </body>
 </html>

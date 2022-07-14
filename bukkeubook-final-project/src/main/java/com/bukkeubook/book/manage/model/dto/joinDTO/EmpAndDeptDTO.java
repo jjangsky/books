@@ -45,12 +45,10 @@ public class EmpAndDeptDTO implements Serializable{
     private DeptDTO dept;
     
 	public EmpAndDeptDTO() {
-		super();
 	}
 	public EmpAndDeptDTO(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3, Date empBirth,
 			String empGender, String empEmail, String empJobCode, String empAddress, String empDAddress,
 			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, int deptCode, DeptDTO dept) {
-		super();
 		this.empNo = empNo;
 		this.empName = empName;
 		this.empPhone1 = empPhone1;
@@ -69,6 +67,7 @@ public class EmpAndDeptDTO implements Serializable{
 		this.deptCode = deptCode;
 		this.dept = dept;
 	}
+	
 	public int getEmpNo() {
 		return empNo;
 	}
@@ -174,6 +173,7 @@ public class EmpAndDeptDTO implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 	@Override
 	public String toString() {
 		return "EmpAndDeptDTO [empNo=" + empNo + ", empName=" + empName + ", empPhone1=" + empPhone1 + ", empPhone2="
