@@ -9,39 +9,39 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
+@Entity(name="RelBkListAndBookAndRelList")
 @Table(name="TBL_REL_BK_LIST")
-public class RelBkListAndRelList implements Serializable{
-	private static final long serialVersionUID = 1L;
-
+public class RelBkListAndBookAndRelList implements Serializable{
 //	REL_BK_CODE	NUMBER
 //	BK_NO	VARCHAR2(100 BYTE)
 //	REL_NO	NUMBER
 //	REL_BK_AMOUNT	NUMBER
 	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@Column(name="REL_BK_CODE")
 	private int relBkCode;		// 목록번호
 	
-	@ManyToOne
-	@JoinColumn(name="BK_NO")
-	private Book book;		// 도서코드
-	
 	@Column(name="REL_BK_AMOUNT")
 	private int relBkAmount;	// 출고수량
 	
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name="REL_NO")
-	private RelListAndEmp relListAndEmp;	// 출고번호
+	private RelListAndEmp relListAndEmp;			// 출고번호
+	
+	@ManyToOne()
+	@JoinColumn(name="BK_NO")
+	private Book book;		// 도서코드
 
-	public RelBkListAndRelList() {
+	public RelBkListAndBookAndRelList() {
 	}
 
-	public RelBkListAndRelList(int relBkCode, Book book, int relBkAmount, RelListAndEmp relListAndEmp) {
+	public RelBkListAndBookAndRelList(int relBkCode, int relBkAmount, RelListAndEmp relListAndEmp, Book book) {
 		this.relBkCode = relBkCode;
-		this.book = book;
 		this.relBkAmount = relBkAmount;
 		this.relListAndEmp = relListAndEmp;
+		this.book = book;
 	}
 
 	public int getRelBkCode() {
@@ -50,14 +50,6 @@ public class RelBkListAndRelList implements Serializable{
 
 	public void setRelBkCode(int relBkCode) {
 		this.relBkCode = relBkCode;
-	}
-
-	public Book getBook() {
-		return book;
-	}
-
-	public void setBook(Book book) {
-		this.book = book;
 	}
 
 	public int getRelBkAmount() {
@@ -76,11 +68,28 @@ public class RelBkListAndRelList implements Serializable{
 		this.relListAndEmp = relListAndEmp;
 	}
 
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
-		return "RelBkListAndRelList [relBkCode=" + relBkCode + ", book=" + book + ", relBkAmount=" + relBkAmount
-				+ ", relListAndEmp=" + relListAndEmp + "]";
+		return "RelBkListAndBookAndRelList [relBkCode=" + relBkCode + ", relBkAmount=" + relBkAmount
+				+ ", relListAndEmp=" + relListAndEmp + ", book=" + book + "]";
 	}
+
+	
+	
+
+	
 	
 	
 	

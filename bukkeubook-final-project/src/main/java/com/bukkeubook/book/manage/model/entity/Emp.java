@@ -66,7 +66,7 @@ public class Emp {
    private String empAddress;
    
    @Column(name = "EMP_D_ADDRESS")
-   private String empDAdreess;
+   private String empDAddress;
    
    @Column(name = "EMP_ENT_DATE")
    private java.sql.Date empEntDate;
@@ -83,13 +83,12 @@ public class Emp {
    @Column(name = "DEPT_CODE")
    private int deptCode;
 
-
 	public Emp() {
 		super();
 	}
 
 	public Emp(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3, Date empBirth,
-			String empGender, String empJobCode, String empEmail, String empAddress, String empDAdreess,
+			String empGender, String empJobCode, String empEmail, String empAddress, String empDAddress,
 			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, int deptCode) {
 		super();
 		this.empNo = empNo;
@@ -102,7 +101,7 @@ public class Emp {
 		this.empJobCode = empJobCode;
 		this.empEmail = empEmail;
 		this.empAddress = empAddress;
-		this.empDAdreess = empDAdreess;
+		this.empDAddress = empDAddress;
 		this.empEntDate = empEntDate;
 		this.empEndDate = empEndDate;
 		this.empEndYn = empEndYn;
@@ -190,12 +189,12 @@ public class Emp {
 		this.empAddress = empAddress;
 	}
 
-	public String getEmpDAdreess() {
-		return empDAdreess;
+	public String getEmpDAddress() {
+		return empDAddress;
 	}
 
-	public void setEmpDAdreess(String empDAdreess) {
-		this.empDAdreess = empDAdreess;
+	public void setEmpDAddreess(String empDAddress) {
+		this.empDAddress = empDAddress;
 	}
 
 	public java.sql.Date getEmpEntDate() {
@@ -242,15 +241,15 @@ public class Emp {
 	public String toString() {
 		return "Emp [empNo=" + empNo + ", empName=" + empName + ", empPhone1=" + empPhone1 + ", empPhone2=" + empPhone2
 				+ ", empPhone3=" + empPhone3 + ", empBirth=" + empBirth + ", empGender=" + empGender + ", empJobCode="
-				+ empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress + ", empDAdreess=" + empDAdreess
-				+ ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate + ", empEndYn=" + empEndYn + ", empPwd="
-				+ empPwd + ", deptCode=" + deptCode + "]";
+				+ empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress + ", empDAddreess="
+				+ empDAddress + ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate + ", empEndYn=" + empEndYn
+				+ ", empPwd=" + empPwd + ", deptCode=" + deptCode + "]";
 	}
-
-
-
-
- }
 	
+	
+   
+
+
+}
 
 

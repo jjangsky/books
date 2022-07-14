@@ -91,7 +91,19 @@ public class EmpService {
 		
 		EmpAndDept emp = empRepository.findById(empNo).get();
 		
-		return modelMapper.map(empNo, EmpAndDeptDTO.class);
+		System.out.println("레포지토리      " + emp);
+		
+		return modelMapper.map(emp, EmpAndDeptDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
+	}
+	
+	/* 사원 상세조회 */
+	public EmpAndDeptDTO searchLeaveEmpDetail(int empNo) {
+		
+		EmpAndDept emp = empRepository.findById(empNo).get();
+		
+		System.out.println("레포지토리      " + emp);
+		
+		return modelMapper.map(emp, EmpAndDeptDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
 	}
 	
 }

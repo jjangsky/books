@@ -14,11 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bukkeubook.book.books.controller.NativeRepository;
 import com.bukkeubook.book.books.model.dto.BookDTO;
-import com.bukkeubook.book.books.model.dto.RelBkListAndRelListDTO;
+import com.bukkeubook.book.books.model.dto.RelBkListAndBookAndRelListDTO;
+import com.bukkeubook.book.books.model.dto.RelListAndEmpDTO;
 import com.bukkeubook.book.books.model.entity.Book;
-import com.bukkeubook.book.books.model.entity.RelBkListAndRelList;
+import com.bukkeubook.book.books.model.entity.RelBkListAndBookAndRelList;
+import com.bukkeubook.book.books.model.entity.RelListAndEmp;
 import com.bukkeubook.book.books.model.repository.BookRepository;
 import com.bukkeubook.book.books.model.repository.OutputRepository;
+import com.bukkeubook.book.books.model.repository.RelBkListAndBookAndRelListRepository;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 
 @Service
@@ -27,13 +30,15 @@ public class BookService {
 	private final BookRepository bookRepository;
 	private final NativeRepository nativeRepository; 
 	private final OutputRepository outputRepository;
+	private final RelBkListAndBookAndRelListRepository relBkListAndBookAndRelListRepository;
 	private final ModelMapper modelMapper;			// modelMapper 빈을 선언
 	
 	@Autowired
-	public BookService(BookRepository bookRepository, ModelMapper modelMapper, NativeRepository nativeRepository, OutputRepository outputRepository) {
+	public BookService(RelBkListAndBookAndRelListRepository relBkListAndBookAndRelListRepository, BookRepository bookRepository, ModelMapper modelMapper, NativeRepository nativeRepository, OutputRepository outputRepository) {
 		this.bookRepository = bookRepository;
 		this.outputRepository = outputRepository;
 		this.nativeRepository = nativeRepository;
+		this.relBkListAndBookAndRelListRepository = relBkListAndBookAndRelListRepository;
 		this.modelMapper = modelMapper;
 	}
 	
@@ -123,30 +128,35 @@ public class BookService {
 		bookRepository.save(modelMapper.map(bookDTO, Book.class));
 	}
 
-	public List<RelBkListAndRelListDTO> searchBookList2(SelectCriteria selectCriteria) {
+	public List<RelListAndEmpDTO> searchBookList2(SelectCriteria selectCriteria) {
 
 		int index = selectCriteria.getPageNo() - 1;
 		int count = selectCriteria.getLimit();
 		String searchValue = selectCriteria.getSearchValue();
 
-		Pageable paging = PageRequest.of(index, count);
+		Pageable paging = PageRequest.of(index, count, Sort.by("relDate").descending());
 
-		List<RelBkListAndRelList> bookList = new ArrayList<RelBkListAndRelList>();
-//		if(searchValue != null) {
-//
-//			if("name".equals(selectCriteria.getSearchCondition())) {
-//				bookList = outputRepository.findByNameContaining(selectCriteria.getSearchValue(), paging);
-//			}
-//
-//			if("no".equals(selectCriteria.getSearchCondition())) {
-//				bookList = outputRepository.findByNoContaining(selectCriteria.getSearchValue(), paging);
-//			}
-//		} else {
+		List<RelListAndEmp> bookList = new ArrayList<RelListAndEmp>();
+		if(searchValue != null) {
+
+			if("name".equals(selectCriteria.getSearchCondition())) {
+				bookList = outputRepository.findAllByEmp_EmpNameContaining(selectCriteria.getSearchValue(), paging);
+			}
+
+			if("date".equals(selectCriteria.getSearchCondition())) {
+				bookList = outputRepository.findAllByRelDateContaining(selectCriteria.getSearchValue(), paging);
+			}
+		} else {
 			bookList = outputRepository.findAll(paging).toList();
-//		}
+		}
+		System.out.println(bookList);
+		return bookList.stream().map(book -> modelMapper.map(book, RelListAndEmpDTO.class)).collect(Collectors.toList());
+	}
 
-		/* 자바의 Stream API와 ModelMapper를 이용하여 entity를 DTO로 변환 후 List<MenuDTO>로 반환 */
-		return bookList.stream().map(book -> modelMapper.map(book, RelBkListAndRelListDTO.class)).collect(Collectors.toList());
+	public List<RelBkListAndBookAndRelListDTO> outputDetail(/* int no */) {
+		List<RelBkListAndBookAndRelList> bookList = relBkListAndBookAndRelListRepository.findAll();
+		System.out.println(bookList);
+		return bookList.stream().map(book -> modelMapper.map(book, RelBkListAndBookAndRelListDTO.class)).toList();
 	}
 	
 	
