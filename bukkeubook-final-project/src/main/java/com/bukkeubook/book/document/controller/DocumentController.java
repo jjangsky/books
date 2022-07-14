@@ -113,7 +113,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 	@PostMapping("tempStore")
 	public ModelAndView tempSave(DocumentDTO newDoc, RedirectAttributes rttr, ModelAndView mv) {
 		
-		System.out.println("djhkfghdjsgkfdjdfjdffffffffffffffffffffffffffffffffffffffffff");
+//		System.out.println("djhkfghdjsgkfdjdfjdffffffffffffffffffffffffffffffffffffffffff");
 		System.out.println(newDoc);
 		
 		docService.insertNewtempDocument(newDoc);
@@ -143,5 +143,38 @@ public class DocumentController {		// 전자결재 컨트롤러
 		mv.setViewName("/document/detailTempDoc");
 		
 		return mv;
+	}
+	
+	/* 임시저장 수정하기 */
+	@PostMapping("tempUpdate")
+	public ModelAndView updateTempDoc(ModelAndView mv, DocumentDTO updateDoc, RedirectAttributes rttr) {
+		
+		System.out.println("수정할 아이 챙겨왔니    " + updateDoc);
+		
+		docService.updateTempDocument(updateDoc);
+		
+		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		mv.setViewName("redirect:/document/docTempList");
+		
+		return mv;
+	}
+	
+	/* 임시저장 삭제하기 */
+	@GetMapping("deleteTempDoc/{num}")
+	public ModelAndView deleteTempDoc(ModelAndView mv, RedirectAttributes rttr, @PathVariable String num) {
+		
+		System.out.println("Controller                       " + num);
+		
+		int docNo = Integer.valueOf(num);
+		
+		System.out.println("for          Controller           " + docNo);
+		
+		docService.deleteTempDoc(docNo);
+		
+		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		mv.setViewName("redirect:/document/docTempList");
+		
+		return mv;
+		
 	}
 }

@@ -96,77 +96,125 @@ window.onload = function() {
 			}
 		});
 	});
-	
+
 	let c = $("#c").val();
 	$("#content").val(c);
 	let content = $("#content").val();
-	
+
 	console.log(content);
-	
+
 	$('.description').summernote(
 		{
-		height: 500,
-		width: 440,
-		toolbar: [
-			// 표만들기
-			['table', ['table']],
-			// 글머리 기호, 번호매기기, 문단정렬
-			['para', ['ul', 'ol', 'paragraph']],
-			// 코드보기, 확대해서보기, 도움말
-			['view', ['codeview', 'fullscreen', 'help']]
-		],
-		callbacks: {
-			onKeyup: function(e) {
-				setTimeout(function() {
-					$("#result").html($('.description').val());
-				}, 200);
+			height: 500,
+			width: 440,
+			toolbar: [
+				// 표만들기
+				['table', ['table']],
+				// 글머리 기호, 번호매기기, 문단정렬
+				['para', ['ul', 'ol', 'paragraph']],
+				// 코드보기, 확대해서보기, 도움말
+				['view', ['codeview', 'fullscreen', 'help']]
+			],
+			callbacks: {
+				onKeyup: function(e) {
+					setTimeout(function() {
+						$("#result").html($('.description').val());
+					}, 200);
+				}
 			}
+		});
+
+	$(document).ready(function() {
+		let now = new Date();
+		// $("h6").text(now); //전체
+
+		let year = now.getFullYear();//연도
+		let month = now.getMonth() + 1;//월
+		let date = now.getDate();//일
+
+		let todayString = now.getFullYear() + "-";
+		let todayMonth = now.getMonth() + 1;
+		if (todayMonth < 10) {
+			todayString += "0";
 		}
+		todayString += todayMonth + "-";
+		let todayDate = now.getDate();
+		if (todayDate < 10) {
+			todayString += "0";
+		}
+		todayString += todayDate;
+
+		$("#date2").text(todayString);
+		$("#wrDate").val(todayString);
 	});
 
-	$(document).ready(function(){
-            let now = new Date();
-            // $("h6").text(now); //전체
+	$("#title").keyup(function() {
+		let title = $("#title").val();
+		// console.log(title);
+		$("#title2").text(title);
+	});
 
-            let year=now.getFullYear();//연도
-            let month=now.getMonth()+1;//월
-            let date=now.getDate();//일
+	$("#tempStore").click(function() {
+		Swal.fire({
+			title: '임시저장',
+			text: "작성하신 문서를 임시저장 하시겠습니까?\n맞으시면 '확인'을 눌러주세요.",
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#c5bfbf',
+			cancelButtonColor: '#c5bfbf',
+			confirmButtonText: '승인',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$("#docStatus").val("임시저장");
+				let cnt = $(".description").val();
+				console.log(cnt)
+				$("#cnttt").val(cnt);
 
-            let todayString = now.getFullYear() + "-";
-            let todayMonth = now.getMonth() + 1;
-            if (todayMonth < 10) {
-                todayString += "0";
-            }
-            todayString += todayMonth + "-";
-            let todayDate = now.getDate();
-            if (todayDate < 10) {
-                todayString += "0";
-            }
-            todayString += todayDate;
+				let sendDraft = $(".draft").html();
+				console.log(sendDraft);
+				$("#draftcnt").val(sendDraft);
+				$("#temp").submit();
+			}
+		});
+	});
 
-            $("#date2").text(todayString);
-            $("#wrDate").val(todayString); 
-        });
+	$("#back").click(function() {
+		Swal.fire({
+			title: '작성내용이 모두 사라집니다.',
+			text: "진행 하시겠습니까?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#c5bfbf',
+			cancelButtonColor: '#c5bfbf',
+			confirmButtonText: '승인',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				window.history.back();
+			}
+		});
+	});
 
-	$("#title").keyup(function(){
-            let title = $("#title").val();
-            // console.log(title);
-            $("#title2").text(title);
-        });
-
-	$("#tempStore").click(function(){
-	let con = confirm("작성하신 문서를 임시저장 하시겠습니까?\n맞으시면 '확인'을 눌러주세요.")
-	if(con){
-		$("#docStatus").val("임시저장");
-		let cnt = $(".description").val();
-		$("#cnttt").val(cnt);
-		
-		let sendDraft = $(".draft").html();
-		console.log(sendDraft);
-		$("#draftcnt").val(sendDraft);
-		$("#temp").submit();
-	}
-});
+		let docNo = $("#docNo").val();
+	$("#deleteTemp").click(function(){
+		Swal.fire({
+			title: '해당 임시저장 문서를 삭제합니다.',
+			text: "진행 하시겠습니까?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#c5bfbf',
+			cancelButtonColor: '#c5bfbf',
+			confirmButtonText: '승인',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				
+				console.log(docNo);
+				location.href="/document/deleteTempDoc/"+docNo
+			}
+		});
+	})
 
 }
 

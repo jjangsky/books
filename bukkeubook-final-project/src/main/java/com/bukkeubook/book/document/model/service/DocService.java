@@ -22,4 +22,8 @@ public interface DocService {
 
 	DocumentAndEmpAndFormCateDTO findOneTempDoc(int selectedDocNo, int tempEmpNo, String docStatus);
 
+	void updateTempDocument(DocumentDTO updateDoc);
+
+	void deleteTempDoc(int docNo);
+
 }

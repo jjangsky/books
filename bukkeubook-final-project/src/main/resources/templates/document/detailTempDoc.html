@@ -10,6 +10,7 @@
 
 	<script src="/js/summernote/summernote-lite.js"></script>
 	<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	
     <link rel="stylesheet"  th:href="@{/css/document/draftwriteStyle.css}">
     <link rel="stylesheet"  th:href="@{/css/summernote/summernote-lite.css}">
@@ -25,6 +26,9 @@
     <hr><br><br>
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div>
+        	<button style="float:right; margin-right:5%;"class="btnin" type="button" id="back">목록으로</button>
+        </div>
         <div class="totals left">
           <h4>결재라인 지정</h4>
           <table class="tbl2" border="1px solid gray">
@@ -93,7 +97,7 @@
       </div>
       <br clear="both">
       <div class="totals left" >
-      	<form action="/document/tempStore" method="post" id="temp">
+      	<form action="/document/tempUpdate" method="post" id="temp">
           <table border="1px solid black" class="tbl">
               <tr class="tbl">
                   <th class="tbl th">제목</th>
@@ -105,9 +109,10 @@
                     <textarea class="description" id="desc" th:utext="${oneTempDoc.cnt}"></textarea>
                     <input type="hidden" name="formNo" value="1" >
                     <input type="hidden" id="draftcnt" name="tagCnt">
-                    <input type="hidden" id="wrDate" name="wrDate">
+                    <input type="text" id="wrDate" name="wrDate">
                     <input type="hidden" id="docStatus" name="docStatus">
                     <input type="text" value="10" id="empNo" name="empNo"readonly>
+                    <input type="hidden" th:value="${oneTempDoc.docNo}" id="docNo" name="docNo"readonly>
                     <input type="hidden" id="cnttt" name="cnt" readonly>
                   </td>
               </tr>
@@ -121,6 +126,7 @@
       </div>
       <br clear="both">
       <div class="right">
+      	<button class="buto" type="button" id="deleteTemp">삭제</button>
         <button class="buto" type="button" onclick="sendData()">상신</button>
         <button class="buto" type="button" id="tempStore">임시저장</button>
       </div>
@@ -129,8 +135,5 @@
 <script>
         $("#writer").val();
         let writer = $("#writer").val();
-        let content = "[[${oneTempDoc.cnt}]"
-        	
-        	console.log(content);
 </script>
 </html>

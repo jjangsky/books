@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet"  th:href="@{/css/document/HR.css}">
 <link rel="stylesheet"  th:href="@{/css/document/Listdetail.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <title>Document docList</title>
 </head>
 <body>
@@ -13,7 +14,13 @@
         <hr><br><br>
 	<script>
 		const successMessage = "[[${ insertSuccess }]]";
-		successMessage && alert(successMessage);
+		if(successMessage){
+			 Swal.fire({
+	                icon: 'success',
+	                title: '저장 성공!',
+	                text: '등록이 성공적으로 완료되었습니다!',
+	            })
+		}
 	</script>
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->

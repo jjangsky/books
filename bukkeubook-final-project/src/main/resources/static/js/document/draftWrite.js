@@ -117,50 +117,77 @@ window.onload = function() {
 		}
 	});
 
-	$(document).ready(function(){
-            let now = new Date();
-            // $("h6").text(now); //전체
+	$(document).ready(function() {
+		let now = new Date();
+		// $("h6").text(now); //전체
 
-            let year=now.getFullYear();//연도
-            let month=now.getMonth()+1;//월
-            let date=now.getDate();//일
+		let year = now.getFullYear();//연도
+		let month = now.getMonth() + 1;//월
+		let date = now.getDate();//일
 
-            let todayString = now.getFullYear() + "-";
-            let todayMonth = now.getMonth() + 1;
-            if (todayMonth < 10) {
-                todayString += "0";
-            }
-            todayString += todayMonth + "-";
-            let todayDate = now.getDate();
-            if (todayDate < 10) {
-                todayString += "0";
-            }
-            todayString += todayDate;
+		let todayString = now.getFullYear() + "-";
+		let todayMonth = now.getMonth() + 1;
+		if (todayMonth < 10) {
+			todayString += "0";
+		}
+		todayString += todayMonth + "-";
+		let todayDate = now.getDate();
+		if (todayDate < 10) {
+			todayString += "0";
+		}
+		todayString += todayDate;
 
-            $("#date2").text(todayString);
-            $("#wrDate").val(todayString); 
-        });
+		$("#date2").text(todayString);
+		$("#wrDate").val(todayString);
+	});
 
-	$("#title").keyup(function(){
-            let title = $("#title").val();
-            // console.log(title);
-            $("#title2").text(title);
-        });
+	$("#title").keyup(function() {
+		let title = $("#title").val();
+		// console.log(title);
+		$("#title2").text(title);
+	});
 
-	$("#tempStore").click(function(){
-	let con = confirm("작성하신 문서를 임시저장 하시겠습니까?\n맞으시면 '확인'을 눌러주세요.")
-	if(con){
-		$("#docStatus").val("임시저장");
-		let cnt = $(".description").val();
-		console.log(cnt)
-		$("#cnttt").val(cnt);
-		
-		let sendDraft = $(".draft").html();
-		console.log(sendDraft);
-		$("#draftcnt").val(sendDraft);
-		$("#temp").submit();
-	}
-});
+	$("#tempStore").click(function() {
+		Swal.fire({
+			title: '임시저장',
+			text: "작성하신 문서를 임시저장 하시겠습니까?\n맞으시면 '확인'을 눌러주세요.",
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#c5bfbf',
+			cancelButtonColor: '#c5bfbf',
+			confirmButtonText: '승인',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$("#docStatus").val("임시저장");
+				let cnt = $(".description").val();
+				console.log(cnt)
+				$("#cnttt").val(cnt);
+
+				let sendDraft = $(".draft").html();
+				console.log(sendDraft);
+				$("#draftcnt").val(sendDraft);
+				$("#temp").submit();
+			}
+		})
+	});
+	
+	$("#back").click(function(){
+		Swal.fire({
+                  title: '작성내용이 모두 사라집니다.',
+                  text: "진행 하시겠습니까?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#c5bfbf',
+                  cancelButtonColor: '#c5bfbf',
+                  confirmButtonText: '승인',
+                  cancelButtonText: '취소'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      window.history.back();
+                  }
+              })
+	})
 
 }
 
