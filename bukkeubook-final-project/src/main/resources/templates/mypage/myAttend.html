@@ -20,20 +20,33 @@
    			 
         <div class="checkdiv">
           
-          	<p>[[${ attend[0].attDate}]]</p>
-          	<p>[[${ currentDate } ]]</p>
-			<th:block th:unless="${ attend[0].attDate.toString == currentDate.toString }">				<!-- th:block을 사용할 수도 있다. -->
+          	<!--<p>[[${ attend[0].attDate}]]</p>
+          	<p>[[${ currentDate } ]]</p> -->
+          	
+			<th:block th:unless="${ attend[0].attDate.toString == currentDate.toString }">
+			  <div style='position: absolute; top: 20px; left: 20%; '>
         		<form action="/attend/checkIn" method="post">
-          	<button class="check1" type="submit" id="checkIn">출근하자</button>
-          </form>
+          			<button class="btn btn-outline-info btn-lg" type="submit" id="checkIn">출근하자</button>
+          		</form>
+   			 </div>
    			 </th:block>
-   			 <th:block th:if="${ attend[0].attDate.toString == currentDate.toString }">				<!-- th:block을 사용할 수도 있다. -->
-        		<p>출근 완료 열일 하자 ㅋㅋ</p>
+   			 <th:block th:if="${ attend[0].attDate.toString == currentDate.toString }">
+   			 <div style='position: absolute; top: 20px; left: 20%;'>
+        		<p class='btn btn-info btn-lg'>출근 완료</p>
+        	</div>
    			 </th:block>
-       
-          <form action="/attend/checkOut" method="post">
-          <button class="check1" type="submit">퇴근하자</button>
-          </form>
+   			<th:block th:unless="${ attend[0].attDate.toString == currentDate.toString }">
+       		<div style='position: absolute; right: 10%; top: 20px;'>
+       		   <p class='btn btn-success btn-lg'>금일 출근 기록이 없습니다.</p>
+         	 </div>
+          	</th:block>
+          	<th:block th:if="${ attend[0].attDate.toString == currentDate.toString }">
+       		<div style='position: absolute; right: 20%; top: 20px;'>
+       		   <form action="/attend/checkOut" method="post">
+         			 <button class="btn btn-outline-success btn-lg" type="submit">퇴근하자</button> 
+        	   </form>
+         	 </div>
+          	</th:block>
         </div>
         <br><br>
 
@@ -102,6 +115,7 @@
             $("#wrDate1").val(todayString);
          });  
          
+        
         </script>
 	    
 </body>
