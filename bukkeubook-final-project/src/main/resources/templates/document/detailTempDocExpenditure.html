@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" th:href="@{/css/document/expenditureWrite.css}">
+<link rel="stylesheet" th:href="@{/css/document/HR.css}">
+<title>Write Draft</title>
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<script>
+		 
+     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
+    
+	</script>
+	 
+	<script src="/js/document/expenditure.js"></script>
+	<h4 class="mb-4" id="main-text">지출결의서 작성</h4>
+	<hr>
+	<br>
+	<br>
+
+	<!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+	<div>
+		<button style="float: right; margin-right: 5%;" class="select btn"
+			type="button" id="back">목록으로</button>
+	</div>
+
+	<div class="total">
+		<h4>결재라인 지정</h4>
+		<table class="tbl2" border="1px solid gray">
+			<tr>
+				<th></th>
+				<th>부서명</th>
+				<th>사원명</th>
+			</tr>
+			<tr>
+				<th>1단계 :</th>
+				<td id="selectDept"><select name="deptCode" id="deptCode">
+						<option value="">선택</option>
+						<!-- ajax -->
+				</select></td>
+				<td><select name="empList" id="empList">
+						<option value=""></option>
+				</select></td>
+			</tr>
+			<tr>
+				<th>2단계 :</th>
+				<td><select name="deptCode2" id="deptCode2">
+						<option value="">선택</option>
+				</select></td>
+				<td><select name="empList2" id="empList2">
+						<option value=""></option>
+				</select></td>
+			</tr>
+			<tr>
+				<th>3단계 :</th>
+				<td><select name="deptCode3" id="deptCode3">
+						<option value="">선택</option>
+				</select></td>
+				<td><select name="empList3" id="empList3">
+						<option value=""></option>
+				</select></td>
+			</tr>
+		</table>
+		<br>
+		<button class="select btn" type="button" onclick="selectacc()">결재라인
+			지정</button>
+	</div>
+	<div class="total">
+		<h4>참조자 설정</h4>
+		<table>
+
+		</table>
+		<br>
+		<button type="button" onclick="selectref()">참조자 지정</button>
+	</div>
+	<br clear="both">
+	<div class="total">
+		<div id="writein">
+			<p th:utext="${oneTempDoc.Cnt}"/>
+		</div>
+		<div style="margin-left:25px; margin-top:30px;">
+			<form id="temp" action="/document/tempUpdate" method="post">
+				<input type="hidden" name="formNo" value="2" >
+		        <input type="hidden" id="draftcnt" name="tagCnt">
+		        <input type="hidden" id="wrDate" name="wrDate">
+		        <input type="hidden" id="docStatus" name="docStatus">
+		        <input type="hidden" value="10" id="empNo" name="empNo">
+		        <input type="hidden" id="docTitle" name="docTitle">
+		        <input type="hidden" id="cnttt" name="cnt" readonly>
+		        <input type="text" th:value="${oneTempDoc.docNo}" id="docNo" name="docNo"readonly>
+				<button class="select btn" type="button" onclick="sendData()">반영하기</button>
+			</form>
+		</div>
+	</div>
+	
+	<div class="total" id="insertin">
+		<table th:utext="${oneTempDoc.tagCnt}">
+			<br>
+
+			</div>
+			<br clear="both">
+			<div class="right">
+				<button class="select btn in" type="button" id="deleteTemp">삭제</button>
+				<button class="select btn in" type="button" onclick="sendData()">상신</button>
+				<button class="select btn in" type="button" id="tempStore">임시저장</button>
+			</div>
+</body>
+
+<script>
+	$("#writer").val();
+	let writer = $("#writer").val();
+	let docNo = $("#docNo").val();
+	$("#deleteTemp").click(function(){
+		Swal.fire({
+			title: '해당 임시저장 문서를\n삭제합니다.',
+			text: "진행 하시겠습니까?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#c5bfbf',
+			cancelButtonColor: '#c5bfbf',
+			confirmButtonText: '확인',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				
+				console.log(docNo);
+				location.href="/document/deleteTempDoc/"+docNo
+			}
+		});
+	})
+</script>
+</html>

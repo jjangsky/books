@@ -117,6 +117,7 @@ window.onload = function() {
 		}
 		todayString += todayDate;
 
+		$("#wrDate").val(todayString);
 		$("#date").text(todayString);
 	});
 
@@ -144,10 +145,31 @@ window.onload = function() {
 	});
 	
 	$("#tempStore").click(function(){
-		let cnt = $("#writein").html();
-		
-		console.log(cnt);
-	})
+		Swal.fire({
+			title: '임시저장',
+			text: "작성하신 문서를 임시저장 하시겠습니까?\n맞으시면 '확인'을 눌러주세요.",
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#c5bfbf',
+			cancelButtonColor: '#c5bfbf',
+			confirmButtonText: '승인',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$("#docStatus").val("임시저장");
+				let cnt = $("#writein").html();
+				console.log(cnt)
+				$("#cnttt").val(cnt);
+
+				let sendDraft = $("#insertin").html();
+				console.log(sendDraft);
+				$("#draftcnt").val(sendDraft);
+				$("#docTitle").val($("#title").text());
+				$("#temp").submit();
+				
+			}
+		})
+	});
 
 }
 function sendData() {
@@ -180,7 +202,7 @@ function sendData() {
 			//alert('내용 한개이상 입력해야함');
 			Swal.fire({
 				icon: 'warning',
-				title: '등록된 내용이 없습니다!',
+				title: '등록된 금액이 없습니다!',
 				text: '내용을 한개이상 입력해주세요!',
 			})
 			return;
@@ -220,13 +242,61 @@ function selectacc() {
 
 	if (account1 == "") {
 		Swal.fire({
-			icon: 'warning',
-			title: '등록된 결재라인이 없습니다!',
-			text: '최소 결재라인을 지정해주세요!',
+				icon: 'warning',
+				title: '결재라인 없음',
+				text: '최소 결재라인을 지정해주세요!'
+			})
+	} else if (account2 == "" && account3 == "") {
+		Swal.fire({
+			title: '결재라인이 1단계로 \n종료됩니다.',
+			text: "맞으시면 확인을 눌러주세요.",
+			icon: 'info',
+			showCancelButton: true,
+			confirmButtonColor: '#c5bfbf',
+			cancelButtonColor: '#c5bfbf',
+			confirmButtonText: '확인',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$("#selacc1").text(account1);
+				$("#selacc2").text(account2);
+				$("#selacc3").text(account3);
+			}
+		})
+	} else if (account3 == "") {
+		Swal.fire({
+			title: '결재라인이 2단계로 \n종료됩니다.',
+			text: "맞으시면 확인을 눌러주세요.",
+			icon: 'info',
+			showCancelButton: true,
+			confirmButtonColor: '#c5bfbf',
+			cancelButtonColor: '#c5bfbf',
+			confirmButtonText: '확인',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$("#selacc1").text(account1);
+				$("#selacc2").text(account2);
+				$("#selacc3").text(account3);
+			}
 		})
 	} else {
-		$("#selacc1").text(account1);
-		$("#selacc2").text(account2);
-		$("#selacc3").text(account3);
+		Swal.fire({
+			title: '결재라인이 3단계로 \n종료됩니다.',
+			text: "맞으시면 확인을 눌러주세요.",
+			icon: 'info',
+			showCancelButton: true,
+			confirmButtonColor: '#c5bfbf',
+			cancelButtonColor: '#c5bfbf',
+			confirmButtonText: '확인',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$("#selacc1").text(account1);
+				$("#selacc2").text(account2);
+				$("#selacc3").text(account3);
+			}
+		})
 	}
 }
+

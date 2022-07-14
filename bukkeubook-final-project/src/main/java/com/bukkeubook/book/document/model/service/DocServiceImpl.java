@@ -128,5 +128,17 @@ public class DocServiceImpl implements DocService{
 		
 	}
 
+	@Override
+	@Transactional
+	public void insertNewDoc(DocumentDTO newDoc) {
+		
+		docRepository.save(modelMapper.map(newDoc, Document.class));
+		int currentDocNo = docRepository.findCurrentSeqDoc();
+		System.out.println("Service            ");
+		System.out.println(currentDocNo);
+		
+		
+	}
+
 	
 }

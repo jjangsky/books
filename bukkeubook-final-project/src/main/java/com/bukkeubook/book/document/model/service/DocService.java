@@ -26,4 +26,6 @@ public interface DocService {
 
 	void deleteTempDoc(int docNo);
 
+	void insertNewDoc(DocumentDTO newDoc);
+
 }

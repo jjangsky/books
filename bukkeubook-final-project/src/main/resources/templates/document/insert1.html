@@ -23,7 +23,7 @@
     </script> 
 	<script src="/js/document/draftWrite.js"></script>
 	<h4 class="mb-4" id="main-text">기안서 작성</h4>
-    <hr><br><br>
+    <hr>
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
         <div>
@@ -31,6 +31,7 @@
         </div>
         
         <div class="totals left">
+        <br><br>
           <h4>결재라인 지정</h4>
           <table class="tbl2" border="1px solid gray">
               <tr>
@@ -42,7 +43,7 @@
                   <th>1단계 : </th>
                   <td id="selectDept">
                       <select name="deptCode" id="deptCode">
-                      	<option value="">선택</option>
+                      	<option value=""></option>
 					  	<!-- ajax -->
                       </select>
                   </td>
@@ -56,7 +57,7 @@
                   <th>2단계 : </th>
                   <td>
                       <select name="deptCode2" id="deptCode2">
-                          <option value="">선택</option>
+                          <option value=""></option>
                       </select>
                   </td>
                   <td>
@@ -69,7 +70,7 @@
                   <th>3단계 : </th>
                   <td>
                       <select name="deptCode3" id="deptCode3">
-                          <option value="">선택</option>
+                          <option value=""></option>
                       </select>
                   </td>
                   <td>
@@ -84,17 +85,69 @@
             <button class="btnin" type="button" onclick="selectacc()">결재라인 지정</button><br><br>
           </div>
       </div>
-      <div class="totals">
-          <h4>참조자 설정</h4>
-          <table class="tbl2" border="1px solid gray">
+      <div class="totals tbl3">
+          <h4>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          결재자 확인
+          </h4>
+          <table class="tbl3 ck" border="1px solid gray">
             <tr>
-              <th></th>
-              <th>부서명</th>
-              <th>사원명</th>
+              <th>단계</th>
+              <th>부서</th>
+              <th>사번</th>
+              <th>결재자</th>
             </tr>
-          </table>
+            <form action="/document/submitReport" method="post" id="submitReport">
+	            <tr>
+	              <th rowspan="3" id="step">
+	              	<input class="inp" type="hidden">
+	              </th>
+	              <td>
+	              	<input class="inp" type="text" id="stepNo" name="number">
+	              	<input class="inp" type="text" id="deptName1" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco1"readonly> -->
+	              	<input class="inp" type="text" id="account1" name="approver1">
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco1" readonly>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>
+	              	<input class="inp" type="text" id="deptName2" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco2" readonly> -->
+	              	<input class="inp" type="text" id="account2" name="approver2">
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco2" readonly>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>
+	              	<input class="inp" type="text" id="deptName3" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco3" readonly> -->
+	              	<input class="inp" type="text" id="account3" name="approver3">
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco3" readonly>
+	              </td>
+	            </tr>
+	          </table>
+	          <input type="hidden" name="formNo" value="1" >
+	          <input type="hidden" id="draftcnt" name="tagCnt">
+	          <input type="hidden" id="wrDate" name="wrDate">
+	          <input type="hidden" id="docStatus" name="docStatus">
+	          <input type="text" value="10" id="empNo" name="empNo">
+	          <input type="text" id="docTitle" name="submitTitle">
+	          <input type="text" id="cnttt" name="cnt" readonly>
+          </form>
           <br>
-          <button class="btnin" type="button">참조자 지정</button><br><br>
       </div>
       <br clear="both">
       <div class="totals left" >

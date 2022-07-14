@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bukkeubook.book.document.model.dto.AppRootDTO;
+import com.bukkeubook.book.document.model.dto.ApproverDTO;
 import com.bukkeubook.book.document.model.dto.DeptDTO;
 import com.bukkeubook.book.document.model.dto.DocumentAndEmpAndFormCateDTO;
 import com.bukkeubook.book.document.model.dto.DocumentDTO;
@@ -46,7 +49,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 	@GetMapping("insertTo/{formNo}")
 	public ModelAndView toSelectByFormNo(ModelAndView mv, @PathVariable String formNo) {
 		
-		System.out.println("fffffffffffffffffffffffffffffffffffff" + formNo);
+//		System.out.println("fffffffffffffffffffffffffffffffffffff" + formNo);
 		
 		mv.setViewName("document/insert"+formNo);
 		
@@ -54,7 +57,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 		
 	}
 	
-	/* 결재내역 리스트 조회 */
+	/* 상신내역 리스트 조회 */
 	@GetMapping("docList")
 	public String toDocList() {
 		return "/document/docList";
@@ -134,13 +137,17 @@ public class DocumentController {		// 전자결재 컨트롤러
 		System.out.println("여기컨트롤러에서 번호 잘받았니      " + selectedDocNo);
 		
 		DocumentAndEmpAndFormCateDTO oneTempDoc = docService.findOneTempDoc(selectedDocNo,tempEmpNo,docStatus);
-		
 		System.out.println("갔다왔니");
 		System.out.println("갔다왔니");
 		System.out.println(oneTempDoc);
 		
 		mv.addObject("oneTempDoc", oneTempDoc);
-		mv.setViewName("/document/detailTempDoc");
+
+		if(oneTempDoc.getFormNo() == 1) {	// 기안서일 경우
+			mv.setViewName("/document/detailTempDocDraft");
+		} else {	//지결서일 경우
+			mv.setViewName("/document/detailTempDocExpenditure");
+		}
 		
 		return mv;
 	}
@@ -176,5 +183,38 @@ public class DocumentController {		// 전자결재 컨트롤러
 		
 		return mv;
 		
+	}
+	
+	/* 기안서 상신하기 */
+	@PostMapping("submitReport")
+	public ModelAndView draftSubmitReport(ModelAndView mv,DocumentDTO newDoc, RedirectAttributes rttr
+										, @RequestParam String number, @RequestParam String approver1
+										, @RequestParam String approver2, @RequestParam String approver3, @RequestParam String submitTitle) {
+		System.out.println("잘 가져 왔니");
+		System.out.println(newDoc);
+		System.out.println(number);
+		System.out.println(approver1);
+		System.out.println(approver2);
+		System.out.println(approver3);
+		System.out.println(submitTitle);
+		
+		/* 일단 문서 인서트 */
+		newDoc.setDocTitle(submitTitle);
+		
+		/* 다음은 결재경로 */
+//		AppRootDTO appRoot = new AppRootDTO();
+//		int step = Integer.valueOf(number);
+//		appRoot.setStepNo(step);
+		
+		/* 결재자 인서트 */
+		if(approver1 != null) {}
+		
+		//docService.insertNewDoc(newDoc);
+		
+		
+		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		mv.setViewName("redirect:/document/docList");
+		
+		return mv;
 	}
 }

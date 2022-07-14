@@ -30,7 +30,8 @@
 	</div>
 
 	<div class="total">
-		<h4>결재라인 지정</h4>
+		<h4 style="padding-left:30px;">결재라인 지정</h4>
+		<br>
 		<table class="tbl2" border="1px solid gray">
 			<tr>
 				<th></th>
@@ -67,8 +68,10 @@
 			</tr>
 		</table>
 		<br>
-		<button class="select btn" type="button" onclick="selectacc()">결재라인
-			지정</button>
+		<button class="select btn" type="button" onclick="selectacc()" style="margin-left:30px;">
+		결재라인 지정
+		</button>
+		<br><br>
 	</div>
 	<div class="total">
 		<h4>참조자 설정</h4>
@@ -79,88 +82,97 @@
 		<button type="button" onclick="selectref()">참조자 지정</button>
 	</div>
 	<br clear="both">
-	<div class="total" id="writein">
-		<table border="1px solid gray" id="write" class="forms">
-			<tr>
-				<th class="write">제목</th>
-				<td class="write" colspan="6" contenteditable="true" id="title"></td>
-			</tr>
-			<tr>
-				<th class="write">번호</th>
-				<th class="write">내역</th>
-				<th class="write" colspan="2">금액</th>
-				<th class="write" colspan="2">비고</th>
-			</tr>
-			<tbody>
-				<tr>
-					<td class="write " contenteditable="true">1</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">2</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">3</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">4</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">5</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">6</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">7</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">8</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">9</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">10</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-			</tbody>
-			<tr>
-				<td class="write" colspan="6">
-					<button class="select btn" type="button" onclick="sendData()">반영하기</button>
-				</td>
-			</tr>
-		</table>
-	</div>
 	<div class="total">
+		<div id="writein">
+			<table border="1px solid gray" id="write" class="forms">
+				<tr>
+					<th class="write">제목</th>
+					<td class="write" colspan="6" contenteditable="true" id="title"></td>
+				</tr>
+				<tr>
+					<th class="write">번호</th>
+					<th class="write">내역</th>
+					<th class="write" colspan="2">금액</th>
+					<th class="write" colspan="2">비고</th>
+				</tr>
+				<tbody>
+					<tr>
+						<td class="write " contenteditable="true">1</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">2</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">3</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">4</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">5</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">6</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">7</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">8</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">9</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">10</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div style="margin-left:25px; margin-top:30px;">
+			<form id="temp" action="/document/tempStore" method="post">
+				<input type="hidden" name="formNo" value="2" >
+		        <input type="hidden" id="draftcnt" name="tagCnt">
+		        <input type="hidden" id="wrDate" name="wrDate">
+		        <input type="hidden" id="docStatus" name="docStatus">
+		        <input type="hidden" value="10" id="empNo" name="empNo">
+		        <input type="hidden" id="docTitle" name="docTitle">
+		        <input type="hidden" id="cnttt" name="cnt" readonly>
+				<button class="select btn" type="button" onclick="sendData()">반영하기</button>
+			</form>
+		</div>
+	</div>
+	<div class="total" id="insertin">
 		<table class="tbl" id="inserttbl">
 			<tr>
 				<th class="coloring view" colspan="7"><h5>지출결의서</h5></th>
