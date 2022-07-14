@@ -10,83 +10,73 @@
       <link rel="stylesheet" href="../css/style.css">
       <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
       <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+      
   </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
-	<h2 class="mb-4" id="main-text">사원관리</h2>
+	        <h2 class="mb-4" id="main-text">사원관리</h2>
         <hr><br><br>
-        <h5 class="mb-4" id="sub-text">사원 상세 정보조회</h5>
+        <h5 class="mb-4" id="sub-text">퇴사사원 상세조회</h5>
         <br>
+
         <div class="emp detail list"> 
           <table border="2">
             <thead>
-              <tr class="detailtitle">
-                <th colspan="4">사원정보</th>
+              <tr class="detailtitle2">
+                <th colspan="4">퇴사 사원정보</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="deemp2">
-                <td>사원번호</td>
-                <td th:text="${ emp.empNo }"></td>
-                <td class="deempfile">도장사진</td>
-                <td class="deempfile">프로필사진</td>
+              <tr class="deemp4">
+                <td class="deemp5">사원번호</td>
+                <td colspan="3" th:text="${ emp.empNo }"></td>
               </tr>
-              <tr class="deemp2">
+              <tr class="deemp4">
                 <td>사원명</td>
-                <td th:text="${ emp.empName }"></td>
-                <td rowspan="4"></td>
-                <td rowspan="4"></td>
+                <td colspan="3" th:text="${ emp.empName }"></td>
               </tr>
-               <tr class="deemp2">
-                <td>부서명</td>
-                <td th:text="${ emp.dept.deptName }"></td>
-              </tr>
-              <tr class="deemp2">
+              <tr class="deemp4">
                 <td>직급</td>
-                <td th:text="${ emp.empJobCode }"></td>
+                <td colspan="3" th:text="${ emp.empJobCode }"></td>
               </tr>
-              <tr class="deemp2" >
+              <tr class="deemp4">
                 <td>입사일자</td>
-<!--                 <td th:text="${#dates.format(emp.emp.empEntDate, 'yyyy-MM-dd')}"></td> -->
-                <td th:text="${ emp.empEntDate }"></td>
+                <td colspan="3" th:text="${ emp.empEntDate }"></td>
               </tr>
-              <tr class="deemp2" >
+              <tr class="deemp4">
                 <td>퇴사여부</td>
-                <td th:text="${ emp.empEndYn }"> </td>
+                <td colspan="3" th:text="${ emp.empEndYn }"> </td>
               </tr>
-              <tr class="deemp" >
+              <tr class="deemp4">
                 <td>성별</td>
                 <td colspan="3" th:text="${ emp.empGender }"></td>
               </tr>
-              <tr class="deemp" >
+              <tr class="deemp4">
                 <td>생년월일</td>
-<!--                 <td colspan="3" th:text="${#dates.format(emp.empBirth, 'yyyy-MM-dd')}"></td> -->
-				 <td colspan="3" th:text="${ emp.empBirth }">
+                <td colspan="3" th:text="${ emp.empBirth }"></td>
               </tr>
-              <tr class="deemp" >
+              <tr class="deemp4">
                 <td>연락처</td>
                 <td th:text="${ emp.empPhone1 }"></td>
                 <td th:text="${ emp.empPhone2 }"></td>
                 <td th:text="${ emp.empPhone3 }"></td>
               </tr>
-              <tr class="deemp">
+              <tr class="deemp4">
                 <td>이메일</td>
                 <td colspan="3" th:text="${ emp.empEmail }"></td>
               </tr>
-              <tr class="deemp" >
+              <tr class="deemp4">
                 <td>주소</td>
                 <td colspan="3" th:text="${ emp.empAddress }"></td>
               </tr>
-              <tr class="deemp" >
+              <tr class="deemp4">
                 <td>상세주소</td>
                 <td colspan="3" th:text="${ emp.empDAddress }"></td>
               </tr>
             </tbody>
-          </table><br>
-          <td><button type="button" class="modify btn" onclick="location.href='empUpdate.html'">수정하기</button></td>
-         <!--  <td><button type="button" class="list btn" th:onclick="'location.href = @{/manage/empList/">목록으로</button></td> -->
-          </div>
-        </div>
-
+            </table><br>
+            <td><button type="button" class="list btn" th:onclick="'location.href = \'' + @{/manage/leaveEmpList/ + '\''">목록으로</button></td>
+         </div>
+       </div>
 </body>
 </html>
