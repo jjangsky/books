@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+	<link rel="stylesheet"  th:href="@{/css/books/order/orderDetail.css}">
+</head>
+<body>
+    <div th:replace="/common/topSideBar.html"></div>
+
+    <h2 class="mb-4" id="main-text">부서관리</h2>
+    <hr><br><br>
+    <h5 class="mb-4" id="sub-text">전체부서조회</h5>
+    <br>
+
+    <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+    <div class="btnArea">
+        <button class="btn" type="button" onclick="location.href='department_regist.html'">신규 부서 등록</button>
+        <button class="btn" type="button" onclick="checkInactive()">부서 비활성화</button>
+    </div>
+    <div id="textTable" style="text-align:-webkit-center">
+      <table id="sampleTable">
+          <tr>
+            <th class="th1"></th>
+            <th class="th1">부서코드</th>
+            <th class="th1">부서명</th>
+            <th class="th1">부서대표번호</th>
+            <th class="th1">활성화여부</th>
+          </tr>
+          <tr th:each="dept : ${ deptList }" >
+            <td th:text="${ dept.deptCode }"></td>
+            <td th:text="${ dept.deptName }"></td>
+            <td th:text="${ dept.deptRepPhone }"></td>
+            <td th:text="${ dept.deptActive }"></td>
+          </tr>
+      </table>
+    </div>
+
+    <script>
+      function checkInactive(){
+        var result = confirm("선택하신 부서들을 정말로 비활성화 하시겠습니까?");
+
+        if(result == true){
+          alert("선택하신 부서들이 비활성화 되었습니다.");
+        }
+      }
+    </script>
+		<script src="../js/jquery.min.js"></script>
+    <script src="../js/popper.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

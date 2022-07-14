@@ -22,6 +22,7 @@ public class DeptAndEmp implements Serializable {
 //	DEPT_CODE		NUMBER				부서코드
 //	DEPT_NAME		NVARCHAR2(31 CHAR)	부서명
 //	DEPT_REP_PHONE	VARCHAR2(15 BYTE)	대표번호
+//	DEPT_ACTIVE		VARCHAR2(3 BYTE)	활성화여부
 	
 	@Id
 	@Column(name = "DEPT_CODE")
@@ -39,10 +40,11 @@ public class DeptAndEmp implements Serializable {
 	public DeptAndEmp() {
 	}
 
-	public DeptAndEmp(int deptCode, String deptName, String deptRepPhone) {
+	public DeptAndEmp(int deptCode, String deptName, String deptRepPhone, List<EmpAndDept> empList) {
 		this.deptCode = deptCode;
 		this.deptName = deptName;
 		this.deptRepPhone = deptRepPhone;
+		this.empList = empList;
 	}
 
 	public int getDeptCode() {
@@ -69,14 +71,23 @@ public class DeptAndEmp implements Serializable {
 		this.deptRepPhone = deptRepPhone;
 	}
 
+	public List<EmpAndDept> getEmpList() {
+		return empList;
+	}
+
+	public void setEmpList(List<EmpAndDept> empList) {
+		this.empList = empList;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	@Override
 	public String toString() {
-		return "Dept [deptCode=" + deptCode + ", deptName=" + deptName + ", deptRepPhone=" + deptRepPhone + "]";
+		return "DeptAndEmp [deptCode=" + deptCode + ", deptName=" + deptName + ", deptRepPhone=" + deptRepPhone
+				+ ", empList=" + empList + "]";
 	}
-	
+
 	
 }
