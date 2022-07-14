@@ -17,11 +17,20 @@
         <h5 class="mb-4" id="sub-text">근태조회</h5>
         <br>
 	      
-
+   			 
         <div class="checkdiv">
-          <form action="/attend/checkIn" method="post">
+          
+          	<p>[[${ attend[0].attDate}]]</p>
+          	<p>[[${ currentDate } ]]</p>
+			<th:block th:unless="${ attend[0].attDate.toString == currentDate.toString }">				<!-- th:block을 사용할 수도 있다. -->
+        		<form action="/attend/checkIn" method="post">
           	<button class="check1" type="submit" id="checkIn">출근하자</button>
           </form>
+   			 </th:block>
+   			 <th:block th:if="${ attend[0].attDate.toString == currentDate.toString }">				<!-- th:block을 사용할 수도 있다. -->
+        		<p>출근 완료 열일 하자 ㅋㅋ</p>
+   			 </th:block>
+       
           <form action="/attend/checkOut" method="post">
           <button class="check1" type="submit">퇴근하자</button>
           </form>

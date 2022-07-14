@@ -1,12 +1,11 @@
 package com.bukkeubook.book.mypage.model.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +28,7 @@ public class AttendService {
 	/* 마이페이지 출퇴근 내역 조회 */
 	public List<AttendDTO> findMyAttend(int memberCode) {
 		
-		List<Attend> attendList = attendRepository.findAllByEmpNo(memberCode);
+		List<Attend> attendList = attendRepository.findByEmpNo(memberCode, Sort.by("attDate").descending());
 		
 		return attendList.stream().map(attend -> modelMapper.map(attend, AttendDTO.class)).collect(Collectors.toList());
 		

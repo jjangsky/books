@@ -1,6 +1,7 @@
 package com.bukkeubook.book.mypage.controller;
 
 
+import java.text.SimpleDateFormat;
 import java.util .Date;
 import java.util.List;
 import java.util.Locale;
@@ -35,7 +36,14 @@ public class AttendController {
 		List<AttendDTO> attend = attendService.findMyAttend(memberCode);
 		System.out.println(attend);
 		
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String format = sdf.format(date);
+		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡcurrent Time : "+format);
+		
 		mv.addObject("attend", attend);
+		mv.addObject("currentDate", format);
 		mv.setViewName("mypage/myAttend");
 		
 		return mv;
@@ -85,10 +93,9 @@ public class AttendController {
 		attendService.modifyCheckOut(attend);
 		
 		rttr.addFlashAttribute("successMessage", "퇴근 등록이 정상적으로 처리 되었습니다.");
-		 mv.setViewName("redirect:/");
+		mv.setViewName("redirect:/");
 		
-		
-		return null;
+		return mv;
 		
 	}
 	
