@@ -23,13 +23,14 @@
     </script> 
 	<script src="/js/document/draftUpdate.js"></script>
 	<h4 class="mb-4" id="main-text">기안서 작성</h4>
-    <hr><br><br>
+    <hr>
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
         <div>
         	<button style="float:right; margin-right:5%;"class="btnin" type="button" id="back">목록으로</button>
         </div>
         <div class="totals left">
+        <br><br>
           <h4>결재라인 지정</h4>
           <table class="tbl2" border="1px solid gray">
               <tr>
@@ -83,17 +84,70 @@
             <button class="btnin" type="button" onclick="selectacc()">결재라인 지정</button><br><br>
           </div>
       </div>
-      <div class="totals">
-          <h4>참조자 설정</h4>
-          <table class="tbl2" border="1px solid gray">
+      <div class="totals tbl3">
+          <h4>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          결재자 확인
+          </h4>
+          <table class="tbl3 ck" border="1px solid gray">
             <tr>
-              <th></th>
-              <th>부서명</th>
-              <th>사원명</th>
+              <th>단계</th>
+              <th>부서</th>
+              <th>사번</th>
+              <th>결재자</th>
             </tr>
-          </table>
+            <form action="/document/submitTempReport" method="post" id="submitReport">
+	            <tr>
+	              <th rowspan="3" id="step">
+	              	<input class="inp" type="hidden">
+	              </th>
+	              <td>
+	              	<input class="inp" type="hidden" id="stepNo" name="app1">
+	              	<input class="inp" type="text" id="deptName1" readonly >
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco1"readonly> -->
+	              	<input class="inp" type="text" id="account1" name="approver1" readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco1" readonly>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>
+	              	<input class="inp" type="text" id="deptName2" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco2" readonly> -->
+	              	<input class="inp" type="text" id="account2" name="approver2" readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco2" readonly>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>
+	              	<input class="inp" type="text" id="deptName3" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco3" readonly> -->
+	              	<input class="inp" type="text" id="account3" name="approver3" readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco3" readonly>
+	              </td>
+	            </tr>
+	          </table>
+	          <input type="hidden" name="formNo2" value="1" >
+	          <input type="hidden" id="draftcnt2" name="tagCnt">
+	          <input type="hidden" id="wrDate2" name="wrDate">
+	          <input type="hidden" id="docStatus2" name="docStatus">
+	          <input type="text" value="10" id="empNo2" name="empNo">
+	          <input type="text" id="docTitle2" name="submitTitle">
+	          <input type="hidden" th:value="${oneTempDoc.docNo}" id="docNo2" name="docNo"readonly>
+	          <input type="text" id="cnttt2" name="cnt" readonly>
+          </form>
           <br>
-          <button class="btnin" type="button">참조자 지정</button><br><br>
       </div>
       <br clear="both">
       <div class="totals left" >
@@ -108,12 +162,12 @@
                   <td class="tbl wid">
                     <textarea class="description" id="desc" th:utext="${oneTempDoc.cnt}"></textarea>
                     <input type="hidden" name="formNo" value="1" >
-                    <input type="hidden" id="draftcnt" name="tagCnt">
-                    <input type="text" id="wrDate" name="wrDate">
-                    <input type="hidden" id="docStatus" name="docStatus">
-                    <input type="text" value="10" id="empNo" name="empNo"readonly>
-                    <input type="hidden" th:value="${oneTempDoc.docNo}" id="docNo" name="docNo"readonly>
-                    <input type="hidden" id="cnttt" name="cnt" readonly>
+                    <input type="hidden" id="draftcnt1" name="tagCnt">
+                    <input type="text" id="wrDate1" name="wrDate">
+                    <input type="hidden" id="docStatus1" name="docStatus">
+                    <input type="text" value="10" id="empNo1" name="empNo"readonly>
+                    <input type="hidden" th:value="${oneTempDoc.docNo}" id="docNo1" name="docNo"readonly>
+                    <input type="hidden" id="cnttt1" name="cnt" readonly>
                   </td>
               </tr>
           </table>

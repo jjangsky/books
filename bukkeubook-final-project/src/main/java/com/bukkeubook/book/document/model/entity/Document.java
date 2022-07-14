@@ -55,7 +55,7 @@ public class Document {
 	private String cnt;
 	
 	@Column(name = "WR_DATE")
-	private java.sql.Date wrDate;
+	private String wrDate;
 	
 	@Column(name = "DOC_STATUS")
 	private String docStatus;
@@ -67,7 +67,7 @@ public class Document {
 		super();
 	}
 
-	public Document(int docNo, int empNo, String docTitle, String tagCnt, String cnt, Date wrDate, String docStatus,
+	public Document(int docNo, int empNo, String docTitle, String tagCnt, String cnt, String wrDate, String docStatus,
 			int formNo) {
 		super();
 		this.docNo = docNo;
@@ -120,11 +120,11 @@ public class Document {
 		this.cnt = cnt;
 	}
 
-	public java.sql.Date getWrDate() {
+	public String getWrDate() {
 		return wrDate;
 	}
 
-	public void setWrDate(java.sql.Date wrDate) {
+	public void setWrDate(String wrDate) {
 		this.wrDate = wrDate;
 	}
 

@@ -21,6 +21,7 @@ import com.bukkeubook.book.document.model.dto.DocumentAndEmpAndFormCateDTO;
 import com.bukkeubook.book.document.model.dto.DocumentDTO;
 import com.bukkeubook.book.document.model.dto.EmpDTO;
 import com.bukkeubook.book.document.model.dto.FormCateDTO;
+import com.bukkeubook.book.document.model.entity.Approver;
 import com.bukkeubook.book.document.model.service.DocService;
 
 @Controller
@@ -34,7 +35,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 		this.docService = docService;
 	}
 
-	/* 전자결재 작성 첫화면 */
+	/* 전자결재 작성 첫화면 - 양식 고르기 */
 	@GetMapping("insert")
 	public ModelAndView toDocWrite(ModelAndView mv) {
 		
@@ -117,6 +118,9 @@ public class DocumentController {		// 전자결재 컨트롤러
 	public ModelAndView tempSave(DocumentDTO newDoc, RedirectAttributes rttr, ModelAndView mv) {
 		
 //		System.out.println("djhkfghdjsgkfdjdfjdffffffffffffffffffffffffffffffffffffffffff");
+		String docStatus = "임시저장";
+		
+		newDoc.setDocStatus(docStatus);
 		System.out.println(newDoc);
 		
 		docService.insertNewtempDocument(newDoc);
@@ -185,32 +189,157 @@ public class DocumentController {		// 전자결재 컨트롤러
 		
 	}
 	
-	/* 기안서 상신하기 */
+	/* 새로작성한 기안서, 지결서 상신하기 */
 	@PostMapping("submitReport")
 	public ModelAndView draftSubmitReport(ModelAndView mv,DocumentDTO newDoc, RedirectAttributes rttr
-										, @RequestParam String number, @RequestParam String approver1
+										, @RequestParam("app1") String app1, @RequestParam String approver1
 										, @RequestParam String approver2, @RequestParam String approver3, @RequestParam String submitTitle) {
 		System.out.println("잘 가져 왔니");
 		System.out.println(newDoc);
-		System.out.println(number);
+		System.out.println("number1          " + app1);
 		System.out.println(approver1);
 		System.out.println(approver2);
 		System.out.println(approver3);
 		System.out.println(submitTitle);
-		
+		String appStatus = "대기";
+		String docStatus = "대기";
 		/* 일단 문서 인서트 */
 		newDoc.setDocTitle(submitTitle);
+		newDoc.setDocStatus(docStatus);
 		
 		/* 다음은 결재경로 */
-//		AppRootDTO appRoot = new AppRootDTO();
-//		int step = Integer.valueOf(number);
-//		appRoot.setStepNo(step);
+		AppRootDTO appRoot = new AppRootDTO();
+		int step = Integer.valueOf(app1);
+		appRoot.setStepNo(step);
 		
 		/* 결재자 인서트 */
-		if(approver1 != null) {}
+		/* 결재자가 한명일 때 */
+		if(approver1 != "" && approver2 == "" && approver3 == "") {
+			
+			int appr = Integer.valueOf(approver1);
+			ApproverDTO approver = new ApproverDTO();
+			approver.setEmpNo(appr);
+			approver.setAppStatus(appStatus);
+			docService.insertNewDocOneAcc(newDoc,appRoot,approver);
+			
+		} else if(approver1 != "" && approver2 != "" && approver3 == "") {
+			/* 결재자가 두명일 때 */
+			int appr1 = Integer.valueOf(approver1);
+			ApproverDTO appro = new ApproverDTO();
+			appro.setEmpNo(appr1);
+			appro.setAppStatus(appStatus);
+			
+			int appr2 = Integer.valueOf(approver2);
+			ApproverDTO appro2 = new ApproverDTO();
+			appro2.setEmpNo(appr2);
+			appro2.setAppStatus(appStatus);
+			
+			docService.insertNewDocTwoAcc(newDoc,appRoot,appro,appro2);
+			
+		} else if (approver1 != "" && approver2 != "" && approver3 != "") {
+			/* 결재자가 세명일 때 */
+			int appr1 = Integer.valueOf(approver1);
+			ApproverDTO appro = new ApproverDTO();
+			appro.setEmpNo(appr1);
+			appro.setAppStatus(appStatus);
+			
+			int appr2 = Integer.valueOf(approver2);
+			ApproverDTO appro2 = new ApproverDTO();
+			appro2.setEmpNo(appr2);
+			appro2.setAppStatus(appStatus);
+			
+			int appr3 = Integer.valueOf(approver3);
+			ApproverDTO appro3 = new ApproverDTO();
+			appro3.setEmpNo(appr2);
+			appro3.setAppStatus(appStatus);
+			
+			docService.insertNewDocThreeAcc(newDoc,appRoot,appro,appro2,appro3);
+			
+		}
 		
-		//docService.insertNewDoc(newDoc);
 		
+		
+		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		mv.setViewName("redirect:/document/docList");
+		
+		return mv;
+	}
+	
+	/* 임시저장된 기안서, 지결서 상신하기 */
+	@PostMapping("submitTempReport")
+	public ModelAndView submitTempReport (ModelAndView mv,DocumentDTO tempDoc, RedirectAttributes rttr
+										, @RequestParam("app1") String app1, @RequestParam String approver1
+										, @RequestParam String approver2, @RequestParam String approver3, @RequestParam String submitTitle) {
+		
+		System.out.println("잘 가져 왔니");
+		System.out.println(tempDoc);
+		System.out.println("number1          " + app1);
+		System.out.println(approver1);
+		System.out.println(approver2);
+		System.out.println(approver3);
+		System.out.println(submitTitle);
+		String appStatus = "대기";
+		/* 일단 문서 인서트 */
+		tempDoc.setDocTitle(submitTitle);
+		
+		/* 다음은 결재경로 */
+		AppRootDTO appRoot = new AppRootDTO();
+		int step = Integer.valueOf(app1);
+		appRoot.setStepNo(step);
+		
+		/* 결재자 인서트 */
+		List<Approver> approverList = new ArrayList<>();
+		
+		/* 결재자가 한명일 때 */
+		if(approver1 != "" && approver2 == "" && approver3 == "") {
+			
+			int appr = Integer.valueOf(approver1);
+			ApproverDTO approver = new ApproverDTO();
+			approver.setEmpNo(appr);
+			approver.setAppStatus(appStatus);
+			docService.submitTempDocOneAcc(tempDoc,appRoot,approver);
+			
+		} else if(approver1 != "" && approver2 != "" && approver3 == "") {
+			/* 결재자가 두명일 때 */
+			int appr1 = Integer.valueOf(approver1);
+			Approver appro = new Approver();
+			appro.setEmpNo(appr1);
+			appro.setAppStatus(appStatus);
+			
+			int appr2 = Integer.valueOf(approver2);
+			Approver appro2 = new Approver();
+			appro2.setEmpNo(appr2);
+			appro2.setAppStatus(appStatus);
+			
+			approverList.add(appro);
+			approverList.add(appro2);
+			
+			docService.submitTempDocTwoAcc(tempDoc,appRoot,approverList);
+			
+		} else if (approver1 != "" && approver2 != "" && approver3 != "") {
+			/* 결재자가 세명일 때 */
+			int appr1 = Integer.valueOf(approver1);
+			Approver appro = new Approver();
+			appro.setEmpNo(appr1);
+			appro.setAppStatus(appStatus);
+			
+			int appr2 = Integer.valueOf(approver2);
+			Approver appro2 = new Approver();
+			appro2.setEmpNo(appr2);
+			appro2.setAppStatus(appStatus);
+			
+			int appr3 = Integer.valueOf(approver3);
+			Approver appro3 = new Approver();
+			appro3.setEmpNo(appr2);
+			appro3.setAppStatus(appStatus);
+			
+			approverList.add(appro);
+			approverList.add(appro2);
+			approverList.add(appro3);
+			
+			docService.submitTempDocTwoAcc(tempDoc,appRoot,approverList);
+		
+		}
 		
 		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
 		mv.setViewName("redirect:/document/docList");

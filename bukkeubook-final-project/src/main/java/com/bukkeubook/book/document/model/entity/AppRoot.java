@@ -27,7 +27,7 @@ public class AppRoot{
 			strategy = GenerationType.SEQUENCE,
 			generator = "DOCUMENT_SEQ_APP_ROOT_NO"
 	)
-	@Column(name = "APP_PATH_NO")
+	@Column(name = "APP_ROOT_NO")
 	private int appRootNo;
 	
 	@Column(name = "DOC_NO")

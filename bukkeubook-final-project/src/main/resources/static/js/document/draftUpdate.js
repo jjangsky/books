@@ -145,7 +145,8 @@ window.onload = function() {
 		todayString += todayDate;
 
 		$("#date2").text(todayString);
-		$("#wrDate").val(todayString);
+		$("#wrDate1").val(todayString);
+		$("#wrDate2").val(todayString);
 	});
 
 	$("#title").keyup(function() {
@@ -196,8 +197,8 @@ window.onload = function() {
 		});
 	});
 
-		let docNo = $("#docNo").val();
-	$("#deleteTemp").click(function(){
+	let docNo = $("#docNo").val();
+	$("#deleteTemp").click(function() {
 		Swal.fire({
 			title: '해당 임시저장 문서를\n삭제합니다.',
 			text: "진행 하시겠습니까?",
@@ -209,9 +210,9 @@ window.onload = function() {
 			cancelButtonText: '취소'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				
+
 				console.log(docNo);
-				location.href="/document/deleteTempDoc/"+docNo
+				location.href = "/document/deleteTempDoc/" + docNo
 			}
 		});
 	})
@@ -219,39 +220,72 @@ window.onload = function() {
 }
 
 function sendData() {
+
+	let account1 = $("#empList option:selected").text();
+	let account2 = $("#empList2 option:selected").text();
+	let account3 = $("#empList3 option:selected").text();
+
+	let ac1 = $("#empList option:selected").val();
+	let ac2 = $("#empList2 option:selected").val();
+	let ac3 = $("#empList3 option:selected").val();
+
+	let deptName1 = $("#deptCode option:selected").text();
+	let deptName2 = $("#deptCode2 option:selected").text();
+	let deptName3 = $("#deptCode3 option:selected").text();
+
+	let stepNo = "";
+
 	if ($("#title").val().length < 1 || $("#title").val() == "" || $("#title").val() == "  ") {
 		Swal.fire({
-				icon: 'warning',
-				title: '제목이 없습니다',
-				text: '문서의 제목을 입력해주세요.'
-			})
+			icon: 'warning',
+			title: '제목이 없습니다',
+			text: '문서의 제목을 입력해주세요.'
+		})
 	} else if ($("#title").val().length < 5 || $("#title").val().length < 5) {
 		Swal.fire({
-				icon: 'warning',
-				title: '글자 수 부족',
-				text: '문서의 제목을 5글자 이상 입력해주세요.'
-			})
-	}
-
-	//console.log($(".note-editable").text());
-	if ($(".note-editable").text().length < 1 || $(".note-editable").text() == "" || $(".note-editable").text() == "  ") {
+			icon: 'warning',
+			title: '글자 수 부족',
+			text: '문서의 제목을 5글자 이상 입력해주세요.'
+		})
+	} else if ($(".note-editable").text().length < 1 || $(".note-editable").text() == "" || $(".note-editable").text() == "  ") {
 		Swal.fire({
-				icon: 'warning',
-				title: '내용이 없습니다',
-				text: '문서의 내용을 입력해주세요.'
-			})
+			icon: 'warning',
+			title: '내용이 없습니다',
+			text: '문서의 내용을 입력해주세요.'
+		})
 	} else if ($(".note-editable").text().length < 10) {
 		Swal.fire({
-				icon: 'warning',
-				title: '글자 수 부족',
-				text: '문서의 내용을 10글자 이상 입력해주세요.'
-			})
-	}
-
-	else {
+			icon: 'warning',
+			title: '글자 수 부족',
+			text: '문서의 내용을 10글자 이상 입력해주세요.'
+		})
+	} else if (account1 == "") {
+		Swal.fire({
+			icon: 'warning',
+			title: '결재라인 없음',
+			text: '최소 결재라인을 지정해주세요!'
+		})
+	} else {
+		$("#acco1").val(account1);
+		$("#acco2").val(account2);
+		$("#acco3").val(account3);
+		//$("#stepNo").val(stepNo);
+		//$("#step").text(stepNo);
+		$("#deptName1").val(deptName1);
+		$("#deptName2").val(deptName2);
+		$("#deptName3").val(deptName3);
+		$("#account1").val(ac1);
+		$("#account2").val(ac2);
+		$("#account3").val(ac3);
 		let sendDraft = $(".draft").html();
 		console.log(sendDraft);
 		$("#draftcnt").val(sendDraft);
+		$("#docStatus").val("대기");
+		let cnt = $(".description").val();
+		console.log(cnt)
+		$("#cnttt").val(cnt);
+		$("#docTitle").val($("#title").val());
+		$("#submitReport").submit();
 	}
 
 }
@@ -261,12 +295,22 @@ function selectacc() {
 	let account2 = $("#empList2 option:selected").text();
 	let account3 = $("#empList3 option:selected").text();
 
+	let ac1 = $("#empList option:selected").val();
+	let ac2 = $("#empList2 option:selected").val();
+	let ac3 = $("#empList3 option:selected").val();
+
+	let deptName1 = $("#deptCode option:selected").text();
+	let deptName2 = $("#deptCode2 option:selected").text();
+	let deptName3 = $("#deptCode3 option:selected").text();
+
+	let stepNo = "";
+
 	if (account1 == "") {
 		Swal.fire({
-				icon: 'warning',
-				title: '결재라인 없음',
-				text: '최소 결재라인을 지정해주세요!'
-			})
+			icon: 'warning',
+			title: '결재라인 없음',
+			text: '최소 결재라인을 지정해주세요!'
+		})
 	} else if (account2 == "" && account3 == "") {
 		Swal.fire({
 			title: '결재라인이 1단계로 \n종료됩니다.',
@@ -282,8 +326,13 @@ function selectacc() {
 				$("#selacc1").text(account1);
 				$("#selacc2").text(account2);
 				$("#selacc3").text(account3);
+				$("#acco1").val(account1);
+				$("#acco2").val(account2);
+				$("#acco3").val(account3);
 			}
 		})
+
+		stepNo = "1";
 	} else if (account3 == "") {
 		Swal.fire({
 			title: '결재라인이 2단계로 \n종료됩니다.',
@@ -299,8 +348,12 @@ function selectacc() {
 				$("#selacc1").text(account1);
 				$("#selacc2").text(account2);
 				$("#selacc3").text(account3);
+				$("#acco1").val(account1);
+				$("#acco2").val(account2);
+				$("#acco3").val(account3);
 			}
 		})
+		stepNo = "2";
 	} else {
 		Swal.fire({
 			title: '결재라인이 3단계로 \n종료됩니다.',
@@ -316,10 +369,23 @@ function selectacc() {
 				$("#selacc1").text(account1);
 				$("#selacc2").text(account2);
 				$("#selacc3").text(account3);
+				$("#acco1").val(account1);
+				$("#acco2").val(account2);
+				$("#acco3").val(account3);
 			}
 		})
+		stepNo = "3";
 	}
-}
 
+	$("#stepNo").val(stepNo);
+	$("#step").text(stepNo);
+	$("#deptName1").val(deptName1);
+	$("#deptName2").val(deptName2);
+	$("#deptName3").val(deptName3);
+	$("#account1").val(ac1);
+	$("#account2").val(ac2);
+	$("#account3").val(ac3);
+
+}
 
 

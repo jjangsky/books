@@ -19,13 +19,13 @@ public class DocumentDTO implements Serializable{
 	private String docTitle;
 	private String tagCnt;
 	private String cnt;
-	private java.sql.Date wrDate;
+	private String wrDate;
 	private String docStatus;
 	private int formNo;
 	public DocumentDTO() {
 		super();
 	}
-	public DocumentDTO(int docNo, int empNo, String docTitle, String tagCnt, String cnt, Date wrDate, String docStatus,
+	public DocumentDTO(int docNo, int empNo, String docTitle, String tagCnt, String cnt, String wrDate, String docStatus,
 			int formNo) {
 		super();
 		this.docNo = docNo;
@@ -67,10 +67,10 @@ public class DocumentDTO implements Serializable{
 	public void setCnt(String cnt) {
 		this.cnt = cnt;
 	}
-	public java.sql.Date getWrDate() {
+	public String getWrDate() {
 		return wrDate;
 	}
-	public void setWrDate(java.sql.Date wrDate) {
+	public void setWrDate(String wrDate) {
 		this.wrDate = wrDate;
 	}
 	public String getDocStatus() {

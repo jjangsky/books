@@ -118,7 +118,8 @@ window.onload = function() {
 		todayString += todayDate;
 
 		$("#wrDate").val(todayString);
-		$("#date").text(todayString);
+		$("#wrDate1").val(todayString);
+		$("#wrDate2").val(todayString);
 	});
 
 	$("#title").keyup(function() {
@@ -172,7 +173,10 @@ window.onload = function() {
 	});
 
 }
+
 function sendData() {
+	
+	console.log("나불러쪄?");
 
 	const cnts = document.querySelectorAll('table#write tbody tr #cnt');
 	const amts = document.querySelectorAll('table#write tbody tr #amt');
@@ -187,51 +191,93 @@ function sendData() {
 	// console.log(memos);
 
 	let totalamt = 0;
+	
+	let account1 = $("#empList option:selected").text();
+	let account2 = $("#empList2 option:selected").text();
+	let account3 = $("#empList3 option:selected").text();
 
-	for (let i = 0; i < amts.length; i++) {
-		if (!(Number(amts[i].innerText) || amts[i].innerText === '')) {
-			//alert('숫자 아닌거 있음');
-			Swal.fire({
-				icon: 'warning',
-				title: '금액란 입력 오류',
-				text: '금액란에 숫자만 입력해주세요!',
-			})
-			return;
-		} else if (amts[0].innerText.length < 1) {
-			console.log(amts[0].innerText);
-			//alert('내용 한개이상 입력해야함');
-			Swal.fire({
-				icon: 'warning',
-				title: '등록된 금액이 없습니다!',
-				text: '내용을 한개이상 입력해주세요!',
-			})
-			return;
-		} else {
-			totalamt += Number(amts[i].innerText);
+	let ac1 = $("#empList option:selected").val();
+	let ac2 = $("#empList2 option:selected").val();
+	let ac3 = $("#empList3 option:selected").val();
+
+	let deptName1 = $("#deptCode option:selected").text();
+	let deptName2 = $("#deptCode2 option:selected").text();
+	let deptName3 = $("#deptCode3 option:selected").text();
+	
+	let check = true;
+
+	let text = $("#title").text();
+	console.log(text);
+	console.log($("#submitTitle").val(text));
+	
+	let sendDraft = $("#insertin").html();
+	console.log(sendDraft);
+	let cnt = $("#writein").html();
+	console.log(cnt)
+	$("#draftcnt").val(sendDraft);
+	$("#cnttt").val(cnt);
+	$("#docStatus").val("대기");
+	$("#submitTitle").val($("#title").text());
+
+	if (account1 == "") {
+		Swal.fire({
+			icon: 'warning',
+			title: '결재라인 없음',
+			text: '최소 결재라인을 지정해주세요!'
+		})
+	}else if (text == ""){
+		Swal.fire({
+			icon: 'warning',
+			title: '제목 없음',
+			text: '제목을 작성해주세요!'
+		})
+	}else if(check){
+		for (let i = 0; i < amts.length; i++) {
+			if (!(Number(amts[i].innerText) || amts[i].innerText === '')) {
+				//alert('숫자 아닌거 있음');
+				Swal.fire({
+					icon: 'warning',
+					title: '금액란 입력 오류',
+					text: '금액란에 숫자만 입력해주세요!',
+				})
+				break;
+			} else if (amts[0].innerText.length < 1) {
+				//console.log(amts[0].innerText);
+				//alert('내용 한개이상 입력해야함');
+				Swal.fire({
+					icon: 'warning',
+					title: '등록된 금액이 없습니다!',
+					text: '내용을 한개이상 입력해주세요!',
+				})
+				break;
+			} else {
+				totalamt += Number(amts[i].innerText);
+			}
 		}
-	}
-
-	for (let i = 0; i < cnts.length; i++) {
-		if (cnts[0].innerText.length < 1) {
-			console.log(cnts[0].innerText);
-			//alert('내용없음 한개이상 입력해야함');
-			Swal.fire({
-				icon: 'warning',
-				title: '등록된 내용이 없습니다!',
-				text: '내용을 한개이상 입력해주세요!',
-			})
-			return;
-		} else {
-			resultamts[i].innerText = amts[i].innerText
-			resultcnts[i].innerText = cnts[i].innerText
-			resultmemos[i].innerText = memos[i].innerText
-
-			// console.log(totalamt);
-
-			document.getElementById("sumamt").innerText = totalamt;
-
+	
+		for (let i = 0; i < cnts.length; i++) {
+			if (cnts[0].innerText.length < 1) {
+				//console.log(cnts[0].innerText);
+				//alert('내용없음 한개이상 입력해야함');
+				Swal.fire({
+					icon: 'warning',
+					title: '등록된 내용이 없습니다!',
+					text: '내용을 한개이상 입력해주세요!',
+				})
+				break;
+			} else {
+				resultamts[i].innerText = amts[i].innerText
+				resultcnts[i].innerText = cnts[i].innerText
+				resultmemos[i].innerText = memos[i].innerText
+	
+				// console.log(totalamt);
+	
+				document.getElementById("sumamt").innerText = totalamt;
+				
+				$("#submitReport").submit();
+			}
 		}
-	}
+	} 
 
 }
 
@@ -240,12 +286,22 @@ function selectacc() {
 	let account2 = $("#empList2 option:selected").text();
 	let account3 = $("#empList3 option:selected").text();
 
+	let ac1 = $("#empList option:selected").val();
+	let ac2 = $("#empList2 option:selected").val();
+	let ac3 = $("#empList3 option:selected").val();
+
+	let deptName1 = $("#deptCode option:selected").text();
+	let deptName2 = $("#deptCode2 option:selected").text();
+	let deptName3 = $("#deptCode3 option:selected").text();
+
+	let stepNo = "";
+
 	if (account1 == "") {
 		Swal.fire({
-				icon: 'warning',
-				title: '결재라인 없음',
-				text: '최소 결재라인을 지정해주세요!'
-			})
+			icon: 'warning',
+			title: '결재라인 없음',
+			text: '최소 결재라인을 지정해주세요!'
+		})
 	} else if (account2 == "" && account3 == "") {
 		Swal.fire({
 			title: '결재라인이 1단계로 \n종료됩니다.',
@@ -261,8 +317,13 @@ function selectacc() {
 				$("#selacc1").text(account1);
 				$("#selacc2").text(account2);
 				$("#selacc3").text(account3);
+				$("#acco1").val(account1);
+				$("#acco2").val(account2);
+				$("#acco3").val(account3);
 			}
 		})
+
+		stepNo = "1";
 	} else if (account3 == "") {
 		Swal.fire({
 			title: '결재라인이 2단계로 \n종료됩니다.',
@@ -278,8 +339,12 @@ function selectacc() {
 				$("#selacc1").text(account1);
 				$("#selacc2").text(account2);
 				$("#selacc3").text(account3);
+				$("#acco1").val(account1);
+				$("#acco2").val(account2);
+				$("#acco3").val(account3);
 			}
 		})
+		stepNo = "2";
 	} else {
 		Swal.fire({
 			title: '결재라인이 3단계로 \n종료됩니다.',
@@ -295,8 +360,86 @@ function selectacc() {
 				$("#selacc1").text(account1);
 				$("#selacc2").text(account2);
 				$("#selacc3").text(account3);
+				$("#acco1").val(account1);
+				$("#acco2").val(account2);
+				$("#acco3").val(account3);
 			}
 		})
+		stepNo = "3";
 	}
+
+	$("#stepNo").val(stepNo);
+	$("#step").text(stepNo);
+	$("#deptName1").val(deptName1);
+	$("#deptName2").val(deptName2);
+	$("#deptName3").val(deptName3);
+	$("#account1").val(ac1);
+	$("#account2").val(ac2);
+	$("#account3").val(ac3);
+
 }
 
+function takeout() {
+	
+	console.log("send send 나불러쪄?");
+
+	const cnts = document.querySelectorAll('table#write tbody tr #cnt');
+	const amts = document.querySelectorAll('table#write tbody tr #amt');
+	const memos = document.querySelectorAll('table#write tbody tr #memo');
+
+	const resultcnts = document.querySelectorAll('table#inserttbl tbody tr #cnt');
+	const resultamts = document.querySelectorAll('table#inserttbl tbody tr #amt');
+	const resultmemos = document.querySelectorAll('table#inserttbl tbody tr #memo');
+
+	// console.log(cnts);
+	// console.log(amts);
+	// console.log(memos);
+
+	let totalamt = 0;
+	
+		for (let i = 0; i < amts.length; i++) {
+			if (!(Number(amts[i].innerText) || amts[i].innerText === '')) {
+				//alert('숫자 아닌거 있음');
+				Swal.fire({
+					icon: 'warning',
+					title: '금액란 입력 오류',
+					text: '금액란에 숫자만 입력해주세요!',
+				})
+				break;
+			} else if (amts[0].innerText.length < 1) {
+				//console.log(amts[0].innerText);
+				//alert('내용 한개이상 입력해야함');
+				Swal.fire({
+					icon: 'warning',
+					title: '등록된 금액이 없습니다!',
+					text: '내용을 한개이상 입력해주세요!',
+				})
+				break;
+			} else {
+				totalamt += Number(amts[i].innerText);
+			}
+		}
+	
+		for (let i = 0; i < cnts.length; i++) {
+			if (cnts[0].innerText.length < 1) {
+				//console.log(cnts[0].innerText);
+				//alert('내용없음 한개이상 입력해야함');
+				Swal.fire({
+					icon: 'warning',
+					title: '등록된 내용이 없습니다!',
+					text: '내용을 한개이상 입력해주세요!',
+				})
+				break;
+			} else {
+				resultamts[i].innerText = amts[i].innerText
+				resultcnts[i].innerText = cnts[i].innerText
+				resultmemos[i].innerText = memos[i].innerText
+	
+				// console.log(totalamt);
+	
+				document.getElementById("sumamt").innerText = totalamt;
+	
+			}
+		}
+
+}

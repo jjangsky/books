@@ -13,16 +13,12 @@
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
 	<script>
-		 
      $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
-    
 	</script>
 	 
 	<script src="/js/document/expenditure.js"></script>
 	<h4 class="mb-4" id="main-text">지출결의서 작성</h4>
-	<hr>
-	<br>
-	<br>
+	<hr><br><br>
 
 	<div>
 		<button style="float: right; margin-right: 5%;" class="select btn"
@@ -30,8 +26,8 @@
 	</div>
 
 	<div class="total">
+		<br><br>
 		<h4 style="padding-left:30px;">결재라인 지정</h4>
-		<br>
 		<table class="tbl2" border="1px solid gray">
 			<tr>
 				<th></th>
@@ -73,14 +69,71 @@
 		</button>
 		<br><br>
 	</div>
-	<div class="total">
-		<h4>참조자 설정</h4>
-		<table>
-
-		</table>
-		<br>
-		<button type="button" onclick="selectref()">참조자 지정</button>
-	</div>
+	<div class="total tbl3">
+		<br><br>
+		<h4>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          결재자 확인
+          </h4>
+          <table class="tbl3 ck" border="1px solid gray">
+            <tr>
+              <th>단계</th>
+              <th>부서</th>
+              <th>사번</th>
+              <th>결재자</th>
+            </tr>
+            <form action="/document/submitReport" method="post" id="submitReport">
+	            <tr>
+	              <th rowspan="3" id="step">
+	              	<input class="inp" type="hidden">
+	              </th>
+	              <td>
+	              	<input class="inp" type="text" id="stepNo" name="app1">
+	              	<input class="inp" type="text" id="deptName1" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco1"readonly> -->
+	              	<input class="inp" type="text" id="account1" name="approver1"readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco1" readonly>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>
+	              	<input class="inp" type="text" id="deptName2" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco2" readonly> -->
+	              	<input class="inp" type="text" id="account2" name="approver2"readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco2" readonly>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>
+	              	<input class="inp" type="text" id="deptName3" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco3" readonly> -->
+	              	<input class="inp" type="text" id="account3" name="approver3"readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco3" readonly>
+	              </td>
+	            </tr>
+	          </table>
+	          <input type="hidden" name="formNo" value="2" >
+	          <input type="text" id="draftcnt" name="tagCnt">
+	          <input type="text" id="wrDate2" name="wrDate">
+	          <input type="text" id="docStatus" name="docStatus">
+	          <input type="text" value="10" id="empNo" name="empNo">
+	          <input type="text" id="submitTitle" name="submitTitle">
+	          <input type="text" id="cnttt" name="cnt" readonly>
+          </form>
+          <br>
+      </div>
 	<br clear="both">
 	<div class="total">
 		<div id="writein">
@@ -163,12 +216,12 @@
 			<form id="temp" action="/document/tempStore" method="post">
 				<input type="hidden" name="formNo" value="2" >
 		        <input type="hidden" id="draftcnt" name="tagCnt">
-		        <input type="hidden" id="wrDate" name="wrDate">
+		        <input type="hidden" id="wrDate1" name="wrDate">
 		        <input type="hidden" id="docStatus" name="docStatus">
 		        <input type="hidden" value="10" id="empNo" name="empNo">
 		        <input type="hidden" id="docTitle" name="docTitle">
 		        <input type="hidden" id="cnttt" name="cnt" readonly>
-				<button class="select btn" type="button" onclick="sendData()">반영하기</button>
+				<button class="select btn" type="button" onclick="takeout()">반영하기</button>
 			</form>
 		</div>
 	</div>

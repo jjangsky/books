@@ -4,11 +4,20 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-@Entity(name = "Approval")
-@Table(name = "TBL_APPROVAL")
+@Entity(name = "Approver")
+@Table(name = "TBL_APPROVER")
+@SequenceGenerator(
+		name = "APPROVER_SEQ_APP_NO",
+		sequenceName = "SEQ_APP_NO",
+		initialValue = 1,
+		allocationSize = 1
+)
 public class Approver{
 
 //	APP_NO	결재자번호	NUMBER
@@ -17,6 +26,10 @@ public class Approver{
 //	APP_STATUS	문서상태	VARCHAR2(100 BYTE)
 	
 	@Id
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "APPROVER_SEQ_APP_NO"
+	)
 	@Column(name = "APP_NO")
 	private int appNo;
 	

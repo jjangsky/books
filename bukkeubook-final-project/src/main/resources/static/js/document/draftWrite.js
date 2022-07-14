@@ -138,7 +138,8 @@ window.onload = function() {
 		todayString += todayDate;
 
 		$("#date2").text(todayString);
-		$("#wrDate").val(todayString);
+		$("#wrDate1").val(todayString);
+		$("#wrDate2").val(todayString);
 	});
 
 	$("#title").keyup(function() {
@@ -159,14 +160,14 @@ window.onload = function() {
 			cancelButtonText: '취소'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				$("#docStatus").val("임시저장");
+				$("#docStatus1").val("임시저장");
 				let cnt = $(".description").val();
 				console.log(cnt)
-				$("#cnttt").val(cnt);
+				$("#cnttt1").val(cnt);
 
 				let sendDraft = $(".draft").html();
 				console.log(sendDraft);
-				$("#draftcnt").val(sendDraft);
+				$("#draftcnt1").val(sendDraft);
 				$("#temp").submit();
 			}
 		})
@@ -243,8 +244,8 @@ function sendData() {
 		$("#acco1").val(account1);
 		$("#acco2").val(account2);
 		$("#acco3").val(account3);
-		$("#stepNo").val(stepNo);
-		$("#step").text(stepNo);
+		//$("#stepNo").val(stepNo);
+		//$("#step").text(stepNo);
 		$("#deptName1").val(deptName1);
 		$("#deptName2").val(deptName2);
 		$("#deptName3").val(deptName3);
@@ -253,12 +254,12 @@ function sendData() {
 		$("#account3").val(ac3);
 		let sendDraft = $(".draft").html();
 		console.log(sendDraft);
-		$("#draftcnt").val(sendDraft);
-		$("#docStatus").val("대기");
+		$("#draftcnt2").val(sendDraft);
+		$("#docStatus2").val("대기");
 		let cnt = $(".description").val();
 		console.log(cnt)
-		$("#cnttt").val(cnt);
-		$("#docTitle").val($("#title").val());
+		$("#cnttt2").val(cnt);
+		$("#docTitle2").val($("#title").val());
 		$("#submitReport").submit();
 	}
 
