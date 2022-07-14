@@ -1,5 +1,7 @@
 package com.bukkeubook.book.mypage.model.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +40,16 @@ public class AttendService {
 	public void registCheckIn(AttendDTO attend) {
 		
 		attendRepository.save(modelMapper.map(attend, Attend.class));
+		
+	}
+	
+	/* 마이페이지에서 퇴근 등록하기 */
+	@Transactional
+	public void modifyCheckOut(AttendDTO attend) {
+		
+		Attend modifyCheckOut = attendRepository.findByAttDateLike(attend.getAttDate());
+		
+		modifyCheckOut.setAttEnd(attend.getAttDate());
 		
 	}
 	

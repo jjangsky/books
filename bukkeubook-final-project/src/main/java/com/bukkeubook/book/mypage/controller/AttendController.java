@@ -1,7 +1,7 @@
 package com.bukkeubook.book.mypage.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import java.util .Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -28,6 +27,7 @@ public class AttendController {
 		this.attendService = attendService;
 	}
 	
+	/* 근태 조회 페이지 이동 */
 	@GetMapping("/findPage")
 	public ModelAndView findMyAttend(ModelAndView mv) {
 		
@@ -41,37 +41,55 @@ public class AttendController {
 		return mv;
 	}
 	
+	/* 출근 등록 버튼 */
 	@PostMapping("/checkIn")
-	public ModelAndView registCheckIn(ModelAndView mv, RedirectAttributes rttr, Locale locale, String startDate, String startStart){
-		
-		System.out.println("Controller                           " +startDate);			
+	public ModelAndView registCheckIn(ModelAndView mv, RedirectAttributes rttr, Locale locale){
 		
 		
-		java.sql.Date startDay = java.sql.Date.valueOf(startDate);
-		java.sql.Date startTime = java.sql.Date.valueOf(startStart);
+		Date today = new Date();
+		long time = today.getTime();
+		java.sql.Date startDate = new java.sql.Date(time);
 		
-		System.out.println("type :    " + startDate);
+
 		int memberInfo = 5;
 		
 		AttendDTO attend = new AttendDTO();
 		
-		attend.setAttDate(startDay);
-		attend.setAttStart(startTime);
+		attend.setAttDate(startDate);
+		attend.setAttStart(startDate);
 		attend.setEmpNo(memberInfo);
-		
-//		System.out.println("class확인해보자:" + (attend.getAttDate()).getClass());
-	
 		
 
 		 attendService.registCheckIn(attend);
 		 
-		 rttr.addFlashAttribute("registSuccessMessage", "일정을 성공적으로 등록하셨습니다.");
-		 mv.setViewName("redirect:/mypage/calendar");
-		
-		
-
+		 rttr.addFlashAttribute("successMessage", "출근 등록이 정상적으로 처리 되었습니다.");
+		 mv.setViewName("redirect:/");
 		
 		return mv;
+	}
+	
+	/* 퇴근 등록 버튼 */
+	@PostMapping("/checkOut")
+	public ModelAndView updateCheckOut(ModelAndView mv, RedirectAttributes rttr, Locale locale) {
+		
+		AttendDTO attend = new AttendDTO();
+		
+		Date today = new Date();
+		long time = today.getTime();
+		java.sql.Date startDate = new java.sql.Date(time);
+		
+		attend.setAttDate(startDate);
+		
+		System.out.println(attend);
+		
+		attendService.modifyCheckOut(attend);
+		
+		rttr.addFlashAttribute("successMessage", "퇴근 등록이 정상적으로 처리 되었습니다.");
+		 mv.setViewName("redirect:/");
+		
+		
+		return null;
+		
 	}
 	
 }
