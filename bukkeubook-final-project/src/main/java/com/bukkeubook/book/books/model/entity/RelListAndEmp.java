@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.entity.Emp;
 
-@Entity
+@Entity(name="RelListAndEmp")
 @Table(name="TBL_REL_LIST")
 public class RelListAndEmp implements Serializable{
 //	REL_NO	NUMBER
@@ -73,6 +73,9 @@ public class RelListAndEmp implements Serializable{
 	public String toString() {
 		return "RelListAndEmp [relNo=" + relNo + ", relDate=" + relDate + ", emp=" + emp + "]";
 	}
+
+	
+
 
 	
 
