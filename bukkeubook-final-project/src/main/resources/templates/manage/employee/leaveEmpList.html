@@ -19,7 +19,7 @@
         <h5 class="mb-4" id="sub-text">퇴사사원조회</h5>
         <br>
 
-        <div>
+ <!--   <div>
           <form action="">
             <button class="search btn" type="submit">검색</button> 
             <input class="search in" type="text" placeholder="검색어 입력" required>
@@ -32,7 +32,7 @@
             </select>
           </form>
         </div>
-        <div>
+        <div> --> 
           <table id="sampleTable">
               <tr>
                 <th class="th1">사원번호</th>
@@ -46,7 +46,7 @@
                 <td th:text="${ emp.empName }"></td>
                 <td th:text="${ emp.dept.deptName }"></td>
                 <td th:text="${ emp.empJobCode }"></td>
-                <td><button type="button" class="select btn" onclick="location.href='manage/leaveEmpDetail.html'">확인</button></td>
+                <td><button type="button" class="select btn" th:onclick="'location.href = \'' + @{/manage/oneLeaveEmp/{empNo}(empNo=${emp.empNo})} + '\''">확인</button></td>
               </tr>
           </table>
         </div>

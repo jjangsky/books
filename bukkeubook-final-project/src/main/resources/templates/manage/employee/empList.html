@@ -10,6 +10,7 @@
       <link rel="stylesheet" href="../css/style.css">
       <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
       <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+      <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
   </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
@@ -19,18 +20,18 @@
         <br>
 
         <div>
-          <form action="">
-            <button class="search btn" type="submit">검색</button> 
-            <input class="search in" type="text" placeholder="검색어 입력" required>
-            <select class="search select" required>
-              <option value="">None</option>
-              <option value="empCode">사원번호</option>
-              <option value="empName">사원명</option>
-              <option value="dept">부서</option>
-              <option value="position">직급</option>
-            </select>
-          </form>
-        </div>
+          <form action="/manage/empList" method="get">
+           <button class="search btn">검색</button> 
+           <input type="hidden" name="currentPage" value="1">
+		   <input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}" class="search in">
+           <select th:with="searchCondition = ${selectCriteria.searchCondition}" 
+            id="searchCondition" name="searchCondition" class="search select">
+              <option value="select">-- 분류 --</option>
+              <option value="empName" th:selected="${ searchCondition } == 'empName'">사원명</option>
+              <option value="empJobCode" th:selected="${ searchCondition } == 'empJobCode'">직급명</option>
+           </select>
+         </form>
+       </div>
         <div>
           <table id="sampleTable">
               <tr>
@@ -45,10 +46,17 @@
                 <td th:text="${ emp.empName }"></td>
                 <td th:text="${ emp.dept.deptName }"></td>
                 <td th:text="${ emp.empJobCode }"></td>
-                <td><button type="button" class="select btn" onclick="location.href='manage/empDetail'">확인</button></td>
+      <td><button type="button" class="select btn"  th:onclick="'location.href = \'' + @{/manage/oneEmp/{empNo}(empNo=${emp.empNo})} + '\''">확인</button></td>
               </tr>
           </table><br>
           <button type="button" class="insert btn" onclick="location.href='empInsert.html'">등록</button>
         </div>
+	<div th:replace="/manage/employee/emppaging.html"></div>
+      
+        <br><br>
+	
+	<script>
+
+	</script>
 </body>
 </html>

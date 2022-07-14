@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bukkeubook.book.document.model.dto.DeptDTO;
+import com.bukkeubook.book.document.model.dto.DocumentAndEmpAndFormCateDTO;
 import com.bukkeubook.book.document.model.dto.DocumentDTO;
 import com.bukkeubook.book.document.model.dto.EmpDTO;
 import com.bukkeubook.book.document.model.dto.FormCateDTO;
@@ -61,8 +62,19 @@ public class DocumentController {		// 전자결재 컨트롤러
 	
 	/* 임시저장 리스트 조회 */
 	@GetMapping("docTempList")
-	public String totempDocList() {
-		return "/document/docTempList";
+	public ModelAndView toTempDocList(ModelAndView mv) {
+		
+		int tempEmpNo = 10;
+		String docStatus = "임시저장";
+		
+		List<DocumentAndEmpAndFormCateDTO> tempDocList = docService.findTempDocList(tempEmpNo,docStatus);
+		
+//		System.out.println("ccccccccccccccc임시저장 리스트 조회cccccccccccccccc" + tempDocList);
+		
+		mv.addObject("tempDocList", tempDocList);
+		mv.setViewName("/document/docTempList");
+		
+		return mv;
 	}
 	
 	/* 결재라인 지정 ajax select Tag Option Dept */
@@ -74,7 +86,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 		
 		list = docService.findDept();
 		
-		System.out.println(list);
+//		System.out.println(list);
 		
 		return list;
 	}
@@ -99,10 +111,70 @@ public class DocumentController {		// 전자결재 컨트롤러
 	
 	/* 임시저장 */
 	@PostMapping("tempStore")
-	public ModelAndView tempSave(DocumentDTO doc, RedirectAttributes rttr, ModelAndView mv) {
+	public ModelAndView tempSave(DocumentDTO newDoc, RedirectAttributes rttr, ModelAndView mv) {
 		
-		System.out.println(doc);
+//		System.out.println("djhkfghdjsgkfdjdfjdffffffffffffffffffffffffffffffffffffffffff");
+		System.out.println(newDoc);
+		
+		docService.insertNewtempDocument(newDoc);
+		
+		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		mv.setViewName("redirect:/document/docTempList");
 		
 		return mv;
+	}
+	
+	/* 임시저장 수정 페이지 접속*/
+	@GetMapping("tempInfo/{docNo}")
+	public ModelAndView toUpdateTempDocPage(ModelAndView mv,@PathVariable String docNo) {
+		
+		int selectedDocNo = Integer.valueOf(docNo);
+		int tempEmpNo = 10;
+		String docStatus = "임시저장";
+		System.out.println("여기컨트롤러에서 번호 잘받았니      " + selectedDocNo);
+		
+		DocumentAndEmpAndFormCateDTO oneTempDoc = docService.findOneTempDoc(selectedDocNo,tempEmpNo,docStatus);
+		
+		System.out.println("갔다왔니");
+		System.out.println("갔다왔니");
+		System.out.println(oneTempDoc);
+		
+		mv.addObject("oneTempDoc", oneTempDoc);
+		mv.setViewName("/document/detailTempDoc");
+		
+		return mv;
+	}
+	
+	/* 임시저장 수정하기 */
+	@PostMapping("tempUpdate")
+	public ModelAndView updateTempDoc(ModelAndView mv, DocumentDTO updateDoc, RedirectAttributes rttr) {
+		
+		System.out.println("수정할 아이 챙겨왔니    " + updateDoc);
+		
+		docService.updateTempDocument(updateDoc);
+		
+		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		mv.setViewName("redirect:/document/docTempList");
+		
+		return mv;
+	}
+	
+	/* 임시저장 삭제하기 */
+	@GetMapping("deleteTempDoc/{num}")
+	public ModelAndView deleteTempDoc(ModelAndView mv, RedirectAttributes rttr, @PathVariable String num) {
+		
+		System.out.println("Controller                       " + num);
+		
+		int docNo = Integer.valueOf(num);
+		
+		System.out.println("for          Controller           " + docNo);
+		
+		docService.deleteTempDoc(docNo);
+		
+		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		mv.setViewName("redirect:/document/docTempList");
+		
+		return mv;
+		
 	}
 }

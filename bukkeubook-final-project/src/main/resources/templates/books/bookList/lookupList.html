@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
 <div th:replace="/common/topSideBar.html"></div>
@@ -103,6 +104,19 @@
 			}
 		}
 		
+		$('.newBookBtn').click(function(){
+			location.href='/book/newBook';
+		});
+		
+		const insertSuccessmessage = "[[${insertSuccessMessage}]]"
+		
+		if(insertSuccessmessage){
+			Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '수정이 성공적으로 완료되었습니다!',
+            })
+		}
 	</script>
 
 </body>

@@ -97,25 +97,32 @@ window.onload = function() {
 		});
 	});
 
-	$('.description').summernote({
-		height: 500,
-		width: 440,
-		toolbar: [
-			// 표만들기
-			['table', ['table']],
-			// 글머리 기호, 번호매기기, 문단정렬
-			['para', ['ul', 'ol', 'paragraph']],
-			// 코드보기, 확대해서보기, 도움말
-			['view', ['codeview', 'fullscreen', 'help']]
-		],
-		callbacks: {
-			onKeyup: function(e) {
-				setTimeout(function() {
-					$("#result").html($('.description').val());
-				}, 200);
+	let c = $("#c").val();
+	$("#content").val(c);
+	let content = $("#content").val();
+
+	console.log(content);
+
+	$('.description').summernote(
+		{
+			height: 500,
+			width: 440,
+			toolbar: [
+				// 표만들기
+				['table', ['table']],
+				// 글머리 기호, 번호매기기, 문단정렬
+				['para', ['ul', 'ol', 'paragraph']],
+				// 코드보기, 확대해서보기, 도움말
+				['view', ['codeview', 'fullscreen', 'help']]
+			],
+			callbacks: {
+				onKeyup: function(e) {
+					setTimeout(function() {
+						$("#result").html($('.description').val());
+					}, 200);
+				}
 			}
-		}
-	});
+		});
 
 	$(document).ready(function() {
 		let now = new Date();
@@ -169,24 +176,44 @@ window.onload = function() {
 				$("#draftcnt").val(sendDraft);
 				$("#temp").submit();
 			}
-		})
+		});
 	});
-	
-	$("#back").click(function(){
+
+	$("#back").click(function() {
 		Swal.fire({
-                  title: '작성내용이 모두 사라집니다.',
-                  text: "진행 하시겠습니까?",
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#c5bfbf',
-                  cancelButtonColor: '#c5bfbf',
-                  confirmButtonText: '승인',
-                  cancelButtonText: '취소'
-              }).then((result) => {
-                  if (result.isConfirmed) {
-                      window.history.back();
-                  }
-              })
+			title: '작성내용이 모두 사라집니다.',
+			text: "진행 하시겠습니까?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#c5bfbf',
+			cancelButtonColor: '#c5bfbf',
+			confirmButtonText: '승인',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				window.history.back();
+			}
+		});
+	});
+
+		let docNo = $("#docNo").val();
+	$("#deleteTemp").click(function(){
+		Swal.fire({
+			title: '해당 임시저장 문서를 삭제합니다.',
+			text: "진행 하시겠습니까?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#c5bfbf',
+			cancelButtonColor: '#c5bfbf',
+			confirmButtonText: '승인',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				
+				console.log(docNo);
+				location.href="/document/deleteTempDoc/"+docNo
+			}
+		});
 	})
 
 }
