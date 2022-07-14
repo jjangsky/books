@@ -153,8 +153,8 @@ public class BookService {
 		return bookList.stream().map(book -> modelMapper.map(book, RelListAndEmpDTO.class)).collect(Collectors.toList());
 	}
 
-	public List<RelBkListAndBookAndRelListDTO> outputDetail(/* int no */) {
-		List<RelBkListAndBookAndRelList> bookList = relBkListAndBookAndRelListRepository.findAll();
+	public List<RelBkListAndBookAndRelListDTO> outputDetail(int no2) {
+		List<RelBkListAndBookAndRelList> bookList = relBkListAndBookAndRelListRepository.findByrelListEmp_relNo(no2);
 		System.out.println(bookList);
 		return bookList.stream().map(book -> modelMapper.map(book, RelBkListAndBookAndRelListDTO.class)).toList();
 	}
