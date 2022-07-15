@@ -9,6 +9,7 @@ public class DeptDTO implements Serializable{
 	//	DEPT_CODE		NUMBER				부서코드
 //	DEPT_NAME		NVARCHAR2(31 CHAR)	부서명
 //	DEPT_REP_PHONE	VARCHAR2(15 BYTE)	대표번호
+//	DEPT_ACTIVE		VARCHAR2(3 BYTE)	활성화여부
 	
 	private int deptCode;			// 부서코드
 	private String deptName;		// 부서명
@@ -16,32 +17,41 @@ public class DeptDTO implements Serializable{
 	
 	public DeptDTO() {
 	}
-	
+
 	public DeptDTO(int deptCode, String deptName, String deptRepPhone) {
 		this.deptCode = deptCode;
 		this.deptName = deptName;
 		this.deptRepPhone = deptRepPhone;
 	}
-	
+
 	public int getDeptCode() {
 		return deptCode;
 	}
+
 	public void setDeptCode(int deptCode) {
 		this.deptCode = deptCode;
 	}
+
 	public String getDeptName() {
 		return deptName;
 	}
+
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
+
 	public String getDeptRepPhone() {
 		return deptRepPhone;
 	}
+
 	public void setDeptRepPhone(String deptRepPhone) {
 		this.deptRepPhone = deptRepPhone;
 	}
-	
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
 		return "DeptDTO [deptCode=" + deptCode + ", deptName=" + deptName + ", deptRepPhone=" + deptRepPhone + "]";

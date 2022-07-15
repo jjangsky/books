@@ -16,12 +16,18 @@ import com.bukkeubook.book.books.controller.NativeRepository;
 import com.bukkeubook.book.books.model.dto.BookDTO;
 import com.bukkeubook.book.books.model.dto.RelBkListAndBookAndRelListDTO;
 import com.bukkeubook.book.books.model.dto.RelListAndEmpDTO;
+import com.bukkeubook.book.books.model.dto.StockBookListAndBookAndStockListAndEmpDTO;
+import com.bukkeubook.book.books.model.dto.StockListAndEmpDTO;
 import com.bukkeubook.book.books.model.entity.Book;
 import com.bukkeubook.book.books.model.entity.RelBkListAndBookAndRelList;
 import com.bukkeubook.book.books.model.entity.RelListAndEmp;
+import com.bukkeubook.book.books.model.entity.StockBookListAndBookAndStockListAndEmp;
+import com.bukkeubook.book.books.model.entity.StockListAndEmp;
 import com.bukkeubook.book.books.model.repository.BookRepository;
+import com.bukkeubook.book.books.model.repository.InputRepository;
 import com.bukkeubook.book.books.model.repository.OutputRepository;
 import com.bukkeubook.book.books.model.repository.RelBkListAndBookAndRelListRepository;
+import com.bukkeubook.book.books.model.repository.StockBookListAndBookAndStockListAndEmpRepository;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 
 @Service
@@ -31,14 +37,18 @@ public class BookService {
 	private final NativeRepository nativeRepository; 
 	private final OutputRepository outputRepository;
 	private final RelBkListAndBookAndRelListRepository relBkListAndBookAndRelListRepository;
+	private final StockBookListAndBookAndStockListAndEmpRepository stockBookListAndBookAndStockListAndEmpRepository;
+	private final InputRepository inputRepository;
 	private final ModelMapper modelMapper;			// modelMapper 빈을 선언
 	
 	@Autowired
-	public BookService(RelBkListAndBookAndRelListRepository relBkListAndBookAndRelListRepository, BookRepository bookRepository, ModelMapper modelMapper, NativeRepository nativeRepository, OutputRepository outputRepository) {
+	public BookService(StockBookListAndBookAndStockListAndEmpRepository stockBookListAndBookAndStockListAndEmpRepository, InputRepository inputRepository, RelBkListAndBookAndRelListRepository relBkListAndBookAndRelListRepository, BookRepository bookRepository, ModelMapper modelMapper, NativeRepository nativeRepository, OutputRepository outputRepository) {
 		this.bookRepository = bookRepository;
 		this.outputRepository = outputRepository;
 		this.nativeRepository = nativeRepository;
 		this.relBkListAndBookAndRelListRepository = relBkListAndBookAndRelListRepository;
+		this.stockBookListAndBookAndStockListAndEmpRepository = stockBookListAndBookAndStockListAndEmpRepository;
+		this.inputRepository = inputRepository;
 		this.modelMapper = modelMapper;
 	}
 	
@@ -153,10 +163,41 @@ public class BookService {
 		return bookList.stream().map(book -> modelMapper.map(book, RelListAndEmpDTO.class)).collect(Collectors.toList());
 	}
 
-	public List<RelBkListAndBookAndRelListDTO> outputDetail(/* int no */) {
-		List<RelBkListAndBookAndRelList> bookList = relBkListAndBookAndRelListRepository.findAll();
+	public List<RelBkListAndBookAndRelListDTO> outputDetail(int no2) {
+		List<RelBkListAndBookAndRelList> bookList = relBkListAndBookAndRelListRepository.findByrelListEmp_relNo(no2);
 		System.out.println(bookList);
 		return bookList.stream().map(book -> modelMapper.map(book, RelBkListAndBookAndRelListDTO.class)).toList();
+	}
+
+	public List<StockListAndEmpDTO> searchBookList3(SelectCriteria selectCriteria) {
+		
+		int index = selectCriteria.getPageNo() - 1;
+		int count = selectCriteria.getLimit();
+		String searchValue = selectCriteria.getSearchValue();
+
+		Pageable paging = PageRequest.of(index, count, Sort.by("stDate").descending());
+
+		List<StockListAndEmp> stockListEmp = new ArrayList<StockListAndEmp>();
+		if(searchValue != null) {
+
+			if("name".equals(selectCriteria.getSearchCondition())) {
+				stockListEmp = inputRepository.findAllByEmp_EmpNameContaining(selectCriteria.getSearchValue(), paging);
+			}
+
+			if("date".equals(selectCriteria.getSearchCondition())) {
+				stockListEmp = inputRepository.findAllByStDateContaining(selectCriteria.getSearchValue(), paging);
+			}
+		} else {
+			stockListEmp = inputRepository.findAll(paging).toList();
+		}
+		System.out.println(stockListEmp);
+		return stockListEmp.stream().map(book -> modelMapper.map(book, StockListAndEmpDTO.class)).collect(Collectors.toList());
+	}
+
+	public List<StockBookListAndBookAndStockListAndEmpDTO> inputDetail(int no2) {
+		List<StockBookListAndBookAndStockListAndEmp> bookList = stockBookListAndBookAndStockListAndEmpRepository.findBystockListEmp_stCode(no2);
+		System.out.println(bookList);
+		return bookList.stream().map(book -> modelMapper.map(book, StockBookListAndBookAndStockListAndEmpDTO.class)).toList();
 	}
 	
 	

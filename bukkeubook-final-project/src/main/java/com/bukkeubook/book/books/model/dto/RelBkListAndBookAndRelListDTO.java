@@ -10,19 +10,20 @@ public class RelBkListAndBookAndRelListDTO {
 	private String bkNo;		// 도서코드
 	private int relNo;			// 출고번호
 	private int relBkAmount;	// 출고수량
-	private RelListAndEmpDTO relListAndEmp;
+	private RelListAndEmpDTO relListEmp;
 	private BookDTO book;
 	
 	public RelBkListAndBookAndRelListDTO() {
 	}
 
 	public RelBkListAndBookAndRelListDTO(int relBkCode, String bkNo, int relNo, int relBkAmount,
-			RelListAndEmpDTO relListAndEmp, BookDTO book) {
+			RelListAndEmpDTO relListEmp, BookDTO book) {
+		super();
 		this.relBkCode = relBkCode;
 		this.bkNo = bkNo;
 		this.relNo = relNo;
 		this.relBkAmount = relBkAmount;
-		this.relListAndEmp = relListAndEmp;
+		this.relListEmp = relListEmp;
 		this.book = book;
 	}
 
@@ -58,12 +59,12 @@ public class RelBkListAndBookAndRelListDTO {
 		this.relBkAmount = relBkAmount;
 	}
 
-	public RelListAndEmpDTO getRelListAndEmp() {
-		return relListAndEmp;
+	public RelListAndEmpDTO getRelListEmp() {
+		return relListEmp;
 	}
 
-	public void setRelListAndEmp(RelListAndEmpDTO relListAndEmp) {
-		this.relListAndEmp = relListAndEmp;
+	public void setRelListEmp(RelListAndEmpDTO relListEmp) {
+		this.relListEmp = relListEmp;
 	}
 
 	public BookDTO getBook() {
@@ -77,8 +78,9 @@ public class RelBkListAndBookAndRelListDTO {
 	@Override
 	public String toString() {
 		return "RelBkListAndBookAndRelListDTO [relBkCode=" + relBkCode + ", bkNo=" + bkNo + ", relNo=" + relNo
-				+ ", relBkAmount=" + relBkAmount + ", relListAndEmp=" + relListAndEmp + ", book=" + book + "]";
+				+ ", relBkAmount=" + relBkAmount + ", relListEmp=" + relListEmp + ", book=" + book + "]";
 	}
+
 
 	
 	
