@@ -174,9 +174,9 @@ public class BookController extends HttpServlet{
 	
 	@GetMapping("/outputDetail")
 	public ModelAndView outputDetail(HttpServletRequest request, String no, ModelAndView mv){
-//		int no2 = Integer.valueOf(request.getParameter("no"));
+		int no2 = Integer.valueOf(request.getParameter("no"));
 		
-		List<RelBkListAndBookAndRelListDTO> outputList = bookService.outputDetail(/* no2 */);
+		List<RelBkListAndBookAndRelListDTO> outputList = bookService.outputDetail(no2);
 		System.out.println("여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다" + outputList);
 		mv.addObject("outputList", outputList);
 		mv.setViewName("books/bookList/outputListDetail");

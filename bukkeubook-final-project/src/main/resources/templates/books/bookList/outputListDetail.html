@@ -30,11 +30,11 @@
                 <th class="th1">출고자</th>
               </tr>
               <tr class="tr1" th:each="outputList : ${ outputList }">
-                <td th:text="${ outputList.relListAndEmp.relNo }"></td>
+                <td th:text="${ outputList.relListEmp.relNo }"></td>
                 <td th:text="${ outputList.book.no }"></td>
                 <td th:text="${ outputList.book.name }"></td>
                 <td th:text="${ outputList.relBkAmount }"></td>
-            	<td th:text="${ outputList.relListAndEmp.emp.name }"></td>
+            	<td th:text="${ outputList.relListEmp.emp.empName }"></td>
               </tr>
           </table>
           <br>          
