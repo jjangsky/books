@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bukkeubook.book.manage.model.dto.joinDTO.AppVacationAndEmpDTO;
 import com.bukkeubook.book.manage.model.entity.AppVacationAndEmp;
+import com.bukkeubook.book.manage.model.entity.CancelVacationAndAppVacation;
 
 @Repository
 public interface EmpAnnualRepository extends JpaRepository<AppVacationAndEmp, Integer> {
@@ -26,9 +27,10 @@ public interface EmpAnnualRepository extends JpaRepository<AppVacationAndEmp, In
 
 	List<AppVacationAndEmp> findByemp_Dept_DeptNameContaining(String searchValue, Pageable paging);
 
-//	List<AppVacationAndEmp> findByEmp_EmpNoContaining(int searchValue, Pageable paging);
+//	List<AppVacationAndEmp> findByEmp_EQmpNoContaining(int searchValue, Pageable paging);
 
 	List<AppVacationAndEmp> findByEmp_EmpNameContaining(String searchValue, Pageable paging);
+
 
 
 

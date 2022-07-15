@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.manage.model.dto.joinDTO.AppVacationAndEmpDTO;
+import com.bukkeubook.book.manage.model.dto.joinDTO.CancelVacationAndAppVacationDTO;
 import com.bukkeubook.book.manage.model.service.EmpAnnualService;
 
 @Controller
@@ -52,7 +53,7 @@ public class EmpAnnualController {
 
       String searchCondition = request.getParameter("searchCondition");
       String searchValue = request.getParameter("searchValue");
-      System.out.println("출력 확인 구문 : "+searchCondition);
+      System.out.println("출력 확인 구문 : "+ searchCondition);
       int totalCount = empAnnualService.selectTotalCount(searchCondition, searchValue);
 
       /* 한 페이지에 보여 줄 게시물 수 */
@@ -92,5 +93,46 @@ public class EmpAnnualController {
 		
 		return mv;
 	}
-}
+	
+	/* 휴가 취소 신청 조회 */
+	@GetMapping("/cancelVacSelect")
+	public ModelAndView findCancelVacList (HttpServletRequest request, ModelAndView mv) {
+		  System.out.println("여기는 휴가 취소 리스트 컨트롤러");
+		
+	      String currentPage = request.getParameter("currentPage");
+	      int pageNo = 1;
+	      
+	      if(currentPage != null && !"".equals(currentPage)) {
+	         pageNo = Integer.parseInt(currentPage);
+	      }
 
+	      String searchCondition = request.getParameter("searchCondition");
+	      String searchValue = request.getParameter("searchValue");
+	      System.out.println("출력 확인 구문 : " + searchCondition);
+	      int totalCount = empAnnualService.selectCancelTotalCount(searchCondition, searchValue);
+
+	      /* 한 페이지에 보여 줄 게시물 수 */
+	      int limit = 2;
+
+	      /* 한 번에 보여질 페이징 버튼의 갯수 */
+	      int buttonAmount = 10;
+
+	      /* 페이징 처리를 위한 로직 호출 후 페이징 처리에 관한 정보를 담고 있는 인스턴스를 반환받는다. */
+	      SelectCriteria selectCriteria = null;
+	      if(searchValue != null && !"".equals(searchValue)) {
+	         selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount, searchCondition, searchValue);
+	      } else {
+	         selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount);
+	      }
+	      System.out.println(selectCriteria);
+	      
+	      List<CancelVacationAndAppVacationDTO> cancelVacList = empAnnualService.findCancelRestList(selectCriteria);
+	      
+	      mv.addObject("cancelVacList", cancelVacList);
+	      mv.addObject("selectCriteria", selectCriteria);
+	      mv.setViewName("manage/empAnnual/cancelVacSelect");
+	      
+	      return mv;
+	   }
+
+}

@@ -12,21 +12,27 @@ import org.springframework.stereotype.Service;
 
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.manage.model.dto.joinDTO.AppVacationAndEmpDTO;
+import com.bukkeubook.book.manage.model.dto.joinDTO.CancelVacationAndAppVacationDTO;
 import com.bukkeubook.book.manage.model.entity.AppVacationAndEmp;
+import com.bukkeubook.book.manage.model.entity.CancelVacationAndAppVacation;
+import com.bukkeubook.book.manage.model.repository.CancelVacRepository;
 import com.bukkeubook.book.manage.model.repository.EmpAnnualRepository;
 
 @Service
 public class EmpAnnualService {
 
    private final EmpAnnualRepository empAnnualRepository;
+   private final CancelVacRepository cancelVacRepository;
    private final ModelMapper modelMapper;
    
    @Autowired
-   public EmpAnnualService(EmpAnnualRepository empAnnualRepository, ModelMapper modelMapper) {
+   public EmpAnnualService(EmpAnnualRepository empAnnualRepository, CancelVacRepository cancelVacRepository, ModelMapper modelMapper) {
       this.empAnnualRepository = empAnnualRepository;
+      this.cancelVacRepository = cancelVacRepository;
       this.modelMapper = modelMapper;
    }
    
+	/* 휴가 신청 조회 페이지 검색 */
    public int selectTotalCount(String searchCondition, String searchValue) {
 
       int count = 0;
@@ -86,6 +92,63 @@ public class EmpAnnualService {
 		
 		return modelMapper.map(appvacAndEmp, AppVacationAndEmpDTO.class);
 	}
+
+	/* 휴가 취소 신청 조회 */
+	public int selectCancelTotalCount(String searchCondition, String searchValue) {
+
+	      int count = 0;
+	      if(searchValue != null) {
+	         if("Dept".equals(searchCondition)) {
+	            count = cancelVacRepository.countByaddvacEmp_emp_Dept_DeptNameContaining(searchValue);
+	         }
+
+//	         if("EmpNo".equals(searchCondition)) {
+//	            count = cancelVacRepository.countByaddvacEmp_Emp_EmpNoContaining(searchValue);
+//	         }
+	         
+	         if("EmpName".equals(searchCondition)) {
+	            count = cancelVacRepository.countByaddvacEmp_Emp_EmpNameContaining(searchValue);
+	         }
+	      } else {
+	         count = (int)cancelVacRepository.count();
+	      }
+
+	      return count;
+	}
+	
+	public List<CancelVacationAndAppVacationDTO> findCancelRestList(SelectCriteria selectCriteria) {
+	     
+	      int index = selectCriteria.getPageNo() - 1;
+	      int count = selectCriteria.getLimit();
+	      String searchValue = selectCriteria.getSearchValue();
+
+	      Pageable paging = PageRequest.of(index, count);
+
+	      List<CancelVacationAndAppVacation> cancelVacList = new ArrayList<CancelVacationAndAppVacation>();
+	      
+	      if(searchValue != null) {
+
+	         if("Dept".equals(selectCriteria.getSearchCondition())) {
+	        	 cancelVacList = cancelVacRepository.findByaddvacEmp_emp_Dept_DeptNameContaining(selectCriteria.getSearchValue(), paging);
+	         }
+
+//	         if("EmpNo".equals(selectCriteria.getSearchCondition())) {
+//	            restList = empAnnualRepository.findByaddvacEmp_Emp_EmpNoContaining((int)Integer.valueOf(selectCriteria.getSearchValue()), paging);
+//	         }
+	         
+	         if("EmpName".equals(selectCriteria.getSearchCondition())) {
+	        	 cancelVacList = cancelVacRepository.findByaddvacEmp_Emp_EmpNameContaining(selectCriteria.getSearchValue(), paging);
+	         }
+	      } else {
+	    	  cancelVacList = cancelVacRepository.findAll(paging).toList();
+	      }
+	      
+	      return cancelVacList.stream().map(rest -> modelMapper.map(rest, CancelVacationAndAppVacationDTO.class)).collect(Collectors.toUnmodifiableList());
+	   }
+
+
+
+
 
 
 }
