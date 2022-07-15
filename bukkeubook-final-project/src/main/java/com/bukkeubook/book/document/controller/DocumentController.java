@@ -60,10 +60,17 @@ public class DocumentController {		// 전자결재 컨트롤러
 		
 	}
 	
-	/* 상신내역 리스트 조회 */
+	/* 수신함 리스트 조회 */
 	@GetMapping("docList")
-	public String toDocList() {
-		return "/document/docList";
+	public ModelAndView toDocList(ModelAndView mv) {
+		
+		int empNo = 17;
+		
+		docService.findInboxAllList(empNo);
+		
+		mv.setViewName("/document/docList");
+		
+		return mv;
 	}
 	
 	/* 임시저장 리스트 조회 */

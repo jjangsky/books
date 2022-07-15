@@ -39,4 +39,6 @@ public interface DocService {
 
 	void submitTempDocTwoAcc(SubmitDocumentDTO tempDoc, AppRootDTO appRoot, List<SubmitApprover> approverList);
 
+	void findInboxAllList(int empNo);
+
 }

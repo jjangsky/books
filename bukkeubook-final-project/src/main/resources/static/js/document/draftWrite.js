@@ -1,5 +1,25 @@
 window.onload = function() {
 
+	$("#empList").change(function(){
+		let appro = $(this).val();
+		let approName = $(this).text();
+		console.log(appro);
+		console.log(approName);
+	})
+	$("#empList2").change(function(){
+		let appro = $(this).val();
+		let approName = $(this).text();
+		console.log(appro);
+		console.log(approName);
+	})
+	$("#empList3").change(function(){
+		let appro = $(this).val();
+		let approName = $(this).text();
+		console.log(appro);
+		console.log(approName);
+	})
+
+
 	$(function() {
 		$.ajax({
 			url: "/document/dept",
@@ -23,7 +43,7 @@ window.onload = function() {
 			}
 		});
 	});
-
+	
 	$("#deptCode").change(function() {
 		let deptValue = $(this).val();
 		console.log($(this).val());
@@ -31,9 +51,9 @@ window.onload = function() {
 		$.ajax({
 			url: "/document/emp/" + deptValue,
 			success: function(data) {
-				console.log(data[0].empName);
-				console.log(data);
-				console.table(data);
+				//console.log(data[0].empName);
+				//console.log(data);
+				//console.table(data);
 
 				const $empList = $("#empList");
 
@@ -55,9 +75,9 @@ window.onload = function() {
 		$.ajax({
 			url: "/document/emp/" + deptValue,
 			success: function(data) {
-				console.log(data[0].empName);
-				console.log(data);
-				console.table(data);
+				//console.log(data[0].empName);
+				//console.log(data);
+				//console.table(data);
 
 				const $empList = $("#empList2");
 
@@ -79,9 +99,9 @@ window.onload = function() {
 		$.ajax({
 			url: "/document/emp/" + deptValue,
 			success: function(data) {
-				console.log(data[0].empName);
-				console.log(data);
-				console.table(data);
+				//console.log(data[0].empName);
+				//console.log(data);
+				//console.table(data);
 
 				const $empList = $("#empList3");
 
@@ -296,9 +316,17 @@ function selectacc() {
 	let account2 = $("#empList2 option:selected").text();
 	let account3 = $("#empList3 option:selected").text();
 
-	let ac1 = $("#empList option:selected").val();
-	let ac2 = $("#empList2 option:selected").val();
-	let ac3 = $("#empList3 option:selected").val();
+	let ac1 = $("#empList").val();
+	let ac2 = $("#empList2").val();
+	let ac3 = $("#empList3").val();
+
+	$("#account1").val($("#empList").val());
+	$("#account2").val(ac2);
+	$("#account3").val(ac3);
+	
+	console.log("여기여기" + ac1);
+	console.log("여기여기" + ac2);
+	console.log("여기여기" + ac3);
 
 	let deptName1 = $("#deptCode option:selected").text();
 	let deptName2 = $("#deptCode2 option:selected").text();
@@ -383,9 +411,11 @@ function selectacc() {
 	$("#deptName1").val(deptName1);
 	$("#deptName2").val(deptName2);
 	$("#deptName3").val(deptName3);
-	$("#account1").val(ac1);
-	$("#account2").val(ac2);
-	$("#account3").val(ac3);
+	
+	
+	console.log($("#account1").val(ac1));
+	console.log($("#account1").val(ac2));
+	console.log($("#account1").val(ac3));
 
 }
 

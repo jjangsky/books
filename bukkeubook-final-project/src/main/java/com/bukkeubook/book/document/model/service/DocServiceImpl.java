@@ -1,9 +1,11 @@
 package com.bukkeubook.book.document.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -248,6 +250,30 @@ public class DocServiceImpl implements DocService{
 			app.setAppRootNo2(currentAccRootNo);
 		}
 		approverRepository.saveAll(approverList);
+		
+	}
+
+	/* 수신함 리스트 조회 */
+	@Override
+	public void findInboxAllList(int empNo) {
+
+		/* 사원과 맞는 결재자테이블에서 결재자 리스트 출력 */
+		List<Object[]> correctToApproverList = approverRepository2.findByApproverNoDocList(empNo);
+		
+		/* 결재 경로 번호들 담을 리스트 */
+		List<Integer> appRootNoList = new ArrayList<>();
+		
+		/* 결재자가 전결한 상태 (결재상태)들 담을 리스트 */
+		List<String> appStatusList = new ArrayList<>();
+		
+		for(Object[] appro : correctToApproverList) {
+			appRootNoList.add((int)appro[0]);
+			appStatusList.add((String)appro[1]);
+		}
+		System.out.println(appRootNoList);
+		System.out.println(appStatusList);
+		
+		/* 가져온 결재경로번호에 맞는 결재경로 리스트 출력 */
 		
 	}
 
