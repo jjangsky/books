@@ -37,7 +37,7 @@ public class ClientDTO implements Serializable{
 	private String cntFax;					// FAX
 	private java.sql.Date cntStartDate;		// 등록날짜
 	private String cntTradeYn;				// 거래여부
-	private String cntManaName;				// 담당자명
+	private String cntManaName;				// 담당자명`
 	private String cntManaPhone;			// 담당자연락처
 	private String cntManaEmail;			// 담당자이메일
 	private java.sql.Date cntOpenDate;		// 개업일
