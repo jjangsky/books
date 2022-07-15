@@ -37,10 +37,18 @@
             	<td th:text="${ inputList.stockListEmp.emp.empName }"></td>
               </tr>
           </table>
-          <br>          
+          <br><br>
+          <div id="newBookDiv">
+          <button type="button" class="productBtn newBookBtn" onclick="location.href='/book/input'">입고등록</button>
+          <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
+         </div>          
         </div> <!------------------------ 본문 종료---------------------------->
 	<br><br>
-	
+	<script>
+		$('.backBtn').click(function(){
+			window.history.back();
+		});
+	</script>
 	
 
 </body>

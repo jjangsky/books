@@ -37,7 +37,7 @@
                 </tr>
                 <tr>
                     <th>장르</th>
-                    <td><input class="updateInput" type="text" name="cate"></td>
+                    <td><input class="updateInput cate" type="text" name="cate"></td>
                 </tr>
                 <tr>
                     <th>가격</th>
@@ -91,7 +91,23 @@
 		});
 		
         $(".updateBtn").click(function () {
-			$("#updateForm").submit();
+        	if($('.cate').val() == '문학'){
+				$("#updateForm").submit();
+        	} else if($('.cate').val() == 'IT'){
+				$("#updateForm").submit();
+        	} else if($('.cate').val() == '잡지'){
+ 				$("#updateForm").submit();
+         	} else if($('.cate').val() == '교육'){
+ 				$("#updateForm").submit();
+         	} else if($('.cate').val() == '기타'){
+ 				$("#updateForm").submit();
+         	} else {
+         		Swal.fire({
+   	                icon: 'warning',
+   	                title: '카테고리를 입력해주세요',
+   	                text: '문학 IT 잡지 교육 기타',
+            	});
+         	}
         });
       </script> 
       
