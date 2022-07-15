@@ -28,7 +28,7 @@ public class RelBkListAndBookAndRelList implements Serializable{
 	
 	@ManyToOne()
 	@JoinColumn(name="REL_NO")
-	private RelListAndEmp relListAndEmp;			// 출고번호
+	private RelListAndEmp relListEmp;			// 출고번호
 	
 	@ManyToOne()
 	@JoinColumn(name="BK_NO")
@@ -37,10 +37,11 @@ public class RelBkListAndBookAndRelList implements Serializable{
 	public RelBkListAndBookAndRelList() {
 	}
 
-	public RelBkListAndBookAndRelList(int relBkCode, int relBkAmount, RelListAndEmp relListAndEmp, Book book) {
+	public RelBkListAndBookAndRelList(int relBkCode, int relBkAmount, RelListAndEmp relListEmp, Book book) {
+		super();
 		this.relBkCode = relBkCode;
 		this.relBkAmount = relBkAmount;
-		this.relListAndEmp = relListAndEmp;
+		this.relListEmp = relListEmp;
 		this.book = book;
 	}
 
@@ -60,12 +61,12 @@ public class RelBkListAndBookAndRelList implements Serializable{
 		this.relBkAmount = relBkAmount;
 	}
 
-	public RelListAndEmp getRelListAndEmp() {
-		return relListAndEmp;
+	public RelListAndEmp getRelListEmp() {
+		return relListEmp;
 	}
 
-	public void setRelListAndEmp(RelListAndEmp relListAndEmp) {
-		this.relListAndEmp = relListAndEmp;
+	public void setRelListEmp(RelListAndEmp relListEmp) {
+		this.relListEmp = relListEmp;
 	}
 
 	public Book getBook() {
@@ -82,9 +83,10 @@ public class RelBkListAndBookAndRelList implements Serializable{
 
 	@Override
 	public String toString() {
-		return "RelBkListAndBookAndRelList [relBkCode=" + relBkCode + ", relBkAmount=" + relBkAmount
-				+ ", relListAndEmp=" + relListAndEmp + ", book=" + book + "]";
+		return "RelBkListAndBookAndRelList [relBkCode=" + relBkCode + ", relBkAmount=" + relBkAmount + ", relListEmp="
+				+ relListEmp + ", book=" + book + "]";
 	}
+
 
 	
 	

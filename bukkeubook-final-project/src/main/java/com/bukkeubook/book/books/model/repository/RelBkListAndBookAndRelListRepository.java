@@ -22,5 +22,7 @@ public interface RelBkListAndBookAndRelListRepository extends JpaRepository<RelB
 //			+ "  JOIN TBL_REL_LIST C ON(A.REL_NO = C.REL_NO)\r\n"
 //			+ " WHERE C.REL_NO = 20")
 	List<RelBkListAndBookAndRelList> findAll();
+
+	List<RelBkListAndBookAndRelList> findByrelListEmp_relNo(int no2);
 	
 }
