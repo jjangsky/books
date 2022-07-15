@@ -36,58 +36,58 @@ public class DeptAndEmp implements Serializable {
    @OneToMany(mappedBy ="dept")   // FK명
    private List<EmpAndDept> empList = new ArrayList<>();
 
-	public DeptAndEmp() {
-		super();
-	}
+   public DeptAndEmp() {
+      super();
+   }
 
-	public DeptAndEmp(int deptCode, String deptName, String deptRepPhone, List<EmpAndDept> empList) {
-		super();
-		this.deptCode = deptCode;
-		this.deptName = deptName;
-		this.deptRepPhone = deptRepPhone;
-		this.empList = empList;
-	}
+   public DeptAndEmp(int deptCode, String deptName, String deptRepPhone, List<EmpAndDept> empList) {
+      super();
+      this.deptCode = deptCode;
+      this.deptName = deptName;
+      this.deptRepPhone = deptRepPhone;
+      this.empList = empList;
+   }
 
-	public int getDeptCode() {
-		return deptCode;
-	}
+   public int getDeptCode() {
+      return deptCode;
+   }
 
-	public void setDeptCode(int deptCode) {
-		this.deptCode = deptCode;
-	}
+   public void setDeptCode(int deptCode) {
+      this.deptCode = deptCode;
+   }
 
-	public String getDeptName() {
-		return deptName;
-	}
+   public String getDeptName() {
+      return deptName;
+   }
 
-	public void setDeptName(String deptName) {
-		this.deptName = deptName;
-	}
+   public void setDeptName(String deptName) {
+      this.deptName = deptName;
+   }
 
-	public String getDeptRepPhone() {
-		return deptRepPhone;
-	}
+   public String getDeptRepPhone() {
+      return deptRepPhone;
+   }
 
-	public void setDeptRepPhone(String deptRepPhone) {
-		this.deptRepPhone = deptRepPhone;
-	}
+   public void setDeptRepPhone(String deptRepPhone) {
+      this.deptRepPhone = deptRepPhone;
+   }
 
-	public List<EmpAndDept> getEmpList() {
-		return empList;
-	}
+   public List<EmpAndDept> getEmpList() {
+      return empList;
+   }
 
-	public void setEmpList(List<EmpAndDept> empList) {
-		this.empList = empList;
-	}
+   public void setEmpList(List<EmpAndDept> empList) {
+      this.empList = empList;
+   }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+   public static long getSerialversionuid() {
+      return serialVersionUID;
+   }
 
-	@Override
-	public String toString() {
-		return "DeptAndEmp [deptCode=" + deptCode + ", deptName=" + deptName + ", deptRepPhone=" + deptRepPhone
-				+ ", empList=" + empList + "]";
-	}
+   @Override
+   public String toString() {
+      return "DeptAndEmp [deptCode=" + deptCode + ", deptName=" + deptName + ", deptRepPhone=" + deptRepPhone
+            + ", empList=" + empList + "]";
+   }
 
 }
