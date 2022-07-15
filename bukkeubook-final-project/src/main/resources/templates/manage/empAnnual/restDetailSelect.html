@@ -60,7 +60,7 @@
           </div>
 	          <button type="button" class="access btn" onclick="accessClick()">승인</button>
 	          <button type="button" class="list btn" th:onclick="location.href='/empAnnual/restSelect'">목록으로</button>
-	          <button type="button" class="cancle btn" onclick="delayClick()">반려</button>
+	          <button type="button" class="cancle btn">반려</button>
           
     <script th:inline="javascript">  
      $().ready(function accessClick() {
@@ -81,23 +81,26 @@
 		        })
 		    });
 		});
-
-/*          $(".cancle.btn").click(function () {
-             const { value: delayReson } = document.getElementById("reason")
+		
+     /* 이건 더 찾아보자... 값을 어떻게 넘기냐 증말 어휴 */
+/*         	 const delay = ""
+         $(".cancle.btn").click(function () {
             	Swal.fire({
     	        title: '반려하시겠습니까?',
     	        text: '반려 사유를 입력해주세요',
     	        input: 'text',
     	        inputPlaceholder: '사유 입력란'
-    	    })
-    	    
-    	    if (delayReson) {
-    	        Swal.fire(`사유 : ${delayReson.innerHTML}`)
-    	    }
-    	})() */
+    	        
+    	    }).then((value) => {
+                delay = swal("You typed : " + value);
+    	    	$('#reason').text(delay);
+                console.log(delay);
+            });
+    	}) */
 
 /*      	(async () => {
-    	    const { value: getName } = await Swal.fire({
+    	    const { value: getName } = await
+    	    Swal.fire({
     	        title: '당신의 이름을 입력하세요.',
     	        text: '그냥 예시일 뿐이니 정보유출 같은건 없습니다.',
     	        input: 'text',
