@@ -8,7 +8,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.bukkeubook.book.manage.model.dto.joinDTO.DayOffAndEmpAndDeptDTO;
+import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.DayOffAndEmpAndDept;
+import com.bukkeubook.book.manage.model.entity.EmpAndDept;
 import com.bukkeubook.book.manage.model.repository.EmpDayOffRepository;
 
 @Service
@@ -31,6 +33,16 @@ public class EmpDayOffService {
       
       return annualList.stream().map(dayOff -> modelMapper.map(dayOff, DayOffAndEmpAndDeptDTO.class)).toList();
    }
+
+   /* 직원 연차상세조회 */
+   public DayOffAndEmpAndDeptDTO searchEmpDayOffDetail(int empNo) {
+	   
+	   DayOffAndEmpAndDept emp = empDayOffRepository.findById(empNo).get();
+		
+		System.out.println("레포지토리      " + emp);
+		
+		return modelMapper.map(emp, DayOffAndEmpAndDeptDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
+}
 
 
 }

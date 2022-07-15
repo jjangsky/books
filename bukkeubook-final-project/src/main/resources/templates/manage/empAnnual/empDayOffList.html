@@ -17,16 +17,6 @@
         <hr><br><br>
         <h5 class="mb-4" id="sub-text">연차조회</h5>
         <br>
-       <!--  <div class="search">
-          <form action="">
-            <button class="search btn" type="submit">검색</button>
-            <select class="search select" required>
-              <option value="year">년도</option>
-              <option value="2022">2022년</option>
-              <option value="2021">2021년</option>
-            </select>
-          </form>
-        </div> -->
           <table id="sampleTable">
               <tr>
                 <th class="th1">사원번호</th>
@@ -42,7 +32,9 @@
                 <td th:text="${ dayOffList.doffAmount }"></td>
                 <td th:text="${ dayOffList.doffUse }"></td>
                 <td th:text="${ dayOffList.doffRemain }"></td> 
-                <td><button type="button" class="select btn" onclick="location.href='empAnnualDetail.html'">확인</button></td>
+                <td><button type="button" class="select btn"   
+                th:onclick="'location.href = \'' + @{/empDayOff/empDayOffDetail/{empNo}(empNo=${dayOffList.empAndDept.empNo})} + '\''">확인</button>
+                </td> 
               </tr>
           </table><br>
           <button type="button" class="insert btn" onclick="location.href='empAnnualInsert.html'">등록</button>
