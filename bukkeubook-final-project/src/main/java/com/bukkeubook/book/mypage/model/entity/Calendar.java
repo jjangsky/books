@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @SequenceGenerator(
 		name = "CAL_SEQ_GENERATOR",
 		sequenceName = "SEQ_CAL_CODE",
-		initialValue = 300,
+		initialValue = 10,
 		allocationSize = 1
 		)
 public class Calendar implements Serializable{

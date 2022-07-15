@@ -96,7 +96,7 @@ public class EmpService {
 		return modelMapper.map(emp, EmpAndDeptDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
 	}
 	
-	/* 사원 상세조회 */
+	/* 퇴사사원 상세조회 */
 	public EmpAndDeptDTO searchLeaveEmpDetail(int empNo) {
 		
 		EmpAndDept emp = empRepository.findById(empNo).get();

@@ -3,173 +3,229 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet"  th:href="@{/css/document/expenditureWrite.css}">
-    <link rel="stylesheet"  th:href="@{/css/document/HR.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" th:href="@{/css/document/expenditureWrite.css}">
+<link rel="stylesheet" th:href="@{/css/document/HR.css}">
 <title>Insert title here</title>
 </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
-	<script> 
-     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
-    </script> 
+	<script>
+     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
+	</script>
+	 
 	<script src="/js/document/expenditure.js"></script>
 	<h4 class="mb-4" id="main-text">지출결의서 작성</h4>
-	<hr>
-	<br>
-	<br>
+	<hr><br><br>
+
+	<div>
+		<button style="float: right; margin-right: 5%;" class="select btn"
+			type="button" id="back">목록으로</button>
+	</div>
 
 	<div class="total">
-		<h4>결재라인 지정</h4>
+		<br><br>
+		<h4 style="padding-left:30px;">결재라인 지정</h4>
 		<table class="tbl2" border="1px solid gray">
 			<tr>
-				<th>1단계</th>
-				<td><select name="">
-						<option value="">None</option>
-						<option value="인사부">인사부</option>
-						<option value="총무부">총무부</option>
-						<option value="물류부">물류부</option>
-						<option value="재무부">재무부</option>
+				<th></th>
+				<th>부서명</th>
+				<th>사원명</th>
+			</tr>
+			<tr>
+				<th>1단계 :</th>
+				<td id="selectDept"><select name="deptCode" id="deptCode">
+						<option value="">선택</option>
+						<!-- ajax -->
 				</select></td>
-				<td><select name="" id="account1">
-						<option value="">None</option>
-						<option value="인사부">인사부</option>
-						<option value="총무부">총무부</option>
-						<option value="물류부">물류부</option>
-						<option value="재무부">재무부</option>
+				<td><select name="empList" id="empList">
+						<option value=""></option>
 				</select></td>
 			</tr>
 			<tr>
-				<th>2단계</th>
-				<td><select name="">
-						<option value="">None</option>
-						<option value="인사부">인사부</option>
-						<option value="총무부">총무부</option>
-						<option value="물류부">물류부</option>
-						<option value="재무부">재무부</option>
+				<th>2단계 :</th>
+				<td><select name="deptCode2" id="deptCode2">
+						<option value="">선택</option>
 				</select></td>
-				<td><select name="" id="account2">
-						<option value="">None</option>
-						<option value="인사부">인사부</option>
-						<option value="총무부">총무부</option>
-						<option value="물류부">물류부</option>
-						<option value="재무부">재무부</option>
+				<td><select name="empList2" id="empList2">
+						<option value=""></option>
 				</select></td>
 			</tr>
 			<tr>
-				<th>3단계</th>
-				<td><select name="">
-						<option value="">None</option>
-						<option value="인사부">인사부</option>
-						<option value="총무부">총무부</option>
-						<option value="물류부">물류부</option>
-						<option value="재무부">재무부</option>
+				<th>3단계 :</th>
+				<td><select name="deptCode3" id="deptCode3">
+						<option value="">선택</option>
 				</select></td>
-				<td><select name="" id="account3">
-						<option value="">None</option>
-						<option value="인사부">인사부</option>
-						<option value="총무부">총무부</option>
-						<option value="물류부">물류부</option>
-						<option value="재무부">재무부</option>
+				<td><select name="empList3" id="empList3">
+						<option value=""></option>
 				</select></td>
 			</tr>
 		</table>
 		<br>
-		<button class="select btn" type="button" onclick="selectacc()">결재라인
-			지정</button>
+		<button class="select btn" type="button" onclick="selectacc()" style="margin-left:30px;">
+		결재라인 지정
+		</button>
+		<br><br>
 	</div>
-	<div class="total">
-		<h4>참조자 설정</h4>
-		<table>
-
-		</table>
-		<br>
-		<button type="button" onclick="selectref()">참조자 지정</button>
-	</div>
+	<div class="total tbl3">
+		<br><br>
+		<h4>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          결재자 확인
+          </h4>
+          <table class="tbl3 ck" border="1px solid gray">
+            <tr>
+              <th>단계</th>
+              <th>부서</th>
+              <th>사번</th>
+              <th>결재자</th>
+            </tr>
+            <form action="/document/submitReport" method="post" id="submitReport">
+	            <tr>
+	              <th rowspan="3" id="step">
+	              	<input class="inp" type="hidden">
+	              </th>
+	              <td>
+	              	<input class="inp" type="text" id="stepNo" name="app1">
+	              	<input class="inp" type="text" id="deptName1" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco1"readonly> -->
+	              	<input class="inp" type="text" id="account1" name="approver1"readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco1" readonly>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>
+	              	<input class="inp" type="text" id="deptName2" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco2" readonly> -->
+	              	<input class="inp" type="text" id="account2" name="approver2"readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco2" readonly>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>
+	              	<input class="inp" type="text" id="deptName3" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco3" readonly> -->
+	              	<input class="inp" type="text" id="account3" name="approver3"readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco3" readonly>
+	              </td>
+	            </tr>
+	          </table>
+	          <input type="hidden" name="formNo2" value="2" >
+	          <input type="text" id="draftcnt2" name="tagCnt2">
+	          <input type="text" id="wrDate2" name="wrDate2">
+	          <input type="text" id="docStatus2" name="docStatus2">
+	          <input type="text" value="10" id="empNo2" name="empNo2">
+	          <input type="text" id="submitTitle" name="submitTitle" placeholder="여긴 상신 제목이양">
+	          <input type="text" id="cnttt2" name="cnt2" readonly>
+          </form>
+          <br>
+      </div>
 	<br clear="both">
 	<div class="total">
-		<table border="1px solid gray" id="write" class="forms">
-			<tr>
-				<th class="write">제목</th>
-				<td class="write" colspan="6" contenteditable="true" id="title"></td>
-			</tr>
-			<tr>
-				<th class="write">번호</th>
-				<th class="write">내역</th>
-				<th class="write" colspan="2">금액</th>
-				<th class="write" colspan="2">비고</th>
-			</tr>
-			<tbody>
+		<div id="writein">
+			<table border="1px solid gray" id="write" class="forms">
 				<tr>
-					<td class="write " contenteditable="true">1</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
+					<th class="write">제목</th>
+					<td class="write" colspan="6" contenteditable="true" id="title"></td>
 				</tr>
 				<tr>
-					<td class="write " contenteditable="true">2</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
+					<th class="write">번호</th>
+					<th class="write">내역</th>
+					<th class="write" colspan="2">금액</th>
+					<th class="write" colspan="2">비고</th>
 				</tr>
-				<tr>
-					<td class="write " contenteditable="true">3</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">4</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">5</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">6</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">7</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">8</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">9</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-				<tr>
-					<td class="write " contenteditable="true">10</td>
-					<td class="write " contenteditable="true" id="cnt"></td>
-					<td class="write " colspan="2" contenteditable="true" id="amt"></td>
-					<td class="write " contenteditable="true" id="memo"></td>
-				</tr>
-			</tbody>
-			<tr>
-				<td class="write" colspan="6">
-					<button class="select btn" type="button" onclick="sendData()">반영하기</button>
-				</td>
-			</tr>
-		</table>
+				<tbody>
+					<tr>
+						<td class="write " contenteditable="true">1</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">2</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">3</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">4</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">5</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">6</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">7</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">8</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">9</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write " contenteditable="true">10</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div style="margin-left:25px; margin-top:30px;">
+			<form id="temp" action="/document/tempStore" method="post">
+				<input type="hidden" name="formNo1" value="2" >
+		        <input type="text" id="draftcnt1" name="tagCnt1" placeholder="여긴 임시저장 태그내용이양">
+		        <input type="hidden" id="wrDate1" name="wrDate1">
+		        <input type="hidden" id="docStatus1" name="docStatus1">
+		        <input type="text" value="10" id="empNo1" name="empNo1">
+		        <input type="text" id="docTitle1" name="docTitle1" placeholder="여긴 임시저장 제목이양">
+		        <input type="text" id="cnttt1" name="cnt1" readonly placeholder="여긴 임시저장 내용이양">
+				<button class="select btn" type="button" onclick="takeout()">반영하기</button>
+			</form>
+		</div>
 	</div>
-	<div class="total">
+	<div class="total" id="insertin">
 		<table class="tbl" id="inserttbl">
 			<tr>
 				<th class="coloring view" colspan="7"><h5>지출결의서</h5></th>
@@ -275,15 +331,15 @@
 			<tr>
 				<th class="view coloring" colspan="2">합계</th>
 				<th class="view" colspan="2" id="sumamt"></th>
-				<th class="view" colspan="3"></th>
+				<th class="view coloring" colspan="3"></th>
 			</tr>
 		</table>
 	</div>
 	<br clear="both">
-    <div class="right">
-      <button class="select btn in" type="button" onclick="sendData()">상신</button>
-      <input type="hidden" id="draftcnt">
-      <button class="select btn in" type="button" id="tempStore">임시저장</button>
-    </div>
+	<div class="right">
+		<button class="select btn in" type="button" onclick="sendData()">상신</button>
+		<input type="hidden" id="draftcnt">
+		<button class="select btn in" type="button" id="tempStore">임시저장</button>
+	</div>
 </body>
 </html>

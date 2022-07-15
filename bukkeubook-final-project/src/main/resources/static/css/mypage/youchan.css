@@ -89,6 +89,7 @@
 }
 
 .checkdiv{
+  position: relative;
   border: 1px solid #515151;
   background-color: #ffffff;
   border-radius: 16px;
