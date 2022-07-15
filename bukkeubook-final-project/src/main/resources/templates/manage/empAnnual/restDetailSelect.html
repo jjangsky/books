@@ -10,6 +10,8 @@
 <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
 <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/css/manage/empAnnual/rest.css}">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
 <div th:replace="/common/topSideBar.html"></div>
@@ -57,34 +59,64 @@
             </table>
           </div>
 	          <button type="button" class="access btn" onclick="accessClick()">승인</button>
-	          <button type="button" class="cancle btn" onclick="location.href='restSelect.html'">목록으로</button>
+	          <button type="button" class="list btn" th:onclick="location.href='/empAnnual/restSelect'">목록으로</button>
 	          <button type="button" class="cancle btn" onclick="delayClick()">반려</button>
-          <script>
-            function accessClick() {
-              var txt;
-              if (confirm("승인하시겠습니까?")) {
-                alert("승인되었습니다.");
-              } else {
-                alert("승인이 취소되었습니다.");
-              }
-            }
-  
-            function delayClick() {
-              var reason = document.getElementById("reason");
-              let text;
-              if(confirm("반려하시겠습니까?")) {
-                let delayReson = prompt("반려 사유를 입력해주세요");
-                if(delayReson.length == 0) {
-                  alert("사유를 입력하지 않아 반려 사유 등록이 취소되었습니다.")
-                } else {
-                  alert("반려 사유가 등록되었습니다.")
-                  reason.innerText = delayReson;
-                }
-              } else {
-                alert("반려가 취소되었습니다.")
-              }
-            }
-            
-          </script>
+          
+    <script th:inline="javascript">  
+     $().ready(function accessClick() {
+		    $(".access.btn").click(function () {
+		        Swal.fire({
+		            title: '승인 하시겠습니까?',
+		            text: "승인 버튼을 누르면 승인이 됩니다.",
+		            icon: 'warning',
+		            showCancelButton: true,
+		            confirmButtonColor: '#c5bfbf',
+		            cancelButtonColor: '#c5bfbf',
+		            confirmButtonText: '승인',
+		            cancelButtonText: '취소'
+		        }).then((result) => {
+		            if (result.isConfirmed) {
+		                window.history.back();
+		            }
+		        })
+		    });
+		});
+
+/*          $(".cancle.btn").click(function () {
+             const { value: delayReson } = document.getElementById("reason")
+            	Swal.fire({
+    	        title: '반려하시겠습니까?',
+    	        text: '반려 사유를 입력해주세요',
+    	        input: 'text',
+    	        inputPlaceholder: '사유 입력란'
+    	    })
+    	    
+    	    if (delayReson) {
+    	        Swal.fire(`사유 : ${delayReson.innerHTML}`)
+    	    }
+    	})() */
+
+/*      	(async () => {
+    	    const { value: getName } = await Swal.fire({
+    	        title: '당신의 이름을 입력하세요.',
+    	        text: '그냥 예시일 뿐이니 정보유출 같은건 없습니다.',
+    	        input: 'text',
+    	        inputPlaceholder: '이름을 입력..'
+    	    })
+
+    	    // 이후 처리되는 내용.
+    	    if (getName) {
+    	        Swal.fire(`: ${getName}`)
+    	    }
+    	})() */
+     
+        /* $(".updateBtn").click(function () {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '수정이 성공적으로 완료되었습니다!',
+            });
+        }); */
+        </script>
 </body>
 </html>

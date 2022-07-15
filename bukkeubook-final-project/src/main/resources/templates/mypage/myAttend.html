@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text">마이페이지</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">근태조회</h5>
+        <br>
+	      
+
+        <div class="checkdiv">
+          <form action="/attend/checkIn" method="post">
+          	<button class="check1" type="submit" id="checkIn">출근하자</button>
+          </form>
+          <form action="/attend/checkOut" method="post">
+          <button class="check1" type="submit">퇴근하자</button>
+          </form>
+        </div>
+        <br><br>
+
+
+        <div>
+          <form action="">
+            <button class="search btn" type="submit">검색</button> 
+            <input class="search in" type="text" placeholder="검색어 입력" required>
+            <select class="search select" required>
+              <option value="1">None</option>
+              <option value="2">해당년도</option>
+              <option value="3">해당월</option>
+              <option value="4">해당일</option>
+            </select>
+          </form>
+        </div>
+        <div>
+          <table id="sampleTable" class="checkTable1">
+              <tr>
+                <th class="th1">근무일자</th>
+                <th class="th1">출근 시간</th>
+                <th class="th1">퇴근 시간</th>
+              </tr>
+              <tr class="hover" th:each="att : ${ attend }">
+                <td th:text="${ att.attDate }"></td>
+                <td th:text="${#dates.format(att.attStart, 'HH:mm:ss')}"></td>
+                <td th:text="${#dates.format(att.attEnd, 'HH:mm:ss')}"></td>
+
+              </tr>
+          </table>
+        </div> <!------------------------ 본문 종료---------------------------->
+        
+        <script>
+        
+        /* 현재 시간을 구하는 스크립트 */
+        $("#checkIn").click(function() {
+             let now = new Date();
+            // $("h6").text(now); //전체
+
+            let year = now.getFullYear();//연도
+            let month = now.getMonth() + 1;//월
+            let date = now.getDate();//일
+             let hours = ('0' + now.getHours()).slice(-2);
+            let minutes = ('0' + now.getMinutes()).slice(-2);
+            let seconds = ('0' + now.getSeconds()).slice(-2); 
+
+
+            let todayString = now.getFullYear() + "-";
+            let todayMonth = now.getMonth() + 1;
+            if (todayMonth < 10) {
+               todayString += "0";
+            }
+            todayString += todayMonth + "-";
+            let todayDate = now.getDate();
+            if (todayDate < 10) {
+               todayString += "0";
+            }
+            todayString += todayDate;
+            
+             todayString += ' ' + ('0' + now.getHours()).slice(-2);
+            todayString += ':' + ('0' + now.getMinutes()).slice(-2);
+            todayString += ':' + ('0' + now.getSeconds()).slice(-2);  
+
+
+            $("#wrDate").val(todayString);
+            $("#wrDate1").val(todayString);
+         });  
+         
+        </script>
+	    
+</body>
+</html>

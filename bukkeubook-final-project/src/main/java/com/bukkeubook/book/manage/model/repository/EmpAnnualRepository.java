@@ -3,6 +3,7 @@ package com.bukkeubook.book.manage.model.repository;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,17 +18,18 @@ public interface EmpAnnualRepository extends JpaRepository<AppVacationAndEmp, In
 
 	/* 검색기능 & 페이징처리 */	
 
-	List<AppVacationAndEmp> findByDeptNameContaining(String searchValue, Pageable paging);
+	int countByemp_Dept_DeptNameContaining(String searchValue);
 
-	List<AppVacationAndEmp> findByEmpNoContaining(String searchValue, Pageable paging);
+//	int countByEmp_EmpNoContaining(String searchValue);
+	
+	int countByEmp_EmpNameContaining(String searchValue);
 
-	List<AppVacationAndEmp> findByEmpNameContaining(String searchValue, Pageable paging);
+	List<AppVacationAndEmp> findByemp_Dept_DeptNameContaining(String searchValue, Pageable paging);
 
-	int countByDeptNameContaining(String searchValue);
+//	List<AppVacationAndEmp> findByEmp_EmpNoContaining(int searchValue, Pageable paging);
 
-	int countByEmpNoContaining(String searchValue);
+	List<AppVacationAndEmp> findByEmp_EmpNameContaining(String searchValue, Pageable paging);
 
-	int countByEmpNameContaining(String searchValue);
 
 
 	

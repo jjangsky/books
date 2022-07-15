@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
+@Entity(name="RelList")
 @Table(name="TBL_REL_LIST")
 public class RelList implements Serializable{
 	private static final long serialVersionUID = 1L;
