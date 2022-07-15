@@ -126,6 +126,8 @@ window.onload = function() {
 		let title = $("#title").text();
 		// console.log(title.length);
 		$("#title2").text(title);
+		$("#docTitle1").val(title);
+		$("#submitTitle").val(title);
 	});
 	
 	$("#back").click(function(){
@@ -145,7 +147,37 @@ window.onload = function() {
               });
 	});
 	
+	$("#deleteTemp").click(function(){
+		Swal.fire({
+			title: '해당 임시저장 문서를\n삭제합니다.',
+			text: "진행 하시겠습니까?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#c5bfbf',
+			cancelButtonColor: '#c5bfbf',
+			confirmButtonText: '확인',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				
+				console.log(docNo);
+				location.href="/document/deleteTempDoc/"+docNo
+			}
+		});
+	})
+	
 	$("#tempStore").click(function(){
+		
+	
+		// console.log(cnts);
+		// console.log(amts);
+		// console.log(memos);
+	
+		let totalamt = 0;
+		
+		let check = true;
+		
+		
 		Swal.fire({
 			title: '임시저장',
 			text: "작성하신 문서를 임시저장 하시겠습니까?\n맞으시면 '확인'을 눌러주세요.",
@@ -157,16 +189,91 @@ window.onload = function() {
 			cancelButtonText: '취소'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				$("#docStatus").val("임시저장");
-				let cnt = $("#writein").html();
-				console.log(cnt)
-				$("#cnttt").val(cnt);
-
+				let countCheck = 0;
+				if ($("#title").text().length < 1 || $("#title").text() == "" || $("#title").text() == "  ") {
+					Swal.fire({
+						icon: 'warning',
+						title: '제목이 없습니다',
+						text: '문서의 제목을 입력해주세요.'
+					})
+				} else{countCheck++;}
+				console.log(countCheck);
+				if(check){
+					
+					const cnts = document.querySelectorAll('table#write tbody tr #cnt');
+					const amts = document.querySelectorAll('table#write tbody tr #amt');
+					const memos = document.querySelectorAll('table#write tbody tr #memo');
+				
+					const resultcnts = document.querySelectorAll('table#inserttbl tbody tr #cnt');
+					const resultamts = document.querySelectorAll('table#inserttbl tbody tr #amt');
+					const resultmemos = document.querySelectorAll('table#inserttbl tbody tr #memo');
+				
+					console.log(cnts);
+					console.log(amts);
+					console.log(memos);
+				
+				
+					
+					for (let i = 0; i < amts.length; i++) {
+						if (!(Number(amts[i].innerText) || amts[i].innerText === '')) {
+							//alert('숫자 아닌거 있음');
+							Swal.fire({
+								icon: 'warning',
+								title: '금액란 입력 오류',
+								text: '금액란에 숫자만 입력해주세요!',
+							})
+							break;
+						} else if (amts[0].innerText.length < 1) {
+							//console.log(amts[0].innerText);
+							//alert('내용 한개이상 입력해야함');
+							Swal.fire({
+								icon: 'warning',
+								title: '등록된 금액이 없습니다!',
+								text: '내용을 한개이상 입력해주세요!',
+							})
+							break;
+						} else {
+							totalamt += Number(amts[i].innerText);
+						}
+					}
+				
+					for (let i = 0; i < cnts.length; i++) {
+						if (cnts[0].innerText.length < 1) {
+							//console.log(cnts[0].innerText);
+							//alert('내용없음 한개이상 입력해야함');
+							Swal.fire({
+								icon: 'warning',
+								title: '등록된 내용이 없습니다!',
+								text: '내용을 한개이상 입력해주세요!',
+							})
+							break;
+						} else {
+							resultamts[i].innerText = amts[i].innerText
+							resultcnts[i].innerText = cnts[i].innerText
+							resultmemos[i].innerText = memos[i].innerText
+				
+							// console.log(totalamt);
+				
+							document.getElementById("sumamt").innerText = totalamt;
+							
+						}
+					}countCheck +=1;
+				} 
+				
+				console.log(countCheck);
+				
+				if(countCheck == 2) {
+					
+				$("#docStatus1").val("임시저장");
 				let sendDraft = $("#insertin").html();
 				console.log(sendDraft);
-				$("#draftcnt").val(sendDraft);
-				$("#docTitle").val($("#title").text());
+				$("#draftcnt1").val(sendDraft);
+				let cnt = $("#writein").html();
+				console.log(cnt)
+				$("#cnttt1").val(cnt);
 				$("#temp").submit();
+				
+				}				
 				
 			}
 		})
@@ -192,46 +299,26 @@ function sendData() {
 
 	let totalamt = 0;
 	
-	let account1 = $("#empList option:selected").text();
-	let account2 = $("#empList2 option:selected").text();
-	let account3 = $("#empList3 option:selected").text();
-
-	let ac1 = $("#empList option:selected").val();
-	let ac2 = $("#empList2 option:selected").val();
-	let ac3 = $("#empList3 option:selected").val();
-
-	let deptName1 = $("#deptCode option:selected").text();
-	let deptName2 = $("#deptCode2 option:selected").text();
-	let deptName3 = $("#deptCode3 option:selected").text();
-	
 	let check = true;
+	let countCheck = 0;
 
-	let text = $("#title").text();
-	console.log(text);
-	console.log($("#submitTitle").val(text));
-	
-	let sendDraft = $("#insertin").html();
-	console.log(sendDraft);
-	let cnt = $("#writein").html();
-	console.log(cnt)
-	$("#draftcnt").val(sendDraft);
-	$("#cnttt").val(cnt);
-	$("#docStatus").val("대기");
-	$("#submitTitle").val($("#title").text());
-
-	if (account1 == "") {
+	if ($("#account1").val() == "") {
 		Swal.fire({
 			icon: 'warning',
 			title: '결재라인 없음',
 			text: '최소 결재라인을 지정해주세요!'
 		})
-	}else if (text == ""){
+	} else{countCheck ++;}
+	console.log(countCheck);
+	if ($("#submitTitle").val() == ""){
 		Swal.fire({
 			icon: 'warning',
 			title: '제목 없음',
 			text: '제목을 작성해주세요!'
 		})
-	}else if(check){
+	} else{countCheck += 1;}
+	console.log(countCheck);
+	if(check){
 		for (let i = 0; i < amts.length; i++) {
 			if (!(Number(amts[i].innerText) || amts[i].innerText === '')) {
 				//alert('숫자 아닌거 있음');
@@ -274,10 +361,28 @@ function sendData() {
 	
 				document.getElementById("sumamt").innerText = totalamt;
 				
-				$("#submitReport").submit();
 			}
-		}
+		}countCheck +=1;
 	} 
+	console.log(countCheck);
+	if(countCheck == 3){
+		
+		let text = $("#title").text();
+		console.log(text);
+		console.log($("#submitTitle").val(text));
+		
+		
+		let sendDraft = $("#insertin").html();
+		console.log(sendDraft);
+		
+		let cnt = $("#writein").html();
+		console.log(cnt)
+		
+		$("#draftcnt2").val(sendDraft);
+		$("#cnttt2").val(cnt);
+		$("#docStatus2").val("대기");
+		$("#submitReport").submit();
+	}
 
 }
 

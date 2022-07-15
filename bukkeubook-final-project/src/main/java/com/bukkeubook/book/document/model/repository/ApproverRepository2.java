@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.bukkeubook.book.document.model.entity.Approver;
 import com.bukkeubook.book.document.model.entity.SubmitApprover;
 
-public interface ApproverRepository extends JpaRepository<SubmitApprover, Integer>{
+public interface ApproverRepository2 extends JpaRepository<Approver, Integer>{
 
 
 }
