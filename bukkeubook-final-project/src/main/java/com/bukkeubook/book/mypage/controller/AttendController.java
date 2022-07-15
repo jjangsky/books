@@ -36,7 +36,6 @@ public class AttendController {
 	@GetMapping("/findPage")
 	public ModelAndView findMyAttend(ModelAndView mv, HttpServletRequest request, AttendDTO attendDTO) {
 			
-		
 		String currentPage = request.getParameter("currentPage");
 		int pageNo = 1;
 		int memberCode = 5;
@@ -47,6 +46,7 @@ public class AttendController {
 		
 		
 		int totalCount = attendService.selectTotalCount(memberCode, attendDTO);
+		System.out.println(totalCount);
 		
 		/* 한 페이지에 보여 줄 게시물 수 */
 		int limit = 5;		//얘도 파라미터로 전달받아도 된다.
@@ -75,7 +75,6 @@ public class AttendController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		String format = sdf.format(date);
-		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡcurrent Time : "+format);
 		
 		mv.addObject("attend", attend);
 		mv.addObject("attend1", attend1);

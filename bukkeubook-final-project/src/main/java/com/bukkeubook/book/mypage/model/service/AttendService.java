@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bukkeubook.book.common.paging.DateSelectCriteria;
-import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.manage.model.dto.AttendDTO;
 import com.bukkeubook.book.manage.model.entity.Attend;
 import com.bukkeubook.book.mypage.model.repository.AttendRepository;
@@ -59,17 +58,11 @@ public class AttendService {
 		List<Attend> attendList1 = new ArrayList<Attend>();
 		if(startDate != null) {
 			
-//			if("attDate".equals(dateSelectCriteria.getSearchCondition())) {
-//				attendList1 = attendRepository.findByAttDateAndEmpNoContaining(dateSelectCriteria.getSearchValue(), memberCode, paging);
-//			}
 			attendList1 = attendRepository.findByEmpNoAndAttDateBetween(memberCode, dateSelectCriteria.getStartDate(), dateSelectCriteria.getEndDate(), paging);
 			
 		}else {
-//			attendList1 = attendRepository.findByEmpNo(memberCode, paging);
 			attendList1 = attendRepository.findByEmpNo(memberCode, paging);
 		}
-		
-		/* List<Attend> attendList = attendRepository.findByEmpNo(memberCode, Sort.by("attDate").descending()); */
 		
 		return attendList1.stream().map(attend -> modelMapper.map(attend, AttendDTO.class)).collect(Collectors.toList());
 

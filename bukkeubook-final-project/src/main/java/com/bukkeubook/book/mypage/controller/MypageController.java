@@ -1,5 +1,6 @@
 package com.bukkeubook.book.mypage.controller;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,7 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bukkeubook.book.books.model.dto.BookDTO;
+import com.bukkeubook.book.common.paging.DatePagenation;
+import com.bukkeubook.book.common.paging.DateSelectCriteria;
 import com.bukkeubook.book.manage.model.dto.AppVacationDTO;
+import com.bukkeubook.book.manage.model.dto.AttendDTO;
 import com.bukkeubook.book.manage.model.dto.DayOffDTO;
 import com.bukkeubook.book.mypage.model.dto.CalendarDTO;
 import com.bukkeubook.book.mypage.model.service.MypageService;
@@ -122,19 +126,52 @@ public class MypageController {
 
 	/* 마이페이지 연차 조회 */
 	@GetMapping("/myAnnual")
-	public ModelAndView findMyAnnualList(ModelAndView mv) {
+	public ModelAndView findMyAnnualList(ModelAndView mv, HttpServletRequest request, Date attStart, Date attEnd) {
 		
+		
+		
+		String currentPage = request.getParameter("currentPage");
+		int pageNo = 1;
 		int memberCode = 5;
 		String approve = "승인";
+		System.out.println("mmmmmmmmmmmmmmmmmmmmmmmm" + attStart);
+		System.out.println("mmmmmmmmmmmmmmmmmmmmmmmm" + attEnd);
 		
-		List<AppVacationDTO> vacationList =  mypageService.findMyAnnualList(memberCode, approve);
-		System.out.println(vacationList);
+		if(currentPage != null && !"".equals(currentPage)) {
+			pageNo = Integer.parseInt(currentPage);
+			
+			System.err.println("pageNo ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ " + pageNo);
+		}
+		
+		int totalCount = mypageService.selectTotalCount(memberCode, approve, attStart, attEnd);
+		System.out.println("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm" + totalCount);
+		
+		int limit = 3;
+		int buttonAmount = 5;
+		
+		java.sql.Date startDate = attStart;
+		java.sql.Date endDate = attEnd;
+		
+		DateSelectCriteria dateSelectCriteria = null;
+		if(startDate != null) {
+			dateSelectCriteria = DatePagenation.getDateSelectCriteria(pageNo, totalCount, limit, buttonAmount, startDate, endDate);
+		} else {
+			dateSelectCriteria = DatePagenation.getDateSelectCriteria(pageNo, totalCount, limit, buttonAmount);
+		}
+		System.out.println(dateSelectCriteria);
+		
+		List<AppVacationDTO> vacation = mypageService.findMyVacation1(memberCode, dateSelectCriteria, approve);
+		System.out.println(vacation);
+		
+//		List<AppVacationDTO> vacationList =  mypageService.findMyAnnualList(memberCode, approve);
+//		System.out.println(vacationList);
 		
 		List<DayOffDTO> dayoffList = mypageService.findMyDayOffList(memberCode);
 		System.out.println(dayoffList);
 		
 		mv.addObject("dayoffList", dayoffList);
-		mv.addObject("vacationList", vacationList);
+		mv.addObject("vacationList", vacation);
+		mv.addObject("selectCriteria", dateSelectCriteria);
 		mv.setViewName("mypage/myAnnual");
 		
 		return mv;
