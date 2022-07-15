@@ -29,7 +29,7 @@
 				<input type="text" style="display:none;"> <!-- 엔터키 새로고침 방지용 -->
 				<input type="hidden" name="currentPage" value="1">
 				<input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}">
-				<button onclick="findTest()" class="productBtn findBtn" id="findBtn" type="button">검색하기</button>
+				<button class="productBtn findBtn" id="findBtn" type="button">검색하기</button>
 			</form>
 		</div>
         <br>
@@ -57,20 +57,28 @@
 	<div th:replace="books/bookList/bookpagingOutput.html"></div>
 	<br><br>
 	<script>
-		function findTest(){
+				
+		$('#findBtn').click(function(){
 			if(inputFind.value == "" && searchCondition.value == 'select'){
-				alert('분류와 검색어를 입력 해 주세요.');
-				return;
-			} else if(searchCondition.value == 'select'){
-				alert('분류를 선택 해 주세요.');
-				return;
-			} else if(inputFind.value == ""){
-				alert('검색어를 입력 해 주세요.')
-				return;
-			} else {
-				$('#loginForm').submit();
-			}
-		}
+				Swal.fire({
+	                icon: 'question',
+	                title: '',
+	                text: '분류와 검색어를 입력 해 주세요.',
+	            })} else if(inputFind.value == ""){
+            	Swal.fire({
+	                icon: 'question',
+	                title: '',
+	                text: '검색어를 입력 해 주세요.',
+	                
+            	})} else if(searchCondition.value == 'select'){
+           		Swal.fire({
+   	                icon: 'question',
+   	                title: '',
+   	                text: '분류를 선택 해 주세요.',
+            	})} else{
+		   			$('#loginForm').submit();
+	   			};
+			});
 	</script>
 	
 

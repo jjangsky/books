@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="..\css\style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="aboveTable">
+        <div>
+            <h1 align="center">사원 검색</h1>
+        </div>
+        <div class="sort" style=float:left;>
+            <select name="sortCondition" id="sortCondition">
+                <option>부서 선택</option>
+                <option value="">인사부</option>
+                <option value="">총무부</option>
+                <option value="">재무부</option>
+                <option value="">도서물류부</option>
+            </select>
+        </div>
+        <br>
+      <table id="searchTable">
+          <tr>
+            <th class="th1">사원번호</th>
+            <th class="th1">사원명</th>
+            <th class="th1">직책</th>
+            <th class="th1">연락처</th>
+            <th class="th1"></th>
+          </tr>
+          <tr>
+              <td class="td1">1</td>
+              <td class="td1">김강민</td>
+              <td class="td1">부서장</td>
+              <td class="td1">010-8945-8474</td>
+              <td class="td1"><button onclick="addList()">목록에 추가</button></td>
+          </tr>
+      </table>
+
+      <br><br><br>
+
+      <button onclick="deleteRows()">목록에서 삭제</button>
+      <div id="textTable" style="text-align:-webkit-center">
+        <table id="sampleTable">
+            <tr>
+              <th class="th1"></th>
+              <th class="th1">사원번호</th>
+              <th class="th1">사원명</th>
+              <th class="th1">직책</th>
+              <th class="th1">연락처</th>
+            </tr>
+            <tr>
+              <td><input type="checkbox" name="del"></td>
+              <td>1</td>
+              <td>김국진</td>
+              <td>대리</td>
+              <td>010-4487-8745</td>
+            </tr>
+        </table>
+        <button type="submit" onclick="sendInfo()">추가</button>
+        <button type="button" onclick="checkCancel()">취소</button>
+      </div> <!------------------------ 본문 종료---------------------------->
+    </div> <!-- 헤더 포함 본문 종료 div-->
+  </div>
+
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/popper.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+      function addList(){
+          const table = document.getElementById("sampleTable");
+
+          const newRow = table.insertRow();
+
+          const newCell1 = newRow.insertCell(0);
+          const newCell2 = newRow.insertCell(1);
+          const newCell3 = newRow.insertCell(2);
+          const newCell4 = newRow.insertCell(3);
+          const newCell5 = newRow.insertCell(4);
+
+          newCell1.innerHTML = '<input type="checkbox" name="del">';
+          newCell2.innerText = "1";
+          newCell3.innerText = "한효주";
+          newCell4.innerText = "사원";
+          newCell5.innerText = "010-2415-8474";
+      }
+
+      function deleteRows(){
+          const table = document.getElementById("sampleTable");
+
+          for(var i = 1; i < table.rows.length; i++){
+              var chkbox = table.rows[i].cells[0].childNodes[0].checked;
+
+              if(chkbox){
+                  table.deleteRow(i);
+                  i--;
+              }
+          }
+      }
+
+      function sendInfo(){
+
+        var result = confirm("해당 사원들을 추가하시겠습니까?")
+
+        if(result == true){
+          const childTable = document.getElementById("sampleTable");
+
+          var tableInfo = {
+                  no : [],
+                  name : [],
+                  role : [],
+                  phone : []
+          }
+
+          for(var i = 1; i < childTable.rows.length; i++){
+              console.log(childTable.rows[i].cells[1].childNodes[0]);
+              console.log(childTable.rows[i].cells[2].childNodes[0]);
+              console.log(childTable.rows[i].cells[3].childNodes[0]);
+              console.log(childTable.rows[i].cells[4].childNodes[0]);
+
+              tableInfo.no[i-1] = childTable.rows[i].cells[1].childNodes[0]
+              tableInfo.name[i-1] = childTable.rows[i].cells[2].childNodes[0]
+              tableInfo.role[i-1] = childTable.rows[i].cells[3].childNodes[0]
+              tableInfo.phone[i-1] = childTable.rows[i].cells[4].childNodes[0]
+          }
+
+          // console.log(Object.values(tableInfo)[1][0]);
+
+          window.opener.addEmp(tableInfo);
+
+          window.close();
+        }
+      }
+
+      function checkCancel(){
+        var result = confirm("정말로 사원 추가를 취소하시겠습니까?")
+
+        if(result == true){
+          alert("사원 추가를 취소하셨습니다.");
+
+          window.close();
+        }
+      }
+  </script>
+</body>
+</html>

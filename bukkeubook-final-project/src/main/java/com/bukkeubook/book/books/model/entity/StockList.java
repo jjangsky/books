@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TBL_STOCK_BK_LIST")
+@Table(name="TBL_STOCK_LIST")
 public class StockList implements Serializable{
 
 	private static final long serialVersionUID = -5872574390835538568L;

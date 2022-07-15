@@ -84,3 +84,32 @@ th{
 #tempStore{
     margin-right: 150px;
 }
+
+.inp{
+	border:none;
+	width:150px;
+}
+
+.tbl3{
+	margin-left:5%;
+}
+
+.tbl3 th, .tbl3 td{
+	width:200px;
+	
+}
+
+.tbl3.ck td{
+	height:40px;
+	border-collapse: collapse;
+	text-align:center;
+}
+
+.tbl3.ck th{
+	width:70px;
+}
+.tbl3 th{
+    text-align: center;
+    margin: 5px;
+    padding: 2%;
+}

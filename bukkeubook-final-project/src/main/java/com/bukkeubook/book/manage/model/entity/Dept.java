@@ -8,6 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /* TBL_DEPT 테이블에 매칭될 Dept 엔티티 클래스도 만들어 보기 */
+/**
+ * @author Jang
+ *
+ */
 @Entity
 @Table(name = "TBL_DEPT")
 public class Dept implements Serializable {
@@ -19,6 +23,7 @@ public class Dept implements Serializable {
 //	DEPT_CODE		NUMBER				부서코드
 //	DEPT_NAME		NVARCHAR2(31 CHAR)	부서명
 //	DEPT_REP_PHONE	VARCHAR2(15 BYTE)	대표번호
+//	DEPT_ACTIVE		VARCHAR2(3 BYTE)	활성화여부	
 	
 	@Id
 	@Column(name = "DEPT_CODE")
@@ -71,7 +76,6 @@ public class Dept implements Serializable {
 	public String toString() {
 		return "Dept [deptCode=" + deptCode + ", deptName=" + deptName + ", deptRepPhone=" + deptRepPhone + "]";
 	}
-	
-	
+
 }
 

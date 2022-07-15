@@ -1,15 +1,11 @@
 package com.bukkeubook.book.document.model.entity;
 
-import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -38,117 +34,119 @@ public class Document {
 			generator = "DOCUMENT_SEQ_DOC_NO"
 	)
 	@Column(name = "DOC_NO")
-	private int docNo;
+	private int docNo1;
 	
 	@Column(name = "EMP_NO")
-	private int empNo;
+	private int empNo1;
 	
 	@Column(name = "DOC_TITLE")
-	private String docTitle;
+	private String docTitle1;
 	
 	@Column(name = "TAG_CNT")
 	@Lob
-	private String tagCnt;
+	private String tagCnt1;
 	
 	@Column(name = "CNT")
 	@Lob
-	private String cnt;
+	private String cnt1;
 	
 	@Column(name = "WR_DATE")
-	private java.sql.Date wrDate;
+	private String wrDate1;
 	
 	@Column(name = "DOC_STATUS")
-	private String docStatus;
+	private String docStatus1;
 	
 	@Column(name = "FORM_NO")
-	private int formNo;
+	private int formNo1;
 
 	public Document() {
 		super();
 	}
 
-	public Document(int docNo, int empNo, String docTitle, String tagCnt, String cnt, Date wrDate, String docStatus,
-			int formNo) {
+	public Document(int docNo1, int empNo1, String docTitle1, String tagCnt1, String cnt1, String wrDate1,
+			String docStatus1, int formNo1) {
 		super();
-		this.docNo = docNo;
-		this.empNo = empNo;
-		this.docTitle = docTitle;
-		this.tagCnt = tagCnt;
-		this.cnt = cnt;
-		this.wrDate = wrDate;
-		this.docStatus = docStatus;
-		this.formNo = formNo;
+		this.docNo1 = docNo1;
+		this.empNo1 = empNo1;
+		this.docTitle1 = docTitle1;
+		this.tagCnt1 = tagCnt1;
+		this.cnt1 = cnt1;
+		this.wrDate1 = wrDate1;
+		this.docStatus1 = docStatus1;
+		this.formNo1 = formNo1;
 	}
 
-	public int getDocNo() {
-		return docNo;
+	public int getDocNo1() {
+		return docNo1;
 	}
 
-	public void setDocNo(int docNo) {
-		this.docNo = docNo;
+	public void setDocNo1(int docNo1) {
+		this.docNo1 = docNo1;
 	}
 
-	public int getEmpNo() {
-		return empNo;
+	public int getEmpNo1() {
+		return empNo1;
 	}
 
-	public void setEmpNo(int empNo) {
-		this.empNo = empNo;
+	public void setEmpNo1(int empNo1) {
+		this.empNo1 = empNo1;
 	}
 
-	public String getDocTitle() {
-		return docTitle;
+	public String getDocTitle1() {
+		return docTitle1;
 	}
 
-	public void setDocTitle(String docTitle) {
-		this.docTitle = docTitle;
+	public void setDocTitle1(String docTitle1) {
+		this.docTitle1 = docTitle1;
 	}
 
-	public String getTagCnt() {
-		return tagCnt;
+	public String getTagCnt1() {
+		return tagCnt1;
 	}
 
-	public void setTagCnt(String tagCnt) {
-		this.tagCnt = tagCnt;
+	public void setTagCnt1(String tagCnt1) {
+		this.tagCnt1 = tagCnt1;
 	}
 
-	public String getCnt() {
-		return cnt;
+	public String getCnt1() {
+		return cnt1;
 	}
 
-	public void setCnt(String cnt) {
-		this.cnt = cnt;
+	public void setCnt1(String cnt1) {
+		this.cnt1 = cnt1;
 	}
 
-	public java.sql.Date getWrDate() {
-		return wrDate;
+	public String getWrDate1() {
+		return wrDate1;
 	}
 
-	public void setWrDate(java.sql.Date wrDate) {
-		this.wrDate = wrDate;
+	public void setWrDate1(String wrDate1) {
+		this.wrDate1 = wrDate1;
 	}
 
-	public String getDocStatus() {
-		return docStatus;
+	public String getDocStatus1() {
+		return docStatus1;
 	}
 
-	public void setDocStatus(String docStatus) {
-		this.docStatus = docStatus;
+	public void setDocStatus1(String docStatus1) {
+		this.docStatus1 = docStatus1;
 	}
 
-	public int getFormNo() {
-		return formNo;
+	public int getFormNo1() {
+		return formNo1;
 	}
 
-	public void setFormNo(int formNo) {
-		this.formNo = formNo;
+	public void setFormNo1(int formNo1) {
+		this.formNo1 = formNo1;
 	}
 
 	@Override
 	public String toString() {
-		return "Document [docNo=" + docNo + ", empNo=" + empNo + ", docTitle=" + docTitle + ", tagCnt=" + tagCnt
-				+ ", cnt=" + cnt + ", wrDate=" + wrDate + ", docStatus=" + docStatus + ", formNo=" + formNo + "]";
+		return "Document [docNo1=" + docNo1 + ", empNo1=" + empNo1 + ", docTitle1=" + docTitle1 + ", tagCnt1=" + tagCnt1
+				+ ", cnt1=" + cnt1 + ", wrDate1=" + wrDate1 + ", docStatus1=" + docStatus1 + ", formNo1=" + formNo1
+				+ "]";
 	}
 
+	
 	
 }

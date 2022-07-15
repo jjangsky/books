@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Sidebar 01</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="department_modify.css">
+  </head>Users
+  <body>
+
+    
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+        <div class="p-4 pt-5">
+          <img src="../images/ManageMent.png" alt="" style="width: 247px;">
+          <div>&nbsp</div>
+		  		<!-- <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo2.jpg);"></a> -->
+          <div id="welcomeLogin" style="text-align: center">${Scope.name}님 반갑습니다!</div>
+          <div>&nbsp</div>
+
+          <!-- 사이드바 시작 -->
+          <!-- 마이페이지 -->
+          <ul class="list-unstyled components mb-5">
+           <li class="active">
+	            <a href="#myPage" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">마이페이지</a>
+	            <ul class="collapse list-unstyled" id="myPage">
+                <li>
+                    <a href="#">일정관리</a>
+                </li>
+                <li>
+                    <a href="#">근태현황</a>
+                </li>
+                <li>
+                    <a href="#">연차조회</a>
+                </li>
+	            </ul>
+	          </li>
+            
+            <!-- 전자결재 -->
+            <li class="active">
+	            <a href="#approval" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">전자결재</a>
+	            <ul class="collapse list-unstyled" id="approval">
+                <li>
+                    <a href="#">결재작성</a>
+                </li>
+                <li>
+                    <a href="#">결재내역</a>
+                </li>
+                <li>
+                    <a href="#">임시저장 내역</a>
+                </li>
+	            </ul>
+	          </li>
+	          
+            <!-- 재무부 -->
+	          <li>
+              <a href="#finance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">재무부</a>
+              <ul class="collapse list-unstyled" id="finance">
+                <li>
+                    <a href="#">거래처 관리</a>
+                </li>
+                <li>
+                    <a href="#">거래내역 관리</a>
+                </li>
+              </ul>
+	          </li>
+
+            <!-- 인사부 -->
+            <li>
+              <a href="#management1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">인사부</a>
+              <ul class="collapse list-unstyled" id="management1">
+                <li>
+                  <a href="#management2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">사원관리</a>
+                  <ul class="collapse list-unstyled" id="management2">
+                    <li>
+                      <a href="#">사원조회</a>
+                    </li>
+                    <li>
+                      <a href="#">퇴사사원조회</a>
+                    </li>
+                    <li>
+                      <a href="#">인원현황</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#management3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">급여관리</a>
+                  <ul class="collapse list-unstyled" id="management3">
+                    <li>
+                      <a href="#">급여계산</a>
+                    </li>
+                    <li>
+                      <a href="#">퇴직금관리</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#management4" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">근태관리</a>
+                  <ul class="collapse list-unstyled" id="management4">
+                    <li>
+                      <a href="#">연차조회</a>
+                    </li>
+                    <li>
+                      <a href="#">휴가조회</a>
+                    </li>
+                    <li>
+                      <a href="#">휴가취소조회</a>
+                    </li>
+                    <li>
+                      <a href="#">사원근태 내역</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#management5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">부서관리</a>
+                  <ul class="collapse list-unstyled" id="management5">
+                    <li>
+                      <a href="#">부서조회</a>
+                    </li>
+                    <li>
+                      <a href="#">부서등록</a>
+                    </li>
+                  </ul>
+                </li>
+                
+              </ul>
+	          </li>
+
+            <!-- 총무부 -->
+            <li>
+              <a href="#General" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">총무부</a>
+              <ul class="collapse list-unstyled" id="General">
+                <li>
+                    <a href="#">비품관리</a>
+                </li>
+                <li>
+                    <a href="#">행사관리</a>
+                </li>
+                <li>
+                    <a href="#">회의관리</a>
+                </li>
+                <li>
+                    <a href="#">게시판관리</a>
+                </li>
+              </ul>
+	          </li>
+
+            <!-- 도서 물류부 -->
+            <li>
+              <a href="#product1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">도서물류부</a>
+              <ul class="collapse list-unstyled" id="product1">
+                <li>
+                  <a href="#product2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">판매현황 및 통계</a>
+                  <ul class="collapse list-unstyled" id="product2">
+                    <li>
+                      <a href="#">판매현황</a>
+                    </li>
+                    <li>
+                      <a href="#">통계(입출고 수량, 순위)</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#product3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">입출고관리</a>
+                  <ul class="collapse list-unstyled" id="product3">
+                    <li>
+                      <a href="#">입고관리</a>
+                    </li>
+                    <li>
+                      <a href="#">출고관리</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#">재고관리</a>
+                </li>
+                <li>
+                  <a href="#">발주관리</a>
+                </li>
+                <li>
+                  <a href="#">훼손도서관리</a>
+                </li>
+              </ul>
+	          </li>
+
+            <!-- 전사게시판 -->
+            <li>
+              <a href="#">전사게시판</a>
+            </li>
+
+            <!-- 휴가자현황 -->
+            <li>
+              <a href="#">휴가자현황</a>
+            </li>
+
+            <!-- 조직도 -->
+            <li>
+              <a href="#">조직도</a>
+            </li>
+	        </ul>
+
+          <!-- 사이드바 하단 내용입니다.-->
+	        <div class="footer">
+	        	<p>아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말아무말</p>
+	        </div>
+	      </div>
+    	</nav> <!-- 사이드바 종료 -->
+
+      
+      <div id="content" class="p-4 p-md-5">
+        <!-- 헤더시작 배경색 -->  
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #515151 !important">
+          <div class="container-fluid">
+
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+              <i class="fa fa-bars"></i>
+              <span class="sr-only">Toggle Menu</span>
+            </button>
+
+            <!-- 반응형 버튼인데 필요없을 것 같아 주석처리합니다.-->
+            <!-- <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button> -->
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">${SessionScope.name} (직책)</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">로그아웃</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- 헤더 종료 -->
+
+
+        <!------------------------ 본문 시작---------------------------->
+        <!-- 본문 제목은 용도에 맞게 수정해주세요.-->
+        <h2 class="mb-4" id="main-text">부서관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">부서 정보 수정</h5>
+        <br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div class="registForm">
+            <form action="" method="post">
+                <div>
+                  <label class="label">부서명 : </label>
+                  <input type="text" name="deptName" id="deptName" placeholder="부서명을 입력하세요."><br><br>
+                  <label class="label">부서 대표 번호 : </label>
+                  <input type="phone" name="deptPhone" id="deptPhone" placeholder="부서 대표 번호를 입력하세요."><br><br>
+                  <label class="label">부서원 :</label>
+                </div>
+                <br>
+                <div class="btnMenu1" align="right">
+                  <button onclick="popup()" class="btn" type="button">사원 추가</button>
+                  <button onclick="deleteRows()" class="btn" type="button">목록에서 삭제</button>
+                </div>
+                <br><br><br>
+                <div class="tableClass">
+                  <table id="sampleTable">
+                    <tr>
+                      <th class="th1"></th>
+                      <th class="th1">사원번호</th>
+                      <th class="th1">사원명</th>
+                      <th class="th1">직책</th>
+                      <th class="th1">연락처</th>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="del"></td>
+                        <td>1</td>
+                        <td>김승호</td>
+                        <td>팀장</td>
+                        <td>010-8824-3834</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="del"></td>
+                        <td>1</td>
+                        <td>김승호</td>
+                        <td>팀장</td>
+                        <td>010-8824-3834</td>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="btnMenu">
+                  <button class="btn" type="button" onclick="checkComplete()">완료</button>
+                  <button class="btn" type="button" onclick="checkCancel()">취소</button>
+                </div>
+            </form>
+        </div>
+
+        <script>
+            function deleteRows(){
+                var table = document.getElementById("sampleTable");
+    
+                for(var i = 1; i < table.rows.length; i++){
+                    var chkbox = table.rows[i].cells[0].childNodes[0].checked;
+    
+                    if(chkbox){
+                        table.deleteRow(i);
+                        i--;
+                    }
+                }
+            }
+
+            function popup(){
+                var url = "emp_search_popup.html";
+                var name = "emp_search";
+                var option = "width = 1000, height = 600, top = 100, left = 200, location = no"
+                window.open(url, name, option);
+            }
+
+            function addEmp(tableInfo){
+                const parentTable = document.getElementById("sampleTable");
+
+                for(var i = 0; i < tableInfo.no.length; i++){
+
+                    const newRow = parentTable.insertRow();
+
+                    const newCell1 = newRow.insertCell(0);
+                    const newCell2 = newRow.insertCell(1);
+                    const newCell3 = newRow.insertCell(2);
+                    const newCell4 = newRow.insertCell(3);
+                    const newCell5 = newRow.insertCell(4);
+
+                    console.log(tableInfo.no[i].data);  
+                    console.log(tableInfo.name[i].data);
+                    console.log(tableInfo.role[i].data);
+                    console.log(tableInfo.phone[i].data);
+
+                    console.log(tableInfo.no[i].data);
+
+                    newCell1.innerHTML = '<input type="checkbox" name="del">';
+                    newCell2.innerText = tableInfo.no[i].data;
+                    newCell3.innerText = tableInfo.name[i].data;
+                    newCell4.innerText = tableInfo.role[i].data;
+                    newCell5.innerText = tableInfo.phone[i].data;
+                }
+            }
+
+            function checkComplete(){
+              var result = confirm("부서 정보 수정을 진행하시겠습니까?");
+
+              console.log(result);
+
+              if(result == true){
+
+                alert("수정이 완료되었습니다.");
+
+                location = "department_detail.html";
+              }
+            }
+            
+            function checkCancel(){
+              var result = confirm("정말로 수정을 취소하시겠습니까?\n수정사항은 저장되지 않습니다.");
+
+              console.log(result);
+
+              if(result == true){
+
+                alert("수정을 취소하셨습니다.");
+
+                location = "department_detail.html";
+              }
+            }
+            
+        </script>
+
+	<script src="../js/jquery.min.js"></script>
+    <script src="../js/popper.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>
