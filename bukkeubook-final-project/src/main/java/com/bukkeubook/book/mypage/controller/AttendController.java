@@ -6,6 +6,8 @@ import java.util .Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bukkeubook.book.common.paging.DatePagenation;
+import com.bukkeubook.book.common.paging.DateSelectCriteria;
 import com.bukkeubook.book.manage.model.dto.AttendDTO;
 import com.bukkeubook.book.mypage.model.service.AttendService;
 
@@ -30,10 +34,41 @@ public class AttendController {
 	
 	/* 근태 조회 페이지 이동 */
 	@GetMapping("/findPage")
-	public ModelAndView findMyAttend(ModelAndView mv) {
+	public ModelAndView findMyAttend(ModelAndView mv, HttpServletRequest request, AttendDTO attendDTO) {
+			
 		
+		String currentPage = request.getParameter("currentPage");
+		int pageNo = 1;
 		int memberCode = 5;
-		List<AttendDTO> attend = attendService.findMyAttend(memberCode);
+		
+		if(currentPage != null && !"".equals(currentPage)) {
+			pageNo = Integer.parseInt(currentPage);
+		}
+		
+		
+		int totalCount = attendService.selectTotalCount(memberCode, attendDTO);
+		
+		/* 한 페이지에 보여 줄 게시물 수 */
+		int limit = 5;		//얘도 파라미터로 전달받아도 된다.
+
+		/* 한 번에 보여질 페이징 버튼의 갯*/
+		int buttonAmount = 5;
+		java.sql.Date startDate = attendDTO.getAttStart();
+		java.sql.Date endDate = attendDTO.getAttEnd();
+		
+		/* 페이징 처리를 위한 로직 호출 후 페이징 처리에 관한 정보를 담고 있는 인스턴스를 반환받는다. */
+		DateSelectCriteria dateSelectCriteria = null;
+		if(startDate != null) {
+			dateSelectCriteria = DatePagenation.getDateSelectCriteria(pageNo, totalCount, limit, buttonAmount, startDate, endDate);
+		} else {
+			dateSelectCriteria = DatePagenation.getDateSelectCriteria(pageNo, totalCount, limit, buttonAmount);
+		}
+		System.out.println(dateSelectCriteria);
+		
+		List<AttendDTO> attend = attendService.findMyAttend(memberCode, dateSelectCriteria);
+		
+		/* 출근 및 퇴근을 위한 데이터 넘기기 */
+		List<AttendDTO> attend1 = attendService.findMyAttend1(memberCode);
 		System.out.println(attend);
 		
 		Date date = new Date();
@@ -43,6 +78,8 @@ public class AttendController {
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡcurrent Time : "+format);
 		
 		mv.addObject("attend", attend);
+		mv.addObject("attend1", attend1);
+		mv.addObject("selectCriteria", dateSelectCriteria);
 		mv.addObject("currentDate", format);
 		mv.setViewName("mypage/myAttend");
 		
