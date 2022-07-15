@@ -16,6 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.bukkeubook.book.books.model.dto.BookDTO;
 import com.bukkeubook.book.books.model.dto.RelBkListAndBookAndRelListDTO;
 import com.bukkeubook.book.books.model.dto.RelListAndEmpDTO;
+import com.bukkeubook.book.books.model.dto.StockBookListAndBookAndStockListAndEmpDTO;
+import com.bukkeubook.book.books.model.dto.StockListAndEmpDTO;
 import com.bukkeubook.book.books.model.service.BookService;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
@@ -183,6 +185,54 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
+	@GetMapping("/inputList")
+	public ModelAndView inputList(HttpServletRequest request, ModelAndView mv) {
+		String currentPage = request.getParameter("currentPage");
+		int pageNo = 1;
+
+		if(currentPage != null && !"".equals(currentPage)) {
+			pageNo = Integer.parseInt(currentPage);
+		}
+
+		String searchCondition = request.getParameter("searchCondition");
+		String searchValue = request.getParameter("searchValue");
+
+		int totalCount = bookService.selectTotalCount(searchCondition, searchValue);
+
+		int limit = 10;		
+
+		int buttonAmount = 5;
+
+		SelectCriteria selectCriteria = null;
+		if(searchValue != null && !"".equals(searchValue)) {
+			selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		} else {
+			selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount);
+		}
+		System.out.println(selectCriteria);
+
+		List<StockListAndEmpDTO> stockListEmp = bookService.searchBookList3(selectCriteria);
+
+		for(StockListAndEmpDTO book : stockListEmp) {
+			System.out.println(book);
+		}
+		
+		mv.addObject("inputList", stockListEmp);
+		
+		mv.addObject("selectCriteria", selectCriteria);
+		mv.setViewName("books/bookList/inputList");
+		return mv;
+	}
 	
+	@GetMapping("/inputDetail")
+	public ModelAndView inputDetail(HttpServletRequest request, String no, ModelAndView mv){
+		int no2 = Integer.valueOf(request.getParameter("no"));
+		
+		List<StockBookListAndBookAndStockListAndEmpDTO> inputList = bookService.inputDetail(no2);
+		System.out.println("여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다여기다");
+		mv.addObject("inputList", inputList);
+		mv.setViewName("books/bookList/inputListDetail");
+		return mv;
+	}
 	
 }
