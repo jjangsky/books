@@ -5,11 +5,20 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity(name="Client")
 @Table(name="TBL_CNT")
+@SequenceGenerator(
+		name = "CLIENT_SEQ_GENERATOR",
+		sequenceName = "SEQ_CNT_NO",
+		initialValue = 21,
+		allocationSize = 1
+)
 public class Client implements Serializable{
 
 	private static final long serialVersionUID = 1422815443447579267L;
@@ -36,6 +45,10 @@ public class Client implements Serializable{
 		CNT_TYPE	NVARCHAR2(31 CHAR)    업태
 	 */
 	@Id
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "CLIENT_SEQ_GENERATOR"
+	)
 	@Column(name="CNT_NO")
 	private int cntNo;					// 거래처번호
 	

@@ -12,10 +12,10 @@
 </head>
 <body>
 <div th:replace="/common/topSideBar.html"></div>
-	<h2 class="mb-4" id="main-text"><a id="sub-a" href="/book/outputList">출고관리</a></h2>
+	<h2 class="mb-4" id="main-text"><a id="sub-a" href="/book/inputList">입고관리</a></h2>
     <hr><br><br>
     	
-        <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/book/outputList">상세출고내역</a></h5>
+        <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/book/inputList">상세입고내역</a></h5>
         <br>
         <br>
 		
@@ -23,18 +23,18 @@
         <div id="textTable" style="text-align:-webkit-center">
           <table id="sampleTable">
               <tr>
-                <th class="th1">출고번호</th>
+                <th class="th1">입고번호</th>
                 <th class="th1">도서코드</th>
                 <th class="th1">도서제목</th>
                 <th class="th1">출고수량</th>
                 <th class="th1">출고자</th>
               </tr>
-              <tr class="tr1" th:each="outputList : ${ outputList }">
-                <td th:text="${ outputList.relNo }"></td>
-                <td th:text="${ outputList.book.no }"></td>
-                <td th:text="${ outputList.book.name }"></td>
-                <td th:text="${ outputList.relBkAmount }"></td>
-            	<td th:text="${ outputList.relListEmp.emp.empName }"></td>
+              <tr class="tr1" th:each="inputList : ${ inputList }">
+                <td th:text="${ inputList.stockListEmp.stCode }"></td>
+                <td th:text="${ inputList.book.no }"></td>
+                <td th:text="${ inputList.book.name }"></td>
+                <td th:text="${ inputList.stockBkAmount }"></td>
+            	<td th:text="${ inputList.stockListEmp.emp.empName }"></td>
               </tr>
           </table>
           <br>          

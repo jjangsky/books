@@ -107,3 +107,17 @@
     color: black;
 }
 .pagination a:hover:not(.active) {background-color: #d9d9d9}
+
+.pagingArea button {
+	border-style: none;
+	margin: 3px;
+	background: #c5bfbf;
+	border-radius: 5px;
+	width: 30px;
+}
+.pagingArea button:hover {
+	background-color: #FEFCC6;
+}
+#sub-text a{
+	color: #515151 !important;
+}

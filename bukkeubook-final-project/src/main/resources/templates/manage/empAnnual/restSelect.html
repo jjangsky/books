@@ -18,17 +18,19 @@
 <div th:replace="/common/topSideBar.html"></div>
     <h2 class="mb-4" id="main-text">사원관리</h2>
     <hr><br><br>
-    <h5 class="mb-4" id="sub-text">휴가조회</h5>
+    <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/empAnnual/restSelect">휴가조회</a></h5>
     <br>
-            <div class="searchEmp">
-            <form class="search select">
-              <select class="searchback">
-                <option value="">None</option>
-                <option value="Dept">부서</option>
-                <option value="EmpNo">사번</option>
-                <option value="EmpName">사원명</option>
+        <div class="searchEmp"  align="center">
+            <form class="search select" action="/empAnnual/restSelect" method="get">
+              <select class="searchback" th:with="searchCondition = ${selectCriteria.searchCondition}"
+				id="searchCondition" name="searchCondition">
+                <option value="select">None</option>
+                <option value="Dept" th:selected="${ searchCondition } == 'Dept'">부서</option>
+                <!-- <option value="EmpNo" th:selected="${ searchCondition } == 'EmpNo'">사번</option> -->
+                <option value="EmpName" th:selected="${ searchCondition } == 'EmpName'">사원명</option>
               </select>
-              <input class="searchinput" type="text" placeholder="검색어를 입력해주세요">
+              <input type="hidden" name="currentPage" value="1">
+              <input class="searchinput" type="search" placeholder="검색어를 입력해주세요" name="searchValue" th:value="${selectCriteria.searchValue}">
             <button class="searchBtn" type="submit">검색하기</button>
             </form>
           </div><br><br>
@@ -54,11 +56,12 @@
                 <td th:text="${ appVac.vacEndDate }"></td>
                 <td><button type="button" class="detail contents" th:onclick="'location.href = \'' + @{/manage/restDetailSelect/(vacNo=${appVac.vacNo})} + '\''" >상세보기</button></td>
               </tr>
-          </table>
+          </table><br><br>
+          <div th:replace="manage/empAnnual/restPaging.html"></div>
           <br><br>
 			
 			
-          <div class="pagination">
+          <!--<div class="pagination">
             <a href="#">&laquo;</a>
             <a href="#">1</a>
             <a class="active" href="#">2</a>
@@ -67,7 +70,7 @@
             <a href="#">5</a>
             <a href="#">6</a>
             <a href="#">&raquo;</a>
-          </div>
+          </div> -->
         </div>
      
 </body>

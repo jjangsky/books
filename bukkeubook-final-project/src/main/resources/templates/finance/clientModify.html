@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+	<link rel="stylesheet"  th:href="@{/css/books/order/orderDetail.css}">
+</head>
+<body>
+    <div th:replace="/common/topSideBar.html"></div>
+
+        <h2 class="mb-4" id="main-text">거래처 관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">거래처 정보 수정</h5>
+        <br>
+
+        <div id="textTable" style="text-align:-webkit-center">
+            <form action="/client/modify" method="post">
+                <table id="sampleTable" align="center">
+                    <tr>
+                        <th class="th1" colspan="4">거래처 정보 입력</th>
+                    </tr>
+                    <tr>
+                        <td>거래처명</td>
+                        <td colspan="3"><input type="text" name="cntName" th:value="${ client.cntName }"></td>
+                    </tr>
+                    <tr>
+                        <td>업종</td>
+                        <td><input type="text" name="cntCate" th:value="${ client.cntCate }"></td>
+                        <td>사업자등록번호</td>
+                        <td><input type="text" name="cntRegNo" th:value="${ client.cntRegNo}"></td>
+                    </tr>
+                    <tr>
+                        <td>업태</td>
+                        <td><input type="text" name="cntType" th:value="${ client.cntType }"></td>
+                        <td>법인등록번호</td>
+                        <td><input type="text" name="corpRegNo" th:value="${ client.corpRegNo }"></td>
+                    </tr>
+                    <tr>
+                        <td>대표자</td>
+                        <td colspan="3"><input type="text" name="cntRepName" th:value="${ client.cntRepName }"></td>
+                    </tr>
+                    <tr>
+                        <td>개업일</td>
+                        <td colspan="3" th:value="${ client.cntOpenDate }"></td>
+                    </tr>
+                    <tr>
+                        <td>소재지</td>
+                        <td colspan="3"><input type="text" name="cntAddress" th:value="${ client.cntAddress }"></td>
+                    </tr>
+                    <tr>
+                        <td>연락처</td>
+                        <td><input type="text" name="cntPhone" th:value="${ client.cntPhone }"></td>
+                        <td>담당자</td>
+                        <td><input type="text" name="cntManaName" th:value="${ client.cntManaName }"></td>
+                    </tr>
+                    <tr>
+                        <td>이메일</td>
+                        <td><input type="email" name="cntEmail" th:value="${ client.cntEmail }"></td>
+                        <td>담당자 연락처</td>
+                        <td><input type="text" name="cntManaPhone" th:value="${ client.cntManaPhone }"></td>
+                    </tr>
+                    <tr>
+                        <td>FAX</td>
+                        <td><input type="text" name="cntFax" th:value="${ client.cntFax }"></td>
+                        <td>담당자 이메일</td>
+                        <td><input type="email" name="cntManaEmail" th:value="${ client.cntManaEmail }"><input type="hidden" name="cntNo" th:value="${ client.cntNo }"></td>
+                    </tr>
+                </table>
+                <!-- <input type="hidden" name="cntStartDate" value='th:text="${ client.cntStartDate }"'>
+                <input type="hidden" name="cntTradeYn" value='th:text="${ client.cntTradeYn }"'> -->
+                <button type="submit">등록</button>
+            </form>
+                <button type="button" onclick="checkCancel()">취소</button>
+        </div> <!------------------------ 본문 종료---------------------------->
+
+    <script>
+      function checkComplete(){
+        var result = confirm("거래처 등록을 진행하시겠습니까?");
+
+        console.log(result);
+
+        if(result == true){
+
+          alert("거래처 등록이 완료되었습니다.");
+
+          location = "client_detail.html";
+        }
+      }
+      
+      function checkCancel(){
+        var result = confirm("정말로 거래처 등록을 취소하시겠습니까?\n수정사항은 저장되지 않습니다.");
+
+        console.log(result);
+
+        if(result == true){
+
+          alert("거래처 등록을 취소하셨습니다.");
+
+          location = "client_select.html";
+        }
+      }
+    </script>
+		<script src="../js/jquery.min.js"></script>
+    <script src="../js/popper.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

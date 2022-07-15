@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /* TBL_DAYOFF 테이블에 매칭될 DayOff 엔티티 클래스도 만들어 보기 */
-@Entity
+@Entity(name="DayOff")
 @Table(name = "TBL_DAYOFF")
 
 public class DayOff implements Serializable{
