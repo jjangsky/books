@@ -199,6 +199,62 @@ public class BookService {
 		System.out.println(bookList);
 		return bookList.stream().map(book -> modelMapper.map(book, StockBookListAndBookAndStockListAndEmpDTO.class)).toList();
 	}
+
+	public List<BookDTO> searchBookList4(SelectCriteria selectCriteria) {
+		int index = selectCriteria.getPageNo() - 1;
+		int count = selectCriteria.getLimit();
+		String searchValue = selectCriteria.getSearchValue();
+
+		Pageable paging = PageRequest.of(index, count, Sort.by("no"));
+
+		List<Book> outputList = new ArrayList<Book>();
+		if(searchValue != null) {
+
+			if("no".equals(selectCriteria.getSearchCondition())) {
+				outputList = bookRepository.findAllByNoContaining(selectCriteria.getSearchValue(), paging);
+			}
+
+			if("name".equals(selectCriteria.getSearchCondition())) {
+				outputList = bookRepository.findAllByNameContaining(selectCriteria.getSearchValue(), paging);
+			}
+			
+			if("author".equals(selectCriteria.getSearchCondition())) {
+				outputList = bookRepository.findAllByAuthorContaining(selectCriteria.getSearchValue(), paging);
+			}
+		} /*
+			 * else { stockListEmp = bookRepository.findAll(paging).toList(); }
+			 */
+		System.out.println(outputList);
+		return outputList.stream().map(book -> modelMapper.map(book, BookDTO.class)).collect(Collectors.toList());
+	}
+
+	public List<BookDTO> searchBookList5(SelectCriteria selectCriteria) {
+		int index = selectCriteria.getPageNo() - 1;
+		int count = selectCriteria.getLimit();
+		String searchValue = selectCriteria.getSearchValue();
+
+		Pageable paging = PageRequest.of(index, count, Sort.by("no"));
+
+		List<Book> inputList = new ArrayList<Book>();
+		if(searchValue != null) {
+
+			if("no".equals(selectCriteria.getSearchCondition())) {
+				inputList = bookRepository.findAllByNoContaining(selectCriteria.getSearchValue(), paging);
+			}
+
+			if("name".equals(selectCriteria.getSearchCondition())) {
+				inputList = bookRepository.findAllByNameContaining(selectCriteria.getSearchValue(), paging);
+			}
+			
+			if("author".equals(selectCriteria.getSearchCondition())) {
+				inputList = bookRepository.findAllByAuthorContaining(selectCriteria.getSearchValue(), paging);
+			}
+		} /*
+			 * else { stockListEmp = bookRepository.findAll(paging).toList(); }
+			 */
+		System.out.println(inputList);
+		return inputList.stream().map(book -> modelMapper.map(book, BookDTO.class)).collect(Collectors.toList());
+	}
 	
 	
 	
