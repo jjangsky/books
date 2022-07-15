@@ -6,19 +6,22 @@ import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.bukkeubook.book.manage.model.entity.Emp;
 
 @Entity
 @Table(name="TBL_STOCK_LIST")
-public class StockList implements Serializable{
+public class StockListAndEmp implements Serializable{
+	private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = -5872574390835538568L;
-	
-	/* DB 자료형(TBL_STOCK_LIST) */
 //	ST_CODE	NUMBER	목록번호
 //	ST_DATE	DATE	입고날짜
 //	EMP_NO	NUMBER	사원번호
 //	ST_TYPE	NVARCHAR2(31 CHAR)	입고구분
+	
 	@Id
 	@Column(name="ST_CODE")
 	private int stCode;				// 목록번호
@@ -26,20 +29,21 @@ public class StockList implements Serializable{
 	@Column(name="ST_DATE")
 	private java.sql.Date stDate;	// 입고날짜
 	
-	@Column(name="EMP_NO")
-	private int empNo;				// 사원번호
-	
 	@Column(name="ST_TYPE")
 	private String stType;			// 입고구분
+	
+	@ManyToOne
+	@JoinColumn(name="EMP_NO")
+	private Emp emp;
 
-	public StockList() {
+	public StockListAndEmp() {
 	}
 
-	public StockList(int stCode, Date stDate, int empNo, String stType) {
+	public StockListAndEmp(int stCode, Date stDate, String stType, Emp emp) {
 		this.stCode = stCode;
 		this.stDate = stDate;
-		this.empNo = empNo;
 		this.stType = stType;
+		this.emp = emp;
 	}
 
 	public int getStCode() {
@@ -58,14 +62,6 @@ public class StockList implements Serializable{
 		this.stDate = stDate;
 	}
 
-	public int getEmpNo() {
-		return empNo;
-	}
-
-	public void setEmpNo(int empNo) {
-		this.empNo = empNo;
-	}
-
 	public String getStType() {
 		return stType;
 	}
@@ -74,13 +70,25 @@ public class StockList implements Serializable{
 		this.stType = stType;
 	}
 
+	public Emp getEmp() {
+		return emp;
+	}
+
+	public void setEmp(Emp emp) {
+		this.emp = emp;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	@Override
 	public String toString() {
-		return "StockList [stCode=" + stCode + ", stDate=" + stDate + ", empNo=" + empNo + ", stType=" + stType + "]";
+		return "StockListAndEmp [stCode=" + stCode + ", stDate=" + stDate + ", stType=" + stType + ", emp=" + emp + "]";
 	}
+	
+	
+	
+	
 	
 }
