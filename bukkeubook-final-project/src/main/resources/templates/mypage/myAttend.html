@@ -51,15 +51,15 @@
         <br><br>
 
 		<!--  검색 창 -->
-        < <div style="margin-left:35%">
-          <form action="/attend/findPage" method="get" style="width:500px; height:300px">
-             <input type="date" class="form-control" style="width:300px" name="attStart">
+          <div style="margin-left:35%">
+          <form action="/attend/findPage" method="get" style="width:500px; height:300px" id="searchForm">
+             <input type="date" class="form-control" style="width:300px" name="attStart" id="startDay">
              <br>
-              <input type="date" class="form-control" style="width:300px" name="attEnd">
+              <input type="date" class="form-control" style="width:300px" name="attEnd" id="endDay">
               <input type="hidden" name="currentPage" value="1">
-            <button class="search btn" type="submit" style="margin-right:60%">검색</button> 
+            <button class="search btn" type="button" id="searchbtn" style="margin-right:60%">검색</button> 
           </form>
-        </div> 
+        </div>  
         <!-- 검색창 마감 -->
         
         <div style="margin-right:20%;">
@@ -78,8 +78,8 @@
           </table>
         </div> <!------------------------ 본문 종료---------------------------->
          <br><br><br><br><br><br><br><br><br><br>
-       	 <div th:replace="/mypage/attendPaging.html"></div>
-        
+       	   <div th:replace="/mypage/attendPaging.html"></div> 
+       
         <script>
         
         /* 현재 시간을 구하는 스크립트 */
@@ -115,6 +115,30 @@
             $("#wrDate").val(todayString);
             $("#wrDate1").val(todayString);
          });  
+        
+        /* 검색 시작일이 검색 종료일보다 값이 큰 경우 경곰*/
+        $("#searchbtn").click(function(){ 
+
+			let start = $("#startDay").val();
+			let end = $("#endDay").val();
+			
+				
+			let startArr = start.split('-');
+			let endArr = end.split('-');
+				
+				
+			let startDateCompare = new Date(startArr[0], parseInt(startArr[1])-1, startArr[2]);
+			let endDateCompare = new Date(endArr[0], parseInt(endArr[1])-1, endArr[2]);
+				
+			
+			if(startDateCompare.getTime() > endDateCompare.getTime()){
+				alert("시작 날짜와 종료 날짜를 확인해 주세요!");
+				$("#startDay").focus();
+			}else {
+				$("#searchForm").submit();
+			}
+			 
+		}) 
          
         
         </script>
