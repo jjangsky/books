@@ -5,13 +5,23 @@
 <meta charset="UTF-8">
 <link rel="stylesheet"  th:href="@{/css/document/HR.css}">
 <link rel="stylesheet"  th:href="@{/css/document/Listdetail.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <title>Document docList</title>
 </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
-	<h2 class="mb-4" id="main-text">전자 결재 내역</h2>
+	<h2 class="mb-4" id="main-text">상신함</h2>
         <hr><br><br>
-
+	<script>
+		const successMessage = "[[${ insertSuccess }]]";
+		if(successMessage){
+			 Swal.fire({
+	                icon: 'success',
+	                title: '성공!',
+	                text: '성공적으로 완료되었습니다!',
+	            })
+		}
+	</script>
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
         <div>
@@ -20,31 +30,34 @@
             <input class="search in" type="text" placeholder="검색어 입력" required>
             <select class="search select" required>
               <option value="">None</option>
-              <option value="empCode">사원번호</option>
-              <option value="empName">사원명</option>
-              <option value="dept">부서</option>
-              <option value="position">직급</option>
+              <option value="empCode">번호</option>
+              <option value="empName">제목</option>
+              <option value="dept">문서종류</option>
             </select>
           </form>
         </div>
         <div>
           <table id="sampleTable">
               <tr>
-                <th class="th1">번호</th>
+                <th class="th1">문서번호</th>
                 <th class="th1">제목</th>
-                <th class="th1">결재 상태</th>
+                <th class="th1">작성일자</th>
                 <th class="th1">작성자</th>
                 <th class="th1">문서종류</th>
                 <th class="th1"></th>
               </tr>
-              <tr class="hover">
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td><button type="button" class="select btn" onclick="location.href=''">보기</button></td>
-              </tr>
+              <!-- <tr class="hover" th:each="temp : ${ tempDocList }">
+                <td class="td1" th:text="${temp.docNo}"></th>
+                <td class="td1" th:text="${temp.docTitle}"></th>
+                <td class="td1" th:text="${temp.wrDate}"></th>
+                <td class="td1" th:text="${temp.emp.empName}"></th>
+                <td class="td1" th:text="${temp.formCate.formName}"></th>
+                <td>
+                	<a th:href="@{/document/tempInfo/{docNo}/(docNo=${temp.docNo})}"> 
+                		<button type="button" class="select btn" onclick="location.href=''">보기</button>
+                	</a>
+                </td>
+              </tr> -->
           </table>
           <br>
           <button type="button" class="insert btn" onclick="location.href='/document/insert'">등록</button>

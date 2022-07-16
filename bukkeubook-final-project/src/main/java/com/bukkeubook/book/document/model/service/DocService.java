@@ -8,6 +8,7 @@ import com.bukkeubook.book.document.model.dto.DeptDTO;
 import com.bukkeubook.book.document.model.dto.DocumentAndEmpAndFormCateDTO;
 import com.bukkeubook.book.document.model.dto.EmpDTO;
 import com.bukkeubook.book.document.model.dto.FormCateDTO;
+import com.bukkeubook.book.document.model.dto.InboxListDTO;
 import com.bukkeubook.book.document.model.dto.SubmitDocumentDTO;
 import com.bukkeubook.book.document.model.dto.TempStoreDocumentDTO;
 import com.bukkeubook.book.document.model.entity.Approver;
@@ -38,5 +39,7 @@ public interface DocService {
 	void submitTempDocOneAcc(SubmitDocumentDTO tempDoc, AppRootDTO appRoot, ApproverDTO approver);
 
 	void submitTempDocTwoAcc(SubmitDocumentDTO tempDoc, AppRootDTO appRoot, List<SubmitApprover> approverList);
+
+	List<InboxListDTO> findInboxAllList(int empNo);
 
 }

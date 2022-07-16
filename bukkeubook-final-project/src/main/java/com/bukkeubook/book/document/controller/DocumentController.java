@@ -1,7 +1,9 @@
 package com.bukkeubook.book.document.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ import com.bukkeubook.book.document.model.dto.DeptDTO;
 import com.bukkeubook.book.document.model.dto.DocumentAndEmpAndFormCateDTO;
 import com.bukkeubook.book.document.model.dto.EmpDTO;
 import com.bukkeubook.book.document.model.dto.FormCateDTO;
+import com.bukkeubook.book.document.model.dto.InboxListDTO;
 import com.bukkeubook.book.document.model.dto.SubmitDocumentDTO;
 import com.bukkeubook.book.document.model.dto.TempStoreDocumentDTO;
 import com.bukkeubook.book.document.model.entity.Approver;
@@ -60,10 +63,30 @@ public class DocumentController {		// 전자결재 컨트롤러
 		
 	}
 	
-	/* 상신내역 리스트 조회 */
-	@GetMapping("docList")
-	public String toDocList() {
-		return "/document/docList";
+	/* 수신함 리스트 조회 */
+	@GetMapping("docInboxList")
+	public ModelAndView toDocList(ModelAndView mv) {
+		
+		int empNo = 7;
+		
+		List<InboxListDTO> all = docService.findInboxAllList(empNo);
+		
+		System.out.println(all);
+		mv.addObject("all", all);
+		mv.setViewName("/document/docInboxList");
+		
+		return mv;
+	}
+	
+	/* 수신함 상세 조회 */
+	@GetMapping("indoxDetail/{docNo}")
+	public ModelAndView inboxDetailView (ModelAndView mv,@PathVariable int docNo) {
+		
+		System.out.println(docNo);
+		
+		mv.setViewName("/document/indoxDetail");
+		
+		return mv;
 	}
 	
 	/* 임시저장 리스트 조회 */
@@ -259,7 +282,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 			
 			int appr3 = Integer.valueOf(approver3);
 			SubmitApprover appro3 = new SubmitApprover();
-			appro3.setEmpNo2(appr2);
+			appro3.setEmpNo2(appr3);
 			appro3.setAppStatus2(appStatus);
 			approverList.add(appro3);
 			
@@ -338,7 +361,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 			
 			int appr3 = Integer.valueOf(approver3);
 			SubmitApprover appro3 = new SubmitApprover();
-			appro3.setEmpNo2(appr2);
+			appro3.setEmpNo2(appr3);
 			appro3.setAppStatus2(appStatus);
 			
 			approverList.add(appro);
@@ -351,6 +374,15 @@ public class DocumentController {		// 전자결재 컨트롤러
 		
 		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
 		mv.setViewName("redirect:/document/docList");
+		
+		return mv;
+	}
+	
+	/* 상신함 전체리스트 조회 */
+	@GetMapping("reqApprovalList")
+	public ModelAndView toReqApprovalList(ModelAndView mv) {
+		
+		mv.setViewName("/document/reqApprovalList");
 		
 		return mv;
 	}

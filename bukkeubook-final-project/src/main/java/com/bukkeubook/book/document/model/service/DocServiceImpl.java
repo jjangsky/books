@@ -1,9 +1,11 @@
 package com.bukkeubook.book.document.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -15,6 +17,7 @@ import com.bukkeubook.book.document.model.dto.DeptDTO;
 import com.bukkeubook.book.document.model.dto.DocumentAndEmpAndFormCateDTO;
 import com.bukkeubook.book.document.model.dto.EmpDTO;
 import com.bukkeubook.book.document.model.dto.FormCateDTO;
+import com.bukkeubook.book.document.model.dto.InboxListDTO;
 import com.bukkeubook.book.document.model.dto.SubmitDocumentDTO;
 import com.bukkeubook.book.document.model.dto.TempStoreDocumentDTO;
 import com.bukkeubook.book.document.model.entity.AppRoot;
@@ -97,7 +100,7 @@ public class DocServiceImpl implements DocService{
 	@Override
 	public List<EmpDTO> findEmp(int dept) {
 
-		List<Emp> empList = docEmpRepository.findByDeptCode(dept);
+		List<Emp> empList = docEmpRepository.findByDeptCode(dept,Sort.by("empNo").descending());
 		
 		return empList.stream().map(emp -> modelMapper.map(emp, EmpDTO.class)).toList();
 //		return empList.stream().map(emp -> modelMapper.map(emp, EmpDTO.class)).toList();
@@ -249,6 +252,91 @@ public class DocServiceImpl implements DocService{
 		}
 		approverRepository.saveAll(approverList);
 		
+	}
+
+	/* 수신함 리스트 조회 */
+	@Override
+	public List<InboxListDTO> findInboxAllList(int empNo) {
+
+		List<InboxListDTO> all = new ArrayList<>();
+		
+		/* 사원과 맞는 결재자테이블에서 결재자 리스트 */
+		List<Object[]> correctToApproverList = approverRepository2.findByApproverNoDocList(empNo);
+		
+		/* 결재 경로 번호들 담을 리스트 */
+		List<Integer> appRootNoList = new ArrayList<>();
+		
+		/* 결재자가 전결한 상태 (결재상태)들 담을 리스트 */
+		List<String> appStatusList = new ArrayList<>();
+		
+		for(Object[] appro : correctToApproverList) {
+			appRootNoList.add((int)appro[0]);
+			appStatusList.add((String)appro[1]);
+		}
+//		System.out.println(appRootNoList);
+//		System.out.println(appStatusList);
+		
+		for(int i = 0; i < appStatusList.size(); i++) {
+			InboxListDTO inbox = new InboxListDTO();
+			inbox.setAppStatus(appStatusList.get(i));
+			all.add(inbox);
+		}
+		
+		/* 가져온 결재경로번호에 맞는 결재경로 리스트 */
+		AppRoot root = new AppRoot();
+		List<AppRoot> correctAppRootList = new ArrayList<>();
+		for(int i = 0; i<appRootNoList.size(); i++) {
+			root = appRootRepository.findById(appRootNoList.get(i)).get();
+			correctAppRootList.add(root);
+		}
+//		System.out.println(correctAppRootList);
+		
+		/* 가져온 문서번호에 맞는 문서 가져오기 */
+		Document doc = new Document();
+		List<Integer> docNoList = new ArrayList<>();
+		List<Integer> stepNoList = new ArrayList<>();
+		List<String> stepNameList = new ArrayList<>();
+		List<Document> docList = new ArrayList<>();
+		for(int i = 0; i<correctAppRootList.size(); i++) {
+			int docNo = correctAppRootList.get(i).getDocNo();
+			docNoList.add(docNo);
+			int stepNo = correctAppRootList.get(i).getStepNo();
+			stepNoList.add(stepNo);
+//			doc = docRepository.findById(docList.get(i).getDocNo1()).get();
+		}
+		
+		for(int i = 0; i<stepNoList.size(); i++) {
+			String name = stepNoList.get(i) + "단계" ;
+			stepNameList.add(name);
+		}
+		
+		for(int i = 0; i<stepNameList.size();i++) {
+			InboxListDTO inbox = all.get(i);
+			inbox.setStepName(stepNameList.get(i));
+		}
+//		System.out.println(stepNameList);
+		
+//		System.out.println(docNoList);
+		for(int i = 0; i<docNoList.size(); i++) {
+			int docNo = docNoList.get(i);
+			doc = docRepository.findById(docNo).get();
+			docList.add(doc);
+		}
+		/* 엔티티 타입을 DTO로 바꾸어 리턴한다. */
+		List<TempStoreDocumentDTO> returnDocList = docList.stream().map(document -> modelMapper.map(document, TempStoreDocumentDTO.class)).toList();
+//		System.out.println(returnDocList);
+		
+		for(int i = 0; i<returnDocList.size();i++) {
+			InboxListDTO inbox = all.get(i);
+			inbox.setDocument(returnDocList.get(i));
+			if(1 == returnDocList.get(i).getFormNo1()) {
+				inbox.setFormName("기안서");
+			}else {
+				inbox.setFormName("지출결의서");
+			}
+		}
+		
+		return all;
 	}
 
 	

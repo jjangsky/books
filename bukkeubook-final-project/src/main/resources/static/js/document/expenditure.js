@@ -1,5 +1,57 @@
 window.onload = function() {
 
+	$("#clear").click(function(){
+		$("#account1").val("");
+		$("#acco1").val("");
+		$("#deptName1").val("");
+		$("#account2").val("");
+		$("#acco2").val("");
+		$("#deptName2").val("");
+		$("#account3").val("");
+		$("#acco3").val("");
+		$("#deptName3").val("");
+		$("#stepNo").val("");
+		$("#step").text("");
+	})
+
+	$("#empList").change(function(){
+		let appro = $(this).val();
+		let account = $("#empList option:selected").text();
+		let deptName = $("#deptCode option:selected").text();
+		console.log(appro);
+		console.log(account);
+		console.log(deptName);
+		$("#account1").val(appro);
+		$("#acco1").val(account);
+		$("#deptName1").val(deptName);
+	});
+	
+	$("#empList2").change(function(){
+		let appro = $(this).val();
+		let account = $("#empList2 option:selected").text();
+		let deptName = $("#deptCode2 option:selected").text();
+		console.log(appro);
+		console.log(account);
+		console.log(deptName);
+		$("#account2").val(appro);
+		$("#acco2").val(account);
+		$("#deptName2").val(deptName);
+	});
+	
+	$("#empList3").change(function(){
+		let appro = $(this).val();
+		let account = $("#empList3 option:selected").text();
+		let deptName = $("#deptCode3 option:selected").text();
+		console.log(appro);
+		console.log(account);
+		console.log(deptName);
+		$("#account3").val(appro);
+		$("#acco3").val(account);
+		$("#deptName3").val(deptName);
+	});
+
+
+
 	$(function() {
 		$.ajax({
 			url: "/document/dept",
@@ -302,11 +354,11 @@ function sendData() {
 	let check = true;
 	let countCheck = 0;
 
-	if ($("#account1").val() == "") {
+	if ($("#stepNo").val() == "") {
 		Swal.fire({
 			icon: 'warning',
-			title: '결재라인 없음',
-			text: '최소 결재라인을 지정해주세요!'
+			title: '결재단계 확인',
+			text: '단계 지정버튼을 눌러주세요!'
 		})
 	} else{countCheck ++;}
 	console.log(countCheck);
@@ -387,27 +439,15 @@ function sendData() {
 }
 
 function selectacc() {
-	let account1 = $("#empList option:selected").text();
-	let account2 = $("#empList2 option:selected").text();
-	let account3 = $("#empList3 option:selected").text();
-
-	let ac1 = $("#empList option:selected").val();
-	let ac2 = $("#empList2 option:selected").val();
-	let ac3 = $("#empList3 option:selected").val();
-
-	let deptName1 = $("#deptCode option:selected").text();
-	let deptName2 = $("#deptCode2 option:selected").text();
-	let deptName3 = $("#deptCode3 option:selected").text();
-
 	let stepNo = "";
 
-	if (account1 == "") {
+	if ($("#account1").val() == "") {
 		Swal.fire({
 			icon: 'warning',
 			title: '결재라인 없음',
 			text: '최소 결재라인을 지정해주세요!'
 		})
-	} else if (account2 == "" && account3 == "") {
+	} else if ($("#account2").val() == "" && $("#account3").val() == "") {
 		Swal.fire({
 			title: '결재라인이 1단계로 \n종료됩니다.',
 			text: "맞으시면 확인을 눌러주세요.",
@@ -419,17 +459,12 @@ function selectacc() {
 			cancelButtonText: '취소'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				$("#selacc1").text(account1);
-				$("#selacc2").text(account2);
-				$("#selacc3").text(account3);
-				$("#acco1").val(account1);
-				$("#acco2").val(account2);
-				$("#acco3").val(account3);
+				stepNo = "1";
+				$("#stepNo").val(stepNo);
+				$("#step").text(stepNo);
 			}
 		})
-
-		stepNo = "1";
-	} else if (account3 == "") {
+	} else if ($("#account3").val() == "") {
 		Swal.fire({
 			title: '결재라인이 2단계로 \n종료됩니다.',
 			text: "맞으시면 확인을 눌러주세요.",
@@ -441,15 +476,11 @@ function selectacc() {
 			cancelButtonText: '취소'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				$("#selacc1").text(account1);
-				$("#selacc2").text(account2);
-				$("#selacc3").text(account3);
-				$("#acco1").val(account1);
-				$("#acco2").val(account2);
-				$("#acco3").val(account3);
+				stepNo = "2";
+				$("#stepNo").val(stepNo);
+				$("#step").text(stepNo);
 			}
 		})
-		stepNo = "2";
 	} else {
 		Swal.fire({
 			title: '결재라인이 3단계로 \n종료됩니다.',
@@ -462,26 +493,12 @@ function selectacc() {
 			cancelButtonText: '취소'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				$("#selacc1").text(account1);
-				$("#selacc2").text(account2);
-				$("#selacc3").text(account3);
-				$("#acco1").val(account1);
-				$("#acco2").val(account2);
-				$("#acco3").val(account3);
+				stepNo = "3";
+				$("#stepNo").val(stepNo);
+				$("#step").text(stepNo);
 			}
 		})
-		stepNo = "3";
 	}
-
-	$("#stepNo").val(stepNo);
-	$("#step").text(stepNo);
-	$("#deptName1").val(deptName1);
-	$("#deptName2").val(deptName2);
-	$("#deptName3").val(deptName3);
-	$("#account1").val(ac1);
-	$("#account2").val(ac2);
-	$("#account3").val(ac3);
-
 }
 
 function takeout() {

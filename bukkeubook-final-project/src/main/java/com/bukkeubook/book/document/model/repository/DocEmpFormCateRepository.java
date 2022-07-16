@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.bukkeubook.book.document.model.entity.DocumentAndEmpAndFormCate;
 
@@ -13,5 +14,7 @@ public interface DocEmpFormCateRepository extends JpaRepository <DocumentAndEmpA
 
 	DocumentAndEmpAndFormCate findDocEmpRepositoryByDocNoAndEmpNoAndDocStatus(int selectedDocNo, int tempEmpNo,
 			String docStatus);
+	
+	List<DocumentAndEmpAndFormCate> findByDocNo(int docNo);
 
 }
