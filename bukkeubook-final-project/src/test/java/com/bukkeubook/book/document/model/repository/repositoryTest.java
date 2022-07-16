@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.bukkeubook.book.config.BukkeubookFinalProjectApplication;
+import com.bukkeubook.book.document.model.entity.AppRoot;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -40,19 +41,19 @@ public class repositoryTest {
 		assertNotNull(list);		// Success!!
 	}
 	
-	@Test
-	@Disabled
-	public void 여러결제번호에_맞는_문서_조회() {
-		List<Object[]> list = rootRe.findByAppRootNoDocList(9);
-		assertNotNull(list);		// Success!!
-	}
-	
-	@Test
-	@Disabled
-	public void 여러문서번호에_맞는_문서조회() {
-		List<Object[]> list = docRe.findByDocNoDocList(17);
-		assertNotNull(list);		// Success!!
-	}
-	
+//	@Test
+//	@Disabled
+//	public void 여러결제번호에_맞는_문서_조회() {
+//		List<AppRoot> list = rootRe.findByAppRootNoDocList(9);
+//		assertNotNull(list);		// Success!!
+//	}
+//	
+//	@Test
+//	@Disabled
+//	public void 여러문서번호에_맞는_문서조회() {
+//		List<Object[]> list = docRe.findByDocNoDocList(17);
+//		assertNotNull(list);		// Success!!
+//	}
+//	
 	
 }

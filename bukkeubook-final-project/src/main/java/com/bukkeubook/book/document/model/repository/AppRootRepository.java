@@ -11,8 +11,5 @@ public interface AppRootRepository extends JpaRepository <AppRoot,Object>{
 
 	@Query(value = "SELECT MAX(a.appRootNo) FROM AppRoot a")
 	int findCurrentSeqAccRoot();
-
-	@Query("SELECT r.appRootNo,r.stepNo,r.stepNo FROM AppRoot r WHERE r.appRootNo = ?1")
-	List<Object[]> findByAppRootNoDocList(int appRootNo);
 	
 }

@@ -13,6 +13,4 @@ public interface DocumentRepository extends JpaRepository<Document, Object>{
 	@Query(value = "SELECT MAX(d.docNo1) FROM Document d")
 	int findCurrentSeqDoc();
 
-	@Query("SELECT d FROM Document d WHERE d.docNo1 = ?1")
-	List<Object[]> findByDocNoDocList(int docNo);
 }

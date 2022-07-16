@@ -125,3 +125,14 @@ h4{
     margin: 5px;
     padding: 2%;
 }
+
+.select.btn{
+    padding: 7px 20px;
+    background-color: #D9D9D9;
+    border-radius: 10px;
+    border: none;
+    margin-left:10px;
+}
+.select.btn:hover{
+    background-color: #FEFCC6;
+}
