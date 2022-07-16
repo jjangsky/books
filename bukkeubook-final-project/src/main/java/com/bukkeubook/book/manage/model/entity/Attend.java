@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @SequenceGenerator(
 		name = "ATT_SEQ_GENERATOR",
 		sequenceName = "SEQ_ATT_NO",
-		initialValue = 300,
+		initialValue = 1,
 		allocationSize = 1
 		)
 public class Attend implements Serializable{

@@ -40,6 +40,9 @@ public class AttendController {
 		int pageNo = 1;
 		int memberCode = 5;
 		
+		System.out.println(attendDTO.getAttStart());
+		System.out.println(attendDTO.getAttEnd());
+		
 		if(currentPage != null && !"".equals(currentPage)) {
 			pageNo = Integer.parseInt(currentPage);
 		}

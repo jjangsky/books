@@ -1,9 +1,7 @@
 package com.bukkeubook.book.mypage.model.service;
 
 import java.sql.Date;
-
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -98,12 +96,16 @@ public class MypageService {
 	public int selectTotalCount(int memberCode, String approve, Date attStart, Date attEnd) {
 
 		int count = 0;
+		System.out.println(attStart);
+		System.out.println(attEnd+ " 값있냐?");
 
 		if (attStart != null && attEnd != null) {
 			count = vacationRepository.countByEmpNoAndVacStatusAndVacStartDateBetween(memberCode, approve, attStart,
 					attEnd);
 
 			System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 서비스 계층 : " + count);
+		}else {
+			count = vacationRepository.countByEmpNoAndVacStatus(memberCode, approve);
 		}
 
 		return count;

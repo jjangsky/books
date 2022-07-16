@@ -21,6 +21,8 @@ public interface VacationRepository extends JpaRepository<AppVacation, Integer>{
 
 	int countByEmpNoAndVacStatusAndVacStartDateBetween(int memberCode, String approve, Date attStart, Date attEnd);
 
+	int countByEmpNoAndVacStatus(int memberCode, String approve);
+
 
 
 }
