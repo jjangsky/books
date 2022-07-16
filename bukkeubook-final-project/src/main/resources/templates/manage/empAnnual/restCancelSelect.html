@@ -47,8 +47,9 @@
               <tr th:each="cancelVac : ${ cancelVacList }">
                 <td th:text="${ cancelVac.vacCancNo }"></td>
                 <td th:text="${ cancelVac.vacNo }"></td>
-                <!-- <td th:text="${ cancelVac?.appVacationAndEmp?.empAndDept?.dept?.deptName }"></td> -->
-                <!-- <td th:text="${ cancelVac?.appVacationAndEmp?.empAndDept?.empName }"></td> -->
+                <td th:text="${ cancelVac.appvacEMP.empAndDept.dept.deptName }"></td>
+                <td th:text="${ cancelVac.empNo }"></td>
+                <td th:text="${ cancelVac.appvacEMP.empAndDept.empName }"></td>
                 <td th:text="${ cancelVac.vacCancDate }"></td>
                 <td><button type="button" class="detail contents" th:onclick="'location.href = \'' + @{/empAnnual/restCancleDetailSelect/(vacCancNo=${cancelVac.vacCancNo})} + '\''">상세보기</button></td>
               </tr>

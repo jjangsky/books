@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bukkeubook.book.books.model.dto.BookDTO;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.manage.model.dto.joinDTO.AppVacationAndEmpDTO;
@@ -140,5 +139,19 @@ public class EmpAnnualController {
 	      
 	      return mv;
 	   }
+	
+	/* 휴가 취소 신청 상세 내역 조회 */
+	@GetMapping("/restCancleDetailSelect")
+	public ModelAndView restCancleDetail (HttpServletRequest request, ModelAndView mv) {
+		
+		int vacCancNo = Integer.valueOf(request.getParameter("vacCancNo"));
+		
+		CancelVacationAndAppVacationDTO cancelVacDetail = empAnnualService.restCancelDetailSelect(vacCancNo);
+		
+		mv.addObject("cancelVacDetail", cancelVacDetail);
+		mv.setViewName("manage/empAnnual/restCancleDetailSelect");
+		
+		return mv;
+	}
 	
 }

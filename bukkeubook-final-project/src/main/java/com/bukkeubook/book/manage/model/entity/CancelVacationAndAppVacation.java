@@ -32,7 +32,7 @@ public class CancelVacationAndAppVacation implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "VAC_NO")
-	private AppVacationAndEmp addvacEmp;
+	private AppVacationAndEmp appvacEmp;
 	
 	@Column(name = "EMP_NO")
 	private int empNo;
@@ -47,12 +47,14 @@ public class CancelVacationAndAppVacation implements Serializable{
 	private String vacCancStatus;
 
 	public CancelVacationAndAppVacation() {
+		super();
 	}
 
-	public CancelVacationAndAppVacation(int vacCancNo, AppVacationAndEmp addvacEmp, int empNo, Date vacCancDate,
+	public CancelVacationAndAppVacation(int vacCancNo, AppVacationAndEmp appvacEmp, int empNo, Date vacCancDate,
 			String vacCancReason, String vacCancStatus) {
+		super();
 		this.vacCancNo = vacCancNo;
-		this.addvacEmp = addvacEmp;
+		this.appvacEmp = appvacEmp;
 		this.empNo = empNo;
 		this.vacCancDate = vacCancDate;
 		this.vacCancReason = vacCancReason;
@@ -67,12 +69,12 @@ public class CancelVacationAndAppVacation implements Serializable{
 		this.vacCancNo = vacCancNo;
 	}
 
-	public AppVacationAndEmp getAddvacEmp() {
-		return addvacEmp;
+	public AppVacationAndEmp getAppvacEmp() {
+		return appvacEmp;
 	}
 
-	public void setAddvacEmp(AppVacationAndEmp addvacEmp) {
-		this.addvacEmp = addvacEmp;
+	public void setAppvacEmp(AppVacationAndEmp appvacEmp) {
+		this.appvacEmp = appvacEmp;
 	}
 
 	public int getEmpNo() {
@@ -113,9 +115,11 @@ public class CancelVacationAndAppVacation implements Serializable{
 
 	@Override
 	public String toString() {
-		return "CancelVacationAndAppVacation [vacCancNo=" + vacCancNo + ", addvacEmp=" + addvacEmp + ", empNo=" + empNo
+		return "CancelVacationAndAppVacation [vacCancNo=" + vacCancNo + ", appvacEmp=" + appvacEmp + ", empNo=" + empNo
 				+ ", vacCancDate=" + vacCancDate + ", vacCancReason=" + vacCancReason + ", vacCancStatus="
 				+ vacCancStatus + "]";
 	}
+
+	
 	
 }

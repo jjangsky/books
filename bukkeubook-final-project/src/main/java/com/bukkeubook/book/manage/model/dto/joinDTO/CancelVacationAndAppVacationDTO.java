@@ -21,20 +21,20 @@ public class CancelVacationAndAppVacationDTO implements Serializable{
 	private java.sql.Date vacCancDate;
 	private String vacCancReason;
 	private String vacCancStatus;
-	private AppVacationAndEmpDTO appvacation;
+	private AppVacationAndEmpDTO appvacEMP;
 	
 	public CancelVacationAndAppVacationDTO() {
 	}
 	
 	public CancelVacationAndAppVacationDTO(int vacCancNo, int vacNo, int empNo, Date vacCancDate, String vacCancReason,
-			String vacCancStatus, AppVacationAndEmpDTO appvacation) {
+			String vacCancStatus, AppVacationAndEmpDTO appvacEMP) {
 		this.vacCancNo = vacCancNo;
 		this.vacNo = vacNo;
 		this.empNo = empNo;
 		this.vacCancDate = vacCancDate;
 		this.vacCancReason = vacCancReason;
 		this.vacCancStatus = vacCancStatus;
-		this.appvacation = appvacation;
+		this.appvacEMP = appvacEMP;
 	}
 	
 	public int getVacCancNo() {
@@ -73,11 +73,11 @@ public class CancelVacationAndAppVacationDTO implements Serializable{
 	public void setVacCancStatus(String vacCancStatus) {
 		this.vacCancStatus = vacCancStatus;
 	}
-	public AppVacationAndEmpDTO getAppvacation() {
-		return appvacation;
+	public AppVacationAndEmpDTO getAppvacEMP() {
+		return appvacEMP;
 	}
-	public void setAppvacation(AppVacationAndEmpDTO appvacation) {
-		this.appvacation = appvacation;
+	public void setAppvacEMP(AppVacationAndEmpDTO appvacEMP) {
+		this.appvacEMP = appvacEMP;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -87,8 +87,7 @@ public class CancelVacationAndAppVacationDTO implements Serializable{
 	public String toString() {
 		return "CancelVacationAndAppVacationDTO [vacCancNo=" + vacCancNo + ", vacNo=" + vacNo + ", empNo=" + empNo
 				+ ", vacCancDate=" + vacCancDate + ", vacCancReason=" + vacCancReason + ", vacCancStatus="
-				+ vacCancStatus + ", appvacation=" + appvacation + "]";
+				+ vacCancStatus + ", appvacEMP=" + appvacEMP + "]";
 	}
-	
-	
+
 }
