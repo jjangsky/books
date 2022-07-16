@@ -24,6 +24,7 @@ public class EmpAnnualService {
    private final EmpAnnualRepository empAnnualRepository;
    private final CancelVacRepository cancelVacRepository;
    private final ModelMapper modelMapper;
+
    
    @Autowired
    public EmpAnnualService(EmpAnnualRepository empAnnualRepository, CancelVacRepository cancelVacRepository, ModelMapper modelMapper) {
@@ -32,7 +33,6 @@ public class EmpAnnualService {
       this.modelMapper = modelMapper;
    }
    
-	/* 휴가 신청 조회 페이지 검색 */
    public int selectTotalCount(String searchCondition, String searchValue) {
 
       int count = 0;
@@ -42,7 +42,7 @@ public class EmpAnnualService {
          }
 
 //         if("EmpNo".equals(searchCondition)) {
-//            count = empAnnualRepository.countByEmp_EmpNoContaining(searchValue);
+//            count = empAnnualRepository.countByEmp_EmpNoContaining(Integer.valueOf(searchValue));
 //         }
          
          if("EmpName".equals(searchCondition)) {
@@ -72,7 +72,7 @@ public class EmpAnnualService {
          }
 
 //         if("EmpNo".equals(selectCriteria.getSearchCondition())) {
-//            restList = empAnnualRepository.findByEmp_EmpNoContaining((int)Integer.valueOf(selectCriteria.getSearchValue()), paging);
+//            restList = empAnnualRepository.findByEmp_EmpNoContaining(Integer.valueOf(selectCriteria.getSearchValue()), paging);
 //         }
          
          if("EmpName".equals(selectCriteria.getSearchCondition())) {
@@ -84,7 +84,7 @@ public class EmpAnnualService {
       
       return restList.stream().map(rest -> modelMapper.map(rest, AppVacationAndEmpDTO.class)).collect(Collectors.toUnmodifiableList());
    }
-
+   
 	/* 휴가 상세 내역 조회 */
 	public AppVacationAndEmpDTO restDetailSelect(int vacNo) {
 		
@@ -93,13 +93,14 @@ public class EmpAnnualService {
 		return modelMapper.map(appvacAndEmp, AppVacationAndEmpDTO.class);
 	}
 
+	/******************************************************************************************/
 	/* 휴가 취소 신청 조회 */
 	public int selectCancelTotalCount(String searchCondition, String searchValue) {
 
 	      int count = 0;
 	      if(searchValue != null) {
 	         if("Dept".equals(searchCondition)) {
-	            count = cancelVacRepository.countByaddvacEmp_emp_Dept_DeptNameContaining(searchValue);
+	            count = cancelVacRepository.countByaddvacEmp_emp_dept_deptNameContaining(searchValue);
 	         }
 
 //	         if("EmpNo".equals(searchCondition)) {
@@ -107,7 +108,7 @@ public class EmpAnnualService {
 //	         }
 	         
 	         if("EmpName".equals(searchCondition)) {
-	            count = cancelVacRepository.countByaddvacEmp_Emp_EmpNameContaining(searchValue);
+	            count = cancelVacRepository.countByaddvacEmp_emp_empNameContaining(searchValue);
 	         }
 	      } else {
 	         count = (int)cancelVacRepository.count();
@@ -129,7 +130,7 @@ public class EmpAnnualService {
 	      if(searchValue != null) {
 
 	         if("Dept".equals(selectCriteria.getSearchCondition())) {
-	        	 cancelVacList = cancelVacRepository.findByaddvacEmp_emp_Dept_DeptNameContaining(selectCriteria.getSearchValue(), paging);
+	        	 cancelVacList = cancelVacRepository.findByaddvacEmp_emp_dept_deptNameContaining(selectCriteria.getSearchValue(), paging);
 	         }
 
 //	         if("EmpNo".equals(selectCriteria.getSearchCondition())) {
@@ -137,17 +138,14 @@ public class EmpAnnualService {
 //	         }
 	         
 	         if("EmpName".equals(selectCriteria.getSearchCondition())) {
-	        	 cancelVacList = cancelVacRepository.findByaddvacEmp_Emp_EmpNameContaining(selectCriteria.getSearchValue(), paging);
+	        	 cancelVacList = cancelVacRepository.findByaddvacEmp_emp_empNameContaining(selectCriteria.getSearchValue(), paging);
 	         }
 	      } else {
 	    	  cancelVacList = cancelVacRepository.findAll(paging).toList();
 	      }
 	      
-	      return cancelVacList.stream().map(rest -> modelMapper.map(rest, CancelVacationAndAppVacationDTO.class)).collect(Collectors.toUnmodifiableList());
+	      return cancelVacList.stream().map(cancelVac -> modelMapper.map(cancelVac, CancelVacationAndAppVacationDTO.class)).collect(Collectors.toUnmodifiableList());
 	   }
-
-
-
 
 
 

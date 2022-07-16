@@ -51,10 +51,9 @@
                 <td th:text="${ appVac.empAndDept.getDept().getDeptName() }"></td>
                 <td th:text="${ appVac.empAndDept.getEmpNo() }"></td>
                 <td th:text="${ appVac.empAndDept.getEmpName() }"></td>
-                <td th:text="${ appVac.vacStartDate  }"></td>
+                <td th:text="${ appVac.vacStartDate }"></td>
                 <td th:text="${ appVac.vacEndDate }"></td>
                 <td><button type="button" class="detail contents" th:onclick="'location.href = \'' + @{/empAnnual/restDetailSelect/(vacNo=${appVac.vacNo})} + '\''">상세보기</button></td>
-              </tr>
           </table><br><br>
           <div th:replace="manage/empAnnual/restPaging.html"></div>
           <br><br>

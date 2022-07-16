@@ -11,18 +11,13 @@ import com.bukkeubook.book.manage.model.entity.CancelVacationAndAppVacation;
 @Repository
 public interface CancelVacRepository extends JpaRepository<CancelVacationAndAppVacation, Integer> {
 
-	int countByaddvacEmp_emp_Dept_DeptNameContaining(String searchValue);
+	int countByaddvacEmp_emp_dept_deptNameContaining(String searchValue);
 
-//	int countByaddvacEmp_Emp_EmpNoContaining(String searchValue);
-	
-	int countByaddvacEmp_Emp_EmpNameContaining(String searchValue);
+	int countByaddvacEmp_emp_empNameContaining(String searchValue);
 
-	List<CancelVacationAndAppVacation> findByaddvacEmp_emp_Dept_DeptNameContaining(String searchValue, Pageable paging);
+	List<CancelVacationAndAppVacation> findByaddvacEmp_emp_dept_deptNameContaining(String searchValue, Pageable paging);
 
-	List<CancelVacationAndAppVacation> findByaddvacEmp_Emp_EmpNameContaining(String searchValue, Pageable paging);
-	
-	
-
+	List<CancelVacationAndAppVacation> findByaddvacEmp_emp_empNameContaining(String searchValue, Pageable paging);
 
 
 

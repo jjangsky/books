@@ -31,11 +31,10 @@ public class CancelVacationAndAppVacation implements Serializable{
 	private int vacCancNo;
 	
 	@ManyToOne
-	@JoinColumn
-	@Column(name = "VAC_NO")
+	@JoinColumn(name = "VAC_NO")
 	private AppVacationAndEmp addvacEmp;
 	
-	@Column(name = "empNo")
+	@Column(name = "EMP_NO")
 	private int empNo;
 	
 	@Column(name = "VAC_CANC_DATE")
@@ -48,12 +47,10 @@ public class CancelVacationAndAppVacation implements Serializable{
 	private String vacCancStatus;
 
 	public CancelVacationAndAppVacation() {
-		super();
 	}
 
 	public CancelVacationAndAppVacation(int vacCancNo, AppVacationAndEmp addvacEmp, int empNo, Date vacCancDate,
 			String vacCancReason, String vacCancStatus) {
-		super();
 		this.vacCancNo = vacCancNo;
 		this.addvacEmp = addvacEmp;
 		this.empNo = empNo;

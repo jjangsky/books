@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" th:href="@{/css/manage/empAnnual/rest.css}">
+<link rel="stylesheet" th:href="@{css/manage/employee/persist.css}">
+<link rel="stylesheet" th:href="@{/css/manage/employee/Listdetail.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	
+        <h2 class="mb-4" id="main-text">사원관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">휴가 취소 상세 내역 조회</h5>
+        <br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div class="emp detail list">
+        <table border="1px">
+          <tbody>
+            <tr>
+              <td class="deemp3">휴가번호</td>
+              <td>RESR-1</td>
+            </tr>
+            <tr>
+              <td class="deemp3">부서</td>
+              <td>인사부</td>
+            </tr>
+            <tr>
+              <td class="deemp3">사원번호</td>
+              <td>EMP-01</td>
+            </tr>
+            <tr>
+              <td class="deemp3">직책</td>
+              <td>사장</td>
+            </tr>
+            <tr>
+              <td class="deemp3">사원명</td>
+              <td>장지영</td>
+            </tr>
+            <tr>
+              <td class="deemp3">사용기간</td>
+              <td>2022/06/28 ~ 2022/06/29</td>
+            </tr>
+            <tr>
+              <td class="deemp3">반려 사유</td>
+              <td id="cancleReason"></td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
+        <br><br>
+        <td><button type="button" class="access btn" onclick="accessClick()">승인</button></td>
+        <td><button type="button" class="cancle btn" onclick="location.href='restCancleSelect.html'">목록으로</button></td>
+        <td><button type="button" class="cancle btn" onclick="delayClick()">반려</button></td>
+
+        <script>
+          function accessClick() {
+            var txt;
+            if (confirm("승인하시겠습니까?")) {
+              alert("승인되었습니다.");
+            } else {
+              alert("승인이 취소되었습니다.")
+            }
+          }
+
+          function delayClick() {
+            var cancleReason = document.getElementById("cancleReason");
+            let text;
+            if(confirm("반려하시겠습니까?")) {
+              let delayReson = prompt("반려 사유를 입력해주세요");
+              if(delayReson.length == 0) {
+                alert("사유를 입력하지 않아 반려 등록이 취소되었습니다.")
+              } else {
+                alert("반려 사유가 등록되었습니다.")
+                cancleReason.innerText = delayReson;
+              }
+            } else {
+              alert("반려가 취소되었습니다.")
+            }
+          }
+        </script>
+</body>
+</html>
