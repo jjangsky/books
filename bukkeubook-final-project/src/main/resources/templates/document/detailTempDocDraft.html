@@ -81,7 +81,8 @@
           </table>
           <br>
           <div>
-            <button class="btnin" type="button" onclick="selectacc()">결재라인 지정</button><br><br>
+          	<button style="margin-left:50px;" class="select btn" type="button" id="clear">초기화</button>
+            <button class="select btn" type="button" onclick="selectacc()">결재라인 지정</button><br><br>
           </div>
       </div>
       <div class="totals tbl3">
@@ -143,9 +144,9 @@
 	          <input type="hidden" id="wrDate2" name="wrDate2">
 	          <input type="hidden" id="docStatus2" name="docStatus2">
 	          <input type="text" value="10" id="empNo2" name="empNo2">
-	          <input type="text" id="docTitle2" name="submitTitle">
+	          <input type="hidden" id="docTitle2" name="submitTitle">
 	          <input type="hidden" th:value="${oneTempDoc.docNo}" id="docNo2" name="docNo2"readonly>
-	          <input type="text" id="cnttt2" name="cnt2" readonly>
+	          <input type="hidden" id="cnttt2" name="cnt2" readonly>
           </form>
           <br>
       </div>
@@ -163,7 +164,7 @@
                     <textarea class="description" id="desc" th:utext="${oneTempDoc.cnt}"></textarea>
                     <input type="hidden" name="formNo1" value="1" >
                     <input type="hidden" id="draftcnt1" name="tagCnt1">
-                    <input type="text" id="wrDate1" name="wrDate1">
+                    <input type="hidden" id="wrDate1" name="wrDate1">
                     <input type="hidden" id="docStatus1" name="docStatus1">
                     <input type="text" value="10" id="empNo1" name="empNo1"readonly>
                     <input type="hidden" th:value="${oneTempDoc.docNo}" id="docNo1" name="docNo1"readonly>

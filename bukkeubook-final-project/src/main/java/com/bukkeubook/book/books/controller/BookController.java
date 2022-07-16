@@ -235,4 +235,81 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
+	@GetMapping("/output")
+	public ModelAndView output(HttpServletRequest request, ModelAndView mv){
+		String currentPage = request.getParameter("currentPage");
+		int pageNo = 1;
+
+		if(currentPage != null && !"".equals(currentPage)) {
+			pageNo = Integer.parseInt(currentPage);
+		}
+
+		String searchCondition = request.getParameter("searchCondition");
+		String searchValue = request.getParameter("searchValue");
+
+		int totalCount = bookService.selectTotalCount(searchCondition, searchValue);
+
+		int limit = 3;		
+
+		int buttonAmount = 5;
+
+		SelectCriteria selectCriteria = null;
+		if(searchValue != null && !"".equals(searchValue)) {
+			selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		} else {
+			selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount);
+		}
+		System.out.println(selectCriteria);
+
+		List<BookDTO> bookList = bookService.searchBookList4(selectCriteria);
+
+		for(BookDTO book : bookList) {
+			System.out.println(book);
+		}
+		
+		mv.addObject("bookList", bookList);
+		
+		mv.addObject("selectCriteria", selectCriteria);
+		mv.setViewName("books/bookList/output");
+		return mv;
+	}
+	
+	@GetMapping("/input")
+	public ModelAndView input(HttpServletRequest request, ModelAndView mv){
+		String currentPage = request.getParameter("currentPage");
+		int pageNo = 1;
+
+		if(currentPage != null && !"".equals(currentPage)) {
+			pageNo = Integer.parseInt(currentPage);
+		}
+
+		String searchCondition = request.getParameter("searchCondition");
+		String searchValue = request.getParameter("searchValue");
+
+		int totalCount = bookService.selectTotalCount(searchCondition, searchValue);
+
+		int limit = 3;		
+
+		int buttonAmount = 5;
+
+		SelectCriteria selectCriteria = null;
+		if(searchValue != null && !"".equals(searchValue)) {
+			selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		} else {
+			selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount);
+		}
+		System.out.println(selectCriteria);
+
+		List<BookDTO> bookList = bookService.searchBookList5(selectCriteria);
+
+		for(BookDTO book : bookList) {
+			System.out.println(book);
+		}
+		
+		mv.addObject("bookList", bookList);
+		
+		mv.addObject("selectCriteria", selectCriteria);
+		mv.setViewName("books/bookList/input");
+		return mv;
+	}
 }

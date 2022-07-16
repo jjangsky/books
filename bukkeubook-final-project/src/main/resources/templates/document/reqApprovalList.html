@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
-	<h2 class="mb-4" id="main-text">임시저장 내역</h2>
+	<h2 class="mb-4" id="main-text">상신함</h2>
         <hr><br><br>
 	<script>
 		const successMessage = "[[${ insertSuccess }]]";
@@ -43,23 +43,25 @@
                 <th class="th1">문서번호</th>
                 <th class="th1">제목</th>
                 <th class="th1">작성일자</th>
+                <th class="th1">문서상태</th>
                 <th class="th1">작성자</th>
                 <th class="th1">문서종류</th>
                 <th class="th1"></th>
               </tr>
-              <tr class="hover" th:each="temp : ${ tempDocList }">
-                <td class="td1" th:text="${tempStat.count}"></th>
-                <td class="td1" th:text="${temp.docNo}"></th>
-                <td class="td1" th:text="${temp.docTitle}"></th>
-                <td class="td1" th:text="${temp.wrDate}"></th>
-                <td class="td1" th:text="${temp.emp.empName}"></th>
-                <td class="td1" th:text="${temp.formCate.formName}"></th>
+              <tr class="hover" th:each="doc : ${ docList }">
+                <td class="td1" th:text="${docStat.count}"></th>
+                <td class="td1" th:text="${doc.docNo}"></th>
+                <td class="td1" th:text="${doc.docTitle}"></th>
+                <td class="td1" th:text="${doc.wrDate}"></th>
+                <td class="td1" th:text="${doc.docStatus}"></th>
+                <td class="td1" th:text="${doc.emp.empName}"></th>
+                <td class="td1" th:text="${doc.formCate.formName}"></th>
                 <td>
-                	<a th:href="@{/document/tempInfo/{docNo}/(docNo=${temp.docNo})}"> 
-                		<button type="button" class="select btn" onclick="location.href=''">보기</button>
+                	<a th:href="@{/document/reqApprovalDetail/{docNo}/(docNo=${doc.docNo})}"> 
+                		<button type="button" class="select btn">보기</button>
                 	</a>
                 </td>
-              </tr>
+              </tr> 
           </table>
           <br>
           <button type="button" class="insert btn" onclick="location.href='/document/insert'">등록</button>

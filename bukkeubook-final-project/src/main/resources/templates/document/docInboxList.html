@@ -5,11 +5,13 @@
 <meta charset="UTF-8">
 <link rel="stylesheet"  th:href="@{/css/document/HR.css}">
 <link rel="stylesheet"  th:href="@{/css/document/Listdetail.css}">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/js/document/inbox.js"></script>
 <title>Document docList</title>
 </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
-	<h2 class="mb-4" id="main-text">전자 결재 내역</h2>
+	<h2 class="mb-4" id="main-text">수신함</h2>
         <hr><br><br>
 
 
@@ -30,24 +32,28 @@
         <div>
           <table id="sampleTable">
               <tr>
-                <th class="th1">번호</th>
+                <th class="th1">No</th>
+                <th class="th1">문서번호</th>
                 <th class="th1">제목</th>
-                <th class="th1">결재 상태</th>
-                <th class="th1">작성자</th>
+                <th class="th1">작성일자</th>
+                <th class="th1">결재여부</th>
+                <th class="th1">단계</th>
+                <th class="th1">문서상태</th>
                 <th class="th1">문서종류</th>
-                <th class="th1"></th>
               </tr>
-              <tr class="hover">
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td>샘플입니다.</td>
-                <td><button type="button" class="select btn" onclick="location.href=''">보기</button></td>
+              <tr class="hover" th:each="all : ${ all }" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all.document.docNo1 }|} + '\''">
+                <td class="td1" th:text="${allStat.count}"></th>
+                <td class="td1" th:text="${all.document.docNo1}"></th>
+                <td class="td1" th:text="${all.document.docTitle1}"></th>
+                <td class="td1" th:text="${all.document.wrDate1}"></th>
+                <td class="td1" th:text="${all.appStatus}"></th>
+                <td class="td1" th:text="${all.stepName}"></th>
+                <td class="td1" th:text="${all.document.docStatus1}"></th>
+                <td class="td1" th:text="${all.formName}"></th>
               </tr>
           </table>
           <br>
-          <button type="button" class="insert btn" onclick="location.href='/document/insert'">등록</button>
+          <button type="button" class="insert btn" onclick="location.href='/document/insert'">결재작성</button>
         </div> <!------------------------ 본문 종료---------------------------->
 </body>
 </html>

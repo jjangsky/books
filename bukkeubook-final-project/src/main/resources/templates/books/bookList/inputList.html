@@ -54,7 +54,10 @@
             	<td th:text="${ inputList.stType }"></td>
               </tr>
           </table>
-          <br>          
+          <br>    
+          <div id="newBookDiv">
+            <button type="button" class="productBtn newBookBtn" onclick="location.href='/book/input'">입고등록</button>
+          </div>      
         </div> <!------------------------ 본문 종료---------------------------->
 	<div th:replace="books/bookList/bookpaginginput.html"></div>
 	<br><br>
