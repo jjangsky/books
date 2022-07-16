@@ -42,4 +42,8 @@ public interface DocService {
 
 	List<InboxListDTO> findInboxAllList(int empNo);
 
+	List<DocumentAndEmpAndFormCateDTO> findByDocNoList(int empNo, String docStatus);
+
+	TempStoreDocumentDTO findByDocNo(int docNo);
+
 }
