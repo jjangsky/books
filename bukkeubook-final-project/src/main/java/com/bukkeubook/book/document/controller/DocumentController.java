@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.bukkeubook.book.document.model.dto.AppRootDTO;
 import com.bukkeubook.book.document.model.dto.ApproverDTO;
 import com.bukkeubook.book.document.model.dto.DeptDTO;
+import com.bukkeubook.book.document.model.dto.DocWriteInfoDTO;
 import com.bukkeubook.book.document.model.dto.DocumentAndEmpAndFormCateDTO;
 import com.bukkeubook.book.document.model.dto.EmpDTO;
 import com.bukkeubook.book.document.model.dto.FormCateDTO;
@@ -108,6 +110,19 @@ public class DocumentController {		// 전자결재 컨트롤러
 		mv.setViewName("/document/docTempList");
 		
 		return mv;
+	}
+	
+	/* 전자결재 작성시 작성자 이름, 부서명, 문서번호 넣어주기 */
+	@GetMapping(value = {"empInfo/{emp}"}, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public DocWriteInfoDTO docWriteInfo(@PathVariable String emp) {
+		
+		System.out.println("emp     " + emp);
+		int empNo = Integer.valueOf(emp);
+		
+		DocWriteInfoDTO info = docService.findWriterInfo(empNo);
+		
+		return info;
 	}
 	
 	/* 결재라인 지정 ajax select Tag Option Dept */

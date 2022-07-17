@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.bukkeubook.book.document.model.dto.AppRootDTO;
 import com.bukkeubook.book.document.model.dto.ApproverDTO;
 import com.bukkeubook.book.document.model.dto.DeptDTO;
+import com.bukkeubook.book.document.model.dto.DocWriteInfoDTO;
 import com.bukkeubook.book.document.model.dto.DocumentAndEmpAndFormCateDTO;
 import com.bukkeubook.book.document.model.dto.EmpDTO;
 import com.bukkeubook.book.document.model.dto.FormCateDTO;
@@ -356,6 +357,29 @@ public class DocServiceImpl implements DocService{
 		Document doc = docRepository.findById(docNo).get();
 		
 		return modelMapper.map(doc, TempStoreDocumentDTO.class);
+	}
+
+	/* 전자결재 작성시 작성자 이름, 부서명, 문서번호 넣어주기 */
+	@Override
+	public DocWriteInfoDTO findWriterInfo(int empNo) {
+		
+		DocWriteInfoDTO info = new DocWriteInfoDTO();
+		
+		Emp emp = docEmpRepository.findById(empNo).get();
+		EmpDTO e = modelMapper.map(emp, EmpDTO.class);
+		info.setEmpName(e.getEmpName());
+		
+		int deptCode = e.getDeptCode();
+		Dept dept = docDeptRepository.findById(deptCode).get();
+		DeptDTO d = modelMapper.map(dept, DeptDTO.class);
+		info.setDeptName(d.getDeptName());
+		
+		int currentDocNo = docRepository.findCurrentSeqDoc() + 1;
+		info.setDocNo(currentDocNo);
+		
+		System.out.println(info);
+		
+		return info;
 	}
 
 	

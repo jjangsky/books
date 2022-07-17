@@ -5,6 +5,7 @@ import java.util.List;
 import com.bukkeubook.book.document.model.dto.AppRootDTO;
 import com.bukkeubook.book.document.model.dto.ApproverDTO;
 import com.bukkeubook.book.document.model.dto.DeptDTO;
+import com.bukkeubook.book.document.model.dto.DocWriteInfoDTO;
 import com.bukkeubook.book.document.model.dto.DocumentAndEmpAndFormCateDTO;
 import com.bukkeubook.book.document.model.dto.EmpDTO;
 import com.bukkeubook.book.document.model.dto.FormCateDTO;
@@ -45,5 +46,7 @@ public interface DocService {
 	List<DocumentAndEmpAndFormCateDTO> findByDocNoList(int empNo, String docStatus);
 
 	TempStoreDocumentDTO findByDocNo(int docNo);
+
+	DocWriteInfoDTO findWriterInfo(int empNo);
 
 }
