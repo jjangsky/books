@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+</head>
+  <body>
+		<div th:replace="/common/topSideBar.html"></div>
+		
+        <h2 class="mb-4" id="main-text">거래내역 관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">거래내역 조회</h5>
+        <br>
+
+        <div class="search-area" align="center">
+			<form id="loginForm" action="/trade/select" method="get" style="display: inline-block">
+				<input type="hidden" name="searchCondition" value=1>
+				<input type="text" style="display:none;"> <!-- 엔터키 새로고침 방지용 -->
+				<input type="hidden" name="currentPage" value="1">
+				<input type="date" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}">
+				<button class="btn btn-bs" type="submit">검색하기</button>
+			</form>
+		</div>
+		
+        <div class="aboveTable">
+            <div>
+                <button type="button" onclick="location.href='/trade/regist'">거래내역 등록</button>
+            </div>
+        </div>
+
+        <div id="textTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">거래번호</th>
+                <th class="th1">거래처명</th>
+                <th class="th1">도서명</th>
+                <th class="th1">담당 사원</th>
+                <th class="th1">거래날짜</th>
+              </tr>
+               <tr class="tr1" th:each="trade : ${ tradeList }" th:onclick="'location.href = \'' + @{/trade/detail/(tlNo=${trade.tlNo})} + '\''">
+	               <td th:text="${ trade.tlNo }"></td>
+	               <td th:text="${ trade.client.cntName }"></td>
+	               <td th:text="${ trade.book.name }"></td>
+	               <td th:text="${ trade.emp.empNo }"></td>
+	               <td th:text="${ trade.tlDate }"></td>
+               </tr>
+          </table>
+          <div th:replace="/finance/tradeSelectPaging.html"></div>
+        </div> <!------------------------ 본문 종료---------------------------->
+
+		<script src="../js/jquery.min.js"></script>
+    <script src="../js/popper.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

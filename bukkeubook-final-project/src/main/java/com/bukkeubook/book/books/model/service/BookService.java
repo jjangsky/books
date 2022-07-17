@@ -15,14 +15,20 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bukkeubook.book.books.controller.NativeRepository;
 import com.bukkeubook.book.books.model.dto.BookDTO;
 import com.bukkeubook.book.books.model.dto.RelBkListAndBookAndRelListDTO;
+import com.bukkeubook.book.books.model.dto.RelBkListDTO;
 import com.bukkeubook.book.books.model.dto.RelListAndEmpDTO;
+import com.bukkeubook.book.books.model.dto.RelListDTO;
 import com.bukkeubook.book.books.model.dto.StockBookListAndBookAndStockListAndEmpDTO;
 import com.bukkeubook.book.books.model.dto.StockListAndEmpDTO;
 import com.bukkeubook.book.books.model.entity.Book;
+import com.bukkeubook.book.books.model.entity.RelBkList;
 import com.bukkeubook.book.books.model.entity.RelBkListAndBookAndRelList;
+import com.bukkeubook.book.books.model.entity.RelList;
 import com.bukkeubook.book.books.model.entity.RelListAndEmp;
 import com.bukkeubook.book.books.model.entity.StockBookListAndBookAndStockListAndEmp;
 import com.bukkeubook.book.books.model.entity.StockListAndEmp;
+import com.bukkeubook.book.books.model.repository.BookOutputRepository;
+import com.bukkeubook.book.books.model.repository.BookOutputRepository2;
 import com.bukkeubook.book.books.model.repository.BookRepository;
 import com.bukkeubook.book.books.model.repository.InputRepository;
 import com.bukkeubook.book.books.model.repository.OutputRepository;
@@ -39,16 +45,20 @@ public class BookService {
 	private final RelBkListAndBookAndRelListRepository relBkListAndBookAndRelListRepository;
 	private final StockBookListAndBookAndStockListAndEmpRepository stockBookListAndBookAndStockListAndEmpRepository;
 	private final InputRepository inputRepository;
+	private final BookOutputRepository bookOutputRepository;
+	private final BookOutputRepository2 bookOutputRepository2;
 	private final ModelMapper modelMapper;			// modelMapper 빈을 선언
 	
 	@Autowired
-	public BookService(StockBookListAndBookAndStockListAndEmpRepository stockBookListAndBookAndStockListAndEmpRepository, InputRepository inputRepository, RelBkListAndBookAndRelListRepository relBkListAndBookAndRelListRepository, BookRepository bookRepository, ModelMapper modelMapper, NativeRepository nativeRepository, OutputRepository outputRepository) {
+	public BookService(BookOutputRepository2 bookOutputRepository2, BookOutputRepository bookOutputRepository, StockBookListAndBookAndStockListAndEmpRepository stockBookListAndBookAndStockListAndEmpRepository, InputRepository inputRepository, RelBkListAndBookAndRelListRepository relBkListAndBookAndRelListRepository, BookRepository bookRepository, ModelMapper modelMapper, NativeRepository nativeRepository, OutputRepository outputRepository) {
 		this.bookRepository = bookRepository;
 		this.outputRepository = outputRepository;
 		this.nativeRepository = nativeRepository;
 		this.relBkListAndBookAndRelListRepository = relBkListAndBookAndRelListRepository;
 		this.stockBookListAndBookAndStockListAndEmpRepository = stockBookListAndBookAndStockListAndEmpRepository;
 		this.inputRepository = inputRepository;
+		this.bookOutputRepository = bookOutputRepository;
+		this.bookOutputRepository2 = bookOutputRepository2;
 		this.modelMapper = modelMapper;
 	}
 	
@@ -254,6 +264,20 @@ public class BookService {
 			 */
 		System.out.println(inputList);
 		return inputList.stream().map(book -> modelMapper.map(book, BookDTO.class)).collect(Collectors.toList());
+	}
+	
+	@Transactional
+	public int outputReceipt(RelListDTO relList) {
+		bookOutputRepository.save(modelMapper.map(relList, RelList.class));
+		int relNo = nativeRepository.newRelNo();
+		System.out.println(relNo);
+		return relNo;
+		
+	}
+	
+	@Transactional
+	public void outputReceipt2(RelBkListDTO relBkList) {
+		bookOutputRepository2.save(modelMapper.map(relBkList, RelBkList.class));
 	}
 	
 	

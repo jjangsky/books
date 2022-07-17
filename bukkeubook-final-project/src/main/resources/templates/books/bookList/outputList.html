@@ -82,6 +82,21 @@
 		   			$('#loginForm').submit();
 	   			};
 			});
+		
+		
+	</script>
+	<script>
+		const outputSuccessmessage = "[[${outputSuccessMessage}]]"
+	
+		console.log(outputSuccessmessage)
+		if(outputSuccessmessage){
+			Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '등록이 성공적으로 완료되었습니다!',
+            })
+			console.log(outputSuccessmessage)
+		}
 	</script>
 	
 

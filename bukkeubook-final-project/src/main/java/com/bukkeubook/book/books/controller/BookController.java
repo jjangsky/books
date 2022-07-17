@@ -15,7 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bukkeubook.book.books.model.dto.BookDTO;
 import com.bukkeubook.book.books.model.dto.RelBkListAndBookAndRelListDTO;
+import com.bukkeubook.book.books.model.dto.RelBkListDTO;
 import com.bukkeubook.book.books.model.dto.RelListAndEmpDTO;
+import com.bukkeubook.book.books.model.dto.RelListDTO;
 import com.bukkeubook.book.books.model.dto.StockBookListAndBookAndStockListAndEmpDTO;
 import com.bukkeubook.book.books.model.dto.StockListAndEmpDTO;
 import com.bukkeubook.book.books.model.service.BookService;
@@ -311,5 +313,36 @@ public class BookController extends HttpServlet{
 		mv.addObject("selectCriteria", selectCriteria);
 		mv.setViewName("books/bookList/input");
 		return mv;
+	}
+	
+	@PostMapping("/outputReceipt")
+	public ModelAndView outputReceipt(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+		int rownum = Integer.valueOf(request.getParameter("rownum"));
+		
+		for(int i = 1; i <= 1; i++) {
+			
+			RelListDTO relList = new RelListDTO();
+			RelBkListDTO relBkList = new RelBkListDTO();
+			
+			relList.setRelDate(new java.sql.Date(System.currentTimeMillis()));
+			relList.setEmpNo(20);	// 사번은 로그인 구현후 변경하기
+			
+			int relNo = bookService.outputReceipt(relList);
+			
+			for(int j = 1; j <= rownum; j++) {
+				String no = request.getParameter("no"+ j);
+				int amount = Integer.valueOf(request.getParameter("amount"+ j));
+				relBkList.setRelNo(relNo);
+				relBkList.setBkNo(no);
+				relBkList.setRelBkAmount(amount);
+				
+				bookService.outputReceipt2(relBkList);
+			}
+		}
+		
+		rttr.addFlashAttribute("outputSuccessMessage", "성공");
+		mv.setViewName("redirect:/book/outputList");
+		return mv;
+		
 	}
 }
