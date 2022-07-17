@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text">마이페이지</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">개인정보 수정</h5>
+        <br>
+      	
+      	 <form action="" > 
+            <div style="margin-top: 30px; clear: both;">
+            <table class="tb_02">
+                <tbody>
+                <tr>
+                  <th >사원번호</th>
+                  <td th:text="${myInfo.empNo}"></td>
+                </tr>
+                <tr>
+                  <th>성함</th>
+                  <td th:text="${myInfo.empName}"></td>
+                </tr>
+                <tr>
+                  <th>성별</th>
+                  <td th:text="${myInfo.empGender}"></td>
+                </tr>
+                <tr>
+                  <th>부서</th>
+                  <td th:text="${myInfo.dept.deptName}"></td>
+                </tr>
+                <tr>
+                  <th>직급</th>
+                  <td th:text="${myInfo.empJobCode}"></td>
+                </tr>
+                <tr>
+                  <th>생년월일</th>
+                  <td th:text="${myInfo.empBirth}"></td>
+                </tr>
+                <tr>
+                  <th>이메일</th>
+                  <td><input type="email" th:value="${myInfo.empEmail}" required></td>
+                </tr>
+                <tr>
+                  <th>우편번호</th>
+                  <td><input type="text" name="zipCode" id="zipCode"th:value="${myInfo.empAddress}" readonly> 
+                  	<input type="button" value="검색" class="btn btn-success" id="searchZipCode">
+                  </td>
+                </tr>
+                <tr>
+                  <th>상세 주소 주소</th>
+                  <td><input type="text" name="address1" id="address1" th:value="${myInfo.empDAddress}" readonly></td>
+                </tr>
+                <tr>
+                  <th>연락처</th>
+                  <td>
+            		<input type="tel" name="phone1" size="3" id="phone1" th:value="${myInfo.empPhone1}" required>
+            		- <input type="tel" name="phone2" size="4" id="phone2" th:value="${myInfo.empPhone2}" required>- 
+            		 <input type="tel" name="phone3" size="4" id="phone3" th:value="${myInfo.empPhone3}" required></td>
+                </tr>
+                <tr>
+                  <th>입사 일자</th>
+                  <td th:text="${myInfo.empEntDate}"></td>
+                </tr>
+           
+              </tbody>
+              
+              </table>
+              
+              
+            </div>
+              
+            </form>
+  
+
+        <div style="width: 50%; height: 40%;  float: left;" class="inline" >
+        <div class="container mt-3 " style="margin-left: 20%;">
+            <div class="card" style="width:400px">
+              <img class="card-img-top" src="/images/main/orgChart/logo2.jpg" alt="Card image" style="width:50%; height: 70%; margin-left: 25%;">
+              <div class="card-body">
+                <h4 class="card-title" style="text-align: center;">프로필 사진</h4>
+                <button type="button" class="btn btn-primary" style="margin-left: 35%;;">수정하기</button>
+              </div>
+            </div>
+        </div>
+        </div>
+        <div style="width: 50%; height: 40%; float: left;" class="inline">
+            <div class="container mt-3 " style="margin-left: 3%;">
+                <div class="card" style="width:400px">
+                  <img class="card-img-top" src="/images/main/orgChart/booklogo1.png" alt="Card image" style="width:50%; height: 250px; margin-left: 25%;">
+                  <div class="card-body">
+                    <h4 class="card-title" style="text-align: center;">도장</h4>
+                    <button type="button" class="btn btn-primary" style="margin-left: 35%;;">수정하기</button>
+                  </div>
+                </div>
+            </div>
+            </div>
+            
+            
+		
+	<!-- 다음 지도 API -->
+	  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		<script>
+		const searchZipCode = document.getElementById("searchZipCode");
+		
+		searchZipCode.onclick = function() {
+		
+			new daum.Postcode({
+				oncomplete: function(data){
+					document.getElementById("zipCode").value = data.zonecode;
+					document.getElementById("address1").value = data.address;
+
+				}
+			}).open();
+		}
+		
+		
+		
+		</script>
+</body>
+
+
+</html>

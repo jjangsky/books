@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html >
+<html xmlns:th="http://www.thymleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -68,40 +68,46 @@
               </div> 
               
             </div>
-            <div class="container p-5 my-5 border maindiv3" style="width: 90%; height: 300px; float:left; margin-top: 50px; margin-left: 50px;">
+            <div  style="width: 80%; height: 300px; float:left; margin-top: 50px; margin-left: 100px;">
               <div>
                 <h4 style="text-align: left; font-family: Bold;">EnterPrise Board List</h4>
-                <table id="sampleTable">
+                <table id="sampleTable" style="width: 100%;">
                   <tr>
-                    <th class="th1">샘플입니다.</th>
-                    <th class="th1">샘플입니다.</th>
-                    <th class="th1">샘플입니다.</th>
-                    <th class="th1">샘플입니다.</th>
+                    <th class="th1">번호</th>
+                    <th class="th1">카테고리</th>
+                    <th class="th1">제목</th>
+                    <th class="th1">작성일</th>
                 </tr>
                 <tr>
-                  <td>샘플입니다.</td>
-                  <td>샘플입니다.</td>
-                  <td>샘플입니다.</td>
-                  <td>샘플입니다.</td>
+                  <td th:text="${boardList[0].no}"></td>
+                  <td th:text="${boardList[0].cate.cateName}"></td>
+                  <td th:text="${boardList[0].title}"></td>
+                  <td th:text="${boardList[0].date}"></td>
                 </tr>
                 <tr>
-                  <td>샘플입니다.</td>
-                  <td>샘플입니다.</td>
-                  <td>샘플입니다.</td>
-                  <td>샘플입니다.</td>
+                  <td th:text="${boardList[1].no}"></td>
+                  <td th:text="${boardList[1].cate.cateName}"></td>
+                  <td th:text="${boardList[1].title}"></td>
+                  <td th:text="${boardList[1].date}"></td>
                 </tr>
                 <tr>
-                  <td>샘플입니다.</td>
-                  <td>샘플입니다.</td>
-                  <td>샘플입니다.</td>
-                  <td>샘플입니다.</td>
+                  <td th:text="${boardList[2].no}"></td>
+                  <td th:text="${boardList[2].cate.cateName}"></td>
+                  <td th:text="${boardList[2].title}"></td>
+                  <td th:text="${boardList[2].date}"></td>
+                </tr>
+                <tr>
+                  <td th:text="${boardList[3].no}"></td>
+                  <td th:text="${boardList[3].cate.cateName}"></td>
+                  <td th:text="${boardList[3].title}"></td>
+                  <td th:text="${boardList[3].date}"></td>
                 </tr>
                 
               </table>
             </div>
             
           </div>
-         <div id='calendar' style="width: 80%; float:left; margin-left: 50px; margin-top: 20px;">
+         <div id='calendar' style="width: 80%; float:left; margin-left: 100px; margin-top: 20px;">
 
         </div>  
        
