@@ -19,7 +19,9 @@ import com.bukkeubook.book.books.model.dto.RelBkListDTO;
 import com.bukkeubook.book.books.model.dto.RelListAndEmpDTO;
 import com.bukkeubook.book.books.model.dto.RelListDTO;
 import com.bukkeubook.book.books.model.dto.StockBookListAndBookAndStockListAndEmpDTO;
+import com.bukkeubook.book.books.model.dto.StockBookListDTO;
 import com.bukkeubook.book.books.model.dto.StockListAndEmpDTO;
+import com.bukkeubook.book.books.model.dto.StockListDTO;
 import com.bukkeubook.book.books.model.service.BookService;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
@@ -337,6 +339,13 @@ public class BookController extends HttpServlet{
 				relBkList.setRelBkAmount(amount);
 				
 				bookService.outputReceipt2(relBkList);
+				
+				BookDTO bookDTO = new BookDTO();
+				bookDTO.setNo(no);
+				bookDTO.setWhSt(amount);
+				bookService.outputReceipt3(bookDTO, amount);
+				
+				
 			}
 		}
 		
@@ -344,5 +353,41 @@ public class BookController extends HttpServlet{
 		mv.setViewName("redirect:/book/outputList");
 		return mv;
 		
+	}
+	
+	@PostMapping("/inputReceipt")
+	public ModelAndView inputReceipt(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+		
+		int rownum = Integer.valueOf(request.getParameter("rownum"));
+		String selectInput = request.getParameter("selectInput");
+		for(int i = 1; i <= 1; i++) {
+			
+			StockListDTO stockList = new StockListDTO();
+			StockBookListDTO stockBookList = new StockBookListDTO();
+			
+			stockList.setStDate(new java.sql.Date(System.currentTimeMillis()));
+			stockList.setStType(selectInput);
+			stockList.setEmpNo(21);	// 사번은 로그인 구현후 변경하기
+			
+			int stCode = bookService.inputReceipt(stockList);
+			
+			for(int j = 1; j <= rownum; j++) {
+				String no = request.getParameter("no"+ j);
+				int amount = Integer.valueOf(request.getParameter("amount"+ j));
+				stockBookList.setBkNo(no);
+				stockBookList.setStockBkAmount(amount);
+				stockBookList.setStCode(stCode);
+				
+				bookService.inputReceipt2(stockBookList);
+				
+				BookDTO bookDTO = new BookDTO();
+				bookDTO.setNo(no);
+				bookDTO.setWhSt(amount);
+				bookService.inputReceipt3(bookDTO, amount, selectInput);
+			}
+		}
+		rttr.addFlashAttribute("inputSuccessMessage", "성공");
+		mv.setViewName("redirect:/book/inputList");
+		return mv;
 	}
 }

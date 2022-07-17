@@ -19,14 +19,20 @@ import com.bukkeubook.book.books.model.dto.RelBkListDTO;
 import com.bukkeubook.book.books.model.dto.RelListAndEmpDTO;
 import com.bukkeubook.book.books.model.dto.RelListDTO;
 import com.bukkeubook.book.books.model.dto.StockBookListAndBookAndStockListAndEmpDTO;
+import com.bukkeubook.book.books.model.dto.StockBookListDTO;
 import com.bukkeubook.book.books.model.dto.StockListAndEmpDTO;
+import com.bukkeubook.book.books.model.dto.StockListDTO;
 import com.bukkeubook.book.books.model.entity.Book;
 import com.bukkeubook.book.books.model.entity.RelBkList;
 import com.bukkeubook.book.books.model.entity.RelBkListAndBookAndRelList;
 import com.bukkeubook.book.books.model.entity.RelList;
 import com.bukkeubook.book.books.model.entity.RelListAndEmp;
+import com.bukkeubook.book.books.model.entity.StockBookList;
 import com.bukkeubook.book.books.model.entity.StockBookListAndBookAndStockListAndEmp;
+import com.bukkeubook.book.books.model.entity.StockList;
 import com.bukkeubook.book.books.model.entity.StockListAndEmp;
+import com.bukkeubook.book.books.model.repository.BookInputRepository;
+import com.bukkeubook.book.books.model.repository.BookInputRepository2;
 import com.bukkeubook.book.books.model.repository.BookOutputRepository;
 import com.bukkeubook.book.books.model.repository.BookOutputRepository2;
 import com.bukkeubook.book.books.model.repository.BookRepository;
@@ -47,10 +53,12 @@ public class BookService {
 	private final InputRepository inputRepository;
 	private final BookOutputRepository bookOutputRepository;
 	private final BookOutputRepository2 bookOutputRepository2;
+	private final BookInputRepository bookInputRepository;
+	private final BookInputRepository2 bookInputRepository2;
 	private final ModelMapper modelMapper;			// modelMapper 빈을 선언
 	
 	@Autowired
-	public BookService(BookOutputRepository2 bookOutputRepository2, BookOutputRepository bookOutputRepository, StockBookListAndBookAndStockListAndEmpRepository stockBookListAndBookAndStockListAndEmpRepository, InputRepository inputRepository, RelBkListAndBookAndRelListRepository relBkListAndBookAndRelListRepository, BookRepository bookRepository, ModelMapper modelMapper, NativeRepository nativeRepository, OutputRepository outputRepository) {
+	public BookService(BookInputRepository2 bookInputRepository2, BookInputRepository bookInputRepository, BookOutputRepository2 bookOutputRepository2, BookOutputRepository bookOutputRepository, StockBookListAndBookAndStockListAndEmpRepository stockBookListAndBookAndStockListAndEmpRepository, InputRepository inputRepository, RelBkListAndBookAndRelListRepository relBkListAndBookAndRelListRepository, BookRepository bookRepository, ModelMapper modelMapper, NativeRepository nativeRepository, OutputRepository outputRepository) {
 		this.bookRepository = bookRepository;
 		this.outputRepository = outputRepository;
 		this.nativeRepository = nativeRepository;
@@ -59,6 +67,8 @@ public class BookService {
 		this.inputRepository = inputRepository;
 		this.bookOutputRepository = bookOutputRepository;
 		this.bookOutputRepository2 = bookOutputRepository2;
+		this.bookInputRepository = bookInputRepository;
+		this.bookInputRepository2 = bookInputRepository2;
 		this.modelMapper = modelMapper;
 	}
 	
@@ -278,6 +288,44 @@ public class BookService {
 	@Transactional
 	public void outputReceipt2(RelBkListDTO relBkList) {
 		bookOutputRepository2.save(modelMapper.map(relBkList, RelBkList.class));
+	}
+	
+	@Transactional
+	public void outputReceipt3(BookDTO bookDTO, int amount) {
+		Book book = bookRepository.findByNo(bookDTO.getNo());
+		int nowAmount = book.getWhSt();
+		int nowStoreAmount = book.getStoreSt();
+		book.setWhSt(nowAmount - amount);
+		book.setStoreSt(nowStoreAmount + amount);
+	}
+	
+	@Transactional
+	public int inputReceipt(StockListDTO stockList) {
+		bookInputRepository.save(modelMapper.map(stockList, StockList.class));
+		int stCode = nativeRepository.newStCode();
+		System.out.println(stCode);
+		return stCode;
+	}
+
+	
+	@Transactional
+	public void inputReceipt2(StockBookListDTO stockBookList) {
+		bookInputRepository2.save(modelMapper.map(stockBookList, StockBookList.class));
+	}
+	
+	@Transactional
+	public void inputReceipt3(BookDTO bookDTO, int amount, String selectInput) {
+		Book book = bookRepository.findByNo(bookDTO.getNo());
+		
+		int nowAmount = book.getWhSt();
+		int nowStAmount = book.getStoreSt();
+		
+		if(selectInput.equals("일반입고")) {
+			book.setWhSt(nowAmount + amount);
+			book.setStoreSt(nowStAmount - amount);
+		} else if(selectInput.equals("일반입고")) {
+			book.setWhSt(nowAmount + amount);
+		}
 	}
 	
 	
