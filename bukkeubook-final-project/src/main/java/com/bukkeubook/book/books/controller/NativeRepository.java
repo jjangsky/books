@@ -13,5 +13,8 @@ public interface NativeRepository extends JpaRepository<Book, Integer>{
 	@Query(value = "SELECT SEQ_REL_NO.CURRVAL FROM DUAL", nativeQuery = true)
 	int newRelNo();
 	
+	@Query(value = "SELECT SEQ_ST_CODE.CURRVAL FROM DUAL", nativeQuery = true)
+	int newStCode();
+	
 	
 }
