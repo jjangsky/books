@@ -339,6 +339,25 @@ public class DocServiceImpl implements DocService{
 		return all;
 	}
 
+	/* 상신함 전체리스트 조회 */
+	@Override
+	public List<DocumentAndEmpAndFormCateDTO> findByDocNoList(int empNo , String docStatus) {
+
+		List<DocumentAndEmpAndFormCate> docList = docEmpFormCateRepository.findByEmpNoAndDocStatusNot(empNo,docStatus);
+		
+		return docList.stream().map(doc -> modelMapper.map(doc, DocumentAndEmpAndFormCateDTO.class)).toList();
+	}
+
+
+	/* 수신함 상세 조회 */
+	@Override
+	public TempStoreDocumentDTO findByDocNo(int docNo) {
+
+		Document doc = docRepository.findById(docNo).get();
+		
+		return modelMapper.map(doc, TempStoreDocumentDTO.class);
+	}
+
 	
 	
 }

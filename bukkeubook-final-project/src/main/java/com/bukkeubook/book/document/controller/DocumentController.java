@@ -84,6 +84,10 @@ public class DocumentController {		// 전자결재 컨트롤러
 		
 		System.out.println(docNo);
 		
+		TempStoreDocumentDTO doc = docService.findByDocNo(docNo);
+		
+		mv.addObject("doc", doc);
+		
 		mv.setViewName("/document/indoxDetail");
 		
 		return mv;
@@ -291,7 +295,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 		}
 		
 		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
-		mv.setViewName("redirect:/document/docList");
+		mv.setViewName("redirect:/document/reqApprovalList");
 		
 		return mv;
 	}
@@ -373,7 +377,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 		}
 		
 		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
-		mv.setViewName("redirect:/document/docList");
+		mv.setViewName("redirect:/document/reqApprovalList");
 		
 		return mv;
 	}
@@ -382,8 +386,30 @@ public class DocumentController {		// 전자결재 컨트롤러
 	@GetMapping("reqApprovalList")
 	public ModelAndView toReqApprovalList(ModelAndView mv) {
 		
+//		int empNo = Integer.valueOf(0)
+		int empNo = 10;
+		String docStatus = "임시저장";
+		
+		List<DocumentAndEmpAndFormCateDTO> docList = docService.findByDocNoList(empNo,docStatus);
+		mv.addObject("docList", docList);
 		mv.setViewName("/document/reqApprovalList");
 		
 		return mv;
+	}
+	
+	/* 상신함 상세조회 */
+	@GetMapping("reqApprovalDetail/{docNo}")
+	public ModelAndView reqApprovalDetail(ModelAndView mv, @PathVariable int docNo) {
+		
+		System.out.println(docNo);
+		
+		TempStoreDocumentDTO doc = docService.findByDocNo(docNo);
+		
+		mv.addObject("doc", doc);
+		
+		mv.setViewName("/document/reqApprovalDetail");
+		
+		return mv;
+		
 	}
 }

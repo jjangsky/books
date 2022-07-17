@@ -21,9 +21,12 @@ window.onload = function() {
 		console.log(appro);
 		console.log(account);
 		console.log(deptName);
+		
+		let approver1 = deptName + "<br>" + account
 		$("#account1").val(appro);
 		$("#acco1").val(account);
 		$("#deptName1").val(deptName);
+		$("#selacc1").html(approver1);
 	});
 	
 	$("#empList2").change(function(){
@@ -33,9 +36,11 @@ window.onload = function() {
 		console.log(appro);
 		console.log(account);
 		console.log(deptName);
-		$("#account2").val(appro);
-		$("#acco2").val(account);
-		$("#deptName2").val(deptName);
+		let approver1 = deptName + "<br>" + account
+		$("#account1").val(appro);
+		$("#acco1").val(account);
+		$("#deptName1").val(deptName);
+		$("#selacc2").html(approver1);
 	});
 	
 	$("#empList3").change(function(){
@@ -45,12 +50,12 @@ window.onload = function() {
 		console.log(appro);
 		console.log(account);
 		console.log(deptName);
-		$("#account3").val(appro);
-		$("#acco3").val(account);
-		$("#deptName3").val(deptName);
+		let approver1 = deptName + "<br>" + account
+		$("#account1").val(appro);
+		$("#acco1").val(account);
+		$("#deptName1").val(deptName);
+		$("#selacc3").html(approver1);
 	});
-
-
 
 	$(function() {
 		$.ajax({

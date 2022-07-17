@@ -60,12 +60,13 @@
           </table><br>
           <div th:replace="books/bookList/bookpagingInput3.html"></div>
           <br><br><br><br>
+          <form id="inputForm" action="/book/inputReceipt" method="post">
           <div class="selectInput" align="center">
           <span class="inputSpan">입고분류를 선택 하세요 : </span>
-	          <select>
-	          	<option value="select">--분류--</option>
-	          	<option>일반입고</option>
-	          	<option>발주입고</option>
+	          <select class="selectInput" name="selectInput">
+	          	<option value = "select">--분류--</option>
+	          	<option value = "일반입고">일반입고</option>
+	          	<option value = "발주입고">발주입고</option>
 	          </select>
           </div>   
           <div id="textTable" style="text-align:-webkit-center">
@@ -77,14 +78,16 @@
                 <th class="th1">가격</th>
                 <th class="th1">창고보유재고</th>
                 <th class="th1">매장보유재고</th>
-                <th class="th1">출고수량</th>
+                <th class="th1">입고수량</th>
                 <th class="th1"><button onclick="AllDel()" class="productBtn delBtn">전체삭제</button></th>
               </tr>
           </table><br><br>
         <div id="newBookDiv">
-          <button type="button" class="productBtn newBookBtn">등록완료</button>
+          <input type="hidden" id="rownum" name="rownum" value="0">	
+          <button type="button" id="inputSubmit" class="productBtn newBookBtn">등록완료</button>
           <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
          </div>       
+        </form>
         </div> <!------------------------ 본문 종료---------------------------->
 	
 	<br><br>
@@ -142,17 +145,40 @@
 	            var no = "no" + index;
 	            var amount = "amount" + index;
 	            
-	            newCell1.innerHTML = td.eq(0).text();
+	            newCell1.innerHTML = td.eq(0).text() + '<input type="hidden" name="' + no + '" value="' + td.eq(0).text() + '">';
 	            newCell2.innerHTML = td.eq(1).text();
 	            newCell3.innerHTML = td.eq(2).text();
 	            newCell4.innerHTML = td.eq(3).text();
 	            newCell5.innerHTML = td.eq(4).text();
 	            newCell6.innerHTML = td.eq(5).text();
-	            newCell7.innerHTML = '<input type="number" class="outputValue" value="1" min="1">';
+	            newCell7.innerHTML = '<input type="number" class="outputValue" name="' + amount + '" value="1" min="1">';
 	            newCell8.innerHTML = '<input class="productBtn delBtn" type="button" value="삭제" onclick="SomeDeleteRowFunction(this)">';
 	            
-	         /* var rownum = document.getElementById("rownum");
-	            rownum.value = index; */
+	       		var rownum = document.getElementById("rownum");
+	            rownum.value = index;
+	            
+	            $(document).ready(function(){
+		        	$('.outputValue').change( function(){
+						var apap = $(this);
+						var tr2 = apap.parent().parent();
+		       			var td2 = tr2.children();
+				        var a = $('.outputValue').val();
+				        var b = Number(td2.eq(5).text().substr(0, 2));
+			            if(a > b){
+							Swal.fire({
+			                    icon: 'warning',
+			                    title: '재고수량을 확인 해 주세요!',
+			                    text: '일반입고는 매장수량을 초과하여 입고할 수 없습니다.',
+		              		 }).then(function(){
+									$(document).ready(function() {
+								        $('.outputValue').val(b);
+								   	});
+								});
+						}
+			        });
+	            });
+	            
+	            
             } else {
             	Swal.fire({
                     icon: 'warning',
@@ -160,14 +186,29 @@
                     text: '수량이 1ea 이상인 도서만 출고 가능합니다.',
                 })
             }
+            
+            
+            
 		})
-	
-	
+		
+		$('#inputSubmit').click(function(){
+			if($('.selectInput option:selected').val() == 'select'){
+				Swal.fire({
+                    icon: 'question',
+                    title: '입고분류를 선택 해 주세요!',
+                })
+			} else{
+				$('#inputForm').submit();
+			}
+		});
+		
 	    /* 행 전체삭제 */
 	    function AllDel(){
 	      $('#bottomTable tr:not(:first)').remove();
 	    }
-	
+		
+		
+		
 	    /* 선택한 행 삭제 */
 	    function SomeDeleteRowFunction(o){
 	      var p=o.parentNode.parentNode;
@@ -194,7 +235,7 @@
 		        })
 		    });
 		});
-      </script> 
+      </script>
 
 </body>
 </html>

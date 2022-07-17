@@ -5,11 +5,20 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity(name="RelList")
 @Table(name="TBL_REL_LIST")
+@SequenceGenerator(
+		name = "OUTPUT_SEQ_GENERATOR",
+		sequenceName = "SEQ_REL_NO",
+		initialValue = 21,
+		allocationSize = 1
+)
 public class RelList implements Serializable{
 	private static final long serialVersionUID = 1L;
 //	REL_NO	NUMBER
@@ -17,6 +26,10 @@ public class RelList implements Serializable{
 //	EMP_NO	NUMBER
 	
 	@Id
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "OUTPUT_SEQ_GENERATOR"
+	)
 	@Column(name="REL_NO")
 	private int relNo;				// 출고번호
 	

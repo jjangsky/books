@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+</head>
+  <body>
+		<div th:replace="/common/topSideBar.html"></div>
+
+        <h2 class="mb-4" id="main-text">거래내역 관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">거래내역 등록</h5>
+        <br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div id="textTable" style="text-align:-webkit-center">
+        	<form action="/trade/regist" method="post">
+	            <table id="sampleTable" align="center">
+	                <tr>
+	                    <td>거래일자</td>
+	                    <td><input type="date" name="tlDate" required></td>
+	                </tr>
+	                <tr>
+	                    <td>도서번호</td>
+	                    <td>
+	                    	<input type="text" id="bkNo" name="bkNo" disabled required>
+	                    	<input type="hidden" id="bkNo1" name="bkNo">
+	                    	<button onclick="popupForBook()" type="button">검색</button>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>도서수량</td>
+	                    <td><input type="number" name="tlAmount" min="1" value="1" required></td>
+	                </tr>
+	                <tr>
+	                    <td>거래처번호</td>
+	                    <td>
+	                    	<input type="text" id="cntNo" name="cntNo" disabled required>
+	                    	<input type="hidden" id="cntNo1" name="cntNo">
+	                    	<button onclick="popupForClient()" type="button">검색</button>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>상세내용</td>
+	                    <td>
+	                    	<input type="text" name="tlDetail">
+	                    </td>
+	                </tr>
+	            </table>
+                <button type="submit" onclick="location.href='/trade/regist'">등록</button>
+        	</form>
+            <button type="button" onclick="checkCancel()">취소</button>
+    </div> <!------------------------ 본문 종료---------------------------->
+
+		<script src="../js/jquery.min.js"></script>
+    <script src="../js/popper.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script th:inline="javascript">
+        function popupForClient(){
+            var url = "/trade/clientPopup";
+            var name = "client_search";
+            var option = "width = 1000, height = 600, top = 100, left = 200, location = no"
+            window.open(url, name, option);
+        }
+
+        function popupForBook(){
+            var url = "/trade/bookPopup";
+            var name = "book_search";
+            var option = "width = 1000, height = 600, top = 100, left = 200, location = no"
+            window.open(url, name, option);
+        }
+
+        function addClient(cntNo){
+            $("#cntNo").val(cntNo);
+            $("#cntNo1").val(cntNo);
+        }
+
+        function addBook(bkNo){
+            $("#bkNo").val(bkNo);
+            $("#bkNo1").val(bkNo);
+        }
+
+        function checkComplete(){
+              var result = confirm("거래내역 등록을 진행하시겠습니까?");
+
+              console.log(result);
+
+              if(result == true){
+
+                alert("거래내역 등록이 완료되었습니다.");
+
+                location = "trade_detail.html";
+              }
+            }
+            
+            function checkCancel(){
+              var result = confirm("정말로 거래내역 등록을 취소하시겠습니까?\n수정사항은 저장되지 않습니다.");
+
+              console.log(result);
+
+              if(result == true){
+
+                alert("거래내역 등록을 취소하셨습니다.");
+
+                location = "trade_history.html";
+              }
+            }
+    </script>
+  </body>
+</html>
