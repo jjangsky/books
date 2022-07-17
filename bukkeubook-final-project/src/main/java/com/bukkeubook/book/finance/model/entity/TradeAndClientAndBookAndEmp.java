@@ -8,20 +8,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.bukkeubook.book.books.model.entity.Book;
+import com.bukkeubook.book.manage.model.entity.Emp;
 
 @Entity
 @Table(name="TBL_TRADE_LIST")
-@SequenceGenerator(
-		name = "TRADE_SEQ_GENERATOR",
-		sequenceName = "SEQ_TL_NO",
-		initialValue = 38,
-		allocationSize = 1
-)
-public class TradeList implements Serializable{
+public class TradeAndClientAndBookAndEmp implements Serializable{
 
-	private static final long serialVersionUID = -3608341261312641532L;
+	private static final long serialVersionUID = -2391827774906552843L;
 
 	/*
 	 * DB 자료형
@@ -35,10 +33,6 @@ public class TradeList implements Serializable{
 		EMP_NO	NUMBER	사원번호
 	 */
 	@Id
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator = "TRADE_SEQ_GENERATOR"
-	)
 	@Column(name="TL_NO")
 	private int tlNo;				// 거래번호
 	
@@ -51,26 +45,30 @@ public class TradeList implements Serializable{
 	@Column(name="TL_DETAIL")
 	private String tlDetail;		// 상세내용
 	
-	@Column(name="CNT_NO")
-	private int cntNo;				// 거래처번호
+	@ManyToOne
+	@JoinColumn(name="CNT_NO")
+	private Client client;				// 거래처번호
 	
-	@Column(name="BK_NO")
-	private String bkNo;			// 도서코드
+	@ManyToOne
+	@JoinColumn(name="BK_NO")
+	private Book book;			// 도서코드
 	
-	@Column(name="EMP_NO")
-	private int empNo;				// 사원번호
+	@ManyToOne
+	@JoinColumn(name="EMP_NO")
+	private Emp emp;				// 사원번호
 
-	public TradeList() {
+	public TradeAndClientAndBookAndEmp() {
 	}
 
-	public TradeList(int tlNo, Date tlDate, int tlAmount, String tlDetail, int cntNo, String bkNo, int empNo) {
+	public TradeAndClientAndBookAndEmp(int tlNo, Date tlDate, int tlAmount, String tlDetail, Client client, Book book,
+			Emp emp) {
 		this.tlNo = tlNo;
 		this.tlDate = tlDate;
 		this.tlAmount = tlAmount;
 		this.tlDetail = tlDetail;
-		this.cntNo = cntNo;
-		this.bkNo = bkNo;
-		this.empNo = empNo;
+		this.client = client;
+		this.book = book;
+		this.emp = emp;
 	}
 
 	public int getTlNo() {
@@ -105,28 +103,28 @@ public class TradeList implements Serializable{
 		this.tlDetail = tlDetail;
 	}
 
-	public int getCntNo() {
-		return cntNo;
+	public Client getClient() {
+		return client;
 	}
 
-	public void setCntNo(int cntNo) {
-		this.cntNo = cntNo;
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
-	public String getBkNo() {
-		return bkNo;
+	public Book getBook() {
+		return book;
 	}
 
-	public void setBkNo(String bkNo) {
-		this.bkNo = bkNo;
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
-	public int getEmpNo() {
-		return empNo;
+	public Emp getEmp() {
+		return emp;
 	}
 
-	public void setEmpNo(int empNo) {
-		this.empNo = empNo;
+	public void setEmp(Emp emp) {
+		this.emp = emp;
 	}
 
 	public static long getSerialversionuid() {
@@ -135,8 +133,8 @@ public class TradeList implements Serializable{
 
 	@Override
 	public String toString() {
-		return "TradeList [tlNo=" + tlNo + ", tlDate=" + tlDate + ", tlAmount=" + tlAmount + ", tlDetail=" + tlDetail
-				+ ", cntNo=" + cntNo + ", bkNo=" + bkNo + ", empNo=" + empNo + "]";
+		return "TradeAndClientAndBookAndEmp [tlNo=" + tlNo + ", tlDate=" + tlDate + ", tlAmount=" + tlAmount
+				+ ", tlDetail=" + tlDetail + ", client=" + client + ", book=" + book + ", emp=" + emp + "]";
 	}
-
+	
 }
