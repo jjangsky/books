@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-//import org.junit.runner.RunWith;
+import org.junit.runner.RunWith;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +17,7 @@ import com.bukkeubook.book.config.BukkeubookFinalProjectApplication;
 import com.bukkeubook.book.document.model.entity.AppRoot;
 
 @SpringBootTest
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {BukkeubookFinalProjectApplication.class})
 public class repositoryTest {
 	

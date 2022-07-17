@@ -24,7 +24,6 @@ public class EmpAnnualService {
    private final EmpAnnualRepository empAnnualRepository;
    private final CancelVacRepository cancelVacRepository;
    private final ModelMapper modelMapper;
-
    
    @Autowired
    public EmpAnnualService(EmpAnnualRepository empAnnualRepository, CancelVacRepository cancelVacRepository, ModelMapper modelMapper) {

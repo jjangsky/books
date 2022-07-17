@@ -16,11 +16,10 @@
 </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
-	
-        <h2 class="mb-4" id="main-text">사원관리</h2>
-        <hr><br><br>
-        <h5 class="mb-4" id="sub-text">휴가 취소 상세 내역 조회</h5>
-        <br>
+    <h2 class="mb-4" id="main-text">사원관리</h2>
+    <hr><br><br>
+    <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/empAnnual/restCancelSelect">휴가 취소 조회</a></h5>
+    <br>
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
         <div class="emp detail list">
@@ -82,21 +81,21 @@
 		    });
 		});
 
-     /* 이건 더 찾아보자... 값을 어떻게 넘기냐 증말 어휴 */
-     /*         	 const delay = ""
-              $(".cancle.btn").click(function () {
-                 	Swal.fire({
-         	        title: '반려하시겠습니까?',
-         	        text: '반려 사유를 입력해주세요',
-         	        input: 'text',
-         	        inputPlaceholder: '사유 입력란'
-         	        
-         	    }).then((value) => {
-                     delay = swal("You typed : " + value);
-         	    	$('#reason').text(delay);
-                     console.log(delay);
-                 });
-         	}) */
+     function delayClick() {
+         var cancleReason = document.getElementById("cancleReason");
+         let text;
+         if(confirm("반려하시겠습니까?")) {
+           let delayReson = prompt("반려 사유를 입력해주세요");
+           if(delayReson.length == 0) {
+             alert("사유를 입력하지 않아 반려 등록이 취소되었습니다.")
+           } else {
+             alert("반려 사유가 등록되었습니다.")
+             cancleReason.innerText = delayReson;
+           }
+         } else {
+           alert("반려가 취소되었습니다.")
+         }
+       }
         </script>
 </body>
 </html>

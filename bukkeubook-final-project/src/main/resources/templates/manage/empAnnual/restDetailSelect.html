@@ -60,7 +60,7 @@
           </div>
 	          <button type="button" class="access btn" onclick="accessClick()">승인</button>
 	          <button type="button" class="cancle btn" th:onclick="location.href='/empAnnual/restSelect'">목록으로</button>
-	          <button type="button" class="cancle btn">반려</button>
+	          <button type="button" class="cancle btn" onclick="delayClick()">반려</button>
           
     <script th:inline="javascript">  
      $().ready(function accessClick() {
@@ -81,9 +81,26 @@
 		        })
 		    });
 		});
-		
-     /* 이건 더 찾아보자... 값을 어떻게 넘기냐 증말 어휴 */
-     /*         	 const delay = ""
+
+     function delayClick() {
+         var cancleReason = document.getElementById("cancleReason");
+         let text;
+         if(confirm("반려하시겠습니까?")) {
+           let delayReson = prompt("반려 사유를 입력해주세요");
+           if(delayReson.length == 0) {
+             alert("사유를 입력하지 않아 반려 등록이 취소되었습니다.")
+           } else {
+             alert("반려 사유가 등록되었습니다.")
+             cancleReason.innerText = delayReson;
+           }
+         } else {
+           alert("반려가 취소되었습니다.")
+         }
+       }
+     </script>
+     
+<!--      이건 더 찾아보자... 값을 어떻게 넘기냐 증말 어휴 */
+              	 const delay = ""
               $(".cancle.btn").click(function () {
                  	Swal.fire({
          	        title: '반려하시겠습니까?',
@@ -96,9 +113,9 @@
          	    	$('#reason').text(delay);
                      console.log(delay);
                  });
-         	}) */
+         	})
 
-/*      	(async () => {
+      	(async () => {
     	    const { value: getName } = await
     	    Swal.fire({
     	        title: '당신의 이름을 입력하세요.',
@@ -111,15 +128,8 @@
     	    if (getName) {
     	        Swal.fire(`: ${getName}`)
     	    }
-    	})() */
-     
-        /* $(".updateBtn").click(function () {
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: '수정이 성공적으로 완료되었습니다!',
-            });
-        }); */
+    	})() -->
+
         </script>
 </body>
 </html>

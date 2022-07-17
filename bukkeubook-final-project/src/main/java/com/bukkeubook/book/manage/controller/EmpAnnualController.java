@@ -7,11 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bukkeubook.book.books.model.dto.BookDTO;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
+import com.bukkeubook.book.manage.model.dto.AppVacationDTO;
+import com.bukkeubook.book.manage.model.dto.DayOffDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.AppVacationAndEmpDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.CancelVacationAndAppVacationDTO;
 import com.bukkeubook.book.manage.model.service.EmpAnnualService;
@@ -93,6 +99,10 @@ public class EmpAnnualController {
 		
 		return mv;
 	}
+	
+	/* 승인 클릭시 연차 횟수 차감 트랜잭션 */
+	
+	
 	
 	/* 휴가 취소 신청 조회 */
 	@GetMapping("/restCancelSelect")
