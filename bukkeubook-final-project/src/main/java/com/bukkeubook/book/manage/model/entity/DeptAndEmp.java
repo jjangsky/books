@@ -33,7 +33,7 @@ public class DeptAndEmp implements Serializable {
    @Column(name = "DEPT_REP_PHONE")
    private String deptRepPhone;
    
-   @OneToMany(mappedBy ="dept")   // FK명
+   @OneToMany(mappedBy ="dept")  
    private List<EmpAndDept> empList = new ArrayList<>();
 
    public DeptAndEmp() {

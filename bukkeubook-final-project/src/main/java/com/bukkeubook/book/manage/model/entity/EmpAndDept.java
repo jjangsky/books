@@ -62,8 +62,9 @@ public class EmpAndDept {
       private String empPwd;                                                                        
       
       @ManyToOne // 다대일 관계일때 사용
-      @JoinColumn(name = "DEPT_CODE")
-      private Dept dept;
+      @JoinColumn(name = "DEPT_CODE", insertable=false, updatable=false)
+//      private Dept dept;
+     private DeptAndEmp dept;
 
 	public EmpAndDept() {
 		super();
@@ -71,7 +72,7 @@ public class EmpAndDept {
 
 	public EmpAndDept(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3, Date empBirth,
 			String empGender, String empJobCode, String empEmail, String empAddress, String empDAddress,
-			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, Dept dept) {
+			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, DeptAndEmp dept) {
 		super();
 		this.empNo = empNo;
 		this.empName = empName;
@@ -211,11 +212,11 @@ public class EmpAndDept {
 		this.empPwd = empPwd;
 	}
 
-	public Dept getDept() {
+	public DeptAndEmp getDept() {
 		return dept;
 	}
 
-	public void setDept(Dept dept) {
+	public void setDept(DeptAndEmp dept) {
 		this.dept = dept;
 	}
 
@@ -225,9 +226,9 @@ public class EmpAndDept {
 				+ empPhone2 + ", empPhone3=" + empPhone3 + ", empBirth=" + empBirth + ", empGender=" + empGender
 				+ ", empJobCode=" + empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress
 				+ ", empDAddress=" + empDAddress + ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate
-				+ ", empEndYn=" + empEndYn + ", empPwd=" + empPwd + ", dept=" + dept + "]";
+				+ ", empEndYn=" + empEndYn + ", empPwd=" + empPwd + ", dept=" + dept.getDeptName() + "]";
 	}
 
-      
+	
 }
 
