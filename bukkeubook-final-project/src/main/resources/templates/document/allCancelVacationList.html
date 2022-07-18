@@ -44,11 +44,23 @@
                 <td class="td1" th:text="${canc.vacCancNo}"></td>
                 <td class="td1" th:text="${canc.vacCancDate}"></td>
                 <td class="td1" th:text="${canc.vacNo}"></td>
-                <td class="td1" th:text="${canc.vacCancStatus}"></td>
+                <td class="td1" th:text="${canc.vacCancStatus}" id="status"></td>
               </tr>
           </table>
           <br><br><br>
           <button type="button" class="insert btn" onclick="location.href='/document/insert'">결재작성</button>
         </div> <!------------------------ 본문 종료---------------------------->
+        <script>
+        	const status = document.querySelectorAll('table tr td#status');
+        	console.log("status"+status);
+        	for (let i = 0; i < status.length; i++) {
+				if (status[i].innerText=="승인") {
+					status[i].style.color = "blue";		
+				}
+				if (status[i].innerText=="반려") {
+					status[i].style.color = "red";		
+				}
+			}
+        </script>
 </body>
 </html>

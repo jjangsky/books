@@ -113,12 +113,14 @@ window.onload = function() {
 				//console.log(data);
 				//console.table(data);
 
+				
 				const $empList = $("#empList");
 
 				$empList.text("");
 
 				for (let index in data) {
-					$empList.append($("<option>").val(data[index].empNo).text(data[index].empName));
+					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
+					$empList.append($("<option>").val(data[index].empNo).text(jobEmp));
 				}
 			},
 			error: function(error) {
@@ -142,7 +144,8 @@ window.onload = function() {
 				$empList.text("");
 
 				for (let index in data) {
-					$empList.append($("<option>").val(data[index].empNo).text(data[index].empName));
+					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
+					$empList.append($("<option>").val(data[index].empNo).text(jobEmp));
 				}
 			},
 			error: function(error) {
@@ -166,7 +169,8 @@ window.onload = function() {
 				$empList.text("");
 
 				for (let index in data) {
-					$empList.append($("<option>").val(data[index].empNo).text(data[index].empName));
+					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
+					$empList.append($("<option>").val(data[index].empNo).text(jobEmp));
 				}
 			},
 			error: function(error) {
