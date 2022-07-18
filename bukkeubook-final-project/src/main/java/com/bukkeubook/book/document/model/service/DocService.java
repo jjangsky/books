@@ -63,4 +63,8 @@ public interface DocService {
 
 	List<CancelVacationDTO> allCancelVacationList(int empNo);
 
+	AppVacationDTO findByVacNo(int vacNo);
+
+	CancelVacationDTO findByvacCancNo(int vacCancNo);
+
 }

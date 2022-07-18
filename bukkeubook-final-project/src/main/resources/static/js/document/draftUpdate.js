@@ -108,16 +108,18 @@ window.onload = function() {
 		$.ajax({
 			url: "/document/emp/" + deptValue,
 			success: function(data) {
-				console.log(data[0].empName);
-				console.log(data);
-				console.table(data);
+				//console.log(data[0].empName);
+				//console.log(data);
+				//console.table(data);
 
+				
 				const $empList = $("#empList");
 
 				$empList.text("");
 
 				for (let index in data) {
-					$empList.append($("<option>").val(data[index].empNo).text(data[index].empName));
+					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
+					$empList.append($("<option>").val(data[index].empNo).text(jobEmp));
 				}
 			},
 			error: function(error) {
@@ -132,16 +134,17 @@ window.onload = function() {
 		$.ajax({
 			url: "/document/emp/" + deptValue,
 			success: function(data) {
-				console.log(data[0].empName);
-				console.log(data);
-				console.table(data);
+				//console.log(data[0].empName);
+				//console.log(data);
+				//console.table(data);
 
 				const $empList = $("#empList2");
 
 				$empList.text("");
 
 				for (let index in data) {
-					$empList.append($("<option>").val(data[index].empNo).text(data[index].empName));
+					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
+					$empList.append($("<option>").val(data[index].empNo).text(jobEmp));
 				}
 			},
 			error: function(error) {
@@ -156,16 +159,17 @@ window.onload = function() {
 		$.ajax({
 			url: "/document/emp/" + deptValue,
 			success: function(data) {
-				console.log(data[0].empName);
-				console.log(data);
-				console.table(data);
+				//console.log(data[0].empName);
+				//console.log(data);
+				//console.table(data);
 
 				const $empList = $("#empList3");
 
 				$empList.text("");
 
 				for (let index in data) {
-					$empList.append($("<option>").val(data[index].empNo).text(data[index].empName));
+					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
+					$empList.append($("<option>").val(data[index].empNo).text(jobEmp));
 				}
 			},
 			error: function(error) {

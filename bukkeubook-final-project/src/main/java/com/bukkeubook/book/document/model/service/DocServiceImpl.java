@@ -456,5 +456,23 @@ public class DocServiceImpl implements DocService{
 		return cancelList.stream().map(can -> modelMapper.map(can, CancelVacationDTO.class)).toList();
 	}
 
+	/* 휴가 신청 상세 조회 */
+	@Override
+	public AppVacationDTO findByVacNo(int vacNo) {
+
+		DocAppVacation vaca = vacationRepository.findById(vacNo).get();
+		
+		return modelMapper.map(vaca, AppVacationDTO.class);
+	}
+
+	/* 휴가취소 상세조회 */
+	@Override
+	public CancelVacationDTO findByvacCancNo(int vacCancNo) {
+
+		DocCancelVacation canc = cancelVacaRepository.findById(vacCancNo).get();
+		
+		return modelMapper.map(canc, CancelVacationDTO.class);
+	}
+
 	
 }

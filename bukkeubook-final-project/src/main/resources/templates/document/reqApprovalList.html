@@ -52,7 +52,7 @@
                 <td class="td1" th:text="${doc.docNo}"></td>
                 <td class="td1" th:text="${doc.docTitle}" style="width:300px;"></td>
                 <td class="td1" th:text="${doc.wrDate}"></td>
-                <td class="td1" th:text="${doc.docStatus}"></td>
+                <td class="td1" th:text="${doc.docStatus}" id="status"></td>
                 <td class="td1" th:text="${doc.emp.empName}"></td>
                 <td class="td1" th:text="${doc.formCate.formName}"></td>
               </tr> 
@@ -60,5 +60,17 @@
           <br>
           <button type="button" class="insert btn" onclick="location.href='/document/insert'">등록</button>
         </div> <!------------------------ 본문 종료---------------------------->
+        <script>
+        	const status = document.querySelectorAll('table tr td#status');
+        	console.log("status"+status);
+        	for (let i = 0; i < status.length; i++) {
+				if (status[i].innerText=="승인") {
+					status[i].style.color = "blue";		
+				}
+				if (status[i].innerText=="반려") {
+					status[i].style.color = "red";		
+				}
+			}
+        </script>
 </body>
 </html>
