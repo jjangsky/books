@@ -1,4 +1,24 @@
 window.onload = function() {
+	
+	$(function(){
+		let empNo = $("#empNo1").val();
+		$.ajax({
+			url:"/document/empInfo/" + empNo,
+			success: function(data){
+				console.log(data.empName);
+				console.log(data.deptName);
+				console.log(data.docNo);
+				console.log(data);
+				
+				$("#writer2").text(data.empName);
+				$("#dept2").text(data.deptName);
+				$("#docnumber").text(data.docNo);
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+	});
 
 	$("#clear").click(function(){
 		$("#account1").val("");

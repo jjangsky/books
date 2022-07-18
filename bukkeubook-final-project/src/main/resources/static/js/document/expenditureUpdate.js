@@ -403,8 +403,8 @@ function sendData() {
 			if ($("#submitTitle").val() == ""){
 				Swal.fire({
 					icon: 'warning',
-					title: '제목 없음',
-					text: '제목을 작성해주세요!'
+					title: '제목 확인',
+					text: '제목에 수정사항을 작성해주세요!'
 				})
 			} else{countCheck += 1;}
 			console.log(countCheck);
@@ -423,8 +423,8 @@ function sendData() {
 						//alert('내용 한개이상 입력해야함');
 						Swal.fire({
 							icon: 'warning',
-							title: '등록된 금액이 없습니다!',
-							text: '내용을 한개이상 입력해주세요!',
+							title: '등록된 금액확인',
+							text: '내용을 확인 후 재입력해주세요!',
 						})
 						break;
 					} else {
@@ -438,8 +438,8 @@ function sendData() {
 						//alert('내용없음 한개이상 입력해야함');
 						Swal.fire({
 							icon: 'warning',
-							title: '등록된 내용이 없습니다!',
-							text: '내용을 한개이상 입력해주세요!',
+							title: '등록된 내용확인',
+							text: '내용을 확인 후 재입력해주세요!',
 						})
 						break;
 					} else {
