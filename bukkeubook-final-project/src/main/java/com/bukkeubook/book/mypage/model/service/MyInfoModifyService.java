@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -15,21 +14,26 @@ import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.EmpAndDept;
 import com.bukkeubook.book.mypage.model.dto.ProfPhotoDTO;
+import com.bukkeubook.book.mypage.model.dto.SignDTO;
 import com.bukkeubook.book.mypage.model.entity.ProfPhoto;
+import com.bukkeubook.book.mypage.model.entity.Sign;
 import com.bukkeubook.book.mypage.model.repository.EmployeeRepository;
 import com.bukkeubook.book.mypage.model.repository.ProfileRepository;
+import com.bukkeubook.book.mypage.model.repository.SignRepository;
 
 @Service
 public class MyInfoModifyService {
 	
 	private final EmployeeRepository employeeRepository;
 	private final ProfileRepository profileRepository;
+	private final SignRepository signRepository;
 	private ModelMapper modelMapper;
 	
 	@Autowired
-	public MyInfoModifyService(EmployeeRepository employeeRepository, ModelMapper modelMapper, ProfileRepository profileRepository) {
+	public MyInfoModifyService(EmployeeRepository employeeRepository, ModelMapper modelMapper, ProfileRepository profileRepository, SignRepository signRepository) {
 		this.employeeRepository = employeeRepository;
 		this.profileRepository = profileRepository;
+		this.signRepository = signRepository;
 		this.modelMapper = modelMapper;
 		
 	}
@@ -71,6 +75,24 @@ public class MyInfoModifyService {
 		List<ProfPhoto> myProfile = profileRepository.findByEmpNo(memberCode, Sort.by("photoNo").descending());
 		
 		return myProfile.stream().map(profile -> modelMapper.map(profile, ProfPhotoDTO.class)).collect(Collectors.toList());
+	}
+	
+	/* 현재 서명 조회 */
+	public SignDTO findMySign(int memberCode) {
+		Sign mySign = signRepository.findByEmpNo(memberCode);
+		
+		return modelMapper.map(mySign, SignDTO.class);
+	}
+	
+	/* 마이페이지에서 서명 수정하기 */
+	@Transactional
+	public void modifySign(SignDTO sign) {
+		
+		Sign mySign = signRepository.findByEmpNo(sign.getEmpNo());
+		mySign.setSignName(sign.getSignName());
+		mySign.setSignSavedName(sign.getSignSavedName());
+		
+		
 	}
 	
 
