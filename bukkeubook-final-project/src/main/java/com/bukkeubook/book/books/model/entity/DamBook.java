@@ -5,11 +5,13 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="TBL_DAM_BOOK")
-public class DamBook implements Serializable{
+public class DamBook implements Serializable{ 
 
 	private static final long serialVersionUID = -5965545469329989049L;
 
@@ -18,24 +20,24 @@ public class DamBook implements Serializable{
 //	DAM_AMOUNT	NUMBER	훼손수량
 	@Id
 	@Column(name="BK_NO")
-	private int bkNo;		// 도서코드
+	private String bkNo;		// 도서코드
 	
-	@Column(name="DAM_AMOUNT")
+	@Column(name="DAM_AMOUNT", nullable=true)
 	private int damAmount;	// 훼손수량
 
 	public DamBook() {
 	}
 
-	public DamBook(int bkNo, int damAmount) {
+	public DamBook(String bkNo, int damAmount) {
 		this.bkNo = bkNo;
 		this.damAmount = damAmount;
 	}
 
-	public int getBkNo() {
+	public String getBkNo() {
 		return bkNo;
 	}
 
-	public void setBkNo(int bkNo) {
+	public void setBkNo(String bkNo) {
 		this.bkNo = bkNo;
 	}
 
@@ -55,5 +57,11 @@ public class DamBook implements Serializable{
 	public String toString() {
 		return "DamBook [bkNo=" + bkNo + ", damAmount=" + damAmount + "]";
 	}
+
+	
+
+	
+
+	
 	
 }
