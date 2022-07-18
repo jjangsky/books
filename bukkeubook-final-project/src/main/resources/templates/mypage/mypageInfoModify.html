@@ -17,7 +17,7 @@
         <h5 class="mb-4" id="sub-text">개인정보 수정</h5>
         <br>
       	
-      	 <form action="" > 
+      	 <form action="/myInfo/modifyInfo" method="post" id="updateEmp"> 
             <div style="margin-top: 30px; clear: both;">
             <table class="tb_02">
                 <tbody>
@@ -47,24 +47,32 @@
                 </tr>
                 <tr>
                   <th>이메일</th>
-                  <td><input type="email" th:value="${myInfo.empEmail}" required></td>
+                  <td><input type="email" class="form-control" name="empEmail"th:value="${myInfo.empEmail}" required></td>
                 </tr>
                 <tr>
                   <th>우편번호</th>
-                  <td><input type="text" name="zipCode" id="zipCode"th:value="${myInfo.empAddress}" readonly> 
+                  <td>
+                  <div class="input-group-prepend">
+                  <input type="text" id="zipCode" class="form-control" name="empAddress" style="width:50%;" th:value="${myInfo.empAddress}" readonly> 
                   	<input type="button" value="검색" class="btn btn-success" id="searchZipCode">
+                  </div>
                   </td>
                 </tr>
                 <tr>
                   <th>상세 주소 주소</th>
-                  <td><input type="text" name="address1" id="address1" th:value="${myInfo.empDAddress}" readonly></td>
+                  <td><input type="text" id="address1" class="form-control" name="empDAddress" th:value="${myInfo.empDAddress}" readonly></td>
                 </tr>
                 <tr>
                   <th>연락처</th>
                   <td>
-            		<input type="tel" name="phone1" size="3" id="phone1" th:value="${myInfo.empPhone1}" required>
-            		- <input type="tel" name="phone2" size="4" id="phone2" th:value="${myInfo.empPhone2}" required>- 
-            		 <input type="tel" name="phone3" size="4" id="phone3" th:value="${myInfo.empPhone3}" required></td>
+                  <div class="input-group-prepend">
+            		<input type="tel" class="form-control"  maxlength="3" id="phone1" name="empPhone1" th:value="${myInfo.empPhone1}" required>
+            		&nbsp;&nbsp;&nbsp;- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            		<input type="tel" class="form-control"  maxlength="4" id="phone2" name="empPhone2" th:value="${myInfo.empPhone2}" required>
+            		&nbsp;&nbsp;&nbsp;- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            		 <input type="tel" class="form-control" maxlength="4" id="phone3" name="empPhone3" th:value="${myInfo.empPhone3}" required>
+            	 </div>
+            	 </td>
                 </tr>
                 <tr>
                   <th>입사 일자</th>
@@ -74,15 +82,18 @@
               </tbody>
               
               </table>
-              
-              
+              </div>
+            <div class="sizebtnYc">
+            <button class="btn btn-primary size80p" type="button" id="save"> 저장</button>
+            <button class="btn btn-primary size80p" type="reset">취소</button>
             </div>
+              
               
             </form>
   
 
-        <div style="width: 50%; height: 40%;  float: left;" class="inline" >
-        <div class="container mt-3 " style="margin-left: 20%;">
+        <div class="inline">
+        <div class="container mt-3 leftMar20" style="margin-left:20%;">
             <div class="card" style="width:400px">
               <img class="card-img-top" src="/images/main/orgChart/logo2.jpg" alt="Card image" style="width:50%; height: 70%; margin-left: 25%;">
               <div class="card-body">
@@ -92,8 +103,8 @@
             </div>
         </div>
         </div>
-        <div style="width: 50%; height: 40%; float: left;" class="inline">
-            <div class="container mt-3 " style="margin-left: 3%;">
+        <div class="inline">
+            <div class="container mt-3 " style="margin-left: 20%;">
                 <div class="card" style="width:400px">
                   <img class="card-img-top" src="/images/main/orgChart/booklogo1.png" alt="Card image" style="width:50%; height: 250px; margin-left: 25%;">
                   <div class="card-body">
@@ -109,18 +120,27 @@
 	<!-- 다음 지도 API -->
 	  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script>
-		const searchZipCode = document.getElementById("searchZipCode");
-		
-		searchZipCode.onclick = function() {
-		
-			new daum.Postcode({
-				oncomplete: function(data){
-					document.getElementById("zipCode").value = data.zonecode;
-					document.getElementById("address1").value = data.address;
-
+			const searchZipCode = document.getElementById("searchZipCode");
+			
+			searchZipCode.onclick = function() {
+			
+				new daum.Postcode({
+					oncomplete: function(data){
+						document.getElementById("zipCode").value = data.zonecode;
+						document.getElementById("address1").value = data.address;
+	
+					}
+				}).open();
+			}
+			
+			$("#save").click(function(){
+				
+				if(!(Number($("#phone1").val())&&Number($("#phone2").val())&&Number($("#phone3").val()))){
+					alert("숫자만");
+				} else{
+					updateEmp.submit();
 				}
-			}).open();
-		}
+			})
 		
 		
 		
