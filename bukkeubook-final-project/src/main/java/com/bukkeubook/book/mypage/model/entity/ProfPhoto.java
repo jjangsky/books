@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @SequenceGenerator(
 		name = "PHOTO_SEQ_GENERATOR",
 		sequenceName = "SEQ_PHOTO_NO",
-		initialValue = 1,
+		initialValue = 2,
 		allocationSize = 1
 		)
 public class ProfPhoto {

@@ -90,28 +90,34 @@
               
               
             </form>
-  
+  		
+  		<!--  프로필 사진 수정 부분 -->
         <div class="inline">
         <div class="container mt-3 leftMar20" style="margin-left:20%;">
             <div class="card" style="width:400px">
-              <img class="card-img-top" th:src="@{/images/mypage/{imageFile}(imageFile=${profile[0].photoSavedName})}" alt="Card image" style="width:50%; height: 70%; margin-left: 25%;">
+             <img class="card-img-top" th:src="@{/images/mypage/{imageFile}(imageFile=${profile[0].photoSavedName})}" alt="Card image" style="width:50%; height: 70%; margin-left: 25%;">
               <div class="card-body">
                 <h4 class="card-title" style="text-align: center;">프로필 사진</h4>
                 <form action="/myInfo/profileRegist" method="post" encType="multipart/form-data">
-                <input type="file" name="singleFile" style="margin-left: 25%;" value="수정하기">
+                <input type="file" name="singleFile" style="margin-left: 25%;" value="수정하기" required>
                 <input type="submit" class="btn btn-primary" value="수정하기" style="margin-left: 25%; margin-top:10px;">
                 </form>
               </div>
             </div>
         </div>
         </div>
+        <!--  서명 수정 부분 -->
+  
         <div class="inline">
             <div class="container mt-3 " style="margin-left: 20%;">
                 <div class="card" style="width:400px">
-                  <img class="card-img-top" src="" alt="Card image" style="width:50%; height: 250px; margin-left: 25%;">
+                  <img class="card-img-top" th:src="@{/images/sign/{signFile}(signFile=${mySign.signSavedName})}" alt="Card image" style="width:50%; height: 250px; margin-left: 25%;">
                   <div class="card-body">
                     <h4 class="card-title" style="text-align: center;">도장</h4>
-                    <button type="button" class="btn btn-primary" style="margin-left: 35%;;">수정하기</button>
+	                    <form action="/myInfo/signModify" method="post" encType="multipart/form-data">
+			                <input type="file" name="singleFile" style="margin-left: 25%;" value="수정하기" required>
+			                <input type="submit" class="btn btn-primary" value="수정하기" style="margin-left: 25%; margin-top:10px;">
+		                </form>
                   </div>
                 </div>
             </div>

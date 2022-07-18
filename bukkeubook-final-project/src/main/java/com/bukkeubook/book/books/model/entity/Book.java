@@ -1,12 +1,12 @@
 package com.bukkeubook.book.books.model.entity;
 
 import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity(name="Book")
@@ -57,12 +57,16 @@ public class Book {
 	
 	@Column(name = "BK_CATE")
 	private String cate;				// 카테고리
+	
+	@OneToOne
+	@JoinColumn(name = "BK_NO")
+	private DamBook damBook;
 
 	public Book() {
 	}
 
 	public Book(String no, String name, String author, String pub, int price, int storeSt, int whSt, Date pubDate,
-			Date lastDate, String isbn, String sellYn, String cate) {
+			Date lastDate, String isbn, String sellYn, String cate, DamBook damBook) {
 		this.no = no;
 		this.name = name;
 		this.author = author;
@@ -75,6 +79,7 @@ public class Book {
 		this.isbn = isbn;
 		this.sellYn = sellYn;
 		this.cate = cate;
+		this.damBook = damBook;
 	}
 
 	public String getNo() {
@@ -173,12 +178,22 @@ public class Book {
 		this.cate = cate;
 	}
 
+	public DamBook getDamBook() {
+		return damBook;
+	}
+
+	public void setDamBook(DamBook damBook) {
+		this.damBook = damBook;
+	}
+
 	@Override
 	public String toString() {
-		return "Book [no=" +"BOOK-"+ no + ", name=" + name + ", author=" + author + ", pub=" + pub + ", price=" + price
+		return "Book [no=" + no + ", name=" + name + ", author=" + author + ", pub=" + pub + ", price=" + price
 				+ ", storeSt=" + storeSt + ", whSt=" + whSt + ", pubDate=" + pubDate + ", lastDate=" + lastDate
-				+ ", isbn=" + isbn + ", sellYn=" + sellYn + ", cate=" + cate + "]";
+				+ ", isbn=" + isbn + ", sellYn=" + sellYn + ", cate=" + cate + ", damBook=" + damBook + "]";
 	}
+	
+	
 	
 }	
 
