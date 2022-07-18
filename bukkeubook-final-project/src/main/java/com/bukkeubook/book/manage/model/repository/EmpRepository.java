@@ -13,6 +13,7 @@ import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Repository;
 
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
+import com.bukkeubook.book.manage.model.entity.Dept;
 import com.bukkeubook.book.manage.model.entity.Emp;
 import com.bukkeubook.book.manage.model.entity.EmpAndDept;
 
@@ -30,6 +31,12 @@ public interface EmpRepository extends JpaRepository<EmpAndDept, Integer>{
 	List<EmpAndDept> findByEmpNameContaining(String searchValue, Pageable paging);
 
 	List<EmpAndDept> findByEmpJobCodeContaining(String searchValue, Pageable paging);
+
+	/* 신규사원 등록 */
+//	@Query(value = "SELECT (TO_NUMBER(SUBSTR(MAX(EMP_NO), 6, 2))+1) FROM TBL_EMP", nativeQuery = true)
+//	int empNo();
+
+
 
 
 

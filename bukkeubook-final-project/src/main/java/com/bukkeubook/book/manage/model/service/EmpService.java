@@ -14,23 +14,30 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bukkeubook.book.books.model.dto.BookDTO;
+import com.bukkeubook.book.books.model.entity.Book;
 import com.bukkeubook.book.common.paging.SelectCriteria;
+import com.bukkeubook.book.manage.model.dto.DeptDTO;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
+import com.bukkeubook.book.manage.model.entity.Dept;
 import com.bukkeubook.book.manage.model.entity.Emp;
 import com.bukkeubook.book.manage.model.entity.EmpAndDept;
 import com.bukkeubook.book.manage.model.repository.EmpRepository;
+import com.bukkeubook.book.manage.model.repository.OriginalEmpRepository;
 
 @Service
 public class EmpService {
 	
 	private final EmpRepository empRepository;
+	private final OriginalEmpRepository originEmpRepository;
 	private final ModelMapper modelMapper;		//앤티티를 디티오로 변환 or 디티오를 엔티티로 변환
 
 	@Autowired
-	public EmpService(EmpRepository empRepository, ModelMapper modelMapper) {
+	public EmpService(EmpRepository empRepository, ModelMapper modelMapper,OriginalEmpRepository originEmpRepository) {
 		this.empRepository = empRepository;
 		this.modelMapper = modelMapper;
+		this.originEmpRepository = originEmpRepository;
 	}
 
 	/* 사원조회 & 검색기능 & 페이징 */
@@ -105,7 +112,53 @@ public class EmpService {
 		
 		return modelMapper.map(emp, EmpAndDeptDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
 	}
+
+//	/* 신규 사원 등록 */
+//	public int empNo() {
+//		int empNo = empRepository.empNo();
+//		return empNo; 
+//	}
+
+//	@Transactional //커밋시점에 스냅샷이랑 비교해보고 커밋을 해줌
+//	public void insertEmp(EmpDTO empDTO) {
+//		originEmpRepository.save(modelMapper.map(empDTO, Emp.class));
+//	}
+
+	@Transactional
+	public void insertNewEmp(EmpDTO emp) {
+		
+		System.out.println("Service                      sssssssssssss" + emp);
+		
+		originEmpRepository.save(modelMapper.map(emp, Emp.class));
+	}
 	
+	/* 사원정보 수정 */
+	@Transactional
+	public List<EmpDTO> findEmpByEmpNo(int empNo) {
+		List<Emp> empList = originEmpRepository.findEmpByEmpNo(empNo);
+		return empList.stream().map(emp -> modelMapper.map(emp, EmpDTO.class)).collect(Collectors.toList());
+	}
+	
+	
+	@Transactional
+	public void modifyEmpInfo(EmpDTO empDTO) {
+		
+		Emp emp = originEmpRepository.findByEmpNo(empDTO.getEmpNo());
+		emp.setEmpName(empDTO.getEmpName());
+		emp.setDeptCode(empDTO.getDeptCode());
+		emp.setEmpJobCode(empDTO.getEmpJobCode());
+		emp.setEmpPhone1(empDTO.getEmpPhone1());
+		emp.setEmpPhone2(empDTO.getEmpPhone2());
+		emp.setEmpPhone3(empDTO.getEmpPhone3());
+		emp.setEmpEmail(empDTO.getEmpEmail());
+		emp.setEmpAddress(empDTO.getEmpAddress());
+		emp.setEmpDAddreess(empDTO.getEmpDAddress());
+		emp.setEmpPwd(empDTO.getEmpPwd());
+		emp.setEmpEndYn(empDTO.getEmpEndYn());
+		
+	}
+
+
 }
 
 

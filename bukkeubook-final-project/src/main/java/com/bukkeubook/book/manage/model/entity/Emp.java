@@ -15,6 +15,12 @@ import javax.persistence.TypedQuery;
 
 @Entity(name="Emp")
 @Table(name = "TBL_EMP")
+@SequenceGenerator(
+		name = "EMP_SEQ_EMP_NO",
+		sequenceName = "SEQ_EMP_NO",
+		initialValue = 300,
+		allocationSize = 1
+)
 public class Emp {
    
 //	EMP_NO			NUMBER				사원번호
@@ -35,6 +41,10 @@ public class Emp {
 //	DEPT_CODE		NUMBER				부서코드
 	
    @Id
+   @GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "EMP_SEQ_EMP_NO"
+	)
    @Column(name = "EMP_NO")
    private int empNo;
    

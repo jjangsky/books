@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>Insert title here</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  </head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text">사원관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">사원 정보 수정</h5>
+        <br>
+         <form action="/manage/empDetailUpdate" method="post" id="updateForm"> 
+          <div class="emp detail list"> 
+           <table border="2">
+            <thead>
+              <tr class="detailtitle">
+                <th colspan="4">사원정보</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="deemp2">
+                <td>사원번호</td>
+                <td th:text="${ emp.empNo }"></td>
+                <td class="deempfile">도장사진</td>
+                <td class="deempfile">프로필사진</td>
+              </tr>
+              <tr class="deemp2">
+                <td>사원명</td>
+                <td><input type="text" th:value="${ emp.empName }" name="empName"></td>
+                <td rowspan="4"></td>
+                <td rowspan="4"></td>
+              </tr>
+               <tr class="deemp2">
+                <td>부서명</td>
+                <td th:value="${ emp.deptCode }" name="deptCode">
+                 <select class="sel3" name="deptCode">
+                  <option value="">--</option>
+                  <option value="2">재무부</option>
+                  <option value="3">인사부</option>
+                  <option value="4">총무부</option>
+                  <option value="5">도서물류부</option>
+                </select> 
+                </td>
+              </tr>
+              <tr class="deemp2">
+                <td>직급</td>
+                <td th:value="${ emp.empJobCode }">
+                	<select class="sel3" name="empJobCode">
+                    <option value="">--</option>
+                    <option value="부장">부장</option>
+                    <option value="팀장">팀장</option>
+                    <option value="대리">대리</option>
+                    <option value="사원">사원</option>
+                  </select> 
+                </td>
+              </tr>
+              <tr class="deemp2" >
+                <td>입사일자</td>
+                <td><input type="date" th:text="${ emp.empEntDate }">
+                <select class="sel3" name="empEndYn">
+                  <option value="N">N</option>
+                  <option value="Y">Y</option>
+                </select> 
+                </td>
+              </tr>
+              <tr class="deemp2" >
+                <td>퇴사여부</td>
+                <td th:value="${ emp.empEndYn }" name="empEndYn"></td>
+                <td><input type="file" name="uploadfile" multiple></td>
+                <td><input type="file" name="uploadfile" multiple></td>
+              </tr>
+              <tr class="deemp" >
+                <td>성별</td>
+                <td colspan="3" th:text="${ emp.empGender }"></td>
+              </tr>
+              <tr class="deemp" >
+                <td>생년월일</td>
+				 <td colspan="3" th:text="${ emp.empBirth }">
+              </tr>
+              <tr class="deemp" >
+                <td>연락처</td>
+                <td th:value="${ emp.empPhone1 }" name="empPhone1 "></td>
+                <td th:value="${ emp.empPhone2 }" name="empPhone2 "></td>
+                <td th:value="${ emp.empPhone3 }" name="empPhone3 "></td>
+              </tr>
+              <tr class="deemp">
+                <td>이메일</td>
+                <td colspan="3"><input type="email" th:value="${ emp.empEmail }" name="email"></td>
+              </tr>
+              <tr class="deemp" >
+                <td>우편번호</td>
+                <td colspan="3">
+                   <input type="text" name="zipCode" id="zipCode" required>
+                  <input type="button" value="검색" class="input2" id="searchZipCode" th:value="${ emp.empAddress }" name="empAddress">
+                </td>  
+              </tr>
+              <tr class="deemp" >
+                <td>상세주소</td>
+                <td colspan="3"><input type="text" th:value="${ emp.empDAddress }" name="empDAddress"></td>
+              </tr>
+              <tr class="deemp">
+                <td>비밀번호</td>
+                <td colspan="3"><input type="text" th:value="${ emp.empPwd }" name="empPwd"></td>
+              </tr>
+            </tbody>
+          </table><br>
+          <div id="newBookDiv">
+          	<button id="leaveUpdateEmp" class="modify btn">퇴사처리</button>
+          	<button id="update" class="modify btn updateBtn">등록하기</button>
+          	<button id="button" class="list btn backBtn" >목록으로</button>
+          </div>
+          </div>
+         </form> 
+       </div> <!------------------------ 본문 종료---------------------------->
+	<script th:inline="javascript">
+    	  $().ready(function () {
+		    $(".backBtn").click(function () {
+		        Swal.fire({
+		            title: '작성내용이 모두 사라집니다.',
+		            text: "진행 하시겠습니까?",
+		            icon: 'warning',
+		            showCancelButton: true,
+		            confirmButtonColor: '#c5bfbf',
+		            cancelButtonColor: '#c5bfbf',
+		            confirmButtonText: '확인',
+		            cancelButtonText: '취소'
+		        }).then((result) => {
+		            if (result.isConfirmed) {
+		                window.history.back();
+		            }
+		        })
+		    });
+		});
+          $("#update").click(function () {
+  			$("#updateForm").submit();
+          });  
+      </script> 
+</body>
+</html>
