@@ -6,13 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.bukkeubook.book.manage.model.entity.DayOff;
-import com.bukkeubook.book.manage.model.entity.DayOffAndEmpAndDept;
 
 @Repository
-public interface EmpDayOffRepository extends JpaRepository<DayOffAndEmpAndDept, Integer> {
+public interface DayOffRepository2 extends JpaRepository<DayOff, Integer> {
 
-	List<DayOff> findDayOffByEmpNo(String empNo);
-
-//	void modifyDayOffInf(DayOff map);
-
+	List<DayOff> findAllByEmpNo(int empNo);
+	
+	
 }

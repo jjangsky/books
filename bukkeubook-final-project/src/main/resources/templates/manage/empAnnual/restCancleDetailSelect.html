@@ -11,15 +11,15 @@
 <link rel="stylesheet" th:href="@{/css/manage/empAnnual/rest.css}">
 <link rel="stylesheet" th:href="@{css/manage/employee/persist.css}">
 <link rel="stylesheet" th:href="@{/css/manage/employee/Listdetail.css}">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
-    <h2 class="mb-4" id="main-text">사원관리</h2>
-    <hr><br><br>
-    <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/empAnnual/restCancelSelect">휴가 취소 조회</a></h5>
-    <br>
+	
+        <h2 class="mb-4" id="main-text">사원관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">휴가 취소 상세 내역 조회</h5>
+        <br>
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
         <div class="emp detail list">
@@ -58,44 +58,34 @@
         </div>
         <br><br>
         <td><button type="button" class="access btn" onclick="accessClick()">승인</button></td>
-        <td><button type="button" class="cancle btn" th:onclick="location.href='/empAnnual/restCancelSelect'">목록으로</button>
+        <td><button type="button" class="cancle btn" onclick="location.href='restCancleSelect.html'">목록으로</button></td>
         <td><button type="button" class="cancle btn" onclick="delayClick()">반려</button></td>
 
-    <script th:inline="javascript">  
-     $().ready(function accessClick() {
-		    $(".access.btn").click(function () {
-		        Swal.fire({
-		            title: '승인 하시겠습니까?',
-		            text: "승인 버튼을 누르면 승인이 됩니다.",
-		            icon: 'warning',
-		            showCancelButton: true,
-		            confirmButtonColor: '#c5bfbf',
-		            cancelButtonColor: '#c5bfbf',
-		            confirmButtonText: '승인',
-		            cancelButtonText: '취소'
-		        }).then((result) => {
-		            if (result.isConfirmed) {
-		                window.history.back();
-		            }
-		        })
-		    });
-		});
+        <script>
+          function accessClick() {
+            var txt;
+            if (confirm("승인하시겠습니까?")) {
+              alert("승인되었습니다.");
+            } else {
+              alert("승인이 취소되었습니다.")
+            }
+          }
 
-     function delayClick() {
-         var cancleReason = document.getElementById("cancleReason");
-         let text;
-         if(confirm("반려하시겠습니까?")) {
-           let delayReson = prompt("반려 사유를 입력해주세요");
-           if(delayReson.length == 0) {
-             alert("사유를 입력하지 않아 반려 등록이 취소되었습니다.")
-           } else {
-             alert("반려 사유가 등록되었습니다.")
-             cancleReason.innerText = delayReson;
-           }
-         } else {
-           alert("반려가 취소되었습니다.")
-         }
-       }
+          function delayClick() {
+            var cancleReason = document.getElementById("cancleReason");
+            let text;
+            if(confirm("반려하시겠습니까?")) {
+              let delayReson = prompt("반려 사유를 입력해주세요");
+              if(delayReson.length == 0) {
+                alert("사유를 입력하지 않아 반려 등록이 취소되었습니다.")
+              } else {
+                alert("반려 사유가 등록되었습니다.")
+                cancleReason.innerText = delayReson;
+              }
+            } else {
+              alert("반려가 취소되었습니다.")
+            }
+          }
         </script>
 </body>
 </html>

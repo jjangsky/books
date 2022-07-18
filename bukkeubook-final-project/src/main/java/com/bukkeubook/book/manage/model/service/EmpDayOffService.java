@@ -17,6 +17,7 @@ import com.bukkeubook.book.manage.model.dto.joinDTO.DayOffAndEmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.AppVacation;
 import com.bukkeubook.book.manage.model.entity.DayOff;
 import com.bukkeubook.book.manage.model.entity.DayOffAndEmpAndDept;
+import com.bukkeubook.book.manage.model.repository.DayOffRepository2;
 import com.bukkeubook.book.manage.model.repository.EmpAnnualRepository;
 import com.bukkeubook.book.manage.model.repository.EmpDayOffRepository;
 import com.bukkeubook.book.mypage.model.repository.DayOffRepository;
@@ -25,15 +26,15 @@ import com.bukkeubook.book.mypage.model.repository.DayOffRepository;
 public class EmpDayOffService {
    
    private final EmpDayOffRepository empDayOffRepository;
-   private final DayOffRepository dayOffRepository;
    private final EmpAnnualRepository empAnnualRepository;
+   private final DayOffRepository2 dayOffRepository2;
    private final ModelMapper modelMapper;
    
    @Autowired
-   public EmpDayOffService(EmpDayOffRepository empDayOffRepository, DayOffRepository dayOffRepository, EmpAnnualRepository empAnnualRepository, ModelMapper modelMapper) {
+   public EmpDayOffService(EmpDayOffRepository empDayOffRepository, EmpAnnualRepository empAnnualRepository, DayOffRepository2 dayOffRepository2, ModelMapper modelMapper) {
       this.empDayOffRepository = empDayOffRepository;
-      this.dayOffRepository = dayOffRepository;
       this.empAnnualRepository = empAnnualRepository;
+      this.dayOffRepository2 = dayOffRepository2;
       this.modelMapper = modelMapper;
    }
    
@@ -58,31 +59,50 @@ public class EmpDayOffService {
    
    /* 휴가 신청이랑 연결된 트랜잭션 */
    @Transactional
-	public List<DayOffDTO> findDayOffByNo(String empNo) {
+	public List<DayOffDTO> findDayOffByNo(int empNo) {
 	   
-		List<DayOff> dayOffList = empDayOffRepository.findDayOffByEmpNo(empNo);
+		List<DayOff> dayOffList = dayOffRepository2.findAllByEmpNo(empNo);
+		
+		System.out.println("아아아아아아아아아아아아아" + dayOffList);
+		System.out.println("아아아아아아아아아아아아아" + dayOffList);
+		System.out.println("아아아아아아아아아아아아아" + dayOffList);
+		System.out.println("아아아아아아아아아아아아아" + dayOffList);
+		System.out.println("아아아아아아아아아아아아아" + dayOffList);
+		System.out.println("아아아아아아아아아아아아아" + dayOffList);
+		System.out.println("아아아아아아아아아아아아아" + dayOffList);
+		System.out.println("아아아아아아아아아아아아아" + dayOffList);
+		System.out.println("아아아아아아아아아아아아아" + dayOffList);
+		System.out.println("아아아아아아아아아아아아아" + dayOffList);
+		System.out.println("아아아아아아아아아아아아아" + dayOffList);
+		System.out.println("아아아아아아아아아아아아아" + dayOffList);
+		System.out.println("아아아아아아아아아아아아아" + dayOffList);
+
 		return dayOffList.stream().map(dayOff -> modelMapper.map(dayOff, DayOffDTO.class)).collect(Collectors.toList());
 	}
-
-   @Transactional
    
-	public void modifyDayOffInfo(DayOff dayOff, @ModelAttribute AppVacation appVac) {
+//   @Transactional
+//	public void modifyDayOffInfo(DayOffDTO dayOffDTO, @ModelAttribute AppVacationDTO appVacationDTO) {
+//
+//	   dayOffRepository.modifyDayOffInfo(modelMapper.map(dayOffDTO, DayOff.class));
+//	   
+//	   AppVacation appVac2 = empAnnualRepository.findAppVacByVacNo(appVacationDTO.getVacNo());
+//	   appVac2.setVacStartDate(appVac2.getVacStartDate());
+//	   appVac2.setVacEndDate(appVac2.getVacEndDate());
+//	   
+//	   System.out.println("출력되니?" + appVac2);
+//	   // 사용한 연차일 수를 구한다.(long)
+//	   
+//	   DayOff dayOff2 = dayOffRepository.findDayOffByEmpNo(dayOffDTO.getEmpNo());
+//	   dayOff2.setDoffRemain(dayOff2.getDoffRemain());
+//	   dayOff2.setDoffAmount(dayOff2.getDoffAmount()- 1); // 사용한 연차일 수를 뺀다 update
+//	   dayOff2.setDoffUse(dayOff2.getDoffUse() + 1);
+//
+//	      
+//	}
 
-	   dayOffRepository.modifyDayOffInfo(modelMapper.map(dayOff, DayOff.class));
-	   
-	   AppVacation appVac2 = empAnnualRepository.findAppVacByVacNo(appVac.getVacNo());
-	   appVac2.setVacStartDate(appVac2.getVacStartDate());
-	   appVac2.setVacEndDate(appVac2.getVacEndDate());
-	   
-	   System.out.println("출력되니?" + appVac2);
-	   // 사용한 연차일 수를 구한다.(long)
-	   
-	   DayOff dayOff2 = dayOffRepository.findDayOffByEmpNo(dayOff.getEmpNo());
-	   dayOff2.setDoffRemain(dayOff2.getDoffRemain());
-	   dayOff2.setDoffAmount(dayOff2.getDoffAmount()- 1); // 사용한 연차일 수를 뺀다 update
-	   dayOff2.setDoffUse(dayOff2.getDoffUse() + 1);
 
-	      
-	}
+
+
+
 
 }

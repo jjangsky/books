@@ -29,12 +29,10 @@ public interface EmpAnnualRepository extends JpaRepository<AppVacationAndEmp, In
 
 	List<AppVacationAndEmp> findByEmp_EmpNameContaining(String searchValue, Pageable paging);
 
+
 	/* 휴가 승인시 연차 트랜잭션..? */
-	AppVacation findByVacNo(AppVacation map);
 
-	void modifyDayOffInfo(AppVacation map);
 
-	AppVacation findAppVacByVacNo(int vacNo);
 
 	
 

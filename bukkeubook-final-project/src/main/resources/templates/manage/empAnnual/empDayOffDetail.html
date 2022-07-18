@@ -19,7 +19,7 @@
         <br>
 		
 		<div class="emp detail list">
-		<form class="search select" action="/empDayOff/empDayOffList" method="post"></form>
+		<form class="search select" action="/empDayOff/empDayOffList"></form>
         <table border="1px">
           
           <tbody>
@@ -54,7 +54,7 @@
           </tbody>
           </table>
           <br>
-          <td><button type="button" class="modify btn" onclick="location.href='empAnnualUpdate.html'">수정하기</button></td>
+          <td><button type="button" class="modify btn" th:onclick="'location.href = \'' + @{/empDayOff/empModify/(empNo=${emp.empNo})} + '\''">수정하기</button></td>
           <td><button type="button" class="list btn" onclick="location.href='empAnnualList.html'">목록으로</button></td>
         </div> 
        </div> <!------------------------ 본문 종료---------------------------->

@@ -3,6 +3,7 @@ package com.bukkeubook.book.manage.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,7 @@ import com.bukkeubook.book.manage.model.entity.AppVacation;
 import com.bukkeubook.book.manage.model.entity.DayOff;
 import com.bukkeubook.book.manage.model.service.EmpAnnualService;
 import com.bukkeubook.book.manage.model.service.EmpDayOffService;
-
+// 휴가 신청
 @Controller
 @RequestMapping("/empAnnual")
 public class EmpAnnualController {
@@ -51,7 +52,6 @@ public class EmpAnnualController {
    public String  main1() {
       return "manage/empAnnual/empAttendanceList";
    }
-   
    
    /* 휴가 신청 조회 */
    @GetMapping("/restSelect")
@@ -110,27 +110,40 @@ public class EmpAnnualController {
 
 	/* 승인 클릭시 연차 횟수 차감 트랜잭션 */
 	// 이 경우 연결되는 Service는 DayOffService에서 처리...
-	@GetMapping("/dayOffInfoUpdate")
-	public ModelAndView updateDayOffInfo(DayOffDTO dayOffDTO, String empNo, ModelAndView mv) {
+	@Transactional
+	@GetMapping("/empDayOffList")
+	public ModelAndView updateDayOffInfo(DayOffDTO dayOffDTO, int empNo, ModelAndView mv) {
 		
 		List<DayOffDTO> dayOffList = empDayOffService.findDayOffByNo(empNo);
 		
 		mv.addObject("dayOffList", dayOffList);
-		mv.setViewName("/manage/empAnnual/empDayOffDetail");
+		mv.setViewName("/empAnnual/empDayOffDetail");
+		
+		System.out.println("나오니?" + dayOffList);
+		System.out.println("나오니?" + dayOffList);
+		System.out.println("나오니?" + dayOffList);
+		System.out.println("나오니?" + dayOffList);
+		System.out.println("나오니?" + dayOffList);
+		System.out.println("나오니?" + dayOffList);
+		System.out.println("나오니?" + dayOffList);
+		System.out.println("나오니?" + dayOffList);
+		System.out.println("나오니?" + dayOffList);
 		
 		return mv;
 	}
 	
-	@PostMapping("/dayOffInfoUpdate")
-	public ModelAndView modifyDayOffInfo(DayOff dayOff, ModelAndView mv, @ModelAttribute AppVacation appVac) {
-		
-		empDayOffService.modifyDayOffInfo(dayOff, appVac);
-		
-		mv.setViewName("redirect:/empDayOff/empDayOffDetail");
-		return mv;
-		
-	};
-	
+//	@Transactional
+//	@PostMapping("/empDayOffList")
+//	public ModelAndView modifyDayOffInfo(RedirectAttributes rttr, DayOffDTO dayOffDTO, ModelAndView mv, @ModelAttribute AppVacationDTO appVacationDTO) {
+//		
+//		empDayOffService.modifyDayOffInfo(dayOffDTO, appVacationDTO);
+//		
+//		mv.setViewName("redirect:/empAnnual/empDayOffList");
+//		return mv;
+//		
+//	};
+
+
 	/* 휴가 취소 신청 조회 */
 	@GetMapping("/restCancelSelect")
 	public ModelAndView findCancelVacList (HttpServletRequest request, ModelAndView mv) {
