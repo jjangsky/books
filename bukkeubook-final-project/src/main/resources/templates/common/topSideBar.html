@@ -16,10 +16,10 @@
 			<nav id="sidebar">
         <div class="p-4 pt-5">
           <a href="/"><img src="/images/ManageMent.png" alt="" style="width: 247px;"></a>
-          <div>&nbsp</div>
+          <div>&nbsp;</div>
 		  		<!-- <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo2.jpg);"></a> -->
           <div id="welcomeLogin" style="text-align: center">${Scope.name}님 반갑습니다!</div>
-          <div>&nbsp</div>
+          <div>&nbsp;</div>
 
           <!-- 사이드바 시작 -->
           <!-- 마이페이지 -->
@@ -49,11 +49,23 @@
                 <li>
                     <a href="/document/docTempList">임시저장 내역</a>
                 </li>
+                
                 <li>
-                    <a href="/document/docInboxList">수신함</a>
+                  <a href="#management2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">상신함</a>
+                  <ul class="collapse list-unstyled" id="management2">
+                    <li>
+                       <a href="/document/reqApprovalList">결재서류</a>
+                    </li>
+                    <li>
+                      <a href="/document/allVacationList">휴가서류</a>
+                    </li>
+                    <li>
+                      <a href="/document/allCancelVacationList">휴가취소서류</a>
+                    </li>
+                  </ul>
                 </li>
                 <li>
-                    <a href="/document/reqApprovalList">상신함</a>
+                    <a href="/document/docInboxList">수신함</a>
                 </li>
 	            </ul>
 	          </li>

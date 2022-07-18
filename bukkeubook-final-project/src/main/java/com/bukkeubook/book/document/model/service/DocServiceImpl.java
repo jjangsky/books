@@ -12,7 +12,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.bukkeubook.book.document.model.dto.AppRootDTO;
+import com.bukkeubook.book.document.model.dto.AppVacationDTO;
 import com.bukkeubook.book.document.model.dto.ApproverDTO;
+import com.bukkeubook.book.document.model.dto.CancelVacationDTO;
 import com.bukkeubook.book.document.model.dto.DeptDTO;
 import com.bukkeubook.book.document.model.dto.DocWriteInfoDTO;
 import com.bukkeubook.book.document.model.dto.DocumentAndEmpAndFormCateDTO;
@@ -24,6 +26,8 @@ import com.bukkeubook.book.document.model.dto.TempStoreDocumentDTO;
 import com.bukkeubook.book.document.model.entity.AppRoot;
 import com.bukkeubook.book.document.model.entity.Approver;
 import com.bukkeubook.book.document.model.entity.Dept;
+import com.bukkeubook.book.document.model.entity.DocAppVacation;
+import com.bukkeubook.book.document.model.entity.DocCancelVacation;
 import com.bukkeubook.book.document.model.entity.Document;
 import com.bukkeubook.book.document.model.entity.DocumentAndEmpAndFormCate;
 import com.bukkeubook.book.document.model.entity.Emp;
@@ -31,8 +35,10 @@ import com.bukkeubook.book.document.model.entity.FormCate;
 import com.bukkeubook.book.document.model.entity.SubmitApprover;
 import com.bukkeubook.book.document.model.entity.SubmitDocument;
 import com.bukkeubook.book.document.model.repository.AppRootRepository;
+import com.bukkeubook.book.document.model.repository.AppVacationRepository;
 import com.bukkeubook.book.document.model.repository.ApproverRepository;
 import com.bukkeubook.book.document.model.repository.ApproverRepository2;
+import com.bukkeubook.book.document.model.repository.CancelVacationRepository;
 import com.bukkeubook.book.document.model.repository.DocDeptRepository;
 import com.bukkeubook.book.document.model.repository.DocEmpFormCateRepository;
 import com.bukkeubook.book.document.model.repository.DocEmpRepository;
@@ -52,6 +58,8 @@ public class DocServiceImpl implements DocService{
 	private final AppRootRepository appRootRepository;
 	private final ApproverRepository approverRepository;
 	private final ApproverRepository2 approverRepository2;
+	private final AppVacationRepository vacationRepository;
+	private final CancelVacationRepository cancelVacaRepository;
 	private final ModelMapper modelMapper;
 	
 	@Autowired
@@ -64,7 +72,9 @@ public class DocServiceImpl implements DocService{
 						  AppRootRepository appRootRepository,
 						  ApproverRepository approverRepository,
 						  ApproverRepository2 approverRepository2,
-						  SubmitDocumentRepository subDocRepository) {
+						  SubmitDocumentRepository subDocRepository,
+						  AppVacationRepository vacationRepository,
+						  CancelVacationRepository cancelVacaRepository) {
 		this.docDeptRepository = docDeptRepository;
 		this.modelMapper = modelMapper;
 		this.formRepository = formRepository;
@@ -75,6 +85,8 @@ public class DocServiceImpl implements DocService{
 		this.approverRepository = approverRepository;
 		this.approverRepository2 = approverRepository2;
 		this.subDocRepository = subDocRepository;
+		this.vacationRepository = vacationRepository;
+		this.cancelVacaRepository = cancelVacaRepository;
 	}
 
 	/* 전자결재 작성 첫화면 - 양식 고르기 */
@@ -368,6 +380,7 @@ public class DocServiceImpl implements DocService{
 		Emp emp = docEmpRepository.findById(empNo).get();
 		EmpDTO e = modelMapper.map(emp, EmpDTO.class);
 		info.setEmpName(e.getEmpName());
+		info.setEmpJobCode(e.getEmpJobCode());
 		
 		int deptCode = e.getDeptCode();
 		Dept dept = docDeptRepository.findById(deptCode).get();
@@ -382,6 +395,66 @@ public class DocServiceImpl implements DocService{
 		return info;
 	}
 
-	
+	/* 휴가신청서 상신하기 */
+	@Override
+	@Transactional
+	public void insertNewVacationApp(AppVacationDTO vacation) {
+
+		int vacNo = vacationRepository.findCurrentSeq() + 10;
+		vacation.setVacNo(vacNo);
+		System.out.println("Service       " +vacation);
+		
+		vacationRepository.save(modelMapper.map(vacation, DocAppVacation.class));
+		
+	}
+
+	/* 취소 신청서 작성시 자신이 작성한 휴가 신청서 리스트 조회 */
+	@Override
+	public List<AppVacationDTO> findByEmpNoVacationList(int empNo) {
+		
+		List<DocAppVacation> vacationByOneList = vacationRepository.findByEmpNo(empNo);
+		
+		return vacationByOneList.stream().map(vac -> modelMapper.map(vac, AppVacationDTO.class)).toList();
+	}
+
+	/* 휴가 취소신청서 상신 */
+	@Override
+	@Transactional
+	public void insertNewCancelVacation(CancelVacationDTO cancVaca) {
+		cancelVacaRepository.save(modelMapper.map(cancVaca, DocCancelVacation.class));
+	}
+
+	/* 휴가서류 문서번호 조회 */
+	@Override
+	public List<Integer> vacationInfo() {
+		
+		int vacNo = vacationRepository.findCurrentSeq() + 1;
+		int cancVacNo = cancelVacaRepository.findCurrentSeq() +1;
+		List<Integer> vacationInfo = new ArrayList<>();
+		
+		vacationInfo.add(vacNo);
+		vacationInfo.add(cancVacNo);
+		
+		return vacationInfo;
+	}
+
+	/* 휴가 리스트 조회 */
+	@Override
+	public List<AppVacationDTO> allVacationList(int empNo) {
+		
+		List<DocAppVacation> allVacationList = vacationRepository.findByEmpNo(empNo);
+		
+		return allVacationList.stream().map(vaca -> modelMapper.map(vaca, AppVacationDTO.class)).toList();
+	}
+
+	/* 휴가취소 리스트 조회 */
+	@Override
+	public List<CancelVacationDTO> allCancelVacationList(int empNo) {
+
+		List<DocCancelVacation> cancelList = cancelVacaRepository.findByEmpNo(empNo);
+		
+		return cancelList.stream().map(can -> modelMapper.map(can, CancelVacationDTO.class)).toList();
+	}
+
 	
 }

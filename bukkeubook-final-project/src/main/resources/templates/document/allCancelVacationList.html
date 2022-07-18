@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
-	<h2 class="mb-4" id="main-text">수신함</h2>
+	<h2 class="mb-4" id="main-text">휴가 취소 서류</h2>
         <hr><br><br>
 
 
@@ -28,31 +28,26 @@
               <option value="position">직급</option>
             </select>
           </form>
+          <br><br><br><br>
         </div>
-        <div style="text-align:-webkit-center; width:80%; margin-left:8%">
+        <div style="text-align:-webkit-center; width:80%; margin-left:10%">
           <table id="sampleTable">
               <tr>
                 <th class="th1">No</th>
                 <th class="th1">문서번호</th>
-                <th class="th1">제목</th>
                 <th class="th1">작성일자</th>
-                <th class="th1">결재여부</th>
-                <th class="th1">단계</th>
+                <th class="th1">취소 서류 번호</th>
                 <th class="th1">문서상태</th>
-                <th class="th1">문서종류</th>
               </tr>
-              <tr class="hover" th:each="all : ${ all }" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all.document.docNo1 }|} + '\''">
-                <td class="td1" th:text="${allStat.count}"></td>
-                <td class="td1" th:text="${all.document.docNo1}"></td>
-                <td class="td1" th:text="${all.document.docTitle1}" style="width:300px;"></td>
-                <td class="td1" th:text="${all.document.wrDate1}"></td>
-                <td class="td1" th:text="${all.appStatus}"></td>
-                <td class="td1" th:text="${all.stepName}"></td>
-                <td class="td1" th:text="${all.document.docStatus1}"></td>
-                <td class="td1" th:text="${all.formName}"></td>
+              <tr class="hover" th:each="canc : ${ cancelList }" th:onclick="'location.href = \'' + @{|/document/cancelVacationDetail/${ canc.vacCancNo }|} + '\''">
+                <td class="td1" th:text="${cancStat.count}"></td>
+                <td class="td1" th:text="${canc.vacCancNo}"></td>
+                <td class="td1" th:text="${canc.vacCancDate}"></td>
+                <td class="td1" th:text="${canc.vacNo}"></td>
+                <td class="td1" th:text="${canc.vacCancStatus}"></td>
               </tr>
           </table>
-          <br>
+          <br><br><br>
           <button type="button" class="insert btn" onclick="location.href='/document/insert'">결재작성</button>
         </div> <!------------------------ 본문 종료---------------------------->
 </body>

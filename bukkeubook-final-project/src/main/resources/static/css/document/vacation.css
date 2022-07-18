@@ -5,10 +5,9 @@
 
 tr,th,td{
     padding: 15px;
-    border: 1px solid gray;
 }
 
-td,th{
+.td{
     text-align: center;
     font-size: large;
 }
@@ -22,7 +21,7 @@ td{
 }
 
 .cnt{
-    height: 500px;
+    height: 200px;
 }
 
 .coloring{

@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
-	<h2 class="mb-4" id="main-text">상신함</h2>
+	<h2 class="mb-4" id="main-text">결재 요청 서류</h2>
         <hr><br><br>
 	<script>
 		const successMessage = "[[${ insertSuccess }]]";
@@ -24,7 +24,7 @@
 	</script>
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
-        <div>
+        <div style="margin-right:7%">
           <form action="">
             <button class="search btn" type="submit">검색</button> 
             <input class="search in" type="text" placeholder="검색어 입력" required>
@@ -36,7 +36,7 @@
             </select>
           </form>
         </div>
-        <div>
+        <div style="text-align:-webkit-center; width:80%; margin-left:8%">
           <table id="sampleTable">
               <tr>
                 <th class="th1">No</th>
@@ -46,21 +46,15 @@
                 <th class="th1">문서상태</th>
                 <th class="th1">작성자</th>
                 <th class="th1">문서종류</th>
-                <th class="th1"></th>
               </tr>
-              <tr class="hover" th:each="doc : ${ docList }">
-                <td class="td1" th:text="${docStat.count}"></th>
-                <td class="td1" th:text="${doc.docNo}"></th>
-                <td class="td1" th:text="${doc.docTitle}"></th>
-                <td class="td1" th:text="${doc.wrDate}"></th>
-                <td class="td1" th:text="${doc.docStatus}"></th>
-                <td class="td1" th:text="${doc.emp.empName}"></th>
-                <td class="td1" th:text="${doc.formCate.formName}"></th>
-                <td>
-                	<a th:href="@{/document/reqApprovalDetail/{docNo}/(docNo=${doc.docNo})}"> 
-                		<button type="button" class="select btn">보기</button>
-                	</a>
-                </td>
+              <tr class="hover" th:each="doc : ${ docList }" th:onclick="'location.href = \'' + @{|/document/reqApprovalDetail/${doc.docNo}|} + '\''">
+                <td class="td1" th:text="${docStat.count}"></td>
+                <td class="td1" th:text="${doc.docNo}"></td>
+                <td class="td1" th:text="${doc.docTitle}" style="width:300px;"></td>
+                <td class="td1" th:text="${doc.wrDate}"></td>
+                <td class="td1" th:text="${doc.docStatus}"></td>
+                <td class="td1" th:text="${doc.emp.empName}"></td>
+                <td class="td1" th:text="${doc.formCate.formName}"></td>
               </tr> 
           </table>
           <br>

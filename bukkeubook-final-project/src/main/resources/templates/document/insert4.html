@@ -14,6 +14,7 @@
 	<script>
 		     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
 	</script>
+	<script src="/js/document/cancelvacation.js"></script>
 	<h4 class="mb-4" id="main-text">휴가 취소 신청서 작성</h4>
 	<hr>
 	<br>
@@ -35,39 +36,44 @@
 				<tbody>
 					<tr>
 						<th class="th coloring">문서번호</th>
-						<td colspan="2">1</td>
+						<td colspan="2" class="td" id="no">1</td>
 						<th class="th coloring">작성일자</th>
-						<td>2022-07-16</td>
+						<td id="date2" class="td">2022-07-16</td>
 					</tr>
 					<tr>
 						<th class="th coloring">부서명</th>
-						<td colspan="2">ddd</td>
+						<td colspan="2" class="td" id="dept2">ddd</td>
 						<th class="th coloring">직급</th>
-						<td>dd</td>
+						<td class="td" id="empJobCode">dd</td>
 					</tr>
-					<tr>
-						<th class="th coloring">부서명</th>
-						<td colspan="2">ddd</td>
-						<th class="th coloring">직급</th>
-						<td>dd</td>
-					</tr>
+				<form action="/document/insertNewCancelVacation" method="post" id="submitReport">
 					<tr>
 						<th class="th coloring">성명</th>
-						<td colspan="2">ddd</td>
+						<td class="td" colspan="2" id="writer2">
+						</td>
 						<th class="th coloring">취소 휴가 서류 번호</th>
-						<td><select name="" id="">
+						<td class="td">
+							<input type="hidden" id="empNo1" value="10" name="empNo" readonly>
+							<select id="vacationList">
 								<option value=""></option>
-						</select></td>
+							</select>
+							<input type="hidden" id="vaca" name="vacNo">
+						</td>
 					</tr>
 					<tr>
 						<th class="th coloring cnt">사유</th>
-						<td colspan="4" contenteditable="true"><input type="text"></td>
+						<td colspan="4">
+							<div class="cnt" contenteditable="true" id="reasonWrite"></div>
+						</td>
 					</tr>
 					<tr>
 						<th colspan="5" class="th">
-							위와 같은 사유로 인하여 신청하오니 검토 후 승인하여 주시기 바랍니다.
+							<input type="hidden" id="date" name="date">
+							<input type="hidden" id="reason" name="vacCancReason">
+							위와 같은 사유로 인하여 신청하오니 검토 후 승인하여 주시기	바랍니다.
 						</th>
 					</tr>
+				</form>
 				</tbody>
 			</table>
 		</div>

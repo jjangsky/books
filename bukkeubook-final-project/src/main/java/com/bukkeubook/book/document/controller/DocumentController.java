@@ -1,5 +1,6 @@
 package com.bukkeubook.book.document.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bukkeubook.book.document.model.dto.AppRootDTO;
+import com.bukkeubook.book.document.model.dto.AppVacationDTO;
 import com.bukkeubook.book.document.model.dto.ApproverDTO;
+import com.bukkeubook.book.document.model.dto.CancelVacationDTO;
 import com.bukkeubook.book.document.model.dto.DeptDTO;
 import com.bukkeubook.book.document.model.dto.DocWriteInfoDTO;
 import com.bukkeubook.book.document.model.dto.DocumentAndEmpAndFormCateDTO;
@@ -427,4 +430,108 @@ public class DocumentController {		// 전자결재 컨트롤러
 		return mv;
 		
 	}
+	
+	/* 휴가 리스트 조회 */
+	@GetMapping("allVacationList")
+	public ModelAndView allVacationList(ModelAndView mv) {
+		
+		int empNo = 10;
+		
+		List<AppVacationDTO> vacaList = docService.allVacationList(empNo);
+		
+		mv.addObject("vacaList", vacaList);
+		
+		mv.setViewName("/document/allVacationList");
+		
+		return mv;
+	}
+	
+	/* 휴가취소 리스트 조회 */
+	@GetMapping("allCancelVacationList")
+	public ModelAndView allCancelVacationList(ModelAndView mv) {
+		
+		int empNo = 10;
+		
+		List<CancelVacationDTO> cancelList = docService.allCancelVacationList(empNo);
+		
+		mv.addObject("cancelList", cancelList);
+		
+		mv.setViewName("/document/allCancelVacationList");
+		
+		return mv;
+	}
+	
+	/* 휴가신청서 상신하기 */
+	@PostMapping("insertNewVacationApp")
+	public ModelAndView insertNewVacationApp(ModelAndView mv, RedirectAttributes rttr , AppVacationDTO vacation,@RequestParam String startDate,@RequestParam String endDate,@RequestParam String date) {
+		
+		System.out.println("Controller         " + vacation);
+		System.out.println("Controller         " + endDate);
+		System.out.println("Controller         " + startDate);
+		System.out.println("Controller         " + date);
+		
+		String vacStatus = "대기";
+		Date vacStartDate = Date.valueOf(startDate);
+		Date vacEndDate = Date.valueOf(endDate);
+		Date vacAppNo = Date.valueOf(date);
+		
+		vacation.setVacStartDate(vacStartDate);
+		vacation.setVacEndDate(vacEndDate);
+		vacation.setVacAppNo(vacAppNo);
+		vacation.setVacStatus(vacStatus);
+		
+		docService.insertNewVacationApp(vacation);
+		
+		System.out.println("Controller         " + vacation);
+		
+		mv.setViewName("redirect:/document/allVacationList");
+		
+		return mv;
+		
+	}
+	
+	/* 취소 신청서 작성시 자신이 작성한 휴가 신청서 리스트 조회  ajax*/
+	@GetMapping(value = {"vacationList"}, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public List<AppVacationDTO> vacationList(){
+		
+		int empNo = 10;
+		
+		List<AppVacationDTO> vacationList = docService.findByEmpNoVacationList(empNo);
+		
+		return vacationList;
+	}
+	
+	/* 휴가 취소신청서 상신 */
+	@PostMapping("insertNewCancelVacation")
+	public ModelAndView insertNewCancelVacation(ModelAndView mv, RedirectAttributes rttr, @RequestParam String date,CancelVacationDTO cancVaca) {
+		
+		System.out.println(cancVaca);
+		
+		String vacStatus = "대기";
+		Date vacAppNo = Date.valueOf(date);
+		
+		cancVaca.setVacCancDate(vacAppNo);
+		cancVaca.setVacCancStatus(vacStatus);
+		
+		System.out.println(cancVaca);
+		
+		docService.insertNewCancelVacation(cancVaca);
+		
+		mv.setViewName("redirect:/document/allVacationList");
+		
+		return mv;
+		
+	}
+		
+	/* 휴가서류 문서번호 조회 */
+	@GetMapping(value = {"vacationInfo"}, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public List<Integer> vacationInfo(){
+		
+		List<Integer> vacationInfo = docService.vacationInfo();
+		
+		return vacationInfo;
+	}
+	
 }
