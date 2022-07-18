@@ -5,11 +5,20 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="TBL_STOCK_LIST")
+@SequenceGenerator(
+		name = "INPUT_SEQ_GENERATOR",
+		sequenceName = "SEQ_ST_CODE",
+		initialValue = 21,
+		allocationSize = 1
+)
 public class StockList implements Serializable{
 
 	private static final long serialVersionUID = -5872574390835538568L;
@@ -20,6 +29,10 @@ public class StockList implements Serializable{
 //	EMP_NO	NUMBER	사원번호
 //	ST_TYPE	NVARCHAR2(31 CHAR)	입고구분
 	@Id
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "INPUT_SEQ_GENERATOR"
+	)
 	@Column(name="ST_CODE")
 	private int stCode;				// 목록번호
 	

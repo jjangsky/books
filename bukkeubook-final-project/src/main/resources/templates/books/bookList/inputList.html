@@ -84,7 +84,19 @@
 	   			};
 			});
 	</script>
+	<script>
+		const inputSuccessmessage = "[[${inputSuccessMessage}]]"
 	
+		console.log(inputSuccessmessage)
+		if(inputSuccessmessage){
+			Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '입고등록이 성공적으로 완료되었습니다!',
+            })
+			console.log(inputSuccessmessage)
+		}
+	</script>
 
 </body>
 </html>

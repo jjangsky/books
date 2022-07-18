@@ -16,7 +16,7 @@
 
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
-        <div>
+        <div style="margin-right:7%">
           <form action="">
             <button class="search btn" type="submit">검색</button> 
             <input class="search in" type="text" placeholder="검색어 입력" required>
@@ -29,7 +29,7 @@
             </select>
           </form>
         </div>
-        <div>
+        <div style="text-align:-webkit-center; width:80%; margin-left:8%">
           <table id="sampleTable">
               <tr>
                 <th class="th1">No</th>
@@ -42,14 +42,14 @@
                 <th class="th1">문서종류</th>
               </tr>
               <tr class="hover" th:each="all : ${ all }" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all.document.docNo1 }|} + '\''">
-                <td class="td1" th:text="${allStat.count}"></th>
-                <td class="td1" th:text="${all.document.docNo1}"></th>
-                <td class="td1" th:text="${all.document.docTitle1}"></th>
-                <td class="td1" th:text="${all.document.wrDate1}"></th>
-                <td class="td1" th:text="${all.appStatus}"></th>
-                <td class="td1" th:text="${all.stepName}"></th>
-                <td class="td1" th:text="${all.document.docStatus1}"></th>
-                <td class="td1" th:text="${all.formName}"></th>
+                <td class="td1" th:text="${allStat.count}"></td>
+                <td class="td1" th:text="${all.document.docNo1}"></td>
+                <td class="td1" th:text="${all.document.docTitle1}" style="width:300px;"></td>
+                <td class="td1" th:text="${all.document.wrDate1}"></td>
+                <td class="td1" th:text="${all.appStatus}"></td>
+                <td class="td1" th:text="${all.stepName}"></td>
+                <td class="td1" th:text="${all.document.docStatus1}"></td>
+                <td class="td1" th:text="${all.formName}"></td>
               </tr>
           </table>
           <br>

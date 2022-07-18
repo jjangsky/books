@@ -1,0 +1,121 @@
+package com.bukkeubook.book.mypage.controller;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.bukkeubook.book.manage.model.dto.EmpDTO;
+import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
+import com.bukkeubook.book.mypage.model.dto.ProfPhotoDTO;
+import com.bukkeubook.book.mypage.model.service.MyInfoModifyService;
+
+
+@Controller
+@RequestMapping("/myInfo")
+public class MyInfoModifyController {
+	
+	private final MyInfoModifyService myInfoModifyService;
+	
+	@Autowired
+	public MyInfoModifyController(MyInfoModifyService myInfoModifyService) {
+		this.myInfoModifyService = myInfoModifyService; 
+	}
+	
+	
+	/* 마이페이지 개인 정보 수정 화면이동 */
+	@GetMapping("/updatePage")
+	public ModelAndView findMyInfo(ModelAndView mv) {
+		
+		int memberCode = 5;
+		EmpAndDeptDTO myInfo = myInfoModifyService.findMyInfo(memberCode);
+		System.out.println(myInfo);
+		
+		List<ProfPhotoDTO> profile = myInfoModifyService.findMyProfile(memberCode);
+		System.out.println(profile);
+		
+		mv.addObject("myInfo", myInfo);
+		mv.addObject("profile", profile);
+		mv.setViewName("mypage/mypageInfoModify");
+		
+		return mv;
+	}
+	
+	/* 마이페이지 개인 정보 수정하기 */
+	@PostMapping("/modifyInfo")
+	public ModelAndView modifyMyInfo(ModelAndView mv, EmpDTO emp, RedirectAttributes rttr, Locale locale) {
+		
+		int memberCode = 5;
+		System.out.println(emp);
+		myInfoModifyService.modifyInfoEmp(memberCode, emp);
+
+		rttr.addFlashAttribute("successMessage", "회원정보를 정상적으로 수정하였습니다.");
+		mv.setViewName("redirect:/");
+		
+		return mv;
+	}
+	
+	/* 마이페이지 프로필 사진 등록 */
+	@PostMapping("/profileRegist")
+	public ModelAndView registMyProfile(ModelAndView mv, HttpServletRequest request, @RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
+		
+		int memberCode = 5;
+		
+//		String root = request.getSession().getServletContext().getRealPath("resources");
+		String root = System.getProperty("user.dir");
+		System.out.println("root까지의 경로 : " + root);
+		
+		String filePath = root + "/src/main/resources/static/images/mypage";
+		
+		File mkdir = new File(filePath);	
+		if(!mkdir.exists()) {
+			mkdir.mkdirs();
+		}
+		
+		String originFileName = singleFile.getOriginalFilename();
+		System.out.println("원본 이름 : " + originFileName);
+		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
+		System.out.println("변경한 이름 : " + saveName);
+		
+		try {
+			singleFile.transferTo(new File(filePath + "/" + saveName));
+			
+			ProfPhotoDTO profile = new ProfPhotoDTO(); 
+			profile.setEmpNo(memberCode);
+			profile.setPhotoOrigName(originFileName);
+			profile.setPhotoSavedName(saveName);
+			profile.setPhotoSavedPath(filePath);
+			
+			myInfoModifyService.registProfile(profile);
+			
+			rttr.addFlashAttribute("successMessage", "변경함");
+			mv.setViewName("redirect:/");
+			
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+			
+			/* 실패 시 파일 삭제 */
+			new File(filePath + "/" + saveName).delete();
+			rttr.addFlashAttribute("successMessage", "프로필 사진 변경을 실패하셨습니다.");
+			mv.setViewName("redirect:/main");
+		}
+		
+		return mv;
+	}
+	
+
+}

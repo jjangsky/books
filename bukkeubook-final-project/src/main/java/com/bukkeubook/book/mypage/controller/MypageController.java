@@ -134,17 +134,25 @@ public class MypageController {
 		int pageNo = 1;
 		int memberCode = 5;
 		String approve = "승인";
-		System.out.println("mmmmmmmmmmmmmmmmmmmmmmmm" + attStart);
-		System.out.println("mmmmmmmmmmmmmmmmmmmmmmmm" + attEnd);
+		
+		
+		/* 연차 갯수 구하기 */
+		if(attStart != null && attEnd != null) {
+		long annualStart = attStart.getTime();
+		long annualEnd = attEnd.getTime();
+		long difference = (annualEnd - annualStart)/86400000 +1;
+		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+difference);
+		}
+		
+		
+		
 		
 		if(currentPage != null && !"".equals(currentPage)) {
 			pageNo = Integer.parseInt(currentPage);
 			
-			System.err.println("pageNo ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ " + pageNo);
 		}
 		
 		int totalCount = mypageService.selectTotalCount(memberCode, approve, attStart, attEnd);
-		System.out.println("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm" + totalCount);
 		
 		int limit = 3;
 		int buttonAmount = 5;

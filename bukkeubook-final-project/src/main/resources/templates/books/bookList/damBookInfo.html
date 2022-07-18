@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>훼손도서 상세정보</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookInfo.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text"><a id="sub-a" href="/book/damageList">훼손도서관리</a></h2>
+    <hr><br><br>
+    <div id="textTable" style="text-align:-webkit-center">
+        <h5 class="mb-4" id="sub-text"></h5>
+        	<form>
+            <table id="bookInfoTable" border="1">
+                <tr th:each="book : ${ bookList }">
+                    <th>도서코드</th>
+                    <td th:text="${ book.no }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>저자</th>
+                    <td th:text="${ book.author }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>출판사</th>
+                    <td th:text="${ book.pub }"></td>
+                </tr>
+                
+                <tr th:each="book : ${ bookList }">
+                    <th>가격</th>
+                    <td th:text="${ book.price }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>현재 훼손도서 권 수</th>
+                    <td><input id="damAmount" type="number" th:value="${ book.damBook.damAmount }" style="text-align: center;"></td>
+                </tr>
+                <!-- <tr th:each="book : ${ bookList }">
+                    <th>매장 재고수량 조정</th>
+                    <td><input id="storeStAmount" type="number" th:value="${ book.storeSt }" style="text-align: center;"></td>
+                </tr> -->
+                <tr th:each="book : ${ bookList }">
+                    <th>창고 재고수량 조정</th>
+                    <td><input id="whStAmount" type="number" th:value="${ book.whSt }" style="text-align: center;"></td>
+                </tr>
+                
+                
+            </table>
+            </form>
+          <br>
+          <div id="newBookDiv">
+            <button type="button" class="productBtn newBookBtn updateBtn">수정하기</button>
+            <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
+          </div>
+        </div> <!------------------------ 본문 종료---------------------------->
+      </div> <!-- 헤더 포함 본문 종료 div-->
+      <script th:inline="javascript">
+		 
+		   $('#findBtn').click(function(){
+			if(inputFind.value == "" && searchCondition.value == 'select'){
+				Swal.fire({
+	                icon: 'question',
+	                title: '',
+	                text: '분류와 검색어를 입력 해 주세요.',
+	            })} else if(inputFind.value == ""){
+          	Swal.fire({
+	                icon: 'question',
+	                title: '',
+	                text: '검색어를 입력 해 주세요.',
+	                
+          	})} else if(searchCondition.value == 'select'){
+         		Swal.fire({
+ 	                icon: 'question',
+ 	                title: '',
+ 	                text: '분류를 선택 해 주세요.',
+          	})} else{
+		   			$('#loginForm').submit();
+	   			};
+			});
+      	
+    	 /* var aa = 0;
+    	 $(document).ready(function(){
+  	    	$('#damAmount').change( function(){
+  				var apap = $(this);
+  		        aa = $('#damAmount').val();
+  		        console.log(aa);
+  	        });
+  	     }); */
+    	 
+    	 var bb = [[${bookList[0].no}]];
+    	 $('.updateBtn').click(function(){
+    		 location.href='/book/damAmountUpdate?no=' + bb + '&amount=' + aa;
+     	 });
+    	 
+    	 
+      </script>
+      
+	 <script>
+	   $().ready(function () {
+		    $(".backBtn").click(function () {
+		        Swal.fire({
+		            title: '작성내용이 모두 사라집니다.',
+		            text: "진행 하시겠습니까?",
+		            icon: 'warning',
+		            showCancelButton: true,
+		            confirmButtonColor: '#c5bfbf',
+		            cancelButtonColor: '#c5bfbf',
+		            confirmButtonText: '승인',
+		            cancelButtonText: '취소'
+		        }).then((result) => {
+		            if (result.isConfirmed) {
+		                window.history.back();
+		            }
+		        })
+		    });
+		});
+	 </script>
+	 
+	 <script th:inline=javascript>
+	 
+		var a = $("#damAmount").val();
+	    var b = $("#whStAmount").val();
+	    var c = 0;
+	    var d = [[${ bookList[0].damBook.damAmount }]]
+	    console.log("a " + a);
+	    console.log("b " + b);
+	    console.log("c " + c);
+	    console.log("d " + d);
+	    
+	    
+	    	$("#damAmount").change(function(){
+		        a = $("#damAmount").val();
+			    if(a > d){
+			        var e = $('#whStAmount').val($('#whStAmount').val()-1);
+			        b = $("#whStAmount").val();
+			        
+			        
+			        
+			        console.log("a " + a);
+				    console.log("b " + b);
+				    console.log("c " + c);
+				    console.log("d " + d);
+				    }
+		    });
+	    
+	</script>
+</body>
+</html>

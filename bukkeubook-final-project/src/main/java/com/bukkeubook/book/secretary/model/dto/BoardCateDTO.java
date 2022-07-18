@@ -7,36 +7,29 @@ public class BoardCateDTO {
 //	CATE_NO	NUMBER
 //	CATE_NAME	NVARCHAR2(31 CHAR)
 	
-	private int no;
-	private String name;
-	
+	private int cateNo;
+	private String cateName;
 	public BoardCateDTO() {
 	}
-
-	public BoardCateDTO(int no, String name) {
-		this.no = no;
-		this.name = name;
+	public BoardCateDTO(int cateNo, String cateName) {
+		this.cateNo = cateNo;
+		this.cateName = cateName;
 	}
-
-	public int getNo() {
-		return no;
+	public int getCateNo() {
+		return cateNo;
 	}
-
-	public void setNo(int no) {
-		this.no = no;
+	public void setCateNo(int cateNo) {
+		this.cateNo = cateNo;
 	}
-
-	public String getName() {
-		return name;
+	public String getCateName() {
+		return cateName;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setCateName(String cateName) {
+		this.cateName = cateName;
 	}
-
 	@Override
 	public String toString() {
-		return "BoardCateDTO [no=" + no + ", name=" + name + "]";
+		return "BoardCateDTO [cateNo=" + cateNo + ", cateName=" + cateName + "]";
 	}
 	
 	

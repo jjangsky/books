@@ -9,40 +9,43 @@ public class DamBookDTO implements Serializable{
 	/* DB 자료형(TBL_DAM_BOOK) */
 //	BK_NO	VARCHAR2(100 BYTE)	도서코드
 //	DAM_AMOUNT	NUMBER	훼손수량
-	private int bkNo;		// 도서코드
+	private String bkNo;		// 도서코드
 	private int damAmount;	// 훼손수량
-	
+	private BookDTO book;
 	public DamBookDTO() {
 	}
-
-	public DamBookDTO(int damAmount, int bkNo) {
+	public DamBookDTO(String bkNo, int damAmount, BookDTO book) {
+		this.bkNo = bkNo;
 		this.damAmount = damAmount;
+		this.book = book;
+	}
+	public String getBkNo() {
+		return bkNo;
+	}
+	public void setBkNo(String bkNo) {
 		this.bkNo = bkNo;
 	}
-
 	public int getDamAmount() {
 		return damAmount;
 	}
-
 	public void setDamAmount(int damAmount) {
 		this.damAmount = damAmount;
 	}
-
-	public int getBkNo() {
-		return bkNo;
+	public BookDTO getBook() {
+		return book;
 	}
-
-	public void setBkNo(int bkNo) {
-		this.bkNo = bkNo;
+	public void setBook(BookDTO book) {
+		this.book = book;
 	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	@Override
 	public String toString() {
-		return "DamBookDTO [damAmount=" + damAmount + ", bkNo=" + bkNo + "]";
+		return "DamBookDTO [bkNo=" + bkNo + ", damAmount=" + damAmount + ", book=" + book + "]";
 	}
+	
+	
+	
 	
 }

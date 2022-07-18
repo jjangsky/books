@@ -117,10 +117,13 @@
             var checkBtn = $(this);
             var tr = checkBtn.parent().parent();
             var td = tr.children();
-            console.log("클릭한 Row의 모든 데이터 : "+tr.text());
             
             var whSt = td.eq(4).text();
+            var bookNo = td.eq(0).text();
+            
             if(whSt.substr(0 , 1) > 0){
+	            
+	            
 	            
 	            const newRow = table.insertRow();
 	            
@@ -136,6 +139,10 @@
 	            var index = newRow.rowIndex;
 	            var no = "no" + index;
 	            var amount = "amount" + index;
+	            console.log(bookNo);
+	            
+	            var test = document.getElementById("bottomTable").getElementsByTagName("tr")[1].getElementsByTagName("td")[0];
+	            console.log(test);
 	            
 	            newCell1.innerHTML = td.eq(0).text()  + '<input type="hidden" name="' + no + '" value="' + td.eq(0).text() + '">';
 	            newCell2.innerHTML = td.eq(1).text();
@@ -149,8 +156,9 @@
 	            var rownum = document.getElementById("rownum");
 	            rownum.value = index;
 	            
-	            console.log("여기" + no);
-	            console.log("여기" + amount);
+	            
+	            
+	            
             } else {
             	Swal.fire({
                     icon: 'warning',

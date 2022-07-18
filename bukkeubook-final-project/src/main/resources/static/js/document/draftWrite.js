@@ -1,5 +1,25 @@
 window.onload = function() {
-
+	
+	$(function(){
+		let empNo = $("#empNo1").val();
+		$.ajax({
+			url:"/document/empInfo/" + empNo,
+			success: function(data){
+				console.log(data.empName);
+				console.log(data.deptName);
+				console.log(data.docNo);
+				console.log(data);
+				
+				$("#writer2").text(data.empName);
+				$("#dept2").text(data.deptName);
+				$("#docnumber").text(data.docNo);
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+	});
+	
 	$("#clear").click(function(){
 		$("#account1").val("");
 		$("#acco1").val("");
@@ -37,9 +57,9 @@ window.onload = function() {
 		console.log(account);
 		console.log(deptName);
 		let approver1 = deptName + "<br>" + account
-		$("#account1").val(appro);
-		$("#acco1").val(account);
-		$("#deptName1").val(deptName);
+		$("#account2").val(appro);
+		$("#acco2").val(account);
+		$("#deptName2").val(deptName);
 		$("#selacc2").html(approver1);
 	});
 	
@@ -51,9 +71,9 @@ window.onload = function() {
 		console.log(account);
 		console.log(deptName);
 		let approver1 = deptName + "<br>" + account
-		$("#account1").val(appro);
-		$("#acco1").val(account);
-		$("#deptName1").val(deptName);
+		$("#account3").val(appro);
+		$("#acco3").val(account);
+		$("#deptName3").val(deptName);
 		$("#selacc3").html(approver1);
 	});
 
@@ -373,6 +393,8 @@ function selectacc() {
 				stepNo = "1";
 				$("#stepNo").val(stepNo);
 				$("#step").text(stepNo);
+				$("#selacc2").text("");
+				$("#selacc3").text("");
 			}
 		})
 	} else if ($("#account3").val() == "") {
@@ -390,6 +412,7 @@ function selectacc() {
 				stepNo = "2";
 				$("#stepNo").val(stepNo);
 				$("#step").text(stepNo);
+				$("#selacc3").text("");
 			}
 		})
 	} else {
