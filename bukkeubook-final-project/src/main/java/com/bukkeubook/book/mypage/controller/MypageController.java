@@ -137,14 +137,15 @@ public class MypageController {
 		
 		
 		/* 연차 갯수 구하기 */
-		
 		if(attStart != null && attEnd != null) {
 		long annualStart = attStart.getTime();
 		long annualEnd = attEnd.getTime();
 		long difference = (annualEnd - annualStart)/86400000 +1;
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+difference);
 		}
-
+		
+		
+		
 		
 		if(currentPage != null && !"".equals(currentPage)) {
 			pageNo = Integer.parseInt(currentPage);
