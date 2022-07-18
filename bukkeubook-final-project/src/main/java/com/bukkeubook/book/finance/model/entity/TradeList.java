@@ -5,11 +5,20 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="TBL_TRADE_LIST")
+@SequenceGenerator(
+		name = "TRADE_SEQ_GENERATOR",
+		sequenceName = "SEQ_TL_NO",
+		initialValue = 38,
+		allocationSize = 1
+)
 public class TradeList implements Serializable{
 
 	private static final long serialVersionUID = -3608341261312641532L;
@@ -26,6 +35,10 @@ public class TradeList implements Serializable{
 		EMP_NO	NUMBER	사원번호
 	 */
 	@Id
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "TRADE_SEQ_GENERATOR"
+	)
 	@Column(name="TL_NO")
 	private int tlNo;				// 거래번호
 	
@@ -125,5 +138,5 @@ public class TradeList implements Serializable{
 		return "TradeList [tlNo=" + tlNo + ", tlDate=" + tlDate + ", tlAmount=" + tlAmount + ", tlDetail=" + tlDetail
 				+ ", cntNo=" + cntNo + ", bkNo=" + bkNo + ", empNo=" + empNo + "]";
 	}
-	
+
 }

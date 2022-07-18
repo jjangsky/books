@@ -61,22 +61,25 @@
           <div th:replace="books/bookList/bookpagingInput2.html"></div>
           <br><br><br><br>   
           <div id="textTable" style="text-align:-webkit-center">
-          <table class="sampleTable" id="bottomTable">
-              <tr>
-                <th class="th1">도서코드</th>
-                <th class="th1">제목</th>
-                <th class="th1">저자</th>
-                <th class="th1">가격</th>
-                <th class="th1">창고보유재고</th>
-                <th class="th1">매장보유재고</th>
-                <th class="th1">출고수량</th>
-                <th class="th1"><button onclick="AllDel()" class="productBtn delBtn">전체삭제</button></th>
-              </tr>
-          </table><br><br>
-        <div id="newBookDiv">
-          <button type="button" class="productBtn newBookBtn">출고신청</button>
-          <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
-         </div>       
+          <form action="/book/outputReceipt" method="post">
+	          <table class="sampleTable" id="bottomTable">
+	              <tr>
+	                <th class="th1">도서코드</th>
+	                <th class="th1">제목</th>
+	                <th class="th1">저자</th>
+	                <th class="th1">가격</th>
+	                <th class="th1">창고보유재고</th>
+	                <th class="th1">매장보유재고</th>
+	                <th class="th1">출고수량</th>
+	                <th class="th1"><button onclick="AllDel()" class="productBtn delBtn">전체삭제</button></th>
+	              </tr>
+	          </table><br><br>
+	        <div id="newBookDiv">
+	          <input type="hidden" id="rownum" name="rownum" value="0">
+	          <button type="submit" class="productBtn newBookBtn" onclick="location.href='/book/outputReceipt'">출고신청</button>
+	          <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
+	        </div>      
+         </form> 
         </div> <!------------------------ 본문 종료---------------------------->
 	
 	<br><br>
@@ -104,7 +107,7 @@
 	   			};
 			});
 	</script>
-	<script>
+	<script th:inline="javascript">
 		
 		$('.addBtn').click(function(){
 			
@@ -114,10 +117,13 @@
             var checkBtn = $(this);
             var tr = checkBtn.parent().parent();
             var td = tr.children();
-            console.log("클릭한 Row의 모든 데이터 : "+tr.text());
             
             var whSt = td.eq(4).text();
+            var bookNo = td.eq(0).text();
+            
             if(whSt.substr(0 , 1) > 0){
+	            
+	            
 	            
 	            const newRow = table.insertRow();
 	            
@@ -133,18 +139,26 @@
 	            var index = newRow.rowIndex;
 	            var no = "no" + index;
 	            var amount = "amount" + index;
+	            console.log(bookNo);
 	            
-	            newCell1.innerHTML = td.eq(0).text();
+	            var test = document.getElementById("bottomTable").getElementsByTagName("tr")[1].getElementsByTagName("td")[0];
+	            console.log(test);
+	            
+	            newCell1.innerHTML = td.eq(0).text()  + '<input type="hidden" name="' + no + '" value="' + td.eq(0).text() + '">';
 	            newCell2.innerHTML = td.eq(1).text();
 	            newCell3.innerHTML = td.eq(2).text();
 	            newCell4.innerHTML = td.eq(3).text();
 	            newCell5.innerHTML = td.eq(4).text();
 	            newCell6.innerHTML = td.eq(5).text();
-	            newCell7.innerHTML = '<input type="number" class="outputValue" value="1" min="1">';
+	            newCell7.innerHTML = '<input type="number" class="outputValue" name="' + amount + '" value="1" min="1">';
 	            newCell8.innerHTML = '<input class="productBtn delBtn" type="button" value="삭제" onclick="SomeDeleteRowFunction(this)">';
 	            
-	         /* var rownum = document.getElementById("rownum");
-	            rownum.value = index; */
+	            var rownum = document.getElementById("rownum");
+	            rownum.value = index;
+	            
+	            
+	            
+	            
             } else {
             	Swal.fire({
                     icon: 'warning',

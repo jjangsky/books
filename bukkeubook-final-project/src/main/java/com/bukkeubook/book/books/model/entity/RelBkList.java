@@ -2,11 +2,20 @@ package com.bukkeubook.book.books.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity(name="RelBkList")
 @Table(name="TBL_REL_BK_LIST")
+@SequenceGenerator(
+		name = "OUTPUT_SEQ_GENERATOR2",
+		sequenceName = "SEQ_REL_BK_CODE",
+		initialValue = 41,
+		allocationSize = 1
+)
 public class RelBkList {
 //	REL_BK_CODE	NUMBER
 //	BK_NO	VARCHAR2(100 BYTE)
@@ -14,6 +23,10 @@ public class RelBkList {
 //	REL_BK_AMOUNT	NUMBER
 	
 	@Id
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "OUTPUT_SEQ_GENERATOR2"
+	)
 	@Column(name="REL_BK_CODE")
 	private int relBkCode;		// 목록번호
 	
