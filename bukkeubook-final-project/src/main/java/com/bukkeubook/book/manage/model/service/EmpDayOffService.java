@@ -1,27 +1,39 @@
 package com.bukkeubook.book.manage.model.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.bukkeubook.book.manage.model.dto.AppVacationDTO;
+import com.bukkeubook.book.manage.model.dto.DayOffDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.DayOffAndEmpAndDeptDTO;
-import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
+import com.bukkeubook.book.manage.model.entity.AppVacation;
+import com.bukkeubook.book.manage.model.entity.DayOff;
 import com.bukkeubook.book.manage.model.entity.DayOffAndEmpAndDept;
-import com.bukkeubook.book.manage.model.entity.EmpAndDept;
+import com.bukkeubook.book.manage.model.repository.EmpAnnualRepository;
 import com.bukkeubook.book.manage.model.repository.EmpDayOffRepository;
+import com.bukkeubook.book.mypage.model.repository.DayOffRepository;
 
 @Service
 public class EmpDayOffService {
    
    private final EmpDayOffRepository empDayOffRepository;
+   private final DayOffRepository dayOffRepository;
+   private final EmpAnnualRepository empAnnualRepository;
    private final ModelMapper modelMapper;
    
    @Autowired
-   public EmpDayOffService(EmpDayOffRepository empDayOffRepository, ModelMapper modelMapper) {
+   public EmpDayOffService(EmpDayOffRepository empDayOffRepository, DayOffRepository dayOffRepository, EmpAnnualRepository empAnnualRepository, ModelMapper modelMapper) {
       this.empDayOffRepository = empDayOffRepository;
+      this.dayOffRepository = dayOffRepository;
+      this.empAnnualRepository = empAnnualRepository;
       this.modelMapper = modelMapper;
    }
    
@@ -43,6 +55,34 @@ public class EmpDayOffService {
 		
 		return modelMapper.map(emp, DayOffAndEmpAndDeptDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
 }
+   
+   /* 휴가 신청이랑 연결된 트랜잭션 */
+   @Transactional
+	public List<DayOffDTO> findDayOffByNo(String empNo) {
+	   
+		List<DayOff> dayOffList = empDayOffRepository.findDayOffByEmpNo(empNo);
+		return dayOffList.stream().map(dayOff -> modelMapper.map(dayOff, DayOffDTO.class)).collect(Collectors.toList());
+	}
 
+   @Transactional
+   
+	public void modifyDayOffInfo(DayOff dayOff, @ModelAttribute AppVacation appVac) {
+
+	   dayOffRepository.modifyDayOffInfo(modelMapper.map(dayOff, DayOff.class));
+	   
+	   AppVacation appVac2 = empAnnualRepository.findAppVacByVacNo(appVac.getVacNo());
+	   appVac2.setVacStartDate(appVac2.getVacStartDate());
+	   appVac2.setVacEndDate(appVac2.getVacEndDate());
+	   
+	   System.out.println("출력되니?" + appVac2);
+	   // 사용한 연차일 수를 구한다.(long)
+	   
+	   DayOff dayOff2 = dayOffRepository.findDayOffByEmpNo(dayOff.getEmpNo());
+	   dayOff2.setDoffRemain(dayOff2.getDoffRemain());
+	   dayOff2.setDoffAmount(dayOff2.getDoffAmount()- 1); // 사용한 연차일 수를 뺀다 update
+	   dayOff2.setDoffUse(dayOff2.getDoffUse() + 1);
+
+	      
+	}
 
 }

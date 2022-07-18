@@ -13,12 +13,13 @@
   </head>
 <body>
    <div th:replace="/common/topSideBar.html"></div>
-        <h2 class="mb-4" id="main-text">근태관리</h2>
+        <h2 class="mb-4" id="main-text"><a id="sub-a" href="/empDayOff/empDayOffList">근태관리</a></h2>
         <hr><br><br>
         <h5 class="mb-4" id="sub-text">직원연차 상세조회</h5>
         <br>
 		
 		<div class="emp detail list">
+		<form class="search select" action="/empDayOff/empDayOffList" method="post"></form>
         <table border="1px">
           
           <tbody>

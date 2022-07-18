@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,7 +21,11 @@ import com.bukkeubook.book.manage.model.dto.AppVacationDTO;
 import com.bukkeubook.book.manage.model.dto.DayOffDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.AppVacationAndEmpDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.CancelVacationAndAppVacationDTO;
+import com.bukkeubook.book.manage.model.dto.joinDTO.DayOffAndEmpAndDeptDTO;
+import com.bukkeubook.book.manage.model.entity.AppVacation;
+import com.bukkeubook.book.manage.model.entity.DayOff;
 import com.bukkeubook.book.manage.model.service.EmpAnnualService;
+import com.bukkeubook.book.manage.model.service.EmpDayOffService;
 
 @Controller
 @RequestMapping("/empAnnual")
@@ -28,11 +33,13 @@ public class EmpAnnualController {
    
    /* 다른 객체 바꿔치기를 방지 및 서비스 연결 */
    private final EmpAnnualService empAnnualService;
+   private final EmpDayOffService empDayOffService;
    
    /* 의존성 자동 주입 */
    @Autowired
-   public EmpAnnualController(EmpAnnualService empAnnualService) {
+   public EmpAnnualController(EmpAnnualService empAnnualService, EmpDayOffService empDayOffService) {
       this.empAnnualService = empAnnualService;
+      this.empDayOffService = empDayOffService;
    }
    
    @GetMapping("empAnnualList")
@@ -44,6 +51,7 @@ public class EmpAnnualController {
    public String  main1() {
       return "manage/empAnnual/empAttendanceList";
    }
+   
    
    /* 휴가 신청 조회 */
    @GetMapping("/restSelect")
@@ -99,15 +107,34 @@ public class EmpAnnualController {
 		
 		return mv;
 	}
-	
+
 	/* 승인 클릭시 연차 횟수 차감 트랜잭션 */
+	// 이 경우 연결되는 Service는 DayOffService에서 처리...
+	@GetMapping("/dayOffInfoUpdate")
+	public ModelAndView updateDayOffInfo(DayOffDTO dayOffDTO, String empNo, ModelAndView mv) {
+		
+		List<DayOffDTO> dayOffList = empDayOffService.findDayOffByNo(empNo);
+		
+		mv.addObject("dayOffList", dayOffList);
+		mv.setViewName("/manage/empAnnual/empDayOffDetail");
+		
+		return mv;
+	}
 	
-	
+	@PostMapping("/dayOffInfoUpdate")
+	public ModelAndView modifyDayOffInfo(DayOff dayOff, ModelAndView mv, @ModelAttribute AppVacation appVac) {
+		
+		empDayOffService.modifyDayOffInfo(dayOff, appVac);
+		
+		mv.setViewName("redirect:/empDayOff/empDayOffDetail");
+		return mv;
+		
+	};
 	
 	/* 휴가 취소 신청 조회 */
 	@GetMapping("/restCancelSelect")
 	public ModelAndView findCancelVacList (HttpServletRequest request, ModelAndView mv) {
-		  System.out.println("여기는 휴가 취소 리스트 컨트롤러");
+//		  System.out.println("여기는 휴가 취소 리스트 컨트롤러");
 		
 	      String currentPage = request.getParameter("currentPage");
 	      int pageNo = 1;
@@ -118,7 +145,7 @@ public class EmpAnnualController {
 
 	      String searchCondition = request.getParameter("searchCondition");
 	      String searchValue = request.getParameter("searchValue");
-	      System.out.println("출력 확인 구문 : " + searchCondition);
+//	      System.out.println("출력 확인 구문 : " + searchCondition);
 	      
 	      int totalCount = empAnnualService.selectCancelTotalCount(searchCondition, searchValue);
 

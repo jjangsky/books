@@ -28,7 +28,7 @@ public class EmpDayOffController {
    /* 사원 연차 조회 */
    @GetMapping("/empDayOffList")
    public ModelAndView findDayOffList(ModelAndView mv) {
-      System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
+//      System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
       List<DayOffAndEmpAndDeptDTO> dayOffList= empDayOffService.findDayOffList();
       
       mv.addObject("dayOffList", dayOffList);
@@ -43,12 +43,12 @@ public class EmpDayOffController {
 		
 		int number = Integer.valueOf(empNo);
 		
-		System.out.println("컨트롤러에서       " + empNo);
-		System.out.println("컨트롤러에서       " + number);
+//		System.out.println("컨트롤러에서       " + empNo);
+//		System.out.println("컨트롤러에서       " + number);
 		
 		DayOffAndEmpAndDeptDTO emp  = empDayOffService.searchEmpDayOffDetail(number);
 		
-		System.out.println("컨트롤러에서       " + emp);
+//		System.out.println("컨트롤러에서       " + emp);
 		
 		mv.addObject("emp", emp);
 		mv.setViewName("/manage/empAnnual/empDayOffDetail");

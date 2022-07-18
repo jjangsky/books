@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.bukkeubook.book.manage.model.entity.AppVacation;
 import com.bukkeubook.book.manage.model.entity.AppVacationAndEmp;
 
 @Repository
@@ -28,8 +29,12 @@ public interface EmpAnnualRepository extends JpaRepository<AppVacationAndEmp, In
 
 	List<AppVacationAndEmp> findByEmp_EmpNameContaining(String searchValue, Pageable paging);
 
+	/* 휴가 승인시 연차 트랜잭션..? */
+	AppVacation findByVacNo(AppVacation map);
 
+	void modifyDayOffInfo(AppVacation map);
 
+	AppVacation findAppVacByVacNo(int vacNo);
 
 	
 
