@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -149,44 +150,35 @@ private EmpService empService;
 		empService.insertNewEmp(empDTO);
 		
 		rttr.addFlashAttribute("insertSuccessMessage", "성공"); //addFlashAttribute 한번만 보여주고 감
-//		mv.setViewName("redirect:/");
 		mv.setViewName("redirect:/manage/empList");
 		return mv;
 	};	
 	
 	/* 사원정보 수정 */
-//	@GetMapping("empDetailUpdate")
-//	public ModelAndView empUpdatePage(ModelAndView mv) {
-//		
-//		mv.setViewName("/manage/employee/empDetailUpdate");
-//		
-//		return mv;
-//	}
-	
 	@GetMapping("detailUpdate/{empNo}")
-//	public ModelAndView empUpdatePage(EmpDTO empDTO, int empNo, ModelAndView mv) {
 	public ModelAndView empUpdatePage(ModelAndView mv,  @PathVariable String empNo) {
 		
 		int number = Integer.valueOf(empNo);
 		
-		List<EmpDTO> empList = empService.findEmpByEmpNo(number);
+		EmpDTO emp = empService.findEmpByEmpNo(number);
 		
-		mv.addObject("empList", empList);
-		mv.setViewName("manage/employee/empDetailUpdate");
+		mv.addObject("emp", emp);
+		mv.setViewName("manage/employee/empDetail"
+				+ "Update");
 		
 		return mv;
 
 	}
 
-	@PostMapping("empDetailUpdate")
-	public ModelAndView modifyEmpInfo(EmpDTO empDTO, ModelAndView mv, RedirectAttributes rttr) {
-		
-		empService.modifyEmpInfo(empDTO);
-		
-		rttr.addFlashAttribute("updateSuccessMessage", "성공");
-		mv.setViewName("redirect:/employee/empList");
-		return mv;
-	};
+//	@PostMapping("empDetailUpdate")
+//	public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, EmpDTO empDTO) {
+//		
+//		empService.modifyEmp(empDTO);
+//		
+//		rttr.addFlashAttribute("updateSuccessMessage", "성공");
+//		mv.setViewName("redirect:/employee/empList");
+//		return mv;
+//	}
 	
 	@GetMapping("personnelSelect")
 	public String perconnelList() {

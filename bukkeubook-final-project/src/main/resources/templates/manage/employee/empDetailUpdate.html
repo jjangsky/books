@@ -23,7 +23,7 @@
            <table border="2">
             <thead>
               <tr class="detailtitle">
-                <th colspan="4">사원정보</th>
+                <th colspan="4">사원 정보 수정</th>
               </tr>
             </thead>
             <tbody>
@@ -42,7 +42,7 @@
                <tr class="deemp2">
                 <td>부서명</td>
                 <td th:value="${ emp.deptCode }" name="deptCode">
-                 <select class="sel3" name="deptCode">
+                 <select class="sel3" name="deptCode" >
                   <option value="">--</option>
                   <option value="2">재무부</option>
                   <option value="3">인사부</option>
@@ -65,16 +65,11 @@
               </tr>
               <tr class="deemp2" >
                 <td>입사일자</td>
-                <td><input type="date" th:text="${ emp.empEntDate }">
-                <select class="sel3" name="empEndYn">
-                  <option value="N">N</option>
-                  <option value="Y">Y</option>
-                </select> 
-                </td>
+                <td th:text="${ emp.empEntDate }"></td>
               </tr>
-              <tr class="deemp2" >
+              <tr class="deemp2">
                 <td>퇴사여부</td>
-                <td th:value="${ emp.empEndYn }" name="empEndYn"></td>
+                <td th:text="${ emp.empEndYn }" name="empEndYn"></td>
                 <td><input type="file" name="uploadfile" multiple></td>
                 <td><input type="file" name="uploadfile" multiple></td>
               </tr>
@@ -88,9 +83,9 @@
               </tr>
               <tr class="deemp" >
                 <td>연락처</td>
-                <td th:value="${ emp.empPhone1 }" name="empPhone1 "></td>
-                <td th:value="${ emp.empPhone2 }" name="empPhone2 "></td>
-                <td th:value="${ emp.empPhone3 }" name="empPhone3 "></td>
+                <td><input type="tel" th:value="${ emp.empPhone1 }" name="empPhone1 "></td>
+                <td><input type="tel" th:value="${ emp.empPhone2 }" name="empPhone2 "></td>
+                <td><input type="tel" th:value="${ emp.empPhone3 }" name="empPhone3 "></td>
               </tr>
               <tr class="deemp">
                 <td>이메일</td>
@@ -99,8 +94,8 @@
               <tr class="deemp" >
                 <td>우편번호</td>
                 <td colspan="3">
-                   <input type="text" name="zipCode" id="zipCode" required>
-                  <input type="button" value="검색" class="input2" id="searchZipCode" th:value="${ emp.empAddress }" name="empAddress">
+                  <input type="text" name="zipCode" id="zipCode" required th:value="${ emp.empAddress }">
+                  <input type="button" value="검색" class="input2" id="searchZipCode" name="empAddress">
                 </td>  
               </tr>
               <tr class="deemp" >

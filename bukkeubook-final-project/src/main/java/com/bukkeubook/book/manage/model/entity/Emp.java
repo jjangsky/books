@@ -204,7 +204,7 @@ public class Emp {
 		return empDAddress;
 	}
 
-	public void setEmpDAddreess(String empDAddress) {
+	public void setEmpDAddress(String empDAddress) {
 		this.empDAddress = empDAddress;
 	}
 
@@ -252,10 +252,12 @@ public class Emp {
 	public String toString() {
 		return "Emp [empNo=" + empNo + ", empName=" + empName + ", empPhone1=" + empPhone1 + ", empPhone2=" + empPhone2
 				+ ", empPhone3=" + empPhone3 + ", empBirth=" + empBirth + ", empGender=" + empGender + ", empJobCode="
-				+ empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress + ", empDAddreess="
+				+ empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress + ", empDAddress="
 				+ empDAddress + ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate + ", empEndYn=" + empEndYn
 				+ ", empPwd=" + empPwd + ", deptCode=" + deptCode + "]";
 	}
+
+
 	
 	
    

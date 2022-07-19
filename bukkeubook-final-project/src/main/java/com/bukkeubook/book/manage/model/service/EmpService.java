@@ -113,17 +113,7 @@ public class EmpService {
 		return modelMapper.map(emp, EmpAndDeptDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
 	}
 
-//	/* 신규 사원 등록 */
-//	public int empNo() {
-//		int empNo = empRepository.empNo();
-//		return empNo; 
-//	}
-
-//	@Transactional //커밋시점에 스냅샷이랑 비교해보고 커밋을 해줌
-//	public void insertEmp(EmpDTO empDTO) {
-//		originEmpRepository.save(modelMapper.map(empDTO, Emp.class));
-//	}
-
+	/* 신규 사원 등록 */
 	@Transactional
 	public void insertNewEmp(EmpDTO emp) {
 		
@@ -133,30 +123,37 @@ public class EmpService {
 	}
 	
 	/* 사원정보 수정 */
-	@Transactional
-	public List<EmpDTO> findEmpByEmpNo(int empNo) {
-		List<Emp> empList = originEmpRepository.findEmpByEmpNo(empNo);
-		return empList.stream().map(emp -> modelMapper.map(emp, EmpDTO.class)).collect(Collectors.toList());
+	public EmpDTO findEmpByEmpNo(int empNo) {
+		System.out.println("확인1");
+		System.out.println("확인2");
+		System.out.println("확인3");
+		Emp emp = originEmpRepository.findById(empNo).get();
+		System.out.println("확인");
+		System.out.println("확인");
+		System.out.println("확인");
+		
+		System.out.println("레포지토리      " + emp);
+		
+		return modelMapper.map(emp, EmpDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
 	}
 	
-	
-	@Transactional
-	public void modifyEmpInfo(EmpDTO empDTO) {
-		
-		Emp emp = originEmpRepository.findByEmpNo(empDTO.getEmpNo());
-		emp.setEmpName(empDTO.getEmpName());
-		emp.setDeptCode(empDTO.getDeptCode());
-		emp.setEmpJobCode(empDTO.getEmpJobCode());
-		emp.setEmpPhone1(empDTO.getEmpPhone1());
-		emp.setEmpPhone2(empDTO.getEmpPhone2());
-		emp.setEmpPhone3(empDTO.getEmpPhone3());
-		emp.setEmpEmail(empDTO.getEmpEmail());
-		emp.setEmpAddress(empDTO.getEmpAddress());
-		emp.setEmpDAddreess(empDTO.getEmpDAddress());
-		emp.setEmpPwd(empDTO.getEmpPwd());
-		emp.setEmpEndYn(empDTO.getEmpEndYn());
-		
-	}
+//	@Transactional
+//	public void modifyEmp(EmpDTO emp) {
+//		
+//		Emp emp = originEmpRepository.findById(emp.getEmpNo()).get();
+//		
+//		emp.setEmpName(emp.getEmpName());
+//		emp.setDeptCode(emp.getDeptCode());
+//		emp.setEmpJobCode(emp.getEmpJobCode());
+//		emp.setEmpPhone1(emp.getEmpPhone1());
+//		emp.setEmpPhone2(emp.getEmpPhone2());
+//		emp.setEmpPhone3(emp.getEmpPhone3());
+//		emp.setEmpEmail(emp.getEmpEmail());
+//		emp.setEmpAddress(emp.getEmpAddress());
+//		emp.setEmpDAddress(emp.getEmpDAddress());
+//		emp.setEmpPwd(emp.getEmpPwd());
+//		
+//	}
 
 
 }
