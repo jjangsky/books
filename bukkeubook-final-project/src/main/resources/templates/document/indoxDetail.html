@@ -5,10 +5,14 @@
 <meta charset="UTF-8">
 <link rel="stylesheet"  th:href="@{/css/document/docDetailView.css}">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <title>Document docList</title>
 </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
+	<script> 
+     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
+    </script> 
 	<script src="/js/document/inbox.js"></script>
 	<h2 class="mb-4" id="main-text">수신함</h2>
         <hr><br><br>
@@ -23,12 +27,23 @@
           		<table th:utext="${doc.tagCnt1}">
           		
           		</table>
-	
+			    <form action="/document/docApproval" id="app" method="post">
+			    	<input type="hidden" th:value="${doc.docNo1}" name="docNo1" id="docNo">
+			    	<input type="hidden" th:value="${doc.empNo1}" name="empNo1">
+			    	<input type="hidden" th:value="${doc.docTitle1}" name="docTitle1">
+			    	<input type="hidden" th:value="${doc.tagCnt1}" name="tagCnt1">
+			    	<input type="hidden" th:value="${doc.cnt1}" name="cnt1">
+			    	<input type="hidden" th:value="${doc.wrDate1}" name="wrDate1">
+			    	<input type="hidden" value="진행중" name="docStatus1">
+			    	<input type="hidden" th:value="${doc.formNo1}" name="formNo1">
+			    	<input type="hidden" id="appStatus" name="statusApp">
+			    </form>
+				
 		    </div>
 		    <div class ="ss">
 		        <div class="select" style="margin-left: 40%;">
-		          <button type="button" class="select btn apply" style="margin-right: 20%;">승인</button>
-		          <button type="button" class="select btn refuse">반려</button>
+		          <button type="button" class="select btn apply" style="margin-right: 20%;" id="apply">승인</button>
+		          <button type="button" class="select btn refuse" id="refuse">반려</button>
 		    </div>
         </div> <!------------------------ 본문 종료---------------------------->
 

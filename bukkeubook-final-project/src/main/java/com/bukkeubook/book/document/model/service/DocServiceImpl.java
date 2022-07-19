@@ -474,5 +474,185 @@ public class DocServiceImpl implements DocService{
 		return modelMapper.map(canc, CancelVacationDTO.class);
 	}
 
+	/* 결재 승인 */
+	@Override
+	@Transactional
+	public void updateDocStatusApprove(int empNo, TempStoreDocumentDTO doc, String statusApp) {
+
+		/* 결재자의 결재상태 업데이트 */
+		/* 해당문서 정보 조회 */
+		Document document = docRepository.findById(doc.getDocNo1()).get();
+		
+		/* 결재자가 몇단계인지 확인, 결재자 정확한 튜플 가져오기 위한 결재경로 번호 가져오기 */
+		AppRoot appRoot =  appRootRepository.findByDocNo(doc.getDocNo1());
+		
+		AppRootDTO realAppRoot = modelMapper.map(appRoot, AppRootDTO.class);
+		
+		int stepNo = realAppRoot.getStepNo();
+		int appRootNo = realAppRoot.getAppRootNo();
+		
+		if(stepNo ==1) {	// 1단계일 경우 - 1단계는 그 단계로 종료
+			/* 결재자 상태 수정 */
+			Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
+			approver.setAppStatus(statusApp);
+			
+			/* 문서상태 수정 */
+			document.setDocStatus1(statusApp);
+		} else if(stepNo == 2 || stepNo ==3) {		// 2, 3단계일 경우  현재 로그인한 사람이 몇번째인지 알아야 함 
+			/* 결재자 상태 수정 */
+			Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
+			approver.setAppStatus(statusApp);
+			int mine = approver.getAppNo();
+			
+			/* 로그인한 사람을 제외한 해당 문서를 결재하는 결재자 조회 */
+			List<Approver> approverList = approverRepository2.findByAppRootNoAndAppNoNot(appRootNo,mine);
+			System.out.println(approverList);
+			
+			List<Integer> appNos = new ArrayList<>();
+			for(int i=0; i<approverList.size(); i++) {
+				int no = approverList.get(i).getAppNo();
+				appNos.add(no);
+			}
+			
+			String preStatus = "";			// 바로 전 결재자 결재여부
+			int step = 0;				// 단계 확인
+			int appNo1 = 0;					// 해당 문서의 다른 결재자의 결재자 번호1
+			int appNo2 = 0;					// 해당 문서의 다른 결재자의 결재자 번호2
+			
+			if(appNos.size() == 0) {		// 로그인한 사람이 1단계, 다른 결재자 없음
+				step = 0;
+				System.out.println(mine);
+				document.setDocStatus1("진행중");
+			} else if(appNos.size() == 1) {	// 다른 결재자가 1명있을 때
+				System.out.println(appNos);
+				appNo1 = appNos.get(0);
+				if(appNo1 > mine) {
+					step = 1;
+				} else { 
+					step = 2;
+				}
+			} else {							// 다른 결재자가 2명있을 때
+				System.out.println(appNos);
+				appNo1 = appNos.get(0);
+	  			appNo2 = appNos.get(1);
+				if( mine < appNo1 && mine < appNo2 ) {
+					step = 1;
+				} else if (( mine > appNo1 && mine < appNo2 ) || ( mine < appNo1 && mine > appNo2 )) {
+					step = 2;
+				} else if ( mine > appNo1 && mine > appNo2 ) {
+					step = 3;
+				}
+			}
+			
+			if(step == 2) {
+				/* 문서상태 수정 */
+				document.setDocStatus1("진행중");
+			} else if (step == 3) {
+				document.setDocStatus1(statusApp);
+			}
+			
+		}
+		
+	}
+
+	/* 결재 버튼 활성화 체크 */
+	@Override
+	public List<String> checkDoc(int docNo, int empNo) {
+
+		/* 컨트롤러에 넘길 리스트 */
+		List<String> list = new ArrayList<>();
+		
+		/* 현재 문서 상태 확인 */
+		Document document = docRepository.findById(docNo).get();
+		TempStoreDocumentDTO doc = modelMapper.map(document, TempStoreDocumentDTO.class);
+		String docStatus = doc.getDocStatus1();
+		if("반려".equals(docStatus) || "승인".equals(docStatus)) {
+			
+			/* 이미 끝난 결재건은 바로 비활성화 처리 할 수 있게 이것만 내보낸다. */
+			list.add(docStatus);
+		} else {
+			
+			/* 아닌 경우 단계를 알아내야함 */
+			/* 우선 경로 번호를 뽑아내자 */
+			AppRoot appRoot =  appRootRepository.findByDocNo(doc.getDocNo1());
+			int appRootNo = appRoot.getAppRootNo();
+			
+			/* 알아낸 경로번호와 현재 로그인한 사람의 정보로 결재자 번호 확인 */
+			Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
+			int mine = approver.getAppNo();
+			
+			/* 로그인한 사람을 제외한 해당 문서를 결재하는 결재자 조회 */
+			List<Approver> approverList = approverRepository2.findByAppRootNoAndAppNoNot(appRootNo,mine);
+			System.out.println(approverList);
+			
+			List<Integer> appNos = new ArrayList<>();
+			for(int i=0; i<approverList.size(); i++) {
+				int no = approverList.get(i).getAppNo();
+				appNos.add(no);
+			}
+			
+			String preStatus = "";			// 바로 전 결재자 결재여부
+			String step = "";				// 단계 확인
+			int appNo1 = 0;					// 해당 문서의 다른 결재자의 결재자 번호1
+			int appNo2 = 0;					// 해당 문서의 다른 결재자의 결재자 번호2
+			
+			if(appNos.size() == 0) {		// 로그인한 사람이 1단계, 다른 결재자 없음
+				step = "0";
+				System.out.println(mine);
+			} else if(appNos.size() == 1) {	// 다른 결재자가 1명있을 때
+				System.out.println(appNos);
+				appNo1 = appNos.get(0);
+				if(appNo1 > mine) {
+					step = "1";
+				} else { 
+					step = "2";
+				}
+			}else {							// 다른 결재자가 2명있을 때
+				System.out.println(appNos);
+				appNo1 = appNos.get(0);
+	  			appNo2 = appNos.get(1);
+				if( mine < appNo1 && mine < appNo2 ) {
+					step = "1";
+				} else if (( mine > appNo1 && mine < appNo2 ) || ( mine < appNo1 && mine > appNo2 )) {
+					step = "2";
+				} else if ( mine > appNo1 && mine > appNo2 ) {
+					step = "3";
+				}
+			}
+			list.add(step);
+			
+			/* 로그인 한 사람이 결재 단계가 2, 3 일 경우 전단계 사람이 결재했는지도 확인해준다. */
+			List<String> statusApps = new ArrayList<>();
+			String isChecked = "대기";
+			if("2".equals(step)) {
+				Approver approver2 = approverRepository2.findById(appNo1).get();
+				preStatus = approver2.getAppStatus();
+				
+				if(!(isChecked.equals(approver2.getAppStatus()))) {
+					list.add("가능");
+				} else {
+					list.add("불가능");
+				}
+				
+			} else if("3".equals(step)) {
+				for (int i =0; i<approverList.size(); i++) {
+					String s = approverList.get(i).getAppStatus();
+					statusApps.add(s);
+				}
+				
+				if(!(isChecked.equals(statusApps.get(0))) && !(isChecked.equals(statusApps.get(1)))) {
+					list.add("가능");
+				} else {
+					list.add("불가능");
+				}
+			}
+			
+		}		
+		
+		
+		
+		return list;
+	}
+
 	
 }

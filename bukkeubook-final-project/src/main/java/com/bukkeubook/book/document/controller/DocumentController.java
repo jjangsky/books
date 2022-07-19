@@ -561,4 +561,38 @@ public class DocumentController {		// 전자결재 컨트롤러
 		return vacationInfo;
 	}
 	
+	/* 결재 승인 반려 */
+	@PostMapping("docApproval")
+	public ModelAndView docApproval(ModelAndView mv, @RequestParam String statusApp, TempStoreDocumentDTO doc) {
+		
+		System.out.println(doc);
+		System.out.println("statusApp   " + statusApp);
+		
+		int empNo = 2;
+		
+		docService.updateDocStatusApprove(empNo,doc,statusApp);
+		if("승인".equals(statusApp)) {
+			// 해당 도장 경로 가져오자
+		} else {
+			// 반려 도장 경로 가져오자
+		}
+		
+		mv.setViewName("redirect:/document/docInboxList");
+		
+		return mv;
+		
+	}
+	
+	/* 결재 버튼 활성화 체크 */
+	@GetMapping(value = {"checkButton/{no}"}, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public List<String> checkButton(@PathVariable String no){
+		
+		int empNo = 2;
+		int docNo = Integer.valueOf(no);
+		
+		List<String> list = docService.checkDoc(docNo,empNo);
+		
+		return list;
+	}
 }

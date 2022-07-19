@@ -67,4 +67,8 @@ public interface DocService {
 
 	CancelVacationDTO findByvacCancNo(int vacCancNo);
 
+	void updateDocStatusApprove(int empNo, TempStoreDocumentDTO doc, String statusApp);
+
+	List<String> checkDoc(int docNo, int empNo);
+
 }

@@ -8,4 +8,5 @@ import com.bukkeubook.book.document.model.entity.SubmitApprover;
 
 public interface ApproverRepository extends JpaRepository<SubmitApprover, Integer>{
 
+
 }
