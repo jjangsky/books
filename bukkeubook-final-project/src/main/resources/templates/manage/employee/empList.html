@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
      <title>Insert title here</title>
     <meta charset="utf-8">
@@ -11,6 +10,7 @@
       <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
       <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
       <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
@@ -24,9 +24,9 @@
            <button class="search btn">검색</button> 
            <input type="hidden" name="currentPage" value="1">
 		   <input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}" class="search in">
-           <select th:with="searchCondition = ${selectCriteria.searchCondition}" 
-            id="searchCondition" name="searchCondition" class="search select">
-              <option value="select">-- 분류 --</option>
+           <select class="search select" th:with="searchCondition = ${selectCriteria.searchCondition}" 
+            id="searchCondition" name="searchCondition">
+              <option value="select">분류</option>
               <option value="empName" th:selected="${ searchCondition } == 'empName'">사원명</option>
               <option value="empJobCode" th:selected="${ searchCondition } == 'empJobCode'">직급명</option>
            </select>
@@ -46,18 +46,31 @@
                 <td th:text="${ emp.empName }"></td>
                 <td th:text="${ emp.dept.deptName }"></td>
                 <td th:text="${ emp.empJobCode }"></td>
-      <td><button type="button" class="select btn"  th:onclick="'location.href = \'' + @{/manage/oneEmp/{empNo}(empNo=${emp.empNo})} + '\''">확인</button></td>
+      <td><button type="button" class="select btn selectbtn"  th:onclick="'location.href = \'' + @{/manage/oneEmp/{empNo}(empNo=${emp.empNo})} + '\''">확인</button></td>
               </tr>
-          </table><br>
-          <button type="button" class="insert btn" onclick="location.href='empInsert.html'">등록</button>
+          </table>
+          <br>
+           <div id="newEmpDiv">
+         	 <button type="button" class="insert btn newbtn">등록</button>
+          </div> 
         </div>
 	<div th:replace="/manage/employee/emppaging.html"></div>
-	
-      
         <br><br>
 	
-	<script>
+  	<script>
 
-	</script>
+ 	$('.newbtn').click(function(){
+		location.href='/manage/empInsert';
+	}); 
+	const insertSuccessmessage = "[[${insertSuccessMessage}]]" 
+	
+	if(insertSuccessmessage){
+		Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '등록이 성공적으로 완료되었습니다!',
+        })
+	}
+	</script> 
 </body>
 </html>

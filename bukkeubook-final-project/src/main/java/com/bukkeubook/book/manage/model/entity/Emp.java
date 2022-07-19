@@ -1,23 +1,28 @@
 package com.bukkeubook.book.manage.model.entity;
 
+import java.io.Serializable;
 import java.sql.Date;
-
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.TypedQuery;
 
 @Entity(name="Emp")
 @Table(name = "TBL_EMP")
-public class Emp {
+@SequenceGenerator(
+		name = "EMP_SEQ_EMP_NO",
+		sequenceName = "SEQ_EMP_NO",
+		initialValue = 300,
+		allocationSize = 1
+)
+public class Emp implements Serializable{
    
+	private static final long serialVersionUID = -4362283915204163589L;
+
 //	EMP_NO			NUMBER				사원번호
 //	EMP_NAME		NVARCHAR2(31 CHAR)	사원명
 //	EMP_PHONE_1		VARCHAR2(10 BYTE)	연락처1
@@ -36,6 +41,10 @@ public class Emp {
 //	DEPT_CODE		NUMBER				부서코드
 	
    @Id
+   @GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "EMP_SEQ_EMP_NO"
+	)
    @Column(name = "EMP_NO")
    private int empNo;
    
@@ -194,7 +203,7 @@ public class Emp {
 		return empDAddress;
 	}
 
-	public void setEmpDAddreess(String empDAddress) {
+	public void setEmpDAddress(String empDAddress) {
 		this.empDAddress = empDAddress;
 	}
 
@@ -242,10 +251,12 @@ public class Emp {
 	public String toString() {
 		return "Emp [empNo=" + empNo + ", empName=" + empName + ", empPhone1=" + empPhone1 + ", empPhone2=" + empPhone2
 				+ ", empPhone3=" + empPhone3 + ", empBirth=" + empBirth + ", empGender=" + empGender + ", empJobCode="
-				+ empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress + ", empDAddreess="
+				+ empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress + ", empDAddress="
 				+ empDAddress + ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate + ", empEndYn=" + empEndYn
 				+ ", empPwd=" + empPwd + ", deptCode=" + deptCode + "]";
 	}
+
+
 	
 	
    

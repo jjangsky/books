@@ -365,22 +365,20 @@ public class BookService {
 	@Transactional
 	public DamBookDTO findByNo(String no, int updateAmount) {
 		DamBook damBookList = damBookRepository.findBybkNo(no);
-		damBookList.setDamAmount(updateAmount);
+		int nowAmount = damBookList.getDamAmount();
+		damBookList.setDamAmount(nowAmount + updateAmount);
 		
 		return modelMapper.map(damBookList, DamBookDTO.class);
 	}
 	
 	@Transactional
 	public void findBookByNo(String no, int updateAmount, int amount) {
-//		amount = 기존 수량
-//		updateAmount = 변경 수량
-//		whst = 기존창고수량
+//		amount = 기존훼손 수량
+//		updateAmount = 추가훼손 수량
+//		whst = 기존 창고수량
 		Book book = bookRepository.findByNo(no);
-		int whst = book.getWhSt();
-		if(amount <= updateAmount) {
-			int num = updateAmount - amount;
-			book.setWhSt(whst-num);
-		}
+		int whst = book.getWhSt();		
+		book.setWhSt(whst - updateAmount);
 	}
 
 	

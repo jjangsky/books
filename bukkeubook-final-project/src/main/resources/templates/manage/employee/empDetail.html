@@ -5,6 +5,7 @@
      <title>Insert title here</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="../css/style.css">
@@ -13,6 +14,7 @@
   </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
+<!-- <h2 class="mb-4" id="main-text">사원관리</h2> -->
 	<h2 class="mb-4" id="main-text">사원관리</h2>
         <hr><br><br>
         <h5 class="mb-4" id="sub-text">사원 상세 정보조회</h5>
@@ -52,7 +54,6 @@
               </tr>
               <tr class="deemp2" >
                 <td>입사일자</td>
-<!--                 <td th:text="${#dates.format(emp.emp.empEntDate, 'yyyy-MM-dd')}"></td> -->
                 <td th:text="${ emp.empEntDate }"></td>
               </tr>
               <tr class="deemp2" >
@@ -65,7 +66,6 @@
               </tr>
               <tr class="deemp" >
                 <td>생년월일</td>
-<!--                 <td colspan="3" th:text="${#dates.format(emp.empBirth, 'yyyy-MM-dd')}"></td> -->
 				 <td colspan="3" th:text="${ emp.empBirth }">
               </tr>
               <tr class="deemp" >
@@ -86,12 +86,36 @@
                 <td>상세주소</td>
                 <td colspan="3" th:text="${ emp.empDAddress }"></td>
               </tr>
+              <tr class="deemp">
+                <td>비밀번호</td>
+                <td colspan="3" th:text="${ emp.empPwd }"></td>
+              </tr>
             </tbody>
           </table><br>
-          <td><button type="button" class="modify btn" onclick="location.href='empUpdate.html'">수정하기</button></td>
-         <!--  <td><button type="button" class="list btn" th:onclick="'location.href = @{/manage/empList/">목록으로</button></td> -->
-          </div>
+          <div id="newBookDiv">
+<!--           	<button id="update" class="modify btn updateBtn">수정하기</button> -->
+          	<button type="submit" class="modify btn" 
+          	th:onclick="'location.href = \'' +  @{/manage/detailUpdate/{empNo}(empNo=${emp.empNo})} + '\''">수정하기</button>
+           	<button type="button" class="list btn backBtn">목록으로</button> 
+		  </div>            
         </div>
+ 		 <script th:inline="javascript">
+ 		 $('.backBtn').click(function(){
+	    		window.history.back(); 
+	    	 }); 
+		 
+  		  $('.updateBtn').click(function(){
+		     }); 
+		  const updateSuccessmessage = "[[${updateSuccessMessage}]]"
+		    			
+		  if(updateSuccessmessage){
+		    	Swal.fire({
+		    		icon: 'success',
+		    		title: 'Success!',
+		    		text: '정보수정이 성공적으로 완료되었습니다!',
+		    	})
+		  } 
 
-</body>
+      </script>
+	</body>
 </html>

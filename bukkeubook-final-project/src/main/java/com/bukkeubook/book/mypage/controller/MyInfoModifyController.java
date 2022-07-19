@@ -70,7 +70,7 @@ public class MyInfoModifyController {
 		System.out.println(emp);
 		myInfoModifyService.modifyInfoEmp(memberCode, emp);
 
-		rttr.addFlashAttribute("successMessage", "회원정보를 정상적으로 수정하였습니다.");
+		rttr.addFlashAttribute("memberInfoUpdate", "회원정보를 정상적으로 수정하였습니다.");
 		mv.setViewName("redirect:/");
 		
 		return mv;

@@ -75,8 +75,16 @@
               </tr>
             </tbody>
             </table><br>
-            <td><button type="button" class="list btn" th:onclick="'location.href = \'' + @{/manage/leaveEmpList/ + '\''">목록으로</button></td>
+             <div id="newBookDiv">
+            <button type="button" class="list btn backBtn">목록으로</button>
+            </div>
          </div>
        </div>
+       <script th:inline="javascript">
+    	 $('.backBtn').click(function(){
+    		window.history.back(); 
+    	 });
+
+      </script>
 </body>
 </html>

@@ -28,7 +28,7 @@
 					</select>
 				<input type="text" style="display:none;"><!-- 엔터키 새로고침 방지용 --> 
 				<input type="hidden" name="currentPage" value="1">
-				<input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}">
+				<input type="search" id="inputFind" name="searchValue" maxlength=50 th:value="${selectCriteria.searchValue}">
 				<button class="productBtn findBtn" id="findBtn" type="button">검색하기</button>
 			</form>
 		</div>
@@ -83,6 +83,19 @@
 		   			$('#loginForm').submit();
 	   			};
 			});
+		$('#inputFind').blur(function(){
+			const tagExp = /(<([^>]+)>)/gi;
+			if(tagExp.test($('#inputFind').val())){
+				Swal.fire({
+                    icon: 'error',
+                    title: '태그쓰지마세요',
+                    text: '',
+                }).then(function(){
+                	$('#inputFind').val('');
+	    			$('#inputFind').focus();
+                })
+			}
+		});
 	</script>
 	<script>
 		const inputSuccessmessage = "[[${inputSuccessMessage}]]"
