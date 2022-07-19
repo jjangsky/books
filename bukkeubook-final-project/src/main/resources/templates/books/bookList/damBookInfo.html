@@ -36,7 +36,7 @@
                     <td th:text="${ book.price }"></td>
                 </tr>
                 <tr th:each="book : ${ bookList }">
-                    <th>현재 훼손도서 권 수</th>
+                    <th>훼손도서 수량</th>
                     <td><input id="damAmount" type="number" th:value="${ book.damBook.damAmount }" style="text-align: center;"></td>
                 </tr>
                 <!-- <tr th:each="book : ${ bookList }">
@@ -82,18 +82,25 @@
 	   			};
 			});
       	
-    	 /* var aa = 0;
-    	 $(document).ready(function(){
-  	    	$('#damAmount').change( function(){
-  				var apap = $(this);
-  		        aa = $('#damAmount').val();
-  		        console.log(aa);
-  	        });
-  	     }); */
-    	 
-    	 var bb = [[${bookList[0].no}]];
+    	 var aa = [[${bookList[0].no}]];
+    	 var bb = [[${bookList[0].damBook.damAmount}]]
+    	 var cc = $('#damAmount').val();
+    	 var dd = $('#whStAmount').val();
+    	 $("#damAmount").change(function(){
+	    	 cc = $('#damAmount').val();
+	    	 dd = $('#whStAmount').val();
+	    	 console.log(cc);
+	    	 console.log(dd);
+	    	 if(dd < 0){
+				Swal.fire({
+                icon: 'warning',
+                title: 'warning!',
+                text: '창고 재고수량 이하로 훼손도서 등록이 불가능합니다.',
+           		})
+			 }
+		 });
     	 $('.updateBtn').click(function(){
-    		 location.href='/book/damAmountUpdate?no=' + bb + '&amount=' + aa;
+    		 location.href='/book/damAmountUpdate?no=' + aa + '&amount=' + bb + '&updateAmount=' + cc;
      	 });
     	 
     	 
@@ -120,16 +127,12 @@
 		});
 	 </script>
 	 
-	 <script th:inline=javascript>
+	 /*<script th:inline=javascript>
 	 
 		var a = $("#damAmount").val();
 	    var b = $("#whStAmount").val();
 	    var c = 0;
 	    var d = [[${ bookList[0].damBook.damAmount }]]
-	    console.log("a " + a);
-	    console.log("b " + b);
-	    console.log("c " + c);
-	    console.log("d " + d);
 	    
 	    
 	    	$("#damAmount").change(function(){
@@ -137,16 +140,9 @@
 			    if(a > d){
 			        var e = $('#whStAmount').val($('#whStAmount').val()-1);
 			        b = $("#whStAmount").val();
-			        
-			        
-			        
-			        console.log("a " + a);
-				    console.log("b " + b);
-				    console.log("c " + c);
-				    console.log("d " + d);
 				    }
 		    });
 	    
-	</script>
+	</script>*/
 </body>
 </html>
