@@ -498,7 +498,7 @@ public class DocServiceImpl implements DocService{
 			
 			/* 문서상태 수정 */
 			document.setDocStatus1(statusApp);
-		} else if(stepNo == 2 || stepNo ==3) {		// 2, 3단계일 경우  현재 로그인한 사람이 몇번째인지 알아야 함 
+		} else if(stepNo == 2 || stepNo ==3) {		// 2단계일 경우  현재 로그인한 사람이 몇번째인지 알아야 함 
 			/* 결재자 상태 수정 */
 			Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
 			approver.setAppStatus(statusApp);
@@ -514,15 +514,12 @@ public class DocServiceImpl implements DocService{
 				appNos.add(no);
 			}
 			
-			String preStatus = "";			// 바로 전 결재자 결재여부
-			int step = 0;				// 단계 확인
+			int step = 0;					// 단계 확인
 			int appNo1 = 0;					// 해당 문서의 다른 결재자의 결재자 번호1
 			int appNo2 = 0;					// 해당 문서의 다른 결재자의 결재자 번호2
 			
 			if(appNos.size() == 0) {		// 로그인한 사람이 1단계, 다른 결재자 없음
-				step = 0;
 				System.out.println(mine);
-				document.setDocStatus1("진행중");
 			} else if(appNos.size() == 1) {	// 다른 결재자가 1명있을 때
 				System.out.println(appNos);
 				appNo1 = appNos.get(0);
@@ -543,15 +540,22 @@ public class DocServiceImpl implements DocService{
 					step = 3;
 				}
 			}
-			
-			if(step == 2) {
-				/* 문서상태 수정 */
-				document.setDocStatus1("진행중");
+			if(step == 0) {
+				if(stepNo == 2) {
+					document.setDocStatus1("진행중");
+				}
+			} else if(step == 2) {
+				if(stepNo == 2) {
+					document.setDocStatus1(statusApp);
+				} else {
+					/* 문서상태 수정 */
+					document.setDocStatus1("진행중");
+				}
 			} else if (step == 3) {
 				document.setDocStatus1(statusApp);
 			}
 			
-		}
+		} 
 		
 	}
 
@@ -580,6 +584,7 @@ public class DocServiceImpl implements DocService{
 			/* 알아낸 경로번호와 현재 로그인한 사람의 정보로 결재자 번호 확인 */
 			Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
 			int mine = approver.getAppNo();
+			String mineStatus = approver.getAppStatus();
 			
 			/* 로그인한 사람을 제외한 해당 문서를 결재하는 결재자 조회 */
 			List<Approver> approverList = approverRepository2.findByAppRootNoAndAppNoNot(appRootNo,mine);
@@ -628,7 +633,7 @@ public class DocServiceImpl implements DocService{
 				Approver approver2 = approverRepository2.findById(appNo1).get();
 				preStatus = approver2.getAppStatus();
 				
-				if(!(isChecked.equals(approver2.getAppStatus()))) {
+				if(!(isChecked.equals(approver2.getAppStatus())) && !("대기").equals(mineStatus)) {
 					list.add("가능");
 				} else {
 					list.add("불가능");
@@ -640,7 +645,7 @@ public class DocServiceImpl implements DocService{
 					statusApps.add(s);
 				}
 				
-				if(!(isChecked.equals(statusApps.get(0))) && !(isChecked.equals(statusApps.get(1)))) {
+				if(!(isChecked.equals(statusApps.get(0))) && !(isChecked.equals(statusApps.get(1))) && !("대기").equals(mineStatus)) {
 					list.add("가능");
 				} else {
 					list.add("불가능");
