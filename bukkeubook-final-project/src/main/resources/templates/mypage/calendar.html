@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet'/>  
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>  
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
@@ -79,7 +80,30 @@
 	    </script>
 	    <script>
 			const successMessage = "[[${ registSuccessMessage }]]";
-			successMessage && alert(successMessage);
+			const updateMessage = "[[${ updateSuccessMessage }]]";
+			const deleteMessage = "[[${ deleteSuccessMessage }]]"
+			
+			if(successMessage){
+				Swal.fire({
+	                icon: 'success',
+	                title: 'Success!',
+	                text: '일정을 성공적으로 등록하셨습니다.',
+	            })
+			}else if(updateMessage){
+				Swal.fire({
+	                icon: 'success',
+	                title: 'Success!',
+	                text: '일정을 성공적으로 수정하셨습니다.',
+	            })
+			}else if(deleteMessage){
+				Swal.fire({
+	                icon: 'success',
+	                title: 'Success!',
+	                text: '일정을 성공적으로 삭제하셨습니다.',
+	            })
+			}
+			
+			
 		</script>
 	
 </body>

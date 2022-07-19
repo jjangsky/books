@@ -22,7 +22,7 @@
 
     <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
     <div class="btnArea">
-        <button class="btn" type="button" onclick="location.href='department_regist.html'">신규 부서 등록</button>
+        <button class="btn" type="button" onclick="location.href='/dept/regist'">신규 부서 등록</button>
         <button class="btn" type="button" onclick="checkInactive()">부서 비활성화</button>
     </div>
     <div id="textTable" style="text-align:-webkit-center">
@@ -34,7 +34,8 @@
             <th class="th1">부서대표번호</th>
             <th class="th1">활성화여부</th>
           </tr>
-          <tr th:each="dept : ${ deptList }" >
+          <tr th:each="dept : ${ deptList }" th:onclick="'location.href = \'' + @{/dept/detail/(deptCode=${dept.deptCode})} + '\''">
+          	<td><input type="checkbox" class="inActive"></td>
             <td th:text="${ dept.deptCode }"></td>
             <td th:text="${ dept.deptName }"></td>
             <td th:text="${ dept.deptRepPhone }"></td>

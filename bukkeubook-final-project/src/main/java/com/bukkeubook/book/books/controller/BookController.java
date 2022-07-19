@@ -116,10 +116,10 @@ public class BookController extends HttpServlet{
 	}
 	
 	@PostMapping("/bookInfoUpdate2")
-	public ModelAndView modifyBookInfo(BookDTO bookDTO, ModelAndView mv) {
+	public ModelAndView modifyBookInfo(BookDTO bookDTO, ModelAndView mv, RedirectAttributes rttr) {
 		
 		bookService.modifyBookInfo(bookDTO);
-		
+		rttr.addFlashAttribute("updateSuccessMessage", "성공");
 		mv.setViewName("redirect:/book/lookupList");
 		return mv;
 	};
@@ -133,7 +133,9 @@ public class BookController extends HttpServlet{
 	}
 	
 	@PostMapping("/newBook2")
-	public ModelAndView insertBook(BookDTO bookDTO, ModelAndView mv, RedirectAttributes rttr) {
+	public ModelAndView insertBook(BookDTO bookDTO, ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request) {
+//		String cate = request.getParameter("cate");
+//		System.out.println(cate);
 		bookService.insertBook(bookDTO);
 		rttr.addFlashAttribute("insertSuccessMessage", "성공");
 		mv.setViewName("redirect:/book/lookupList");
@@ -394,7 +396,6 @@ public class BookController extends HttpServlet{
 	
 	@GetMapping("/damageList")
 	public ModelAndView damageList(HttpServletRequest request, ModelAndView mv) {
-		
 		String currentPage = request.getParameter("currentPage");
 		int pageNo = 1;
 

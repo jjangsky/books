@@ -33,61 +33,73 @@ public class DeptAndEmp implements Serializable {
    @Column(name = "DEPT_REP_PHONE")
    private String deptRepPhone;
    
-   @OneToMany(mappedBy ="dept")  
+   @Column(name = "DEPT_ACTIVE")
+   private String deptActive;
+   
+   @OneToMany(mappedBy ="dept")   // FK명
    private List<EmpAndDept> empList = new ArrayList<>();
 
+   
    public DeptAndEmp() {
-      super();
    }
+   
+   public DeptAndEmp(int deptCode, String deptName, String deptRepPhone, String deptActive, List<EmpAndDept> empList) {
+		this.deptCode = deptCode;
+		this.deptName = deptName;
+		this.deptRepPhone = deptRepPhone;
+		this.deptActive = deptActive;
+		this.empList = empList;
+   }
+   
 
-   public DeptAndEmp(int deptCode, String deptName, String deptRepPhone, List<EmpAndDept> empList) {
-      super();
-      this.deptCode = deptCode;
-      this.deptName = deptName;
-      this.deptRepPhone = deptRepPhone;
-      this.empList = empList;
-   }
+	public int getDeptCode() {
+		return deptCode;
+	}
+	
+	public void setDeptCode(int deptCode) {
+		this.deptCode = deptCode;
+	}
+	
+	public String getDeptName() {
+		return deptName;
+	}
+	
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+	
+	public String getDeptRepPhone() {
+		return deptRepPhone;
+	}
+	
+	public void setDeptRepPhone(String deptRepPhone) {
+		this.deptRepPhone = deptRepPhone;
+	}
+	
+	public String getDeptActive() {
+		return deptActive;
+	}
+	
+	public void setDeptActive(String deptActive) {
+		this.deptActive = deptActive;
+	}
+	
+	public List<EmpAndDept> getEmpList() {
+		return empList;
+	}
+	
+	public void setEmpList(List<EmpAndDept> empList) {
+		this.empList = empList;
+	}
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
-   public int getDeptCode() {
-      return deptCode;
-   }
-
-   public void setDeptCode(int deptCode) {
-      this.deptCode = deptCode;
-   }
-
-   public String getDeptName() {
-      return deptName;
-   }
-
-   public void setDeptName(String deptName) {
-      this.deptName = deptName;
-   }
-
-   public String getDeptRepPhone() {
-      return deptRepPhone;
-   }
-
-   public void setDeptRepPhone(String deptRepPhone) {
-      this.deptRepPhone = deptRepPhone;
-   }
-
-   public List<EmpAndDept> getEmpList() {
-      return empList;
-   }
-
-   public void setEmpList(List<EmpAndDept> empList) {
-      this.empList = empList;
-   }
-
-   public static long getSerialversionuid() {
-      return serialVersionUID;
-   }
-
-   @Override
-   public String toString() {
-      return "DeptAndEmp [deptCode=" + deptCode + ", deptName=" + deptName + ", deptRepPhone=" + deptRepPhone
-            + ", empList=" + empList + "]";
-   }
+	@Override
+	public String toString() {
+		return "DeptAndEmp [deptCode=" + deptCode + ", deptName=" + deptName + ", deptRepPhone=" + deptRepPhone
+				+ ", deptActive=" + deptActive + ", empList=" + empList + "]";
+	}
 
 }

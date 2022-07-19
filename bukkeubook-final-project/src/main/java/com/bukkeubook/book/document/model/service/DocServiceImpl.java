@@ -132,7 +132,7 @@ public class DocServiceImpl implements DocService{
 	@Override
 	public List<DocumentAndEmpAndFormCateDTO> findTempDocList(int tempEmpNo, String docStatus) {
 
-		List<DocumentAndEmpAndFormCate> tempDocList = docEmpFormCateRepository.findByEmpNoAndDocStatus(tempEmpNo,docStatus,Sort.by("docNo"));
+		List<DocumentAndEmpAndFormCate> tempDocList = docEmpFormCateRepository.findByEmpNoAndDocStatus(tempEmpNo,docStatus,Sort.by("wrDate").descending());
 		
 //		System.out.println("임시저장 리스트 조회 --------------------여기는 서비스에서 엔티티 조회했을때양" + tempDocList);
 		
@@ -356,7 +356,7 @@ public class DocServiceImpl implements DocService{
 	@Override
 	public List<DocumentAndEmpAndFormCateDTO> findByDocNoList(int empNo , String docStatus) {
 
-		List<DocumentAndEmpAndFormCate> docList = docEmpFormCateRepository.findByEmpNoAndDocStatusNot(empNo,docStatus);
+		List<DocumentAndEmpAndFormCate> docList = docEmpFormCateRepository.findByEmpNoAndDocStatusNot(empNo,docStatus,Sort.by("wrDate").descending());
 		
 		return docList.stream().map(doc -> modelMapper.map(doc, DocumentAndEmpAndFormCateDTO.class)).toList();
 	}
@@ -412,7 +412,7 @@ public class DocServiceImpl implements DocService{
 	@Override
 	public List<AppVacationDTO> findByEmpNoVacationList(int empNo) {
 		
-		List<DocAppVacation> vacationByOneList = vacationRepository.findByEmpNo(empNo);
+		List<DocAppVacation> vacationByOneList = vacationRepository.findByEmpNo(empNo,Sort.by("vacAppNo").descending());
 		
 		return vacationByOneList.stream().map(vac -> modelMapper.map(vac, AppVacationDTO.class)).toList();
 	}
@@ -442,7 +442,7 @@ public class DocServiceImpl implements DocService{
 	@Override
 	public List<AppVacationDTO> allVacationList(int empNo) {
 		
-		List<DocAppVacation> allVacationList = vacationRepository.findByEmpNo(empNo);
+		List<DocAppVacation> allVacationList = vacationRepository.findByEmpNo(empNo,Sort.by("vacAppNo").descending());
 		
 		return allVacationList.stream().map(vaca -> modelMapper.map(vaca, AppVacationDTO.class)).toList();
 	}
@@ -451,7 +451,7 @@ public class DocServiceImpl implements DocService{
 	@Override
 	public List<CancelVacationDTO> allCancelVacationList(int empNo) {
 
-		List<DocCancelVacation> cancelList = cancelVacaRepository.findByEmpNo(empNo);
+		List<DocCancelVacation> cancelList = cancelVacaRepository.findByEmpNo(empNo,Sort.by("vacCancDate").descending());
 		
 		return cancelList.stream().map(can -> modelMapper.map(can, CancelVacationDTO.class)).toList();
 	}

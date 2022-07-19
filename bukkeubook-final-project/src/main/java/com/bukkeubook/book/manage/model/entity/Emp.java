@@ -1,18 +1,15 @@
 package com.bukkeubook.book.manage.model.entity;
 
+import java.io.Serializable;
 import java.sql.Date;
-
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.TypedQuery;
 
 @Entity(name="Emp")
 @Table(name = "TBL_EMP")
@@ -22,8 +19,10 @@ import javax.persistence.TypedQuery;
 		initialValue = 300,
 		allocationSize = 1
 )
-public class Emp {
+public class Emp implements Serializable{
    
+	private static final long serialVersionUID = -4362283915204163589L;
+
 //	EMP_NO			NUMBER				사원번호
 //	EMP_NAME		NVARCHAR2(31 CHAR)	사원명
 //	EMP_PHONE_1		VARCHAR2(10 BYTE)	연락처1

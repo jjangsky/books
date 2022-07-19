@@ -3,4 +3,8 @@ window.onload = function(){
 	//let docNo = $(".docNo :click").val();
 	//	console.log(docNo);
 	})
+	
+	$("#back").click(function() {
+				window.history.back();
+	})
 }
