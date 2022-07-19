@@ -1,6 +1,5 @@
 package com.bukkeubook.book.mypage.model.service;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +48,6 @@ public class MyInfoModifyService {
 	/* 마이페이지 개인정보 수정하기 */
 	@Transactional
 	public void modifyInfoEmp(int memberCode, EmpDTO emp) {
-		
 		
 		EmpAndDept myInfo = employeeRepository.findById(memberCode).get();
 		myInfo.setEmpEmail(emp.getEmpEmail());

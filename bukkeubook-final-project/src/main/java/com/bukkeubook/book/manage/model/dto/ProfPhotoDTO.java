@@ -25,6 +25,7 @@ public class ProfPhotoDTO implements Serializable{
 	private String thumbPath;
 	private String photoExt;
 	private int empNo;
+	
 	public ProfPhotoDTO() {
 		super();
 	}

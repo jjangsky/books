@@ -1,5 +1,6 @@
 package com.bukkeubook.book.manage.model.entity;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -10,12 +11,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "TBL_EMP")
-public class EmpAndDept {
+public class EmpAndDept implements Serializable{
    
-      @Id
+	private static final long serialVersionUID = -203007969761115254L;
+
+	@Id
       @Column(name = "EMP_NO")
       private int empNo;
       
@@ -66,13 +68,11 @@ public class EmpAndDept {
       private Dept dept;
 
 	public EmpAndDept() {
-		super();
 	}
 
 	public EmpAndDept(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3, Date empBirth,
 			String empGender, String empJobCode, String empEmail, String empAddress, String empDAddress,
 			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, Dept dept) {
-		super();
 		this.empNo = empNo;
 		this.empName = empName;
 		this.empPhone1 = empPhone1;

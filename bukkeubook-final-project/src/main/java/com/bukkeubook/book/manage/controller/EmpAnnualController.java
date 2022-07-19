@@ -43,16 +43,6 @@ public class EmpAnnualController {
       this.empDayOffService = empDayOffService;
    }
    
-   @GetMapping("empAnnualList")
-   public String  main() { 
-      return "manage/empAnnual/empAnnualList";
-   }
-   
-   @GetMapping("empAttendanceList")
-   public String  main1() {
-      return "manage/empAnnual/empAttendanceList";
-   }
-   
    /* 휴가 신청 조회 */
    @GetMapping("/restSelect")
    public ModelAndView findRestList(HttpServletRequest request, ModelAndView mv) {
@@ -110,7 +100,6 @@ public class EmpAnnualController {
 
 	/* 승인 클릭시 연차 횟수 차감 트랜잭션 */
 	// 이 경우 연결되는 Service는 DayOffService에서 처리...
-	@Transactional
 	@GetMapping("/empDayOffList")
 	public ModelAndView updateDayOffInfo(DayOffDTO dayOffDTO, int empNo, ModelAndView mv) {
 		

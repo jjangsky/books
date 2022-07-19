@@ -127,9 +127,7 @@ public class MypageController {
 	/* 마이페이지 연차 조회 */
 	@GetMapping("/myAnnual")
 	public ModelAndView findMyAnnualList(ModelAndView mv, HttpServletRequest request, Date attStart, Date attEnd) {
-		
-		
-		
+
 		String currentPage = request.getParameter("currentPage");
 		int pageNo = 1;
 		int memberCode = 5;

@@ -1,8 +1,12 @@
-package com.bukkeubook.book.mypage.model.dto;
+package com.bukkeubook.book.manage.model.dto.joinDTO;
 
-public class ProfPhotoDTO {
-	
-//	TBL_PROF_PHOTO 프로필 사진 테이블
+import java.io.Serializable;
+
+public class ProfPhotoAndEmpDTO implements Serializable{
+
+	private static final long serialVersionUID = 7337729857873241833L;
+
+//	TBL_EMP 프로필 사진 테이블
 //	
 //	PHOTO_NO	NUMBER
 //	PHOTO_ORIG_NAME	VARCHAR2(255 BYTE)
@@ -15,16 +19,19 @@ public class ProfPhotoDTO {
 	private String photoSavedName;
 	private String photoSavedPath;
 	private int empNo;
+	private EmpAndDeptDTO empAndDept;
 	
-	public ProfPhotoDTO() {
+	public ProfPhotoAndEmpDTO() {
 	}
 	
-	public ProfPhotoDTO(int photoNo, String photoOrigName, String photoSavedName, String photoSavedPath, int empNo) {
+	public ProfPhotoAndEmpDTO(int photoNo, String photoOrigName, String photoSavedName, String photoSavedPath,
+			int empNo, EmpAndDeptDTO empAndDept) {
 		this.photoNo = photoNo;
 		this.photoOrigName = photoOrigName;
 		this.photoSavedName = photoSavedName;
 		this.photoSavedPath = photoSavedPath;
 		this.empNo = empNo;
+		this.empAndDept = empAndDept;
 	}
 	
 	public int getPhotoNo() {
@@ -57,13 +64,20 @@ public class ProfPhotoDTO {
 	public void setEmpNo(int empNo) {
 		this.empNo = empNo;
 	}
+	public EmpAndDeptDTO getEmpAndDept() {
+		return empAndDept;
+	}
+	public void setEmpAndDept(EmpAndDeptDTO empAndDept) {
+		this.empAndDept = empAndDept;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	
 	@Override
 	public String toString() {
-		return "ProfPhotoDTO [photoNo=" + photoNo + ", photoOrigName=" + photoOrigName + ", photoSavedName="
-				+ photoSavedName + ", photoSavedPath=" + photoSavedPath + ", empNo=" + empNo + "]";
+		return "ProfPhotoAndEmpDTO [photoNo=" + photoNo + ", photoOrigName=" + photoOrigName + ", photoSavedName="
+				+ photoSavedName + ", photoSavedPath=" + photoSavedPath + ", empNo=" + empNo + ", empAndDept="
+				+ empAndDept + "]";
 	}
-	
-	
-
 }

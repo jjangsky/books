@@ -19,13 +19,15 @@ import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.Emp;
 import com.bukkeubook.book.manage.model.entity.EmpAndDept;
+import com.bukkeubook.book.manage.model.entity.ProfPhotoAndEmp;
 import com.bukkeubook.book.manage.model.repository.EmpRepository;
+import com.bukkeubook.book.mypage.model.dto.ProfPhotoDTO;
 
 @Service
 public class EmpService {
 	
 	private final EmpRepository empRepository;
-	private final ModelMapper modelMapper;		//앤티티를 디티오로 변환 or 디티오를 엔티티로 변환
+	private final ModelMapper modelMapper;		// 엔티티를 디티오로 변환 or 디티오를 엔티티로 변환
 
 	@Autowired
 	public EmpService(EmpRepository empRepository, ModelMapper modelMapper) {
@@ -82,7 +84,7 @@ public class EmpService {
 		
 	/* 퇴사 사원 조회 */
 	public List<EmpAndDeptDTO> findLeaveEmpList(String empEndYn) {
-		List<EmpAndDept> leaveEmpList = empRepository.findByEmpEndYn(empEndYn);   //List<Emp>  = 앤티티 담기
+		List<EmpAndDept> leaveEmpList = empRepository.findByEmpEndYn(empEndYn);   // List<Emp> = 엔티티 담기
 		return leaveEmpList.stream().map(emp -> modelMapper.map(emp, EmpAndDeptDTO.class)).toList(); 
 	}
 	
@@ -93,7 +95,7 @@ public class EmpService {
 		
 		System.out.println("레포지토리      " + emp);
 		
-		return modelMapper.map(emp, EmpAndDeptDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
+		return modelMapper.map(emp, EmpAndDeptDTO.class); // 엔티티를 넣어달라고 요청 -> modelMapper
 	}
 	
 	/* 퇴사사원 상세조회 */
@@ -103,8 +105,15 @@ public class EmpService {
 		
 		System.out.println("레포지토리      " + emp);
 		
-		return modelMapper.map(emp, EmpAndDeptDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
+		return modelMapper.map(emp, EmpAndDeptDTO.class); // 엔티티를 넣어달라고 요청 -> modelMapper
 	}
+	
+	/* 프로필 사진 등록 */
+//	@Transactional
+//	public void inputProfile(ProfPhotoDTO profile) {
+//		
+//		empAndProfileRepository.input(modelMapper.map(profile, ProfPhotoAndEmp.class));
+//	}
 	
 }
 

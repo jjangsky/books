@@ -35,7 +35,12 @@
                 <td>사원명</td>
                 <td th:text="${ emp.empName }"></td>
                 <td rowspan="4"></td>
-                <td rowspan="4"></td>
+                <td rowspan="4">
+	                <form action="/myInfo/signModify" method="post" encType="multipart/form-data">
+				    <input type="file" name="singleFile" style="margin-left: 25%;" value="수정하기" required>
+				    <input type="submit" class="btn btn-primary" value="수정하기" style="margin-left: 25%; margin-top:10px;">
+			        </form>
+                </td>
               </tr>
                <tr class="deemp2">
                 <td>부서명</td>
