@@ -446,8 +446,10 @@ public class BookController extends HttpServlet{
 	public ModelAndView damAmountUpdate(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
 		String no = request.getParameter("no");
 		int amount = Integer.valueOf(request.getParameter("amount"));
+		int updateAmount = Integer.valueOf(request.getParameter("updateAmount"));
 		
-		DamBookDTO bookList = bookService.findByNo(no, amount);
+		DamBookDTO bookList = bookService.findByNo(no, updateAmount);
+		bookService.findBookByNo(no, updateAmount, amount);
 		rttr.addFlashAttribute("updateSuccessMessage", "성공");
 		mv.setViewName("redirect:/book/damageList");
 		return mv;

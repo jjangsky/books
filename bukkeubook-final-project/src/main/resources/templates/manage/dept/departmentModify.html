@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+	<link rel="stylesheet"  th:href="@{/css/books/order/orderDetail.css}">
+</head>
+<body>
+    <div th:replace="/common/topSideBar.html"></div>
+    
+        <h2 class="mb-4" id="main-text">부서관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">부서 정보 수정</h5>
+        <br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div class="registForm">
+            <form action="/dept/modify" method="post">
+			      <table>
+			          <tr>
+			          	<td>부서명 : </td>
+			          	<td><input type="text" name="deptName" th:value="${ dept.deptName }" required></td>
+			          </tr>
+			          <tr>
+			          	<td>부서 대표 번호 : </td>
+			          	<td><input type="text" name="deptRepPhone" th:value="${ dept.deptRepPhone }" required></td>
+			          </tr>
+			          <tr>
+			          	<td>부서 활성화 여부 : </td>
+			          	<td>
+				          	<select name="deptActive">
+								<option value="Y">활성화</option>
+								<option value="N">비활성화</option>
+							</select>
+						</td>
+			          </tr>
+			    </table>
+			    <input type="hidden" name="deptCode" th:value="${ dept.deptCode }">
+                <button class="btn" type="submit">완료</button>
+            </form>
+                <button class="btn" type="button" onclick="checkCancel()">취소</button>
+        </div>
+
+        <script>
+
+            function checkComplete(){
+              var result = confirm("부서 정보 수정을 진행하시겠습니까?");
+
+              console.log(result);
+
+              if(result == true){
+
+                alert("수정이 완료되었습니다.");
+
+                location = "department_detail.html";
+              }
+            }
+            
+            function checkCancel(){
+              var result = confirm("정말로 수정을 취소하시겠습니까?\n수정사항은 저장되지 않습니다.");
+
+              console.log(result);
+
+              if(result == true){
+
+                alert("수정을 취소하셨습니다.");
+
+                location = "department_detail.html";
+              }
+            }
+            
+        </script>
+
+  </body>
+</html>
