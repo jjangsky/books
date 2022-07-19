@@ -14,7 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.bukkeubook.book.config.BukkeubookFinalProjectApplication;
-import com.bukkeubook.book.document.model.entity.AppRoot;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
