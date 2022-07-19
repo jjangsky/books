@@ -29,7 +29,9 @@
             <tbody>
               <tr class="deemp2">
                 <td>사원번호</td>
-                <td th:text="${ emp.empNo }"></td>
+                <td>
+                <input type="text" th:value="${ emp.empNo }" name="empNo" readonly style="border:none;">
+                </td>
                 <td class="deempfile">도장사진</td>
                 <td class="deempfile">프로필사진</td>
               </tr>
@@ -41,20 +43,24 @@
               </tr>
                <tr class="deemp2">
                 <td>부서명</td>
-                <td th:value="${ emp.deptCode }" name="deptCode">
-                 <select class="sel3" name="deptCode" >
+                <td>
+                본 부서코드 : <input type="text" name="deptCode1" th:value="${ emp.deptCode }" readonly style="width:70px;">
+                변경 : 
+                 <select class="sel3" name="deptCode2" >
                   <option value="">--</option>
-                  <option value="2">재무부</option>
-                  <option value="3">인사부</option>
-                  <option value="4">총무부</option>
-                  <option value="5">도서물류부</option>
+                  <option value="2">2.재무부</option>
+                  <option value="3">3.인사부</option>
+                  <option value="4">4.총무부</option>
+                  <option value="5">5.도서물류부</option>
                 </select> 
                 </td>
               </tr>
               <tr class="deemp2">
                 <td>직급</td>
-                <td th:value="${ emp.empJobCode }">
-                	<select class="sel3" name="empJobCode">
+                <td>
+                	본 직급 : <input type="text" name="empJobCode1" th:value="${ emp.empJobCode }" readonly style="width:70px;">
+                	변경 : 
+                	<select class="sel3" name="empJobCode2">
                     <option value="">--</option>
                     <option value="부장">부장</option>
                     <option value="팀장">팀장</option>
@@ -65,37 +71,54 @@
               </tr>
               <tr class="deemp2" >
                 <td>입사일자</td>
-                <td th:text="${ emp.empEntDate }"></td>
+                <td>
+                <input type="text" th:value="${ emp.empEntDate }" name="empEntDate" readonly style="border:none;">
+                </td>
               </tr>
               <tr class="deemp2">
                 <td>퇴사여부</td>
-                <td th:text="${ emp.empEndYn }" name="empEndYn"></td>
-                <td><input type="file" name="uploadfile" multiple></td>
+                <td><input type="text" th:value="${ emp.empEndYn }" name="empEndYn" readonly style="border:none;"></td>
+                <td>
+                <form action="/myInfo/signModify" method="post" encType="multipart/form-data">
+			     	<input type="file" name="singleFile" style="margin-left: 25%;" value="수정하기" required>
+			     	<input type="submit" class="btn btn-primary" value="수정하기" style="margin-right: 26%; margin-top:10px;">
+		         </form>
+                </td>
                 <td><input type="file" name="uploadfile" multiple></td>
               </tr>
               <tr class="deemp" >
                 <td>성별</td>
-                <td colspan="3" th:text="${ emp.empGender }"></td>
+                <td colspan="3">
+                	<input type="text" th:value="${ emp.empGender }" name="empGender" readonly style="border:none;">
+                </td>
               </tr>
               <tr class="deemp" >
                 <td>생년월일</td>
-				 <td colspan="3" th:text="${ emp.empBirth }">
+				 <td colspan="3"><input type="text" th:value="${ emp.empBirth }" readonly style="border:none;">
               </tr>
               <tr class="deemp" >
                 <td>연락처</td>
-                <td><input type="tel" th:value="${ emp.empPhone1 }" name="empPhone1 "></td>
-                <td><input type="tel" th:value="${ emp.empPhone2 }" name="empPhone2 "></td>
-                <td><input type="tel" th:value="${ emp.empPhone3 }" name="empPhone3 "></td>
+                <td>
+                <select class="sel1" th:value="${ emp.empPhone1 }" name="empPhone1">
+                    <option value="010">010</option>
+                    <option value="011">011</option>
+                    <option value="019">019</option>
+                    <option value="016">016</option>
+                  </select>
+<!--                 <input type="text" th:value="${ emp.empPhone1 }" name="empPhone1"> -->
+                </td>
+                <td><input type="text" th:value="${ emp.empPhone2 }" name="empPhone2"></td>
+                <td><input type="text" th:value="${ emp.empPhone3 }" name="empPhone3"></td>
               </tr>
               <tr class="deemp">
                 <td>이메일</td>
-                <td colspan="3"><input type="email" th:value="${ emp.empEmail }" name="email"></td>
+                <td colspan="3"><input type="text" th:value="${ emp.empEmail }" name="empEmail"></td>
               </tr>
               <tr class="deemp" >
                 <td>우편번호</td>
                 <td colspan="3">
-                  <input type="text" name="zipCode" id="zipCode" required th:value="${ emp.empAddress }">
-                  <input type="button" value="검색" class="input2" id="searchZipCode" name="empAddress">
+                  <input type="text" id="zipCode" th:value="${ emp.empAddress }" name="empAddress">
+                  <input type="button" value="검색" class="input2" id="searchZipCode">
                 </td>  
               </tr>
               <tr class="deemp" >
@@ -108,6 +131,7 @@
               </tr>
             </tbody>
           </table><br>
+          <input type="hidden" name="empNo" th:value="${emp.empNo}">
           <div id="newBookDiv">
           	<button id="leaveUpdateEmp" class="modify btn">퇴사처리</button>
           	<button id="update" class="modify btn updateBtn">등록하기</button>
@@ -116,6 +140,22 @@
           </div>
          </form> 
        </div> <!------------------------ 본문 종료---------------------------->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+		const $searchZipCode = document.getElementById("searchZipCode");
+		
+		
+		$searchZipCode.onclick = function() {
+		
+			new daum.Postcode({
+				oncomplete: function(data){
+					document.getElementById("zipCode").value = data.zonecode;
+					document.getElementById("address1").value = data.address;
+					document.getElementById("address2").focus();
+				}
+			}).open();
+		}
+	</script>
 	<script th:inline="javascript">
     	  $().ready(function () {
 		    $(".backBtn").click(function () {

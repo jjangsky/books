@@ -1,6 +1,9 @@
 package com.bukkeubook.book.manage.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
@@ -12,17 +15,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.bukkeubook.book.books.model.dto.BookDTO;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
-import com.bukkeubook.book.manage.model.dto.DeptDTO;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
+import com.bukkeubook.book.manage.model.dto.SignDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
-import com.bukkeubook.book.manage.model.entity.EmpAndDept;
 import com.bukkeubook.book.manage.model.service.EmpService;
+import com.bukkeubook.book.manage.model.service.SignService;
 
 
 @Controller
@@ -30,11 +34,18 @@ import com.bukkeubook.book.manage.model.service.EmpService;
 public class EmployeeController {
 
 private EmpService empService;
+private SignService signService;
 	
 	@Autowired
 	public EmployeeController(EmpService empService) {
 		this.empService = empService;
 	}
+	
+	@GetMapping("personnelSelect")
+	public String perconnelList() {
+		return "manage/employee/personnelSelect";
+	}
+
 	
 	/* 사원조회 , 페이징, 검색기능 */
 	@GetMapping("/empList")
@@ -170,20 +181,74 @@ private EmpService empService;
 
 	}
 
-//	@PostMapping("empDetailUpdate")
-//	public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, EmpDTO empDTO) {
-//		
-//		empService.modifyEmp(empDTO);
-//		
-//		rttr.addFlashAttribute("updateSuccessMessage", "성공");
-//		mv.setViewName("redirect:/employee/empList");
-//		return mv;
-//	}
-	
-	@GetMapping("personnelSelect")
-	public String perconnelList() {
-		return "manage/employee/personnelSelect";
+	@PostMapping("/empDetailUpdate")
+	public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, EmpDTO emp
+								, String deptCode1, String deptCode2
+								, String empJobCode1, String empJobCode2) {
+		System.out.println("TEST");
+		System.out.println("TEST");
+		System.out.println("TEST");
+		System.out.println("TEST");
+		System.out.println("TEST         "+ deptCode1);
+		System.out.println("TEST         "+ deptCode2);
+		System.out.println("TEST         "+ empJobCode1);
+		System.out.println("TEST         "+ empJobCode2);
+		System.out.println("emp11111111111111111111111111111" + emp);
+		
+//		empService.modifyEmp(emp); 
+		
+		rttr.addFlashAttribute("updateSuccessMessage", "성공");
+//		mv.setViewName("redirect:/");
+		mv.setViewName("redirect:/manage/empList");
+		return mv;
 	}
-
+	
+	/* 사원등록- 도장사진 등록 */
+	@PostMapping("/signRegist")
+	public ModelAndView registSign(ModelAndView mv, HttpServletRequest request, @RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
+		
+		int memberCode = 5;
+		
+		String root = System.getProperty("user.dir");
+		System.out.println("root까지의 경로 : " + root);
+		
+		String filePath = root + "/src/main/resources/static/images/sign";
+		
+		File mkdir = new File(filePath);	
+		if(!mkdir.exists()) {
+			mkdir.mkdirs();
+		}
+		
+		String originFileName = singleFile.getOriginalFilename();
+		System.out.println("원본 이름 : " + originFileName);
+		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
+		System.out.println("변경한 이름 : " + saveName);
+		
+		try {
+			singleFile.transferTo(new File(filePath + "/" + saveName));
+			
+			SignDTO sign = new SignDTO(); 
+			sign.setEmpNo(memberCode);
+			sign.setSignName(originFileName);
+			sign.setSignSavedName(saveName);
+			sign.setSignPath(filePath);
+			
+			signService.registSign(sign);
+			
+			rttr.addFlashAttribute("successMessage", "도장 사진 등록을 성공하셨습니다.");
+			mv.setViewName("redirect:/manage/empList");
+			
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+			
+			/* 실패 시 파일 삭제 */
+			new File(filePath + "/" + saveName).delete();
+			rttr.addFlashAttribute("successMessage", "도장 사진 등록을 실패하셨습니다.");
+			mv.setViewName("redirect:/main");
+		}
+		
+		return mv;
+	}
 }
  

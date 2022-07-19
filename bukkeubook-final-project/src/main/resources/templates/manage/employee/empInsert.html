@@ -12,6 +12,7 @@
       <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
       <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
 </head>
 <body>
 <div th:replace="/common/topSideBar.html"></div>
@@ -76,7 +77,12 @@
                   <option value="Y">Y</option>
                 </select> 
               </td>
-                <td><input type="file" name="uploadfile" multiple></td>
+                <td>
+                   <form action="/manage/signRegist" method="post" encType="multipart/form-data">
+			     	 <input type="file" name="singleFile" style="margin-left: 25%;" value="등록하기" required>
+			     	 <input type="submit" class="btn btn-primary" value="등록하기" style="margin-right: 30%; margin-top:10px;">
+		          </form>
+                </td>
                 <td><input type="file" name="uploadfile" multiple></td>
               </tr>
               <tr class="deemp2">
@@ -95,14 +101,9 @@
               <tr class="deemp2">
                 <td>연락처</td>
                 <td colspan="3">
-                  <select class="sel1" name="empPhone1">
-                    <option value="010">010</option>
-                    <option value="011">011</option>
-                    <option value="019">019</option>
-                    <option value="016">016</option>
-                  </select>
-                  <input type="text" class="sel1" name="empPhone2" required>
-                  <input type="text" class="sel1" name="empPhone3" required>
+                  <input type="tel" class="sel1" maxlength="3" name="empPhone1" required>
+                  <input type="tel" class="sel1" maxlength="4" name="empPhone2" required>
+                  <input type="tel" class="sel1" maxlength="4" name="empPhone3" required>
                 </td>
               </tr>
               <tr class="deemp2">
@@ -112,8 +113,10 @@
               <tr class="deemp2">
                 <td>우편번호</td>
                 <td colspan="3">
-                  <input type="text" name="zipCode" id="zipCode" required>
-                  <input type="button" value="검색" class="input2" id="searchZipCode" name="empAddress">
+                <div>
+                  <input type="text" id="zipCode" name="empAddress" required>
+                  <input type="button" value="검색" class="input2" id="searchZipCode">
+                  </div>
                 </td>
               </tr>
               <tr class="deemp2">
@@ -136,19 +139,18 @@
      </div> <!-- 헤더 포함 본문 종료 div-->
      <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
-		const $searchZipCode = document.getElementById("searchZipCode");
-		
-		
-		$searchZipCode.onclick = function() {
-		
-			new daum.Postcode({
-				oncomplete: function(data){
-					document.getElementById("zipCode").value = data.zonecode;
-					document.getElementById("address1").value = data.address;
-					document.getElementById("address2").focus();
-				}
-			}).open();
-		}
+		const searchZipCode = document.getElementById("searchZipCode");
+			
+			searchZipCode.onclick = function() {
+			
+				new daum.Postcode({
+					oncomplete: function(data){
+						document.getElementById("zipCode").value = data.zonecode;
+						document.getElementById("address1").value = data.address;
+	
+					}
+				}).open();
+			}
 	</script>
 	<script th:inline="javascript">
     	  $().ready(function () {

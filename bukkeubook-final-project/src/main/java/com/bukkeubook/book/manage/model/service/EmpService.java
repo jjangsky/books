@@ -14,13 +14,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bukkeubook.book.books.model.dto.BookDTO;
-import com.bukkeubook.book.books.model.entity.Book;
 import com.bukkeubook.book.common.paging.SelectCriteria;
-import com.bukkeubook.book.manage.model.dto.DeptDTO;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
-import com.bukkeubook.book.manage.model.entity.Dept;
 import com.bukkeubook.book.manage.model.entity.Emp;
 import com.bukkeubook.book.manage.model.entity.EmpAndDept;
 import com.bukkeubook.book.manage.model.repository.EmpRepository;
@@ -124,36 +120,35 @@ public class EmpService {
 	
 	/* 사원정보 수정 */
 	public EmpDTO findEmpByEmpNo(int empNo) {
-		System.out.println("확인1");
-		System.out.println("확인2");
-		System.out.println("확인3");
+		System.out.println("확인1111111111111");
+
 		Emp emp = originEmpRepository.findById(empNo).get();
-		System.out.println("확인");
-		System.out.println("확인");
-		System.out.println("확인");
+		System.out.println("확인222222222222222");
+
 		
 		System.out.println("레포지토리      " + emp);
 		
 		return modelMapper.map(emp, EmpDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
 	}
 	
-//	@Transactional
-//	public void modifyEmp(EmpDTO emp) {
-//		
-//		Emp emp = originEmpRepository.findById(emp.getEmpNo()).get();
-//		
-//		emp.setEmpName(emp.getEmpName());
-//		emp.setDeptCode(emp.getDeptCode());
-//		emp.setEmpJobCode(emp.getEmpJobCode());
-//		emp.setEmpPhone1(emp.getEmpPhone1());
-//		emp.setEmpPhone2(emp.getEmpPhone2());
-//		emp.setEmpPhone3(emp.getEmpPhone3());
-//		emp.setEmpEmail(emp.getEmpEmail());
-//		emp.setEmpAddress(emp.getEmpAddress());
-//		emp.setEmpDAddress(emp.getEmpDAddress());
-//		emp.setEmpPwd(emp.getEmpPwd());
-//		
-//	}
+	@Transactional
+	public void modifyEmp(EmpDTO emp) {
+		
+		Emp foundemp = originEmpRepository.findById(emp.getEmpNo()).get();
+		
+		foundemp.setEmpName(emp.getEmpName());
+		foundemp.setDeptCode(emp.getDeptCode());
+		foundemp.setEmpJobCode(emp.getEmpJobCode());
+		foundemp.setEmpPhone1(emp.getEmpPhone1());
+		foundemp.setEmpPhone2(emp.getEmpPhone2());
+		foundemp.setEmpPhone3(emp.getEmpPhone3());
+		foundemp.setEmpEmail(emp.getEmpEmail());
+		foundemp.setEmpAddress(emp.getEmpAddress());
+		foundemp.setEmpDAddress(emp.getEmpDAddress());
+		foundemp.setEmpPwd(emp.getEmpPwd());
+		
+	}
+
 
 
 }
