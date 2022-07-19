@@ -14,14 +14,16 @@ public class DeptDTO implements Serializable{
 	private int deptCode;			// 부서코드
 	private String deptName;		// 부서명
 	private String deptRepPhone;	// 대표번호
+	private String deptActive;		// 활성화여부
 	
 	public DeptDTO() {
 	}
 
-	public DeptDTO(int deptCode, String deptName, String deptRepPhone) {
+	public DeptDTO(int deptCode, String deptName, String deptRepPhone, String deptActive) {
 		this.deptCode = deptCode;
 		this.deptName = deptName;
 		this.deptRepPhone = deptRepPhone;
+		this.deptActive = deptActive;
 	}
 
 	public int getDeptCode() {
@@ -48,13 +50,22 @@ public class DeptDTO implements Serializable{
 		this.deptRepPhone = deptRepPhone;
 	}
 
+	public String getDeptActive() {
+		return deptActive;
+	}
+
+	public void setDeptActive(String deptActive) {
+		this.deptActive = deptActive;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	@Override
 	public String toString() {
-		return "DeptDTO [deptCode=" + deptCode + ", deptName=" + deptName + ", deptRepPhone=" + deptRepPhone + "]";
+		return "DeptDTO [deptCode=" + deptCode + ", deptName=" + deptName + ", deptRepPhone=" + deptRepPhone
+				+ ", deptActive=" + deptActive + "]";
 	}
 	
 }
