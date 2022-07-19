@@ -18,6 +18,6 @@ public interface DocEmpFormCateRepository extends JpaRepository <DocumentAndEmpA
 	
 	List<DocumentAndEmpAndFormCate> findByDocNo(int docNo);
 
-	List<DocumentAndEmpAndFormCate> findByEmpNoAndDocStatusNot(int empNo, String docStatus);
+	List<DocumentAndEmpAndFormCate> findByEmpNoAndDocStatusNot(int empNo, String docStatus, Sort sort);
 
 }
