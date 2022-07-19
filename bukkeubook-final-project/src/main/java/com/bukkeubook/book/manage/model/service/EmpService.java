@@ -20,17 +20,20 @@ import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.Emp;
 import com.bukkeubook.book.manage.model.entity.EmpAndDept;
 import com.bukkeubook.book.manage.model.repository.EmpRepository;
+import com.bukkeubook.book.manage.model.repository.OriginalEmpRepository;
 
 @Service
 public class EmpService {
 	
 	private final EmpRepository empRepository;
+	private final OriginalEmpRepository originEmpRepository;
 	private final ModelMapper modelMapper;		//앤티티를 디티오로 변환 or 디티오를 엔티티로 변환
 
 	@Autowired
-	public EmpService(EmpRepository empRepository, ModelMapper modelMapper) {
+	public EmpService(EmpRepository empRepository, ModelMapper modelMapper,OriginalEmpRepository originEmpRepository) {
 		this.empRepository = empRepository;
 		this.modelMapper = modelMapper;
+		this.originEmpRepository = originEmpRepository;
 	}
 
 	/* 사원조회 & 검색기능 & 페이징 */
@@ -105,7 +108,49 @@ public class EmpService {
 		
 		return modelMapper.map(emp, EmpAndDeptDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
 	}
+
+	/* 신규 사원 등록 */
+	@Transactional
+	public void insertNewEmp(EmpDTO emp) {
+		
+		System.out.println("Service                      sssssssssssss" + emp);
+		
+		originEmpRepository.save(modelMapper.map(emp, Emp.class));
+	}
 	
+	/* 사원정보 수정 */
+	public EmpDTO findEmpByEmpNo(int empNo) {
+		System.out.println("확인1111111111111");
+
+		Emp emp = originEmpRepository.findById(empNo).get();
+		System.out.println("확인222222222222222");
+
+		
+		System.out.println("레포지토리      " + emp);
+		
+		return modelMapper.map(emp, EmpDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
+	}
+	
+	@Transactional
+	public void modifyEmp(EmpDTO emp) {
+		
+		Emp foundemp = originEmpRepository.findById(emp.getEmpNo()).get();
+		
+		foundemp.setEmpName(emp.getEmpName());
+		foundemp.setDeptCode(emp.getDeptCode());
+		foundemp.setEmpJobCode(emp.getEmpJobCode());
+		foundemp.setEmpPhone1(emp.getEmpPhone1());
+		foundemp.setEmpPhone2(emp.getEmpPhone2());
+		foundemp.setEmpPhone3(emp.getEmpPhone3());
+		foundemp.setEmpEmail(emp.getEmpEmail());
+		foundemp.setEmpAddress(emp.getEmpAddress());
+		foundemp.setEmpDAddress(emp.getEmpDAddress());
+		foundemp.setEmpPwd(emp.getEmpPwd());
+		
+	}
+
+
+
 }
 
 
