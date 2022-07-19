@@ -83,7 +83,7 @@ private SignService signService;
 			System.out.println(emp);
 		}
 		
-		mv.addObject("empList", empList);  //보내는 객체 설정
+		mv.addObject("empList", empList);  			//보내는 객체 설정
 		mv.addObject("selectCriteria", selectCriteria);
 		mv.setViewName("manage/employee/empList"); //리턴할 페이지 설정
 		
@@ -166,7 +166,7 @@ private SignService signService;
 	
 	/* 사원정보 수정 */
 	@GetMapping("detailUpdate/{empNo}")
-	public ModelAndView empUpdatePage(ModelAndView mv,  @PathVariable String empNo) {
+	public ModelAndView empUpdatePage(ModelAndView mv, @PathVariable String empNo) {
 		
 		int number = Integer.valueOf(empNo);
 		

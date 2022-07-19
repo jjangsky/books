@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -98,41 +99,34 @@ public class EmpAnnualController {
 		return mv;
 	}
 
+	/****************************************************************/
+	
 	/* 승인 클릭시 연차 횟수 차감 트랜잭션 */
 	// 이 경우 연결되는 Service는 DayOffService에서 처리...
-	@GetMapping("/empDayOffList")
-	public ModelAndView updateDayOffInfo(DayOffDTO dayOffDTO, int empNo, ModelAndView mv) {
+	@GetMapping("/empDayOffUpdate")
+	public ModelAndView updateAppVacInfo(AppVacationDTO appVacationDTO, int vacNo, ModelAndView mv) {
 		
-		List<DayOffDTO> dayOffList = empDayOffService.findDayOffByNo(empNo);
+		List<AppVacationDTO> appVacList = empDayOffService.findAppVacByEmpNo(vacNo);
 		
-		mv.addObject("dayOffList", dayOffList);
-		mv.setViewName("/empAnnual/empDayOffDetail");
+		mv.addObject("appVacList", appVacList);							// 보내는 객체 설정
+		mv.setViewName("/empDayOffDetail/{vacNo}");	// 리턴할 페이지 설정
 		
-		System.out.println("나오니?" + dayOffList);
-		System.out.println("나오니?" + dayOffList);
-		System.out.println("나오니?" + dayOffList);
-		System.out.println("나오니?" + dayOffList);
-		System.out.println("나오니?" + dayOffList);
-		System.out.println("나오니?" + dayOffList);
-		System.out.println("나오니?" + dayOffList);
-		System.out.println("나오니?" + dayOffList);
-		System.out.println("나오니?" + dayOffList);
+		System.out.println("나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?" + vacNo);
 		
 		return mv;
 	}
 	
-//	@Transactional
-//	@PostMapping("/empDayOffList")
-//	public ModelAndView modifyDayOffInfo(RedirectAttributes rttr, DayOffDTO dayOffDTO, ModelAndView mv, @ModelAttribute AppVacationDTO appVacationDTO) {
-//		
-//		empDayOffService.modifyDayOffInfo(dayOffDTO, appVacationDTO);
-//		
-//		mv.setViewName("redirect:/empAnnual/empDayOffList");
-//		return mv;
-//		
-//	};
+	@PostMapping("/empDayOffUpdate2")
+	public ModelAndView modifyDayOffInfo(DayOffDTO dayOffDTO, ModelAndView mv, RedirectAttributes rttr) {
+		
+		empDayOffService.modifyDayOffInfo(dayOffDTO);
+		rttr.addFlashAttribute("updateSuccessMessage", "성공");
+		mv.setViewName("redirect:/empDayOffDetail/{empNo}/");
+		return mv;
+	}
 
-
+	/****************************************************************/
+	
 	/* 휴가 취소 신청 조회 */
 	@GetMapping("/restCancelSelect")
 	public ModelAndView findCancelVacList (HttpServletRequest request, ModelAndView mv) {

@@ -125,7 +125,6 @@ public class EmpService {
 		Emp emp = originEmpRepository.findById(empNo).get();
 		System.out.println("확인222222222222222");
 
-		
 		System.out.println("레포지토리      " + emp);
 		
 		return modelMapper.map(emp, EmpDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
