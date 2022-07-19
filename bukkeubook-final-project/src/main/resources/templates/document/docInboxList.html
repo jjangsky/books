@@ -48,12 +48,24 @@
                 <td class="td1" th:text="${all.document.wrDate1}"></td>
                 <td class="td1" th:text="${all.appStatus}"></td>
                 <td class="td1" th:text="${all.stepName}"></td>
-                <td class="td1" th:text="${all.document.docStatus1}"></td>
+                <td class="td1" th:text="${all.document.docStatus1}" id="status"></td>
                 <td class="td1" th:text="${all.formName}"></td>
               </tr>
           </table>
           <br>
           <button type="button" class="insert btn" onclick="location.href='/document/insert'">결재작성</button>
         </div> <!------------------------ 본문 종료---------------------------->
+        <script>
+        	const status = document.querySelectorAll('table tr td#status');
+        	console.log("status"+status);
+        	for (let i = 0; i < status.length; i++) {
+				if (status[i].innerText=="승인") {
+					status[i].style.color = "blue";		
+				}
+				if (status[i].innerText=="반려") {
+					status[i].style.color = "red";		
+				}
+			}
+        </script>
 </body>
 </html>
