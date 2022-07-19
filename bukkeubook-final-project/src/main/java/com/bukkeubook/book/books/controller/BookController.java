@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bukkeubook.book.books.model.dto.BookDTO;
+import com.bukkeubook.book.books.model.dto.DamBookDTO;
 import com.bukkeubook.book.books.model.dto.RelBkListAndBookAndRelListDTO;
 import com.bukkeubook.book.books.model.dto.RelBkListDTO;
 import com.bukkeubook.book.books.model.dto.RelListAndEmpDTO;
@@ -390,4 +391,68 @@ public class BookController extends HttpServlet{
 		mv.setViewName("redirect:/book/inputList");
 		return mv;
 	}
+	
+	@GetMapping("/damageList")
+	public ModelAndView damageList(HttpServletRequest request, ModelAndView mv) {
+		
+		String currentPage = request.getParameter("currentPage");
+		int pageNo = 1;
+
+		if(currentPage != null && !"".equals(currentPage)) {
+			pageNo = Integer.parseInt(currentPage);
+		}
+
+		String searchCondition = request.getParameter("searchCondition");
+		String searchValue = request.getParameter("searchValue");
+
+		int totalCount = bookService.selectTotalCount(searchCondition, searchValue);
+
+		int limit = 10;		
+
+		int buttonAmount = 5;
+
+		SelectCriteria selectCriteria = null;
+		if(searchValue != null && !"".equals(searchValue)) {
+			selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		} else {
+			selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount);
+		}
+		System.out.println(selectCriteria);
+
+		List<BookDTO> bookDTO = bookService.searchDamageBook(selectCriteria);
+
+		for(BookDTO book : bookDTO) {
+			System.out.println(book);
+		}
+		
+		mv.addObject("damageList", bookDTO);
+		
+		mv.addObject("selectCriteria", selectCriteria);
+		mv.setViewName("books/bookList/damageBookList");
+		return mv;
+	}
+	
+	@GetMapping("/damageAmount")
+	public ModelAndView damBookInfo(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+		String no = request.getParameter("bkNo");
+		List<BookDTO> bookList = bookService.findBookByNo(no);
+		System.out.println(bookList);
+		mv.addObject("bookList", bookList);
+		mv.setViewName("books/bookList/damBookInfo");
+		return mv;
+	}
+	
+	@GetMapping("/damAmountUpdate")
+	public ModelAndView damAmountUpdate(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+		String no = request.getParameter("no");
+		int amount = Integer.valueOf(request.getParameter("amount"));
+		int updateAmount = Integer.valueOf(request.getParameter("updateAmount"));
+		
+		DamBookDTO bookList = bookService.findByNo(no, updateAmount);
+		bookService.findBookByNo(no, updateAmount, amount);
+		rttr.addFlashAttribute("updateSuccessMessage", "성공");
+		mv.setViewName("redirect:/book/damageList");
+		return mv;
+	}
+	
 }

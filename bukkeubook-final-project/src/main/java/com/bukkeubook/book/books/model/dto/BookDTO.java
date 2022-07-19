@@ -3,6 +3,8 @@ package com.bukkeubook.book.books.model.dto;
 
 import java.sql.Date;
 
+import com.bukkeubook.book.books.model.entity.DamBook;
+
 public class BookDTO {
 	
 //	BK_NO	VARCHAR2(100 BYTE)
@@ -30,12 +32,11 @@ public class BookDTO {
 	private String isbn;				// ISBN
 	private String sellYn;				// 판매여부
 	private String cate;				// 카테고리
-	
+	private DamBook damBook;
 	public BookDTO() {
 	}
-
 	public BookDTO(String no, String name, String author, String pub, int price, int storeSt, int whSt, Date pubDate,
-			Date lastDate, String isbn, String sellYn, String cate) {
+			Date lastDate, String isbn, String sellYn, String cate, DamBook damBook) {
 		this.no = no;
 		this.name = name;
 		this.author = author;
@@ -48,110 +49,93 @@ public class BookDTO {
 		this.isbn = isbn;
 		this.sellYn = sellYn;
 		this.cate = cate;
+		this.damBook = damBook;
 	}
-
 	public String getNo() {
 		return no;
 	}
-
 	public void setNo(String no) {
 		this.no = no;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public String getAuthor() {
 		return author;
 	}
-
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-
 	public String getPub() {
 		return pub;
 	}
-
 	public void setPub(String pub) {
 		this.pub = pub;
 	}
-
 	public int getPrice() {
 		return price;
 	}
-
 	public void setPrice(int price) {
 		this.price = price;
 	}
-
 	public int getStoreSt() {
 		return storeSt;
 	}
-
 	public void setStoreSt(int storeSt) {
 		this.storeSt = storeSt;
 	}
-
 	public int getWhSt() {
 		return whSt;
 	}
-
 	public void setWhSt(int whSt) {
 		this.whSt = whSt;
 	}
-
 	public java.sql.Date getPubDate() {
 		return pubDate;
 	}
-
 	public void setPubDate(java.sql.Date pubDate) {
 		this.pubDate = pubDate;
 	}
-
 	public java.sql.Date getLastDate() {
 		return lastDate;
 	}
-
 	public void setLastDate(java.sql.Date lastDate) {
 		this.lastDate = lastDate;
 	}
-
 	public String getIsbn() {
 		return isbn;
 	}
-
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
-
 	public String getSellYn() {
 		return sellYn;
 	}
-
 	public void setSellYn(String sellYn) {
 		this.sellYn = sellYn;
 	}
-
 	public String getCate() {
 		return cate;
 	}
-
 	public void setCate(String cate) {
 		this.cate = cate;
 	}
-
+	public DamBook getDamBook() {
+		return damBook;
+	}
+	public void setDamBook(DamBook damBook) {
+		this.damBook = damBook;
+	}
 	@Override
 	public String toString() {
 		return "BookDTO [no=" + no + ", name=" + name + ", author=" + author + ", pub=" + pub + ", price=" + price
 				+ ", storeSt=" + storeSt + ", whSt=" + whSt + ", pubDate=" + pubDate + ", lastDate=" + lastDate
-				+ ", isbn=" + isbn + ", sellYn=" + sellYn + ", cate=" + cate + "]";
+				+ ", isbn=" + isbn + ", sellYn=" + sellYn + ", cate=" + cate + ", damBook=" + damBook + "]";
 	}
+	
 	
 
 	

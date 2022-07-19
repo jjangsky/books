@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.mypage.model.dto.ProfPhotoDTO;
+import com.bukkeubook.book.mypage.model.dto.SignDTO;
 import com.bukkeubook.book.mypage.model.service.MyInfoModifyService;
 
 
@@ -40,15 +41,22 @@ public class MyInfoModifyController {
 	@GetMapping("/updatePage")
 	public ModelAndView findMyInfo(ModelAndView mv) {
 		
+		/* 개인정보 조회 */
 		int memberCode = 5;
 		EmpAndDeptDTO myInfo = myInfoModifyService.findMyInfo(memberCode);
 		System.out.println(myInfo);
 		
+		/* 프로필 사진 조회 */
 		List<ProfPhotoDTO> profile = myInfoModifyService.findMyProfile(memberCode);
 		System.out.println(profile);
 		
+		/* 현재 서명 조회 */
+		SignDTO mySign = myInfoModifyService.findMySign(memberCode);
+		System.out.println(mySign);
+		
 		mv.addObject("myInfo", myInfo);
 		mv.addObject("profile", profile);
+		mv.addObject("mySign", mySign);
 		mv.setViewName("mypage/mypageInfoModify");
 		
 		return mv;
@@ -74,7 +82,6 @@ public class MyInfoModifyController {
 		
 		int memberCode = 5;
 		
-//		String root = request.getSession().getServletContext().getRealPath("resources");
 		String root = System.getProperty("user.dir");
 		System.out.println("root까지의 경로 : " + root);
 		
@@ -102,7 +109,7 @@ public class MyInfoModifyController {
 			
 			myInfoModifyService.registProfile(profile);
 			
-			rttr.addFlashAttribute("successMessage", "변경함");
+			rttr.addFlashAttribute("successMessage", "프로필 사진 변경을 성공하셨습니다.");
 			mv.setViewName("redirect:/");
 			
 		} catch (IllegalStateException | IOException e) {
@@ -113,6 +120,52 @@ public class MyInfoModifyController {
 			rttr.addFlashAttribute("successMessage", "프로필 사진 변경을 실패하셨습니다.");
 			mv.setViewName("redirect:/main");
 		}
+		
+		return mv;
+	}
+	
+
+	
+	/* 마이페이지 서명 변경 */
+	@PostMapping("signModify")
+	public ModelAndView modifySign(ModelAndView mv, HttpServletRequest request, @RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
+		
+		int memberCode = 5;
+		
+		String root = System.getProperty("user.dir");
+		System.out.println("root까지의 경로 : " + root);
+		
+		String filePath = root + "/src/main/resources/static/images/sign";
+		
+		String originFileName = singleFile.getOriginalFilename();
+		System.out.println("원본 이름 : " + originFileName);
+		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
+		System.out.println("변경한 이름 : " + saveName);
+		
+		
+		try {
+			singleFile.transferTo(new File(filePath + "/" + saveName));
+			
+			SignDTO sign = new SignDTO();
+			sign.setEmpNo(memberCode);
+			sign.setSignName(originFileName);
+			sign.setSignSavedName(saveName);
+			
+			myInfoModifyService.modifySign(sign);
+			
+			rttr.addFlashAttribute("successMessage", "서명 변경을 성공하셨습니다.");
+			mv.setViewName("redirect:/");
+			
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+			
+			/* 실패 시 파일 삭제 */
+			new File(filePath + "/" + saveName).delete();
+			rttr.addFlashAttribute("successMessage", "서명 사진 변경을 실패하셨습니다.");
+			mv.setViewName("redirect:/main");
+		}
+		
 		
 		return mv;
 	}

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bukkeubook.book.books.controller.NativeRepository;
 import com.bukkeubook.book.books.model.dto.BookDTO;
+import com.bukkeubook.book.books.model.dto.DamBookDTO;
 import com.bukkeubook.book.books.model.dto.RelBkListAndBookAndRelListDTO;
 import com.bukkeubook.book.books.model.dto.RelBkListDTO;
 import com.bukkeubook.book.books.model.dto.RelListAndEmpDTO;
@@ -23,6 +24,7 @@ import com.bukkeubook.book.books.model.dto.StockBookListDTO;
 import com.bukkeubook.book.books.model.dto.StockListAndEmpDTO;
 import com.bukkeubook.book.books.model.dto.StockListDTO;
 import com.bukkeubook.book.books.model.entity.Book;
+import com.bukkeubook.book.books.model.entity.DamBook;
 import com.bukkeubook.book.books.model.entity.RelBkList;
 import com.bukkeubook.book.books.model.entity.RelBkListAndBookAndRelList;
 import com.bukkeubook.book.books.model.entity.RelList;
@@ -36,6 +38,7 @@ import com.bukkeubook.book.books.model.repository.BookInputRepository2;
 import com.bukkeubook.book.books.model.repository.BookOutputRepository;
 import com.bukkeubook.book.books.model.repository.BookOutputRepository2;
 import com.bukkeubook.book.books.model.repository.BookRepository;
+import com.bukkeubook.book.books.model.repository.DamBookRepository;
 import com.bukkeubook.book.books.model.repository.InputRepository;
 import com.bukkeubook.book.books.model.repository.OutputRepository;
 import com.bukkeubook.book.books.model.repository.RelBkListAndBookAndRelListRepository;
@@ -55,10 +58,11 @@ public class BookService {
 	private final BookOutputRepository2 bookOutputRepository2;
 	private final BookInputRepository bookInputRepository;
 	private final BookInputRepository2 bookInputRepository2;
+	private final DamBookRepository damBookRepository;
 	private final ModelMapper modelMapper;			// modelMapper 빈을 선언
 	
 	@Autowired
-	public BookService(BookInputRepository2 bookInputRepository2, BookInputRepository bookInputRepository, BookOutputRepository2 bookOutputRepository2, BookOutputRepository bookOutputRepository, StockBookListAndBookAndStockListAndEmpRepository stockBookListAndBookAndStockListAndEmpRepository, InputRepository inputRepository, RelBkListAndBookAndRelListRepository relBkListAndBookAndRelListRepository, BookRepository bookRepository, ModelMapper modelMapper, NativeRepository nativeRepository, OutputRepository outputRepository) {
+	public BookService(DamBookRepository damBookRepository, BookInputRepository2 bookInputRepository2, BookInputRepository bookInputRepository, BookOutputRepository2 bookOutputRepository2, BookOutputRepository bookOutputRepository, StockBookListAndBookAndStockListAndEmpRepository stockBookListAndBookAndStockListAndEmpRepository, InputRepository inputRepository, RelBkListAndBookAndRelListRepository relBkListAndBookAndRelListRepository, BookRepository bookRepository, ModelMapper modelMapper, NativeRepository nativeRepository, OutputRepository outputRepository) {
 		this.bookRepository = bookRepository;
 		this.outputRepository = outputRepository;
 		this.nativeRepository = nativeRepository;
@@ -69,6 +73,7 @@ public class BookService {
 		this.bookOutputRepository2 = bookOutputRepository2;
 		this.bookInputRepository = bookInputRepository;
 		this.bookInputRepository2 = bookInputRepository2;
+		this.damBookRepository = damBookRepository;
 		this.modelMapper = modelMapper;
 	}
 	
@@ -306,7 +311,6 @@ public class BookService {
 		System.out.println(stCode);
 		return stCode;
 	}
-
 	
 	@Transactional
 	public void inputReceipt2(StockBookListDTO stockBookList) {
@@ -327,8 +331,57 @@ public class BookService {
 			book.setWhSt(nowAmount + amount);
 		}
 	}
+
 	
+	public List<BookDTO> searchDamageBook(SelectCriteria selectCriteria) {
+		int index = selectCriteria.getPageNo() - 1;
+		int count = selectCriteria.getLimit();
+		String searchValue = selectCriteria.getSearchValue();
+
+		Pageable paging = PageRequest.of(index, count, Sort.by("no"));
+
+		List<Book> bookList = new ArrayList<Book>();
+		if(searchValue != null) {
+
+			if("name".equals(selectCriteria.getSearchCondition())) {
+				bookList = bookRepository.findByNameContaining(selectCriteria.getSearchValue(), paging);
+			}
+
+			if("author".equals(selectCriteria.getSearchCondition())) {
+				bookList = bookRepository.findByAuthorContaining(selectCriteria.getSearchValue(), paging);
+			}
+			
+			if("no".equals(selectCriteria.getSearchCondition())) {
+				bookList = bookRepository.findByNoContaining(selectCriteria.getSearchValue(), paging);
+			}
+		} else {
+			bookList = bookRepository.findAll(paging).toList();
+		}
+		System.out.println(bookList);
+		return bookList.stream().map(book -> modelMapper.map(book, BookDTO.class)).collect(Collectors.toList());
+	}
+
 	
+	@Transactional
+	public DamBookDTO findByNo(String no, int updateAmount) {
+		DamBook damBookList = damBookRepository.findBybkNo(no);
+		damBookList.setDamAmount(updateAmount);
+		
+		return modelMapper.map(damBookList, DamBookDTO.class);
+	}
 	
+	@Transactional
+	public void findBookByNo(String no, int updateAmount, int amount) {
+//		amount = 기존 수량
+//		updateAmount = 변경 수량
+//		whst = 기존창고수량
+		Book book = bookRepository.findByNo(no);
+		int whst = book.getWhSt();
+		if(amount <= updateAmount) {
+			int num = updateAmount - amount;
+			book.setWhSt(whst-num);
+		}
+	}
+
 	
 }

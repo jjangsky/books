@@ -446,6 +446,21 @@ public class DocumentController {		// 전자결재 컨트롤러
 		return mv;
 	}
 	
+	/* 휴가 신청 상세 조회 */
+	@GetMapping("vacationDetail/{no}")
+	public ModelAndView vacationDetail(ModelAndView mv, @PathVariable String no) {
+		
+		int vacNo = Integer.valueOf(no);
+		
+		AppVacationDTO vaca = docService.findByVacNo(vacNo);
+		
+		mv.addObject("vaca", vaca);
+		mv.setViewName("/document/detailVacation");
+		
+		return mv;
+		
+	}
+	
 	/* 휴가취소 리스트 조회 */
 	@GetMapping("allCancelVacationList")
 	public ModelAndView allCancelVacationList(ModelAndView mv) {
@@ -457,6 +472,21 @@ public class DocumentController {		// 전자결재 컨트롤러
 		mv.addObject("cancelList", cancelList);
 		
 		mv.setViewName("/document/allCancelVacationList");
+		
+		return mv;
+	}
+	
+	/* 휴가취소 상세조회 */
+	@GetMapping("cancelVacationDetail/{no}")
+	public ModelAndView cancelVacationDetail(ModelAndView mv, @PathVariable String no) {
+		
+		int vacCancNo =Integer.valueOf(no);
+		
+		CancelVacationDTO canc = docService.findByvacCancNo(vacCancNo);
+		
+		mv.addObject("canc", canc);
+		
+		mv.setViewName("/document/detailCancelVacation");
 		
 		return mv;
 	}

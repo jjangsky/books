@@ -66,3 +66,7 @@ td{
 .input{
     width: 50px;
 }
+
+.vac:hover{
+    background-color: #FEFCC6;
+}
