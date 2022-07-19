@@ -61,7 +61,7 @@
           <div th:replace="books/bookList/bookpagingInput2.html"></div>
           <br><br><br><br>   
           <div id="textTable" style="text-align:-webkit-center">
-          <form action="/book/outputReceipt" method="post">
+          <form id="outputForm" action="/book/outputReceipt" method="post">
 	          <table class="sampleTable" id="bottomTable">
 	              <tr>
 	                <th class="th1">도서코드</th>
@@ -76,7 +76,7 @@
 	          </table><br><br>
 	        <div id="newBookDiv">
 	          <input type="hidden" id="rownum" name="rownum" value="0">
-	          <button type="submit" class="productBtn newBookBtn" onclick="location.href='/book/outputReceipt'">출고신청</button>
+	          <button type="button" class="productBtn newBookBtn" onclick="formCheck();">출고신청</button>
 	          <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
 	        </div>      
          </form> 
@@ -106,9 +106,23 @@
 		   			$('#loginForm').submit();
 	   			};
 			});
+		$('#inputFind').blur(function(){
+			const tagExp = /(<([^>]+)>)/gi;
+			if(tagExp.test($('#inputFind').val())){
+				Swal.fire({
+                    icon: 'error',
+                    title: '태그쓰지마세요',
+                    text: '',
+                }).then(function(){
+                	$('#inputFind').val('');
+	    			$('#inputFind').focus();
+                })
+			}
+		
+		});
 	</script>
 	<script th:inline="javascript">
-		
+		var rownum = 0;
 		$('.addBtn').click(function(){
 			
 			const table = document.getElementById("bottomTable");
@@ -150,14 +164,64 @@
 	            newCell4.innerHTML = td.eq(3).text();
 	            newCell5.innerHTML = td.eq(4).text();
 	            newCell6.innerHTML = td.eq(5).text();
-	            newCell7.innerHTML = '<input type="number" class="outputValue" name="' + amount + '" value="1" min="1">';
+	            newCell7.innerHTML = '<input type="number" class="outputValue" name="' + amount + '" value="0" min="0">';
 	            newCell8.innerHTML = '<input class="productBtn delBtn" type="button" value="삭제" onclick="SomeDeleteRowFunction(this)">';
 	            
-	            var rownum = document.getElementById("rownum");
+	            rownum = document.getElementById("rownum");
 	            rownum.value = index;
 	            
+	            $('.outputValue').blur(function(){
+	    			const test1 = $('.outputValue').val();
+	    			if( $('.outputValue').val() < 0){
+	    	  			Swal.fire({
+	    	                  icon: 'question',
+	    	                  title: '입고수량을 입력 해 주세요!',
+	    	                  text: '음수는 불가능 합니다.',
+	    	              }).then(function(){
+	    		    			$('.outputValue').val(0);
+	    		    			$('.outputValue').focus();
+	    	              })
+	    	 			  return false;
+	    	  		}
+	    			const prodExp = /^[0-9]{1,6}$/;
+	    			if(!prodExp.test($('.outputValue').val())){
+	    	  			Swal.fire({
+	    	                  icon: 'question',
+	    	                  title: '입고수량을 입력 해 주세요!',
+	    	                  text: '숫자만 입력 가능 합니다.',
+	    	              }).then(function(){
+	    		    			$('.outputValue').val(0);
+	    		    			$('.outputValue').focus();
+	    	              })
+	    	 			  return false;
+	    	  		}
+	    			
+	    		});
 	            
-	            
+	            $(document).ready(function(){
+		        	$('.outputValue').change( function(){
+						var apap = $(this);
+						var tr2 = apap.parent().parent();
+		       			var td2 = tr2.children();
+				        var a = Number(td2.eq(4).text().substr(0, 2));
+				        var b = $('.outputValue').val();
+				        const afaf = '';
+				        console.log('a' + a);
+				        console.log('b' + b);
+				        
+			            if(a < b){
+							Swal.fire({
+			                    icon: 'warning',
+			                    title: '재고수량을 확인 해 주세요!',
+			                    text: '창고보유재고 이상으로 출고할 수 없습니다.',
+		              		 }).then(function(){
+									$(document).ready(function() {
+								        $('.outputValue').val(a);
+								   	});
+								});
+						}
+			        });
+	            });
 	            
             } else {
             	Swal.fire({
@@ -167,7 +231,17 @@
                 })
             }
 		})
-	
+		function formCheck(){
+			if( rownum == 0 ){
+	  			Swal.fire({
+	                  icon: 'question',
+	                  title: '출고하실 도서를 추가해 주세요',
+	                  text: '',
+	              })
+	 			  return false;
+	  		};
+	  		$("#outputForm").submit();
+		}
 	
 	    /* 행 전체삭제 */
 	    function AllDel(){
