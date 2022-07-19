@@ -16,20 +16,6 @@
 
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
-        <div style="margin-right:7%">
-          <form action="">
-            <button class="search btn" type="submit">검색</button> 
-            <input class="search in" type="text" placeholder="검색어 입력" required>
-            <select class="search select" required>
-              <option value="">None</option>
-              <option value="empCode">사원번호</option>
-              <option value="empName">사원명</option>
-              <option value="dept">부서</option>
-              <option value="position">직급</option>
-            </select>
-          </form>
-          <br><br><br><br>
-        </div>
         <div style="text-align:-webkit-center; width:80%; margin-left:10%">
           <table id="sampleTable">
               <tr>
@@ -49,6 +35,7 @@
           </table>
           <br><br><br>
           <button type="button" class="insert btn" onclick="location.href='/document/insert'">결재작성</button>
+          <br><br><br><br><br><br><br><br><br>
         </div> <!------------------------ 본문 종료---------------------------->
         <script>
         	const status = document.querySelectorAll('table tr td#status');
