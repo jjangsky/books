@@ -92,7 +92,7 @@ public class Emp implements Serializable{
    
    @Column(name = "DEPT_CODE")
    private int deptCode;
-
+   
 	public Emp() {
 		super();
 	}

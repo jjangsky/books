@@ -10,6 +10,16 @@
 <title>Document docList</title>
 </head>
 <body>
+	<script>
+		const successMessage = "[[${ insertSuccess }]]";
+		if(successMessage){
+			 Swal.fire({
+	                icon: 'success',
+	                title: '성공!',
+	                text: '성공적으로 완료되었습니다!',
+	            })
+		}
+	</script>
 	<div th:replace="/common/topSideBar.html"></div>
 	<h2 class="mb-4" id="main-text">수신함</h2>
         <hr><br><br>
@@ -31,7 +41,7 @@
               <tr class="hover" th:each="all : ${ all }" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all.document.docNo1 }|} + '\''">
                 <td class="td1" th:text="${allStat.count}"></td>
                 <td class="td1" th:text="${all.document.docNo1}"></td>
-                <td class="td1" th:text="${all.document.docTitle1}" style="width:300px;"></td>
+                <td class="td1" th:text="${all.document.docTitle1}" style="width:400px;"></td>
                 <td class="td1" th:text="${all.document.wrDate1}"></td>
                 <td class="td1" th:text="${all.appStatus}"></td>
                 <td class="td1" th:text="${all.stepName}"></td>
@@ -48,12 +58,16 @@
         	console.log("status"+status);
         	for (let i = 0; i < status.length; i++) {
 				if (status[i].innerText=="승인") {
-					status[i].style.color = "blue";		
+					status[i].style.background= "lightcyan";
 				}
 				if (status[i].innerText=="반려") {
-					status[i].style.color = "red";		
+					status[i].style.background = "mistyrose";		
+				}
+				if (status[i].innerText=="진행중") {
+					status[i].style.background = "honeydew";		
 				}
 			}
+			
         </script>
 </body>
 </html>

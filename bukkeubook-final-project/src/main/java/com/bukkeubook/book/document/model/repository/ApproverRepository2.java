@@ -13,5 +13,12 @@ public interface ApproverRepository2 extends JpaRepository<Approver, Object>{
 	@Query("SELECT a.appRootNo, a.appStatus FROM Approver a WHERE a.empNo = ?1")
 	List<Object[]> findByApproverNoDocList(int empNo);
 
+	Approver findByEmpNoAndAppRootNo(int empNo, int appRootNo);
+
+	Approver findByAppRootNoAndAppStatus(int appRootNo, String app);
+
+	List<Approver> findByAppRootNoAndAppNoNot(int appRootNo, int mine);
+
+
 	
 }
