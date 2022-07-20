@@ -169,27 +169,19 @@ public class EmpService {
 		
 		
 	}
+
+	/* ********************************************************************************** */
+	@Transactional
+	public void modifyProfile(ProfPhotoDTO profile) {
+		
+		ProfPhoto profPhoto = profilePhotoRepository.findByEmpNo(profile.getEmpNo());
+		profPhoto.setPhotoOrigName(profile.getPhotoOrigName());
+		profPhoto.setPhotoSavedName(profile.getPhotoSavedName());
+	}
+
 	
 	
-	/* 지영 - 사원 수정 화면 이동 */
-	/* push for comment */
-//	public EmpAndDeptDTO findEmpInfo(int empNo) {
-//		
-//		EmpAndDeptDTO empInfo = 
-//		
-//		
-//		return null;
-//	}
-//
-//	public List<ProfPhotoDTO> findEmpProfile(int empNo) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	public SignDTO findEmpSign(int empNo) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+
 
 
 }

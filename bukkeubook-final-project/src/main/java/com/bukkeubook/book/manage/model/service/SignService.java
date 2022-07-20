@@ -40,7 +40,16 @@ public class SignService {
 		empSignRepository.save(modelMapper.map(signFile, Sign.class));
 		
 	}
-
+	
+	/******************************************************************/
+	/* 사원 정보 수정 서명 */
+	@Transactional
+	public void modifySign(SignDTO sign) {
+		
+		Sign sign2 = empSignRepository.findByEmpNo(sign.getEmpNo());
+		sign2.setSignName(sign2.getSignName());
+		sign2.setSignSavedName(sign2.getSignSavedName());
+	}
 
 
 }

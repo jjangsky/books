@@ -105,6 +105,7 @@ public class EmpAnnualController {
 	// 이 경우 연결되는 Service는 DayOffService에서 처리...
 //	@GetMapping("/empDayOffUpdate")
 //	public ModelAndView updateAppVacInfo(AppVacationDTO appVacationDTO, int vacNo, ModelAndView mv) {
+//
 //		
 //		List<AppVacationDTO> appVacList = empDayOffService.findAppVacByEmpNo(vacNo);
 //		
@@ -115,7 +116,7 @@ public class EmpAnnualController {
 //		
 //		return mv;
 //	}
-	
+//	
 //	@PostMapping("/empDayOffUpdate")
 //	public ModelAndView updateAppVac(AppVacationDTO appVacationDTO, int vacNo, ModelAndView mv, RedirectAttributes rttr) {
 //		
@@ -125,15 +126,16 @@ public class EmpAnnualController {
 //		return mv;
 //		
 //	}
-	
+//	
 //	@PostMapping("/empDayOffUpdate2")
 //	public ModelAndView modifyDayOffInfo(DayOffDTO dayOffDTO, ModelAndView mv, RedirectAttributes rttr) {
 //		
 //		empDayOffService.modifyDayOffInfo(dayOffDTO);
 //		rttr.addFlashAttribute("updateSuccessMessage", "성공");
-//		mv.setViewName("redirect:/empDayOff/empDayOffDetail");
+//		mv.setViewName("redirect:/empDayOffDetail/{empNo}/");
 //		return mv;
 //	}
+
 
 	/****************************************************************/
 	

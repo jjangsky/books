@@ -11,6 +11,4 @@ public interface SignRepository extends JpaRepository<Sign, Integer>{
 	Sign findByEmpNo(int memberCode);
 
 
-
-
 }

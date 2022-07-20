@@ -2,7 +2,6 @@ package com.bukkeubook.book.manage.controller;
 
 import java.io.File;
 
-
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -268,38 +267,10 @@ private final MyInfoModifyService myInfoModifyService;
 		return mv;
 	};	
 
-	/* 지영님이 하는중 -> 사원 상세페이지에서 수정 페이지로 화면이동 */ 
-//	/* 사원 상세페이지에서 수정 페이지로 화면이동 */
-//	@GetMapping("/empDetailUpdate")
-//	public ModelAndView findEmpDetailModify(ModelAndView mv, int empNo) {
-//		 
-//		/* 개인정보 조회 */
-////		int memberCode = 5;
-//		EmpAndDeptDTO empInfo = empService.findEmpInfo(empNo);
-//		System.out.println(empInfo);
-//		
-//		/* 프로필 사진 조회 */
-//		List<ProfPhotoDTO> profile = empService.findEmpProfile(empNo);
-//		System.out.println(profile);
-//		
-//		/* 현재 서명 조회 */
-//		SignDTO empSign = empService.findEmpSign(empNo);
-//		System.out.println(empSign);
-//		
-//		mv.addObject("empInfo", empInfo);
-//		mv.addObject("profile", profile);
-//		mv.addObject("empSign", empSign);
-//		mv.setViewName("manage/detailUpdat/{empNo}");
-//		
-//		return mv;
-//	}
-	
-	
 	/***********************************************************************************************/	
-	
 	/* 사원정보 수정 */
 	@GetMapping("detailUpdate/{empNo}")
-	public ModelAndView empUpdatePage(ModelAndView mv,  @PathVariable String empNo) {
+	public ModelAndView empUpdatePage(ModelAndView mv, @PathVariable String empNo) {
 		
 		int number = Integer.valueOf(empNo);
 		
@@ -335,5 +306,97 @@ private final MyInfoModifyService myInfoModifyService;
 	      return mv;
 	   }
 
+	   
+	/***********************************************************************************************/	
+	/* 도장 사진 수정 */
+	@PostMapping("detailUpdate")
+	public ModelAndView modifySign(ModelAndView mv, HttpServletRequest request, @RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
+		
+		int memberCode = 5;
+		
+		String root = System.getProperty("user.dir");
+		System.out.println("root까지의 경로 : " + root);
+		
+		String filePath = root + "/src/main/resources/static/images/sign";
+		
+		String originFileName = singleFile.getOriginalFilename();
+		System.out.println("원본 이름 : " + originFileName);
+		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
+		System.out.println("변경한 이름 : " + saveName);
+		
+		
+		try {
+			singleFile.transferTo(new File(filePath + "/" + saveName));
+			
+			SignDTO sign = new SignDTO();
+			sign.setEmpNo(memberCode);
+			sign.setSignName(originFileName);
+			sign.setSignSavedName(saveName);
+			
+			signService.modifySign(sign);
+			
+			rttr.addFlashAttribute("successMessage", "서명 변경을 성공하셨습니다.");
+			mv.setViewName("redirect:/");
+			
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+			
+			/* 실패 시 파일 삭제 */
+			new File(filePath + "/" + saveName).delete();
+			rttr.addFlashAttribute("successMessage", "서명 사진 변경을 실패하셨습니다.");
+			mv.setViewName("redirect:/main");
+		}
+		
+		return mv;
+	}
+	
+	/***********************************************************************************************/	
+	/* 프로필 사진 수정 */
+	@PostMapping("detailUpdate2")
+	public ModelAndView modifyProfile(ModelAndView mv, HttpServletRequest request, @RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
+		
+		int memberCode = 5;
+		
+		String root = System.getProperty("user.dir");
+		System.out.println("root까지의 경로 : " + root);
+		
+		String filePath = root + "/src/main/resources/static/images/manage/employee";
+		
+		String originFileName = singleFile.getOriginalFilename();
+		System.out.println("원본 이름 : " + originFileName);
+		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
+		System.out.println("변경한 이름 : " + saveName);
+		
+		
+		try {
+			singleFile.transferTo(new File(filePath + "/" + saveName));
+			
+			ProfPhotoDTO profile = new ProfPhotoDTO();
+			profile.setEmpNo(memberCode);
+			profile.setPhotoOrigName(originFileName);
+			profile.setPhotoSavedName(saveName);
+			
+			
+			
+			empService.modifyProfile(profile);
+			
+			rttr.addFlashAttribute("successMessage", "서명 변경을 성공하셨습니다.");
+			mv.setViewName("redirect:/");
+			
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+			
+			/* 실패 시 파일 삭제 */
+			new File(filePath + "/" + saveName).delete();
+			rttr.addFlashAttribute("successMessage", "서명 사진 변경을 실패하셨습니다.");
+			mv.setViewName("redirect:/main");
+		}
+		
+		return mv;
+	}
 }
+ 
+
  
