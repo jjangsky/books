@@ -7,12 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bukkeubook.book.books.model.dto.BookDTO;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.finance.model.dto.TradeAndClientAndBookAndEmpDTO;
@@ -93,42 +97,17 @@ public class DeptController {
 	
 	@GetMapping("/popup")
 	public ModelAndView popupPage(HttpServletRequest request, ModelAndView mv) {
-		
-		String currentPage = request.getParameter("currentPage");
-		int pageNo = 1;
-
-		if(currentPage != null && !"".equals(currentPage)) {
-			pageNo = Integer.parseInt(currentPage);
-		}
 
 		String searchCondition = request.getParameter("searchCondition");
 		String searchValue = request.getParameter("searchValue");
 
-		int totalCount = deptService.selectTotalCount(searchCondition, searchValue);
-
-		/* 한 페이지에 보여 줄 게시물 수 */
-		int limit = 10;		//얘도 파라미터로 전달받아도 된다.
-
-		/* 한 번에 보여질 페이징 버튼의 갯수 */
-		int buttonAmount = 5;
-
-		/* 페이징 처리를 위한 로직 호출 후 페이징 처리에 관한 정보를 담고 있는 인스턴스를 반환받는다. */
-		SelectCriteria selectCriteria = null;
-		if(searchValue != null && !"".equals(searchValue)) {
-			selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount, searchCondition, searchValue);
-		} else {
-			selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount);
-		}
-		System.out.println(selectCriteria);
-
-		List<EmpDTO> empList = deptService.searchEmpList(selectCriteria);
+		List<EmpDTO> empList = deptService.searchEmpList(searchCondition, searchValue);
 
 		for(EmpDTO emp : empList) {
 			System.out.println(emp);
 		}
 
 		mv.addObject("empList", empList);
-		mv.addObject("selectCriteria", selectCriteria);
 		mv.setViewName("manage/dept/empPopup");
 
 		return mv;
@@ -181,5 +160,29 @@ public class DeptController {
 		mv.setViewName("redirect:/dept/detail/?deptCode=" + newDept.getDeptCode());
 		
 		return mv;
+	}
+	
+	@GetMapping("/getSearchList")
+	@ResponseBody
+	private List<EmpDTO> getSearchList(@RequestParam("searchCondition") String searchCondition,
+			@RequestParam("searchValue") String searchValue, Model model) throws Exception{
+		
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println("ajax 동작함");
+		System.out.println("searchCondition : " + searchCondition);
+		System.out.println("searchValue : " + searchValue);
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		
+		return deptService.searchEmpList(searchCondition, searchValue);
 	}
 }

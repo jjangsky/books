@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
-@Table(name = "TBL_ENP_CONT")
+@Table(name = "TBL_EMP_CONT")
 public class EmpCont implements Serializable{
 
 	private static final long serialVersionUID = 2280854708427407012L;

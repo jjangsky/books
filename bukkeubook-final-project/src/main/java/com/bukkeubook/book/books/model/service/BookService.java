@@ -98,6 +98,9 @@ public class BookService {
 			if("no".equals(searchCondition)) {
 				count = bookRepository.countByNoContaining(searchValue);
 			}
+			if("date".equals(searchCondition)) {
+				count = inputRepository.countBystDateContaining(searchValue);
+			}
 		} else {
 			count = (int)bookRepository.count();
 		}
@@ -160,7 +163,12 @@ public class BookService {
 	
 	@Transactional
 	public void insertBook(BookDTO bookDTO) {
+		String bkNo = bookDTO.getNo();
+		DamBookDTO damBook = new DamBookDTO();
+		damBook.setBkNo(bkNo);
+		damBook.setDamAmount(0);
 		bookRepository.save(modelMapper.map(bookDTO, Book.class));
+		damBookRepository.save(modelMapper.map(damBook, DamBook.class));
 	}
 
 	public List<RelListAndEmpDTO> searchBookList2(SelectCriteria selectCriteria) {
@@ -200,7 +208,7 @@ public class BookService {
 		int count = selectCriteria.getLimit();
 		String searchValue = selectCriteria.getSearchValue();
 
-		Pageable paging = PageRequest.of(index, count, Sort.by("stDate").descending());
+		Pageable paging = PageRequest.of(index, count/* , Sort.by("stDate").descending() */);
 
 		List<StockListAndEmp> stockListEmp = new ArrayList<StockListAndEmp>();
 		if(searchValue != null) {
@@ -210,7 +218,7 @@ public class BookService {
 			}
 
 			if("date".equals(selectCriteria.getSearchCondition())) {
-				stockListEmp = inputRepository.findAllByStDateContaining(selectCriteria.getSearchValue(), paging);
+				stockListEmp = inputRepository.searchDate(selectCriteria.getSearchValue(), paging);
 			}
 		} else {
 			stockListEmp = inputRepository.findAll(paging).toList();
@@ -320,14 +328,14 @@ public class BookService {
 	@Transactional
 	public void inputReceipt3(BookDTO bookDTO, int amount, String selectInput) {
 		Book book = bookRepository.findByNo(bookDTO.getNo());
-		
+		System.out.println("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd" + book);
 		int nowAmount = book.getWhSt();
 		int nowStAmount = book.getStoreSt();
 		
 		if(selectInput.equals("일반입고")) {
 			book.setWhSt(nowAmount + amount);
 			book.setStoreSt(nowStAmount - amount);
-		} else if(selectInput.equals("일반입고")) {
+		} else if(selectInput.equals("발주입고")) {
 			book.setWhSt(nowAmount + amount);
 		}
 	}

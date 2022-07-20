@@ -15,8 +15,10 @@
    <div th:replace="/common/topSideBar.html"></div>
         <h2 class="mb-4" id="main-text">근태관리</h2>
         <hr><br><br>
-        <h5 class="mb-4" id="sub-text">연차조회</h5>
+        <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/empDayOff/empDayOffList">연차조회</a></h5>
         <br>
+        <div id="sampleTable" style="text-align:-webkit-center">
+          <form class="search select" action="/empDayOff/empDayOffList"ost"></form>
           <table id="sampleTable">
               <tr>
                 <th class="th1">사원번호</th>
@@ -26,18 +28,18 @@
                 <th class="th1">잔여연차 횟수</th>
                 <th class="th1">상세조회</th>
               </tr>
+              
                <tr th:each="dayOffList : ${ dayOffList }" class="hover">
-                <td th:text="${ dayOffList.empAndDept.empNo }"></td>
+                <td th:text="${ dayOffList.empNo }"></td>
                 <td th:text="${ dayOffList.empAndDept.empName }"></td>
                 <td th:text="${ dayOffList.doffAmount }"></td>
                 <td th:text="${ dayOffList.doffUse }"></td>
                 <td th:text="${ dayOffList.doffRemain }"></td> 
-                <td><button type="button" class="select btn"   
-                th:onclick="'location.href = \'' + @{/empDayOff/empDayOffDetail/{empNo}(empNo=${dayOffList.empAndDept.empNo})} + '\''">확인</button>
+                <td><button type="button" class="select btn" th:onclick="'location.href = \'' + @{/empDayOff/empDayOffDetail/{empNo}(empNo=${dayOffList.empNo})} + '\''">확인</button>
                 </td> 
               </tr>
-          </table><br>
-          <button type="button" class="insert btn" onclick="location.href='empAnnualInsert.html'">등록</button>
+          </table><br><br>
+          <button type="button" class="insert btn" onclick="location.href='empAnnualInsert.html'">등록</button> <!-- 여기는 컨트롤러 요청으로 바꿔줄 것 -->
         </div>
 </body>
 </html>

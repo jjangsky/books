@@ -3,6 +3,7 @@ package com.bukkeubook.book.books.model.repository;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +17,4 @@ public interface OrderRepository extends JpaRepository<OrderAndEmpAndBook, Integ
 
 	List<OrderAndEmpAndBook> findByOrderApprYnContaining(String searchValue, Pageable paging);
 
-	
 }

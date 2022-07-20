@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.bukkeubook.book.books.model.dto.BookDTO;
+import com.bukkeubook.book.books.model.entity.Book;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.finance.model.dto.TradeAndClientAndBookAndEmpDTO;
 import com.bukkeubook.book.finance.model.entity.TradeAndClientAndBookAndEmp;
@@ -149,6 +151,27 @@ public class DeptService {
 		foundDept.setDeptName(newDept.getDeptName());
 		foundDept.setDeptRepPhone(newDept.getDeptRepPhone());
 		foundDept.setDeptActive(newDept.getDeptActive());
+	}
+
+	public List<EmpDTO> searchEmpList(String searchCondition, String searchValue) {
+
+		List<Emp> empList = new ArrayList<Emp>();
+		if(searchValue != null) {
+
+			if("empName".equals(searchCondition)) {
+				empList = empRepository.findByEmpNameContaining(searchValue, Sort.by("empNo"));
+			}
+
+			if("empJobCode".equals(searchCondition)) {
+				empList = empRepository.findByEmpJobCodeContaining(searchValue, Sort.by("empNo"));
+			}
+			
+		} else {
+			empList = empRepository.findAll(Sort.by("empNo"));
+		}
+
+		/* 자바의 Stream API와 ModelMapper를 이용하여 entity를 DTO로 변환 후 List<MenuDTO>로 반환 */
+		return empList.stream().map(Emp -> modelMapper.map(Emp, EmpDTO.class)).collect(Collectors.toList());
 	}
 	
 	

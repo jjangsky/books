@@ -27,7 +27,7 @@
           <table class="type03">
             <tr>
               <th>일정 제목</th>
-              <td><input type="text" class="form-control" name="title" th:value="${detailCal.title}" required>
+              <td><input type="text" class="form-control" name="title" id="calName" th:value="${detailCal.title}" required>
               	  <input type="hidden" th:value="${detailCal.code}" name="code"></td>
             </tr>
             <tr>
@@ -40,7 +40,7 @@
             </tr>
             <tr>
               <td colspan="2" style="height: 500px;">
-                <textarea class="form-control" style="resize:none; height: 480px;" name="content" th:text="${ detailCal.content }" required></textarea> 
+                <textarea class="form-control" style="resize:none; height: 480px;" name="content" id="calText" th:text="${ detailCal.content }" required></textarea> 
               </td>
             </tr>
           </table>
@@ -83,9 +83,17 @@
                     confirmButtonText: '승인',
                     cancelButtonText: '취소'
                 }).then((result) => {
-                    if (result.isConfirmed) {
-                    	$("#modifyForm").submit();
-                    }
+                	 if (result.isConfirmed) {
+                     	if(($("#startDay").val() !== "")&& ($("#endDay").val() !== "") && ($("#calName").val() !== "") && ($("#calText").val() !== "")){
+                     	$("#modifyForm").submit();
+                     	}else{
+                     		Swal.fire({
+             		            icon: 'error',                        
+             		            title: '입력값을 확인해 주세요',   
+             		            text: '옳바르지 않은 값 혹은 빈 값을 입력하였습니다.', 
+             		        });
+                     	}
+                       }
               	  })
 				}
 			})

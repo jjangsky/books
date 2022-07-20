@@ -23,6 +23,10 @@
                     <td th:text="${ book.no }"></td>
                 </tr>
                 <tr th:each="book : ${ bookList }">
+                    <th>도서 명</th>
+                    <td th:text="${ book.name }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
                     <th>저자</th>
                     <td th:text="${ book.author }"></td>
                 </tr>
@@ -67,16 +71,16 @@
 	                title: '',
 	                text: '분류와 검색어를 입력 해 주세요.',
 	            })} else if(inputFind.value == ""){
-          	Swal.fire({
-	                icon: 'question',
-	                title: '',
-	                text: '검색어를 입력 해 주세요.',
+          				Swal.fire({
+		                icon: 'question',
+		                title: '',
+		                text: '검색어를 입력 해 주세요.',
 	                
           	})} else if(searchCondition.value == 'select'){
-         		Swal.fire({
- 	                icon: 'question',
- 	                title: '',
- 	                text: '분류를 선택 해 주세요.',
+	         			Swal.fire({
+	 	                icon: 'question',
+	 	                title: '',
+	 	                text: '분류를 선택 해 주세요.',
           	})} else{
 		   			$('#loginForm').submit();
 	   			};
@@ -115,7 +119,41 @@
      		
     		location.href='/book/damAmountUpdate?no=' + aa + '&amount=' + bb + '&updateAmount=' + cc;
      	 });
-    	 
+    	 $('#damAmount').blur(function(){
+			if( $('#damAmount').val() < 0 ){
+				Swal.fire({
+                     icon: 'warning',
+                     title: '도서정보가 부족합니다!',
+                     text: '음수는 입력 불가능 합니다.',
+                 }).then(function(){
+					$('#damAmount').val(0);
+ 	    			$('#damAmount').focus();
+                 })
+    				return false;
+			 }
+			if( $('#damAmount').val() < 0 ){
+				Swal.fire({
+                     icon: 'warning',
+                     title: '도서정보가 부족합니다!',
+                     text: '음수는 입력 불가능 합니다.',
+                 }).then(function(){
+					$('#damAmount').val(0);
+ 	    			$('#damAmount').focus();
+                 })
+    				return false;
+			}
+			const prodExp = /^[0-9]{1,6}$/;
+			if(!prodExp.test($('#damAmount').val())){
+				Swal.fire({
+                  icon: 'warning',
+                  title: '도서정보가 부족합니다!',
+                  text: '숫자만 입력 가능합니다.',
+              }).then(function(){
+              		$('#damAmount').val(0);
+	    			$('#damAmount').focus();
+              })
+			}
+		 })
     	 
       </script>
       

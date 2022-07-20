@@ -79,10 +79,7 @@
                 <td>퇴사여부</td>
                 <td><input type="text" th:value="${ emp.empEndYn }" name="empEndYn" readonly style="border:none;"></td>
                 <td>
-                <form action="/myInfo/signModify" method="post" encType="multipart/form-data">
-			     	<input type="file" name="singleFile" style="margin-left: 25%;" value="수정하기" required>
-			     	<input type="submit" class="btn btn-primary" value="수정하기" style="margin-right: 26%; margin-top:10px;">
-		         </form>
+                  <input type="file" name="proFile" style="margin-left: 25%;">
                 </td>
                 <td><input type="file" name="uploadfile" multiple></td>
               </tr>
