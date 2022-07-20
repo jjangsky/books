@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
+import com.bukkeubook.book.manage.model.dto.ProfPhotoDTO;
 import com.bukkeubook.book.manage.model.dto.SignDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.service.EmpService;
@@ -105,6 +106,25 @@ private SignService signService;
 	}
 		
 	/* 사원 상세조회 */
+//	@GetMapping("/oneEmp/{empNo}")
+//	public ModelAndView empDetail(ModelAndView mv, @PathVariable String empNo){
+//		
+//		int number = Integer.valueOf(empNo);
+//		
+//		System.out.println("컨트롤러에서       " + empNo);
+//		System.out.println("컨트롤러에서       " + number);
+//		
+//		EmpAndDeptDTO emp  = empService.searchEmpDetail(number);
+//		
+//		System.out.println("컨트롤러에서       ddddddddddddddddddddddddddddddddd" + emp);
+//		
+//		mv.addObject("emp", emp);
+//		mv.setViewName("manage/employee/empDetail");
+//		return mv;
+//		
+//	}
+	
+	/* 사원 상세조회 */
 	@GetMapping("/oneEmp/{empNo}")
 	public ModelAndView empDetail(ModelAndView mv, @PathVariable String empNo){
 		
@@ -114,12 +134,15 @@ private SignService signService;
 		System.out.println("컨트롤러에서       " + number);
 		
 		EmpAndDeptDTO emp  = empService.searchEmpDetail(number);
+		SignDTO mysign  = signService.searchEmpSign(number);
 		
 		System.out.println("컨트롤러에서       ddddddddddddddddddddddddddddddddd" + emp);
 		
 		mv.addObject("emp", emp);
+		mv.addObject("mysign", mysign);
 		mv.setViewName("manage/employee/empDetail");
 		return mv;
+				
 	}
 	
 	/* 퇴사사원 상세조회 */
@@ -149,16 +172,120 @@ private SignService signService;
 		return mv;
 	}
 	
+//	@PostMapping("insert")
+//	public ModelAndView insertEmp(EmpDTO empDTO, ModelAndView mv, RedirectAttributes rttr) {
+//		
+//		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
+//		
+//		String empAddress = "주소";
+//		empDTO.setEmpAddress(empAddress);	
+//		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
+//		
+//		empService.insertNewEmp(empDTO);
+//		
+//		rttr.addFlashAttribute("insertSuccessMessage", "성공"); //addFlashAttribute 한번만 보여주고 감
+//		mv.setViewName("redirect:/manage/empList");
+//		return mv;
+//	};	
+	
+	/* 신규 직원 등록  insert */
 	@PostMapping("insert")
-	public ModelAndView insertEmp(EmpDTO empDTO, ModelAndView mv, RedirectAttributes rttr) {
+	public ModelAndView insertEmp(EmpDTO empDTO, ModelAndView mv, HttpServletRequest request, 
+										@RequestParam("proFile") MultipartFile proFile,  
+										@RequestParam("nameFile") MultipartFile nameFile,  
+										RedirectAttributes rttr) 
+	{
 		
 		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
-		
+		/* 여기는 왜 그럴까요? */
 		String empAddress = "주소";
 		empDTO.setEmpAddress(empAddress);	
 		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
 		
+		/* 프로필 사진, 도장 사진을 제외한 나머지 회원 정보 insert */
 		empService.insertNewEmp(empDTO);
+		
+		/* 방금 등록한 회원에 대해 기본키 가져오기 */
+		List<EmpAndDeptDTO> lastEmp = empService.selectLastEmp();
+		
+		System.out.println(lastEmp.get(0).getEmpNo());  // 방금 등록한 회원의 번호 추출
+		
+		int registEmp = lastEmp.get(0).getEmpNo();
+		
+		/* 민님 이틀 갈아넣어서 만든 프로젝트 내부 저장 방식 소스 */
+		String root = System.getProperty("user.dir");
+		System.out.println("root까지의 경로 : " + root);
+		
+		String filePath = root + "/src/main/resources/static/images/mypage";  // 프사 저장 루트
+		String signPath = root + "/src/main/resources/static/images/sign"; 	  // 서명 저장 루트
+		
+		/* 파일 없으면 만들어줌 */
+		File mkdir = new File(filePath);	
+		if(!mkdir.exists()) {
+			mkdir.mkdirs();
+		}
+		File mkdir1 = new File(signPath);	
+		if(!mkdir1.exists()) {
+			mkdir1.mkdirs();
+		}
+		
+		/* 원본이랑 저장되는 값 이름이 같으면 안됨 -> 그래서 변경된 값으로 새로 프로젝트에 저장*/
+		String originFileName = proFile.getOriginalFilename();
+		String originFileName1 = nameFile.getOriginalFilename();
+		System.out.println("프로필 사진 원본 이름 : " + originFileName);
+		System.out.println("서명 사진 원본 이름 : " + originFileName1);
+		
+		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+		String ext1 = originFileName1.substring(originFileName1.lastIndexOf("."));
+		
+		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
+		String saveName1 = UUID.randomUUID().toString().replace("-", "") + ext1;
+		
+		System.out.println("변경한 이름 : " + saveName);
+		System.out.println("변경한 이름 : " + saveName1);
+		
+		/* 프로필 사진 저장 처리 */
+		try {
+			proFile.transferTo(new File(filePath + "/" + saveName));
+			
+			/* DB에 저장할 파일 정보를 DTO에 담기 */
+			ProfPhotoDTO profile = new ProfPhotoDTO();
+			profile.setEmpNo(registEmp);
+			profile.setPhotoOrigName(originFileName);
+			profile.setPhotoSavedName(saveName);
+			profile.setPhotoSavedPath(filePath);
+			
+			/* 서비스로 보내서 DB로 전송 */
+			empService.registEmpProFile(profile);
+			
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+			
+			/* 실패 시 파일 삭제 */
+			new File(filePath + "/" + saveName).delete();
+		}
+		
+		
+		/* 서명 사진 저장 처리 */
+		try {
+			nameFile.transferTo(new File(signPath + "/" + saveName1));
+			/* DB에 저장할 파일 정보를 DTO에 담기 */
+			SignDTO signFile = new SignDTO();
+			signFile.setEmpNo(registEmp);
+			signFile.setSignName(originFileName1);
+			signFile.setSignSavedName(saveName1);
+			signFile.setSignPath(signPath);
+			
+			/* 서비스로 보내서 DB로 전송(signService) */
+			signService.registEmpNameFile(signFile);
+			
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+			
+			/* 실패 시 파일 삭제 */
+			new File(signPath + "/" + saveName1).delete();
+		}
+				
 		
 		rttr.addFlashAttribute("insertSuccessMessage", "성공"); //addFlashAttribute 한번만 보여주고 감
 		mv.setViewName("redirect:/manage/empList");
@@ -203,52 +330,71 @@ private SignService signService;
 		return mv;
 	}
 	
-	/* 사원등록- 도장사진 등록 */
-	@PostMapping("/signRegist")
-	public ModelAndView registSign(ModelAndView mv, HttpServletRequest request, @RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
-		
-		int memberCode = 5;
-		
-		String root = System.getProperty("user.dir");
-		System.out.println("root까지의 경로 : " + root);
-		
-		String filePath = root + "/src/main/resources/static/images/sign";
-		
-		File mkdir = new File(filePath);	
-		if(!mkdir.exists()) {
-			mkdir.mkdirs();
-		}
-		
-		String originFileName = singleFile.getOriginalFilename();
-		System.out.println("원본 이름 : " + originFileName);
-		String ext = originFileName.substring(originFileName.lastIndexOf("."));
-		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
-		System.out.println("변경한 이름 : " + saveName);
-		
-		try {
-			singleFile.transferTo(new File(filePath + "/" + saveName));
-			
-			SignDTO sign = new SignDTO(); 
-			sign.setEmpNo(memberCode);
-			sign.setSignName(originFileName);
-			sign.setSignSavedName(saveName);
-			sign.setSignPath(filePath);
-			
-			signService.registSign(sign);
-			
-			rttr.addFlashAttribute("successMessage", "도장 사진 등록을 성공하셨습니다.");
-			mv.setViewName("redirect:/manage/empList");
-			
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-			
-			/* 실패 시 파일 삭제 */
-			new File(filePath + "/" + saveName).delete();
-			rttr.addFlashAttribute("successMessage", "도장 사진 등록을 실패하셨습니다.");
-			mv.setViewName("redirect:/main");
-		}
-		
-		return mv;
-	}
+//	/* 사원등록- 도장사진 등록 */
+//	@PostMapping("/signRegist")
+//	public ModelAndView registSign(ModelAndView mv, HttpServletRequest request, @RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
+//		
+//		int memberCode = 5;
+//		
+//		String root = System.getProperty("user.dir");
+//		System.out.println("root까지의 경로 : " + root);
+//		
+//		String filePath = root + "/src/main/resources/static/images/sign";
+//		
+//		File mkdir = new File(filePath);	
+//		if(!mkdir.exists()) {
+//			mkdir.mkdirs();
+//		}
+//		
+//		String originFileName = singleFile.getOriginalFilename();
+//		System.out.println("원본 이름 : " + originFileName);
+//		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+//		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
+//		System.out.println("변경한 이름 : " + saveName);
+//		
+//		try {
+//			singleFile.transferTo(new File(filePath + "/" + saveName));
+//			
+//			SignDTO sign = new SignDTO(); 
+//			sign.setEmpNo(memberCode);
+//			sign.setSignName(originFileName);
+//			sign.setSignSavedName(saveName);
+//			sign.setSignPath(filePath);
+//			
+//			signService.registSign(sign);
+//			
+//			rttr.addFlashAttribute("successMessage", "도장 사진 등록을 성공하셨습니다.");
+//			mv.setViewName("redirect:/manage/empList");
+//			
+//		} catch (IllegalStateException | IOException e) {
+//			e.printStackTrace();
+//			
+//			/* 실패 시 파일 삭제 */
+//			new File(filePath + "/" + saveName).delete();
+//			rttr.addFlashAttribute("successMessage", "도장 사진 등록을 실패하셨습니다.");
+//			mv.setViewName("redirect:/main");
+//		}
+//		
+//		return mv;
+//	}
+	
+//	/* 사원 상세조회 - 도장사진 조회 */
+//	@GetMapping("/empSign")
+//	public ModelAndView empDetailSign(ModelAndView mv, @PathVariable String empNo){
+//		
+//		int number = Integer.valueOf(empNo);
+//		
+//		System.out.println("컨트롤러에서       " + empNo);
+//		System.out.println("컨트롤러에서       " + number);
+//		
+//		SignDTO mysign  = signService.searchEmpSign(number);
+//		
+//		System.out.println("컨트롤러에서       ddddddddddddddddddddddddddddddddd" + mysign);
+//		
+//		mv.addObject("mysign", mysign);
+//		mv.setViewName("manage/employee/empDetail");
+//		return mv;
+//	}
+
 }
  

@@ -37,6 +37,9 @@
                 <td>사원명</td>
                 <td th:text="${ emp.empName }"></td>
                 <td rowspan="4"></td>
+             <!--    <td rowspan="4" th:text="${ sign.signSavedName }"></td> -->
+    <td rowspan="4"><img class="card-img-top" th:src="@{/images/sign/{signFile}(signFile=${mySign.signSavedName})}"  
+                alt="Card image" style="width:50%; height: 250px; margin-left: 25%;"></td>
                 <td rowspan="4"></td>
               </tr>
                <tr class="deemp2">

@@ -20,7 +20,7 @@
         <hr><br><br>
         <h5 class="mb-4" id="sub-text">사원 정보등록</h5>
         <br>
-	<form action="/manage/insert" method="post" id="insertForm">
+	<form action="/manage/insert" method="post" id="insertForm" encType="multipart/form-data">
         <div class="emp detail list"> 
           <table border="2">
             <thead>
@@ -78,12 +78,10 @@
                 </select> 
               </td>
                 <td>
-                   <form action="/manage/signRegist" method="post" encType="multipart/form-data">
-			     	 <input type="file" name="singleFile" style="margin-left: 25%;" value="등록하기" required>
-			     	 <input type="submit" class="btn btn-primary" value="등록하기" style="margin-right: 30%; margin-top:10px;">
-		          </form>
+			     	 <input type="file" name="proFile" style="margin-left: 25%;">
                 </td>
-                <td><input type="file" name="uploadfile" multiple></td>
+                <td><input type="file" name="nameFile" style="margin-left: 25%;">
+                </td>
               </tr>
               <tr class="deemp2">
                 <td>성별</td>
@@ -121,7 +119,7 @@
               </tr>
               <tr class="deemp2">
                 <td>상세주소</td>
-                <td colspan="3"><input type="text" class="input1" name="empDAddress" required></td>
+                <td colspan="3"><input type="text" id="address1" class="input1" name="empDAddress" required></td>
               </tr>
               <tr class="deemp2">
                 <td>초기비밀번호</td>
@@ -130,13 +128,11 @@
             </tbody>
           </table><br>
           <div id="newBookDiv">
-          	<button id="insert" class="modify btn updateBtn">등록하기</button>
+          	<button id="insert" type="submit" class="modify btn updateBtn">등록하기</button>
           	<button id="button" class="list btn backBtn">목록으로</button>
           </div>
           </div>
          </form> 
-       </div> <!------------------------ 본문 종료---------------------------->
-     </div> <!-- 헤더 포함 본문 종료 div-->
      <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
 		const searchZipCode = document.getElementById("searchZipCode");
