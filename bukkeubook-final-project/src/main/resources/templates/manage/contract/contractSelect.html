@@ -43,4 +43,24 @@
         </div> <!------------------------ 본문 종료---------------------------->
      
 </body>
+
+	<script>
+			const successMessage = "[[${ successMessage }]]";
+
+
+			if(successMessage){
+				Swal.fire({
+	                icon: 'success',
+	                title: 'Success!',
+	                text: '정상적으로 근로계약서가 등록 처리되었습니다!',
+	            })
+			}else{
+				Swal.fire({
+	                icon: 'error',
+	                title: 'error!',
+	                text: '실패',
+	            })
+			}
+			
+	</script>
 </html>
