@@ -38,18 +38,6 @@ public class BookController extends HttpServlet{
 		this.bookService = bookService;
 	}
 	
-	/*
-	 * @GetMapping("/lookupList") public ModelAndView findBookList(ModelAndView mv)
-	 * {
-	 * 
-	 * List<BookDTO> bookList = bookService.findBookList();
-	 *  mv.addObject("bookList", bookList); 
-	 *  mv.setViewName("books/bookList/lookupList");
-	 * 
-	 * return mv; }
-	 */
-	
-	
 	@GetMapping("/lookupList")
 	public ModelAndView searchPage(HttpServletRequest request, ModelAndView mv) {
 
@@ -116,10 +104,10 @@ public class BookController extends HttpServlet{
 	}
 	
 	@PostMapping("/bookInfoUpdate2")
-	public ModelAndView modifyBookInfo(BookDTO bookDTO, ModelAndView mv) {
+	public ModelAndView modifyBookInfo(BookDTO bookDTO, ModelAndView mv, RedirectAttributes rttr) {
 		
 		bookService.modifyBookInfo(bookDTO);
-		
+		rttr.addFlashAttribute("updateSuccessMessage", "성공");
 		mv.setViewName("redirect:/book/lookupList");
 		return mv;
 	};
@@ -133,7 +121,9 @@ public class BookController extends HttpServlet{
 	}
 	
 	@PostMapping("/newBook2")
-	public ModelAndView insertBook(BookDTO bookDTO, ModelAndView mv, RedirectAttributes rttr) {
+	public ModelAndView insertBook(BookDTO bookDTO, ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request) {
+//		String cate = request.getParameter("cate");
+//		System.out.println(cate);
 		bookService.insertBook(bookDTO);
 		rttr.addFlashAttribute("insertSuccessMessage", "성공");
 		mv.setViewName("redirect:/book/lookupList");
@@ -201,7 +191,6 @@ public class BookController extends HttpServlet{
 
 		String searchCondition = request.getParameter("searchCondition");
 		String searchValue = request.getParameter("searchValue");
-
 		int totalCount = bookService.selectTotalCount(searchCondition, searchValue);
 
 		int limit = 10;		
@@ -378,7 +367,8 @@ public class BookController extends HttpServlet{
 				stockBookList.setBkNo(no);
 				stockBookList.setStockBkAmount(amount);
 				stockBookList.setStCode(stCode);
-				
+				System.out.println(no);
+				System.out.println(amount);
 				bookService.inputReceipt2(stockBookList);
 				
 				BookDTO bookDTO = new BookDTO();
@@ -394,7 +384,6 @@ public class BookController extends HttpServlet{
 	
 	@GetMapping("/damageList")
 	public ModelAndView damageList(HttpServletRequest request, ModelAndView mv) {
-		
 		String currentPage = request.getParameter("currentPage");
 		int pageNo = 1;
 

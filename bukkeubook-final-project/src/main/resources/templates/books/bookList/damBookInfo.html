@@ -23,6 +23,10 @@
                     <td th:text="${ book.no }"></td>
                 </tr>
                 <tr th:each="book : ${ bookList }">
+                    <th>도서 명</th>
+                    <td th:text="${ book.name }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
                     <th>저자</th>
                     <td th:text="${ book.author }"></td>
                 </tr>
@@ -36,16 +40,16 @@
                     <td th:text="${ book.price }"></td>
                 </tr>
                 <tr th:each="book : ${ bookList }">
-                    <th>훼손도서 수량</th>
-                    <td><input id="damAmount" type="number" th:value="${ book.damBook.damAmount }" style="text-align: center;"></td>
+                    <th>현재 훼손도서 수량</th>
+                    <td th:text="${ book.damBook.damAmount }"></td>
                 </tr>
-                <!-- <tr th:each="book : ${ bookList }">
-                    <th>매장 재고수량 조정</th>
-                    <td><input id="storeStAmount" type="number" th:value="${ book.storeSt }" style="text-align: center;"></td>
-                </tr> -->
                 <tr th:each="book : ${ bookList }">
-                    <th>창고 재고수량 조정</th>
-                    <td><input id="whStAmount" type="number" th:value="${ book.whSt }" style="text-align: center;"></td>
+                    <th>추가수량</th>
+                    <td><input id="damAmount" type="number" min=0 value=0 style="text-align: center;"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>창고 재고수량</th>
+                    <td><input id="whStAmount" type="number" th:value="${ book.whSt }" min=0 readonly style="text-align: center;"></td>
                 </tr>
                 
                 
@@ -67,16 +71,16 @@
 	                title: '',
 	                text: '분류와 검색어를 입력 해 주세요.',
 	            })} else if(inputFind.value == ""){
-          	Swal.fire({
-	                icon: 'question',
-	                title: '',
-	                text: '검색어를 입력 해 주세요.',
+          				Swal.fire({
+		                icon: 'question',
+		                title: '',
+		                text: '검색어를 입력 해 주세요.',
 	                
           	})} else if(searchCondition.value == 'select'){
-         		Swal.fire({
- 	                icon: 'question',
- 	                title: '',
- 	                text: '분류를 선택 해 주세요.',
+	         			Swal.fire({
+	 	                icon: 'question',
+	 	                title: '',
+	 	                text: '분류를 선택 해 주세요.',
           	})} else{
 		   			$('#loginForm').submit();
 	   			};
@@ -86,23 +90,70 @@
     	 var bb = [[${bookList[0].damBook.damAmount}]]
     	 var cc = $('#damAmount').val();
     	 var dd = $('#whStAmount').val();
+    	 var ee = [[${bookList[0].whSt}]];
     	 $("#damAmount").change(function(){
 	    	 cc = $('#damAmount').val();
 	    	 dd = $('#whStAmount').val();
-	    	 console.log(cc);
-	    	 console.log(dd);
-	    	 if(dd < 0){
+	    	 if(cc > ee){
 				Swal.fire({
                 icon: 'warning',
                 title: 'warning!',
-                text: '창고 재고수량 이하로 훼손도서 등록이 불가능합니다.',
-           		})
-			 }
+                text: '창고 재고수량 이상으로 훼손도서 등록이 불가능합니다.',
+                
+           		});
+				$('#damAmount').val(ee);
+				cc = $('#damAmount').val();
+	    	 }
 		 });
     	 $('.updateBtn').click(function(){
-    		 location.href='/book/damAmountUpdate?no=' + aa + '&amount=' + bb + '&updateAmount=' + cc;
+    		 if( $('#damAmount').val() == '' ){
+     			Swal.fire({
+                     icon: 'question',
+                     title: '도서정보가 부족합니다!',
+                     text: '수량을 입력 해 주세요.',
+                 }).then(function(){
+ 	    			$('#damAmount').focus();
+                 })
+    				return false;
+     		};
+     		
+    		location.href='/book/damAmountUpdate?no=' + aa + '&amount=' + bb + '&updateAmount=' + cc;
      	 });
-    	 
+    	 $('#damAmount').blur(function(){
+			if( $('#damAmount').val() < 0 ){
+				Swal.fire({
+                     icon: 'warning',
+                     title: '도서정보가 부족합니다!',
+                     text: '음수는 입력 불가능 합니다.',
+                 }).then(function(){
+					$('#damAmount').val(0);
+ 	    			$('#damAmount').focus();
+                 })
+    				return false;
+			 }
+			if( $('#damAmount').val() < 0 ){
+				Swal.fire({
+                     icon: 'warning',
+                     title: '도서정보가 부족합니다!',
+                     text: '음수는 입력 불가능 합니다.',
+                 }).then(function(){
+					$('#damAmount').val(0);
+ 	    			$('#damAmount').focus();
+                 })
+    				return false;
+			}
+			const prodExp = /^[0-9]{1,6}$/;
+			if(!prodExp.test($('#damAmount').val())){
+				Swal.fire({
+                  icon: 'warning',
+                  title: '도서정보가 부족합니다!',
+                  text: '숫자만 입력 가능합니다.',
+              }).then(function(){
+              		$('#damAmount').val(0);
+	    			$('#damAmount').focus();
+              })
+			}
+		 })
     	 
       </script>
       
@@ -127,22 +178,5 @@
 		});
 	 </script>
 	 
-	 /*<script th:inline=javascript>
-	 
-		var a = $("#damAmount").val();
-	    var b = $("#whStAmount").val();
-	    var c = 0;
-	    var d = [[${ bookList[0].damBook.damAmount }]]
-	    
-	    
-	    	$("#damAmount").change(function(){
-		        a = $("#damAmount").val();
-			    if(a > d){
-			        var e = $('#whStAmount').val($('#whStAmount').val()-1);
-			        b = $("#whStAmount").val();
-				    }
-		    });
-	    
-	</script>*/
 </body>
 </html>
