@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.ProfPhotoDTO;
+import com.bukkeubook.book.manage.model.dto.SignDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.Emp;
 import com.bukkeubook.book.manage.model.entity.EmpAndDept;
@@ -169,12 +170,22 @@ public class EmpService {
 		
 	}
 	
-	/* 사원 수정 화면 이동 */
+	/* 사원 수정 화면 이동 - 지영 작업 중*/
 //	public EmpAndDeptDTO findEmpInfo(int empNo) {
 //		
-//		EmpAndDeptDTO 
+//		EmpAndDeptDTO empInfo = 
 //		
 //		
+//		return null;
+//	}
+//
+//	public List<ProfPhotoDTO> findEmpProfile(int empNo) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	public SignDTO findEmpSign(int empNo) {
+//		// TODO Auto-generated method stub
 //		return null;
 //	}
 
