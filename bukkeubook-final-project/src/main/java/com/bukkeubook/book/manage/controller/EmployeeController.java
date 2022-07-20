@@ -1,17 +1,16 @@
 package com.bukkeubook.book.manage.controller;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,18 +26,23 @@ import com.bukkeubook.book.manage.model.dto.SignDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.service.EmpService;
 import com.bukkeubook.book.manage.model.service.SignService;
+import com.bukkeubook.book.mypage.model.dto.ProfPhotoDTO;
+import com.bukkeubook.book.mypage.model.service.MyInfoModifyService;
 
 
 @Controller
 @RequestMapping("/manage") 
 public class EmployeeController {
 
-private EmpService empService;
-private SignService signService;
+private final EmpService empService;
+private final SignService signService;
+private final MyInfoModifyService myInfoModifyService;
 	
 	@Autowired
-	public EmployeeController(EmpService empService) {
+	public EmployeeController(EmpService empService, SignService signService, MyInfoModifyService myInfoModifyService) {
 		this.empService = empService;
+		this.signService = signService;
+		this.myInfoModifyService = myInfoModifyService;
 	}
 	
 	@GetMapping("personnelSelect")
@@ -113,11 +117,18 @@ private SignService signService;
 		System.out.println("컨트롤러에서       " + empNo);
 		System.out.println("컨트롤러에서       " + number);
 		
+		/* 회원 개인의 정보 가져와서 상세페이지에 뿌리기 */
 		EmpAndDeptDTO emp  = empService.searchEmpDetail(number);
 		
-		System.out.println("컨트롤러에서       ddddddddddddddddddddddddddddddddd" + emp);
+		/* 마이페이지 service에서 사원 사진 조회 */
+		List<ProfPhotoDTO> profile = myInfoModifyService.findMyProfile(number);
+		
+		/* 마이페이지 service에서 도장 사진 조회, 같은 이름으로 임포트 불가능해서 이렇게 설정.*/
+		com.bukkeubook.book.mypage.model.dto.SignDTO mySign = myInfoModifyService.findMySign(number);
 		
 		mv.addObject("emp", emp);
+		mv.addObject("profile", profile);
+		mv.addObject("mySign", mySign);
 		mv.setViewName("manage/employee/empDetail");
 		return mv;
 	}

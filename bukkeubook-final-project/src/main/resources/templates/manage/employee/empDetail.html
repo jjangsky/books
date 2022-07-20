@@ -30,14 +30,14 @@
               <tr class="deemp2">
                 <td>사원번호</td>
                 <td th:text="${ emp.empNo }"></td>
-                <td class="deempfile">도장사진</td>
-                <td class="deempfile">프로필사진</td>
+                <td class="deempfile">프로필 사진</td>
+                <td class="deempfile">서명 사진</td>
               </tr>
               <tr class="deemp2">
                 <td>사원명</td>
                 <td th:text="${ emp.empName }"></td>
-                <td rowspan="4"></td>
-                <td rowspan="4"></td>
+                <td rowspan="5"><img th:src="@{/images/mypage/{imageFile}(imageFile=${profile[0].photoSavedName})}" width="200px"/></td>
+                <td rowspan="5"><img th:src="@{/images/sign/{signFile}(signFile=${mySign.signSavedName})}" width="200px"></td>
               </tr>
                <tr class="deemp2">
                 <td>부서명</td>
