@@ -172,6 +172,7 @@ public class EmpService {
 	
 	
 	/* 지영 - 사원 수정 화면 이동 */
+	/* push for comment */
 //	public EmpAndDeptDTO findEmpInfo(int empNo) {
 //		
 //		EmpAndDeptDTO empInfo = 
