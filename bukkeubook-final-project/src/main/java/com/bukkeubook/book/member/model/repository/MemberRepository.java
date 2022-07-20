@@ -1,12 +1,14 @@
 package com.bukkeubook.book.member.model.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.bukkeubook.book.manage.model.dto.EmpDTO;
+import com.bukkeubook.book.main.model.entity.EmpAndMemberRole;
 import com.bukkeubook.book.manage.model.entity.Emp;
 
-public interface MemberRepository extends JpaRepository<Emp, Integer> {
+public interface MemberRepository extends JpaRepository<EmpAndMemberRole, Integer> {
 
-	EmpDTO findByempNo(int empNo2);
+	EmpAndMemberRole findByEmpNo(int empNo2);
 
 }
