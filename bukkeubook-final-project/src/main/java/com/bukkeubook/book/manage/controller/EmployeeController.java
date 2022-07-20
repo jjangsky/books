@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
+import com.bukkeubook.book.manage.model.dto.ProfPhotoDTO;
 import com.bukkeubook.book.manage.model.dto.SignDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.service.EmpService;
@@ -249,7 +250,7 @@ private SignService signService;
 		return mv;
 	}
 	
-//	/* 프로필 사진 등록 */
+	/* 프로필 사진 등록 */
 //	@PostMapping("/insert")
 //	public ModelAndView registMyProfile(ModelAndView mv, HttpServletRequest request, @RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
 //		

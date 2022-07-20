@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
+import com.bukkeubook.book.manage.model.dto.ProfPhotoDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.Emp;
 import com.bukkeubook.book.manage.model.entity.EmpAndDept;
+import com.bukkeubook.book.manage.model.entity.ProfPhoto;
+import com.bukkeubook.book.manage.model.repository.EmpAndProfileRepository;
 import com.bukkeubook.book.manage.model.repository.EmpRepository;
 import com.bukkeubook.book.manage.model.repository.OriginalEmpRepository;
 
@@ -26,12 +28,14 @@ import com.bukkeubook.book.manage.model.repository.OriginalEmpRepository;
 public class EmpService {
 	
 	private final EmpRepository empRepository;
+	private final EmpAndProfileRepository empAndProfileRepository;
 	private final OriginalEmpRepository originEmpRepository;
 	private final ModelMapper modelMapper;		//앤티티를 디티오로 변환 or 디티오를 엔티티로 변환
 
 	@Autowired
-	public EmpService(EmpRepository empRepository, ModelMapper modelMapper,OriginalEmpRepository originEmpRepository) {
+	public EmpService(EmpRepository empRepository, EmpAndProfileRepository empAndProfileRepository, ModelMapper modelMapper,OriginalEmpRepository originEmpRepository) {
 		this.empRepository = empRepository;
+		this.empAndProfileRepository = empAndProfileRepository;
 		this.modelMapper = modelMapper;
 		this.originEmpRepository = originEmpRepository;
 	}
@@ -134,26 +138,26 @@ public class EmpService {
 //	@Transactional
 //	public void inputProfile(ProfPhotoDTO profile) {
 //		
-//		empAndProfileRepository.input(modelMapper.map(profile, ProfPhotoAndEmp.class));
+//		empAndProfileRepository.input(modelMapper.map(profile, ProfPhoto.class));
 //	}
 	
-	@Transactional
-	public void modifyEmp(EmpDTO emp) {
-	
-		Emp foundemp = originEmpRepository.findById(emp.getEmpNo()).get();
-	
-		foundemp.setEmpName(emp.getEmpName());
-		foundemp.setDeptCode(emp.getDeptCode());
-		foundemp.setEmpJobCode(emp.getEmpJobCode());
-		foundemp.setEmpPhone1(emp.getEmpPhone1());
-		foundemp.setEmpPhone2(emp.getEmpPhone2());
-		foundemp.setEmpPhone3(emp.getEmpPhone3());
-		foundemp.setEmpEmail(emp.getEmpEmail());
-		foundemp.setEmpAddress(emp.getEmpAddress());
-		foundemp.setEmpDAddress(emp.getEmpDAddress());
-		foundemp.setEmpPwd(emp.getEmpPwd());
-	
-	}
+//	@Transactional
+//	public void modifyEmp(EmpDTO emp) {
+//	
+//		Emp foundemp = originEmpRepository.findById(emp.getEmpNo()).get();
+//	
+//		foundemp.setEmpName(emp.getEmpName());
+//		foundemp.setDeptCode(emp.getDeptCode());
+//		foundemp.setEmpJobCode(emp.getEmpJobCode());
+//		foundemp.setEmpPhone1(emp.getEmpPhone1());
+//		foundemp.setEmpPhone2(emp.getEmpPhone2());
+//		foundemp.setEmpPhone3(emp.getEmpPhone3());
+//		foundemp.setEmpEmail(emp.getEmpEmail());
+//		foundemp.setEmpAddress(emp.getEmpAddress());
+//		foundemp.setEmpDAddress(emp.getEmpDAddress());
+//		foundemp.setEmpPwd(emp.getEmpPwd());
+//	
+//	}
 
 
 

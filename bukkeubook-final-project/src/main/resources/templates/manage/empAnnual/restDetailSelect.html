@@ -62,7 +62,8 @@
 	          <button type="button" class="cancle btn" th:onclick="location.href='/empAnnual/restSelect'">목록으로</button>
 	          <button type="button" class="cancle btn" onclick="delayClick()">반려</button>
           
-    <script th:inline="javascript">  
+    <script th:inline="javascript"> 
+   
      $().ready(function accessClick() {
 		    $(".access.btn").click(function () {
 		        Swal.fire({
@@ -99,7 +100,7 @@
        }
      </script>
      
-<!--      이건 더 찾아보자... 값을 어떻게 넘기냐 증말 어휴 */
+<!--      
               	 const delay = ""
               $(".cancle.btn").click(function () {
                  	Swal.fire({

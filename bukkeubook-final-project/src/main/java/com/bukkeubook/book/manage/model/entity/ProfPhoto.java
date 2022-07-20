@@ -2,10 +2,7 @@ package com.bukkeubook.book.manage.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity(name="ProfPhoto")
@@ -23,7 +20,7 @@ public class ProfPhoto {
 //	EMP_NO	NUMBER	사원번호
 	
 	@Id
-	@Column(name = "SAL_NO")
+	@Column(name = "PHOTO_NO")
 	private int photoNo;
 	
 	@Column(name = "PHOTO_ORIG_NAME")

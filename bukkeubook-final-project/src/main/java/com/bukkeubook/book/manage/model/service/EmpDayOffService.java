@@ -57,10 +57,21 @@ public class EmpDayOffService {
   
 	/****************************************************************/
    /* 휴가 신청이랑 연결된 트랜잭션 */
-	@Transactional
-	public List<AppVacationDTO> findAppVacByEmpNo (int vacNo) {
-		List<AppVacation> appVacList = appVacRepository.findAppVacByNo(vacNo);
-		return appVacList.stream().map(appVac -> modelMapper.map(appVac, AppVacationDTO.class)).collect(Collectors.toList());
+//	@Transactional
+//	public List<AppVacationDTO> findAppVacByEmpNo (int vacNo) {
+//		List<AppVacation> appVacList = appVacRepository.findAppVacByNo(vacNo);
+//		return appVacList.stream().map(appVac -> modelMapper.map(appVac, AppVacationDTO.class)).collect(Collectors.toList());
+//	}
+   @Transactional
+   public void updateAppVac(AppVacationDTO appVacationDTO) {
+		
+	   AppVacation appVac = appVacRepository.findByVacNo(appVacationDTO.getVacNo());
+	   appVac.setVacStatus(appVacationDTO.getVacStatus());
+	   appVac.setVacStartDate(appVacationDTO.getVacStartDate());
+	   appVac.setVacEndDate(appVacationDTO.getVacEndDate());
+	   
+	   System.out.println("^____________________^" + appVac);
+		
 	}
 
    @Transactional
@@ -74,6 +85,7 @@ public class EmpDayOffService {
 	   System.out.println("^____________________^" + dayOff);
 	}
 	/****************************************************************/
+
 }
 
 

@@ -103,27 +103,37 @@ public class EmpAnnualController {
 	
 	/* 승인 클릭시 연차 횟수 차감 트랜잭션 */
 	// 이 경우 연결되는 Service는 DayOffService에서 처리...
-	@GetMapping("/empDayOffUpdate")
-	public ModelAndView updateAppVacInfo(AppVacationDTO appVacationDTO, int vacNo, ModelAndView mv) {
-		
-		List<AppVacationDTO> appVacList = empDayOffService.findAppVacByEmpNo(vacNo);
-		
-		mv.addObject("appVacList", appVacList);							// 보내는 객체 설정
-		mv.setViewName("/empDayOffDetail/{vacNo}");	// 리턴할 페이지 설정
-		
-		System.out.println("나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?" + vacNo);
-		
-		return mv;
-	}
+//	@GetMapping("/empDayOffUpdate")
+//	public ModelAndView updateAppVacInfo(AppVacationDTO appVacationDTO, int vacNo, ModelAndView mv) {
+//		
+//		List<AppVacationDTO> appVacList = empDayOffService.findAppVacByEmpNo(vacNo);
+//		
+//		mv.addObject("appVacList", appVacList);		// 보내는 객체 설정
+//		mv.setViewName("/empDayOffDetail/{vacNo}");	// 리턴할 페이지 설정
+//		
+//		System.out.println("나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?" + vacNo);
+//		
+//		return mv;
+//	}
 	
-	@PostMapping("/empDayOffUpdate2")
-	public ModelAndView modifyDayOffInfo(DayOffDTO dayOffDTO, ModelAndView mv, RedirectAttributes rttr) {
-		
-		empDayOffService.modifyDayOffInfo(dayOffDTO);
-		rttr.addFlashAttribute("updateSuccessMessage", "성공");
-		mv.setViewName("redirect:/empDayOffDetail/{empNo}/");
-		return mv;
-	}
+//	@PostMapping("/empDayOffUpdate")
+//	public ModelAndView updateAppVac(AppVacationDTO appVacationDTO, int vacNo, ModelAndView mv, RedirectAttributes rttr) {
+//		
+//		empDayOffService.updateAppVac(appVacationDTO);
+//		rttr.addFlashAttribute("updateSuccessMessage", "성공");
+//		mv.setViewName("redirect:/empAnnual/restDetailSelect/?vacNo=" + appVacationDTO.getVacNo());
+//		return mv;
+//		
+//	}
+	
+//	@PostMapping("/empDayOffUpdate2")
+//	public ModelAndView modifyDayOffInfo(DayOffDTO dayOffDTO, ModelAndView mv, RedirectAttributes rttr) {
+//		
+//		empDayOffService.modifyDayOffInfo(dayOffDTO);
+//		rttr.addFlashAttribute("updateSuccessMessage", "성공");
+//		mv.setViewName("redirect:/empDayOff/empDayOffDetail");
+//		return mv;
+//	}
 
 	/****************************************************************/
 	
