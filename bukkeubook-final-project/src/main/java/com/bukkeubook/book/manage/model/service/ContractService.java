@@ -64,5 +64,12 @@ public class ContractService {
 		laborContFileRepository.save(modelMapper.map(contFile, LaborContFile.class));
 		
 	}
+	
+	/* 근로계약서 내역 삭제 */
+	public void deleteCont(int contNo) {
+		
+		empContRepository.deleteById(contNo);
+		
+	}
 
 }

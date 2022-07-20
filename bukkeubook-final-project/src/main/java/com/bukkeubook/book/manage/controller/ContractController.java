@@ -142,5 +142,17 @@ public class ContractController {
 		return mv;
 	}
 	
+	/* 근로계약서 삭제 (내역 삭제이므로 파일에는 지장X)*/
+	@PostMapping("deleteCont")
+	public ModelAndView deleteContract(ModelAndView mv, RedirectAttributes rttr, String contNo, HttpServletRequest request) {
+		
+		int no = Integer.valueOf(request.getParameter(contNo));
+		
+		contractService.deleteCont(no);
+		
+		
+		return mv;
+	}
+	
 
 }
