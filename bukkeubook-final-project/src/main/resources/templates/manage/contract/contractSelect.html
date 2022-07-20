@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" th:href="@{/css/manage/empAnnual/rest.css}">
+<link rel="stylesheet" th:href="@{css/manage/employee/persist.css}">
+<link rel="stylesheet" th:href="@{/css/manage/employee/Listdetail.css}">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+    <h2 class="mb-4" id="main-text">사원관리</h2>
+    <hr><br><br>
+    <h5 class="mb-4" id="sub-text">근로계약서 조회</h5>
+    <br>
+         <div id="textTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">파일번호</th>
+                <th class="th1">개시일</th>
+                <th class="th1">계약서명</th>
+                <th class="th1">이름</th>
+                <th class="th1">만료일</th>
+                <th class="th1">작성자</th>
+              </tr>
+              <tr class="tr1" th:each="cont : ${ contList }" th:onclick="'location.href = \'' + @{/cont/findDetailCont/(no=${cont.contNo})} + '\''">
+                <td th:text="${ cont.contNo }"></td>
+                <td th:text="${ cont.contDate }"></td>
+                <td th:text="${ cont.contName }"></td>
+                <td th:text="${ cont.emp.empName }"></td>
+                <td th:text="${ cont.contExpDate }"></td>
+                <td th:text="${ cont.contWriter }"></td>
+              </tr>
+          </table>
+			
+		
+        </div> <!------------------------ 본문 종료---------------------------->
+     
+</body>
+</html>

@@ -86,6 +86,8 @@ public class AttendController {
 		mv.setViewName("mypage/myAttend");
 		
 		return mv;
+		
+		
 	}
 	
 	/* 출근 등록 버튼 */
