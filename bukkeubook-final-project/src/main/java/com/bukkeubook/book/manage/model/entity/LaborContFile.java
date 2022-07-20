@@ -4,12 +4,21 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /* TBL_CONT_FILE 테이블에 매칭될 ContFile 엔티티 클래스도 만들어 보기 */
 @Entity
 @Table(name = "TBL_CONT_FILE")
+@SequenceGenerator(
+		name = "CFILE_SEQ_GENERATOR",
+		sequenceName = "SEQ_C_FILE_NO",
+		initialValue = 1,
+		allocationSize = 1
+		)
 public class LaborContFile implements Serializable{
 
 	private static final long serialVersionUID = -1131043244610318049L;
@@ -19,12 +28,14 @@ public class LaborContFile implements Serializable{
 //	C_FILE_NO			NUMBER				파일번호
 //	C_FILE_ORIG_NAME	VARCHAR2(255 BYTE)	파일본명
 //	C_FILE_SAVED_NAME	VARCHAR2(255 BYTE)	변경된파일명
-//	C_FILE_STATE		VARCHAR2(31 BYTE)	파일상태
 //	C_FILE_PATH			VARCHAR2(255 BYTE)	저장경로
-//	C_FILE_EXT			VARCHAR2(15 BYTE)	확장자
 //	CONT_NO				NUMBER				근로계약번호
 	
 	@Id
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "CFILE_SEQ_GENERATOR"
+	)
 	@Column(name = "C_FILE_NO")
 	private int cfileNo;
 	
@@ -34,14 +45,9 @@ public class LaborContFile implements Serializable{
 	@Column(name = "C_FILE_SAVED_NAME")
 	private String cfileSavedName;
 	
-	@Column(name = "C_FILE_STATE")
-	private String cfileState;
-	
 	@Column(name = "C_FILE_PATH")
 	private String cfilePath;
 	
-	@Column(name = "C_FILE_EXT")
-	private String cfileExt;
 	
 	@Column(name = "CONT_NO")
 	private int contNo;
@@ -49,14 +55,11 @@ public class LaborContFile implements Serializable{
 	public LaborContFile() {
 	}
 
-	public LaborContFile(int cfileNo, String cfileOrigName, String cfileSavedName, String cfileState, String cfilePath,
-			String cfileExt, int contNo) {
+	public LaborContFile(int cfileNo, String cfileOrigName, String cfileSavedName, String cfilePath, int contNo) {
 		this.cfileNo = cfileNo;
 		this.cfileOrigName = cfileOrigName;
 		this.cfileSavedName = cfileSavedName;
-		this.cfileState = cfileState;
 		this.cfilePath = cfilePath;
-		this.cfileExt = cfileExt;
 		this.contNo = contNo;
 	}
 
@@ -84,28 +87,12 @@ public class LaborContFile implements Serializable{
 		this.cfileSavedName = cfileSavedName;
 	}
 
-	public String getCfileState() {
-		return cfileState;
-	}
-
-	public void setCfileState(String cfileState) {
-		this.cfileState = cfileState;
-	}
-
 	public String getCfilePath() {
 		return cfilePath;
 	}
 
 	public void setCfilePath(String cfilePath) {
 		this.cfilePath = cfilePath;
-	}
-
-	public String getCfileExt() {
-		return cfileExt;
-	}
-
-	public void setCfileExt(String cfileExt) {
-		this.cfileExt = cfileExt;
 	}
 
 	public int getContNo() {
@@ -123,9 +110,11 @@ public class LaborContFile implements Serializable{
 	@Override
 	public String toString() {
 		return "LaborContFile [cfileNo=" + cfileNo + ", cfileOrigName=" + cfileOrigName + ", cfileSavedName="
-				+ cfileSavedName + ", cfileState=" + cfileState + ", cfilePath=" + cfilePath + ", cfileExt=" + cfileExt
-				+ ", contNo=" + contNo + "]";
+				+ cfileSavedName + ", cfilePath=" + cfilePath + ", contNo=" + contNo + "]";
 	}
+	
+	
+
 	
 	
 }
