@@ -15,6 +15,7 @@ public class StockListAndEmpDTO {
 	private String stType;			// 입고구분
 	private int empNo;				// 사원번호
 	private Emp emp;
+	
 	public StockListAndEmpDTO() {
 	}
 	public StockListAndEmpDTO(int stCode, Date stDate, String stType, int empNo, Emp emp) {

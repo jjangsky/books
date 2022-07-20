@@ -72,7 +72,7 @@ public class BookController extends HttpServlet{
 
 		for(BookDTO book : bookList) {
 			System.out.println(book);
-		}
+		} 
 
 		mv.addObject("bookList", bookList);
 		mv.addObject("selectCriteria", selectCriteria);

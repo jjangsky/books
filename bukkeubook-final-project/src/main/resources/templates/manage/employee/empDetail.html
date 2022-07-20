@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <head>
      <title>Insert title here</title>
     <meta charset="utf-8">
@@ -13,9 +13,9 @@
       <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
   </head>
 <body>
-	<div th:replace="/common/topSideBar.html"></div>
+   <div th:replace="/common/topSideBar.html"></div>
 <!-- <h2 class="mb-4" id="main-text">사원관리</h2> -->
-	<h2 class="mb-4" id="main-text">사원관리</h2>
+   <h2 class="mb-4" id="main-text">사원관리</h2>
         <hr><br><br>
         <h5 class="mb-4" id="sub-text">사원 상세 정보조회</h5>
         <br>
@@ -36,8 +36,8 @@
               <tr class="deemp2">
                 <td>사원명</td>
                 <td th:text="${ emp.empName }"></td>
-                <td rowspan="5"><img th:src="@{/images/mypage/{imageFile}(imageFile=${profile[0].photoSavedName})}" width="200px"/></td>
-                <td rowspan="5"><img th:src="@{/images/sign/{signFile}(signFile=${mySign.signSavedName})}" width="200px"></td>
+               <td rowspan="5"><img th:src="@{/images/mypage/{imageFile}(imageFile=${profile[0].photoSavedName})}" width="200px"/></td>
+                <td rowspan="5"><img th:src="@{/images/sign/{signFile}(signFile=${mySign.signSavedName})}" width="200px"></td> 
               </tr>
                <tr class="deemp2">
                 <td>부서명</td>
@@ -61,7 +61,7 @@
               </tr>
               <tr class="deemp" >
                 <td>생년월일</td>
-				 <td colspan="3" th:text="${ emp.empBirth }">
+             <td colspan="3" th:text="${ emp.empBirth }">
               </tr>
               <tr class="deemp" >
                 <td>연락처</td>
@@ -88,29 +88,28 @@
             </tbody>
           </table><br>
           <div id="newBookDiv">
-<!--           	<button id="update" class="modify btn updateBtn">수정하기</button> -->
-          	<button type="submit" class="modify btn" 
-          	th:onclick="'location.href = \'' +  @{/manage/detailUpdate/{empNo}(empNo=${emp.empNo})} + '\''">수정하기</button>
-           	<button type="button" class="list btn backBtn">목록으로</button> 
-		  </div>            
+             <button type="submit" class="modify btn" 
+             th:onclick="'location.href = \'' +  @{/manage/detailUpdate/{empNo}(empNo=${emp.empNo})} + '\''">수정하기</button>
+              <button type="button" class="list btn backBtn">목록으로</button> 
+        </div>            
         </div>
- 		 <script th:inline="javascript">
- 		 $('.backBtn').click(function(){
-	    		window.history.back(); 
-	    	 }); 
-		 
-  		  $('.updateBtn').click(function(){
-		     }); 
-		  const updateSuccessmessage = "[[${updateSuccessMessage}]]"
-		    			
-		  if(updateSuccessmessage){
-		    	Swal.fire({
-		    		icon: 'success',
-		    		title: 'Success!',
-		    		text: '정보수정이 성공적으로 완료되었습니다!',
-		    	})
-		  } 
+        <script th:inline="javascript">
+        $('.backBtn').click(function(){
+             window.history.back(); 
+           }); 
+       
+          $('.updateBtn').click(function(){
+           }); 
+        const updateSuccessmessage = "[[${updateSuccessMessage}]]"
+                   
+        if(updateSuccessmessage){
+             Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '정보수정이 성공적으로 완료되었습니다!',
+             })
+        } 
 
       </script>
-	</body>
+   </body>
 </html>

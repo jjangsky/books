@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bukkeubook.book.manage.model.dto.SignDTO;
+import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
+import com.bukkeubook.book.manage.model.entity.EmpAndDept;
 import com.bukkeubook.book.manage.model.entity.Sign;
 import com.bukkeubook.book.manage.model.repository.EmpSignRepository;
 
@@ -30,5 +32,15 @@ public class SignService {
 		empSignRepository.save(modelMapper.map(sign, Sign.class));
 		
 	}
+
+	/* 도장 사진 등록(회원 가입) */
+	@Transactional
+	public void registEmpNameFile(SignDTO signFile) {
+		
+		empSignRepository.save(modelMapper.map(signFile, Sign.class));
+		
+	}
+
+
 
 }
