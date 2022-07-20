@@ -28,6 +28,7 @@ import com.bukkeubook.book.document.model.entity.Approver;
 import com.bukkeubook.book.document.model.entity.Dept;
 import com.bukkeubook.book.document.model.entity.DocAppVacation;
 import com.bukkeubook.book.document.model.entity.DocCancelVacation;
+import com.bukkeubook.book.document.model.entity.DocSign;
 import com.bukkeubook.book.document.model.entity.Document;
 import com.bukkeubook.book.document.model.entity.DocumentAndEmpAndFormCate;
 import com.bukkeubook.book.document.model.entity.Emp;
@@ -42,6 +43,7 @@ import com.bukkeubook.book.document.model.repository.CancelVacationRepository;
 import com.bukkeubook.book.document.model.repository.DocDeptRepository;
 import com.bukkeubook.book.document.model.repository.DocEmpFormCateRepository;
 import com.bukkeubook.book.document.model.repository.DocEmpRepository;
+import com.bukkeubook.book.document.model.repository.DocSignRepository;
 import com.bukkeubook.book.document.model.repository.DocumentRepository;
 import com.bukkeubook.book.document.model.repository.FormCateRepository;
 import com.bukkeubook.book.document.model.repository.SubmitDocumentRepository;
@@ -60,6 +62,7 @@ public class DocServiceImpl implements DocService{
 	private final ApproverRepository2 approverRepository2;
 	private final AppVacationRepository vacationRepository;
 	private final CancelVacationRepository cancelVacaRepository;
+	private final DocSignRepository signRepository;
 	private final ModelMapper modelMapper;
 	
 	@Autowired
@@ -74,7 +77,8 @@ public class DocServiceImpl implements DocService{
 						  ApproverRepository2 approverRepository2,
 						  SubmitDocumentRepository subDocRepository,
 						  AppVacationRepository vacationRepository,
-						  CancelVacationRepository cancelVacaRepository) {
+						  CancelVacationRepository cancelVacaRepository,
+						  DocSignRepository signRepository) {
 		this.docDeptRepository = docDeptRepository;
 		this.modelMapper = modelMapper;
 		this.formRepository = formRepository;
@@ -87,6 +91,7 @@ public class DocServiceImpl implements DocService{
 		this.subDocRepository = subDocRepository;
 		this.vacationRepository = vacationRepository;
 		this.cancelVacaRepository = cancelVacaRepository;
+		this.signRepository = signRepository;
 	}
 
 	/* 전자결재 작성 첫화면 - 양식 고르기 */
@@ -482,6 +487,7 @@ public class DocServiceImpl implements DocService{
 		/* 결재자의 결재상태 업데이트 */
 		/* 해당문서 정보 조회 */
 		Document document = docRepository.findById(doc.getDocNo1()).get();
+		document.setTagCnt1(doc.getTagCnt1());
 		
 		/* 결재자가 몇단계인지 확인, 결재자 정확한 튜플 가져오기 위한 결재경로 번호 가져오기 */
 		AppRoot appRoot =  appRootRepository.findByDocNo(doc.getDocNo1());
@@ -831,6 +837,20 @@ public class DocServiceImpl implements DocService{
 		} 
 		
 		
+	}
+
+	/* 결재시 서명 도장 이름 가져오기 */
+	@Override
+	public List<String> findSignName(int empNo) {
+
+		List<String> list = new ArrayList<>();
+		
+		DocSign sign = signRepository.findById(empNo).get();
+		
+		String signName = sign.getSignSavedName();
+		list.add(signName);
+		
+		return list;
 	}
 
 	

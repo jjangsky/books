@@ -69,7 +69,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 	@GetMapping("docInboxList")
 	public ModelAndView toDocList(ModelAndView mv) {
 		
-		int empNo = 1;
+		int empNo = 7;
 		
 		List<InboxListDTO> all = docService.findInboxAllList(empNo);
 		
@@ -568,20 +568,15 @@ public class DocumentController {		// 전자결재 컨트롤러
 		System.out.println(doc);
 		System.out.println("statusApp   " + statusApp);
 		
-		int empNo = 1;
-		String signRoot = "";
-		
+		int empNo = 7;
 		
 		if("승인".equals(statusApp)) {
 			docService.updateDocStatusApprove(empNo,doc,statusApp);
-			// 해당 도장 경로 가져오자
 		} else {
 			docService.updateDocStatusRefuse(empNo,doc,statusApp);
-			// 반려 도장 경로 가져오자
 		}
-		mv.addObject(signRoot, signRoot);
 		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
-		mv.setViewName("redirect:/document/test");
+		mv.setViewName("redirect:/document/docInboxList");
 		
 		return mv;
 		
@@ -592,11 +587,23 @@ public class DocumentController {		// 전자결재 컨트롤러
 	@ResponseBody
 	public List<String> checkButton(@PathVariable String no){
 		
-		int empNo = 1;
+		int empNo = 7;
 		int docNo = Integer.valueOf(no);
 		
 		List<String> list = docService.checkDoc(docNo,empNo);
 		
 		return list;
+	}
+	
+	/* 결재시 서명 도장 이름 가져오기 */
+	@GetMapping(value = {"findSignName"}, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public List<String> findSignName() {
+		
+		int empNo = 7;
+		
+		List<String> signName = docService.findSignName(empNo);
+		
+		return signName;
 	}
 }
