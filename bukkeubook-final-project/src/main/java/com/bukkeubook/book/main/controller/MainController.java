@@ -25,10 +25,9 @@ public class MainController {
 		this.mypageService = mypageService;
 	}
 	
-	/* 메인페이지 이동 */
-	@GetMapping("/main")
+
+	@PostMapping("/main")
 	public ModelAndView main(ModelAndView mv) {
-		
 		int memberCode = 5;
 		
 		/* 최근 전사게시판 우선순위 5개 조회 */
@@ -43,16 +42,30 @@ public class MainController {
 		mv.addObject("boardList", boardList);
 		mv.addObject("calendar", calendar);
 		mv.setViewName("/main");
-		
-		
 		return mv;
 	}
+	
 	@GetMapping("/")
+	public String login() {
+		return "/member/login";
+	};
+	
+	@GetMapping("/main")
 	public ModelAndView main2(ModelAndView mv) {
-//		mv.setViewName("/member/test");
-		mv.setViewName("/member/login");
+		int memberCode = 5;
+		
+		/* 최근 전사게시판 우선순위 5개 조회 */
+		List<BoardAndCateDTO> boardList = mainService.findBoardList();
+		System.out.println(boardList);
+		
+		/* 주간 캘린더 일정 전체 조회 (마이페이지 Service 재활용)*/
+		List<CalendarDTO> calendar = mypageService.findMyCalendar(memberCode);
+		System.out.println(calendar);
+		
+		
+		mv.addObject("boardList", boardList);
+		mv.addObject("calendar", calendar);
+		mv.setViewName("/main");
 		return mv;
 	}
-	
-	
 }
