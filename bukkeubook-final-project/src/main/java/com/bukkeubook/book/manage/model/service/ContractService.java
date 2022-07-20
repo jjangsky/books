@@ -3,6 +3,8 @@ package com.bukkeubook.book.manage.model.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -52,6 +54,7 @@ public class ContractService {
 	}
 	
 	/* 근로계약서 테이블 insert */
+	@Transactional
 	public void registNewContract(EmpContDTO empCont) {
 		
 		empContRepository.save(modelMapper.map(empCont, EmpCont.class));
@@ -59,6 +62,7 @@ public class ContractService {
 	}
 	
 	/* 근로계약서 파일 업로드 */
+	@Transactional
 	public void registNewFile(ContFileDTO contFile) {
 		
 		laborContFileRepository.save(modelMapper.map(contFile, LaborContFile.class));
@@ -66,9 +70,10 @@ public class ContractService {
 	}
 	
 	/* 근로계약서 내역 삭제 */
-	public void deleteCont(int contNo) {
+	@Transactional
+	public void deleteCont(int No) {
 		
-		empContRepository.deleteById(contNo);
+		empContRepository.deleteByContNo(No);
 		
 	}
 

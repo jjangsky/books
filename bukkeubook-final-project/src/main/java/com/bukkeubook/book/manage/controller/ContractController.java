@@ -143,13 +143,16 @@ public class ContractController {
 	}
 	
 	/* 근로계약서 삭제 (내역 삭제이므로 파일에는 지장X)*/
-	@PostMapping("deleteCont")
-	public ModelAndView deleteContract(ModelAndView mv, RedirectAttributes rttr, String contNo, HttpServletRequest request) {
+	@GetMapping("deleteCont")
+	public ModelAndView deleteContract(ModelAndView mv, RedirectAttributes rttr, String no, HttpServletRequest request) {
 		
-		int no = Integer.valueOf(request.getParameter(contNo));
+		System.out.println(no);
+		int code = Integer.parseInt(request.getParameter("no"));
+		System.out.println(code);
+		contractService.deleteCont(code);
 		
-		contractService.deleteCont(no);
-		
+		rttr.addFlashAttribute("successMessage", "삭제 성공");
+		mv.setViewName("redirect:/manage/contract/contractSelect");
 		
 		return mv;
 	}

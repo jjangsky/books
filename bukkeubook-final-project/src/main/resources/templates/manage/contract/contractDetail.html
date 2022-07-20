@@ -21,13 +21,11 @@
 
        <div id="textTable" style="text-align:-webkit-center">
         <h5 class="mb-4" id="sub-text"></h5>
-        	<form action="/cont/deleteCont" method="post" id="deleteContForm">
+        	<form>
             <table id="bookInfoTable" border="1">
                 <tr>
                     <th>근로계약서 번호</th>
-                    <td th:text="${ empCont.contNo }">
-                    	<input type="hidden" th:value="${empCont.contNo}" name="contNo">
-                    </td>
+                    <td th:text="${ empCont.contNo }"></td>
                 </tr>
                 <tr>
                     <th>사원 이름</th>
@@ -65,7 +63,7 @@
           
           <br><br>
           
-          <script>
+          <script th:inline="javascript">
           $("#deleteBtn").click(function(){
 				Swal.fire({
 		            title: '근로계약서를 삭제 하시겠습니까?',
@@ -78,7 +76,9 @@
 		            cancelButtonText: '취소'
 		        }).then((result) => {
 		            if (result.isConfirmed) {
-	            		$("#deleteContForm").submit();
+		            	
+		            	const no = [[${empCont.contNo}]];
+						location.href= '/cont/deleteCont/?no=' + no 
 		            }
 		        })
 		});
