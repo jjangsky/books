@@ -1,6 +1,7 @@
 package com.bukkeubook.book.books.model.dto;
 
 public class StockBookListAndBookAndStockListAndEmpDTO {
+	
 //	STOCK_BK_LIST_CODE	NUMBER	목록번호
 //	ST_CODE	NUMBER	입고 코드
 //	BK_NO	VARCHAR2(100 BYTE)	도서코드

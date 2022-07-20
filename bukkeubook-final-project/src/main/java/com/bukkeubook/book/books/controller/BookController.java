@@ -38,18 +38,6 @@ public class BookController extends HttpServlet{
 		this.bookService = bookService;
 	}
 	
-	/*
-	 * @GetMapping("/lookupList") public ModelAndView findBookList(ModelAndView mv)
-	 * {
-	 * 
-	 * List<BookDTO> bookList = bookService.findBookList();
-	 *  mv.addObject("bookList", bookList); 
-	 *  mv.setViewName("books/bookList/lookupList");
-	 * 
-	 * return mv; }
-	 */
-	
-	
 	@GetMapping("/lookupList")
 	public ModelAndView searchPage(HttpServletRequest request, ModelAndView mv) {
 
@@ -84,7 +72,7 @@ public class BookController extends HttpServlet{
 
 		for(BookDTO book : bookList) {
 			System.out.println(book);
-		}
+		} 
 
 		mv.addObject("bookList", bookList);
 		mv.addObject("selectCriteria", selectCriteria);
@@ -203,7 +191,6 @@ public class BookController extends HttpServlet{
 
 		String searchCondition = request.getParameter("searchCondition");
 		String searchValue = request.getParameter("searchValue");
-
 		int totalCount = bookService.selectTotalCount(searchCondition, searchValue);
 
 		int limit = 10;		
@@ -380,7 +367,8 @@ public class BookController extends HttpServlet{
 				stockBookList.setBkNo(no);
 				stockBookList.setStockBkAmount(amount);
 				stockBookList.setStCode(stCode);
-				
+				System.out.println(no);
+				System.out.println(amount);
 				bookService.inputReceipt2(stockBookList);
 				
 				BookDTO bookDTO = new BookDTO();

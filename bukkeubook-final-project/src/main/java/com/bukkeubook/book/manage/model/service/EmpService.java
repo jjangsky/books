@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -170,12 +168,16 @@ public class EmpService {
 		
 		
 	}
-
+	
+	
+	/* 지영 - 사원 수정 화면 이동 */
+//	public EmpAndDeptDTO findEmpInfo(int empNo) {
+//		
+//		EmpAndDeptDTO 
+//		
+//		
+//		return null;
+//	}
 
 
 }
-
-
-	
-
-	

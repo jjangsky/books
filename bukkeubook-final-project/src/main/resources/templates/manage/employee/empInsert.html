@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <head>
      <title>Insert title here</title>
     <meta charset="utf-8">
@@ -16,11 +16,11 @@
 </head>
 <body>
 <div th:replace="/common/topSideBar.html"></div>
-	<h2 class="mb-4" id="main-text">사원관리</h2>
+   <h2 class="mb-4" id="main-text">사원관리</h2>
         <hr><br><br>
         <h5 class="mb-4" id="sub-text">사원 정보등록</h5>
         <br>
-	<form action="/manage/insert" method="post" id="insertForm" encType="multipart/form-data">
+   <form action="/manage/insert" method="post" id="insertForm" encType="multipart/form-data">
         <div class="emp detail list"> 
           <table border="2">
             <thead>
@@ -78,7 +78,7 @@
                 </select> 
               </td>
                 <td>
-			     	 <input type="file" name="proFile" style="margin-left: 25%;">
+                  <input type="file" name="proFile" style="margin-left: 25%;">
                 </td>
                 <td><input type="file" name="nameFile" style="margin-left: 25%;">
                 </td>
@@ -128,48 +128,48 @@
             </tbody>
           </table><br>
           <div id="newBookDiv">
-          	<button id="insert" type="submit" class="modify btn updateBtn">등록하기</button>
-          	<button id="button" class="list btn backBtn">목록으로</button>
+             <button id="insert" type="submit" class="modify btn updateBtn">등록하기</button>
+             <button id="button" class="list btn backBtn">목록으로</button>
           </div>
           </div>
          </form> 
      <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script>
-		const searchZipCode = document.getElementById("searchZipCode");
-			
-			searchZipCode.onclick = function() {
-			
-				new daum.Postcode({
-					oncomplete: function(data){
-						document.getElementById("zipCode").value = data.zonecode;
-						document.getElementById("address1").value = data.address;
-	
-					}
-				}).open();
-			}
-	</script>
-	<script th:inline="javascript">
-    	  $().ready(function () {
-		    $(".backBtn").click(function () {
-		        Swal.fire({
-		            title: '작성내용이 모두 사라집니다.',
-		            text: "진행 하시겠습니까?",
-		            icon: 'warning',
-		            showCancelButton: true,
-		            confirmButtonColor: '#c5bfbf',
-		            cancelButtonColor: '#c5bfbf',
-		            confirmButtonText: '확인',
-		            cancelButtonText: '취소'
-		        }).then((result) => {
-		            if (result.isConfirmed) {
-		                window.history.back();
-		            }
-		        })
-		    });
-		});
-		
+   <script>
+      const searchZipCode = document.getElementById("searchZipCode");
+         
+         searchZipCode.onclick = function() {
+         
+            new daum.Postcode({
+               oncomplete: function(data){
+                  document.getElementById("zipCode").value = data.zonecode;
+                  document.getElementById("address1").value = data.address;
+   
+               }
+            }).open();
+         }
+   </script>
+   <script th:inline="javascript">
+         $().ready(function () {
+          $(".backBtn").click(function () {
+              Swal.fire({
+                  title: '작성내용이 모두 사라집니다.',
+                  text: "진행 하시겠습니까?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#c5bfbf',
+                  cancelButtonColor: '#c5bfbf',
+                  confirmButtonText: '확인',
+                  cancelButtonText: '취소'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      window.history.back();
+                  }
+              })
+          });
+      });
+      
         $("#insert").click(function () {
-			$("#insertForm").submit();
+         $("#insertForm").submit();
         });
       </script> 
 </body>

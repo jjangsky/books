@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymleaf.org">
-
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -13,9 +11,11 @@
 <link rel="stylesheet" th:href="@{/css/manage/empAnnual/rest.css}">
 <link rel="stylesheet" th:href="@{css/manage/employee/persist.css}">
 <link rel="stylesheet" th:href="@{/css/manage/employee/Listdetail.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
 <div th:replace="/common/topSideBar.html"></div>
+
     <h2 class="mb-4" id="main-text">사원관리</h2>
     <hr><br><br>
     <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/empAnnual/restSelect">휴가조회</a></h5>
@@ -23,7 +23,7 @@
         <div class="searchEmp"  align="center">
             <form class="search select" action="/empAnnual/restSelect" method="get">
               <select class="searchback" th:with="searchCondition = ${selectCriteria.searchCondition}"
-				id="searchCondition" name="searchCondition">
+            id="searchCondition" name="searchCondition">
                 <option value="select">None</option>
                 <option value="Dept" th:selected="${ searchCondition } == 'Dept'">부서</option>
                 <!-- <option value="EmpNo" th:selected="${ searchCondition } == 'EmpNo'">사번</option> -->
@@ -52,26 +52,41 @@
                 <td th:text="${ appVac.empAndDept.getDept().getDeptName() }"></td>
                 <td th:text="${ appVac.empAndDept.getEmpNo() }"></td>
                 <td th:text="${ appVac.empAndDept.getEmpName() }"></td>
-                <td th:text="${ appVac.vacStartDate  }"></td>
+                <td th:text="${ appVac.vacStartDate }"></td>
                 <td th:text="${ appVac.vacEndDate }"></td>
-                <td><button type="button" class="detail contents" th:onclick="'location.href = \'' + @{/manage/restDetailSelect/(vacNo=${appVac.vacNo})} + '\''" >상세보기</button></td>
-              </tr>
+                <td><button type="button" class="detail contents" th:onclick="'location.href = \'' + @{/empAnnual/restDetailSelect/(vacNo=${appVac.vacNo})} + '\''">상세보기</button></td>
           </table><br><br>
           <div th:replace="manage/empAnnual/restPaging.html"></div>
           <br><br>
-			
-			
-          <!--<div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#">1</a>
-            <a class="active" href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#">6</a>
-            <a href="#">&raquo;</a>
-          </div> -->
-        </div>
-     
+
+      </div> <!-- 헤더 포함 본문 종료 div-->
+<!--        <script th:inline="javascript">  
+     $().ready(function () {
+		    $(".backBtn").click(function () {
+		        Swal.fire({
+		            title: '작성내용이 모두 사라집니다.',
+		            text: "진행 하시겠습니까?",
+		            icon: 'warning',
+		            showCancelButton: true,
+		            confirmButtonColor: '#c5bfbf',
+		            cancelButtonColor: '#c5bfbf',
+		            confirmButtonText: '승인',
+		            cancelButtonText: '취소'
+		        }).then((result) => {
+		            if (result.isConfirmed) {
+		                window.history.back();
+		            }
+		        })
+		    });
+		});
+		
+        $(".updateBtn").click(function () {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '수정이 성공적으로 완료되었습니다!',
+            });
+        });
+        </script>  --> 
 </body>
 </html>

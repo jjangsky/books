@@ -15,8 +15,10 @@ public class ProfPhotoDTO {
 	private String photoSavedName;
 	private String photoSavedPath;
 	private int empNo;
+	
 	public ProfPhotoDTO() {
 	}
+	
 	public ProfPhotoDTO(int photoNo, String photoOrigName, String photoSavedName, String photoSavedPath, int empNo) {
 		this.photoNo = photoNo;
 		this.photoOrigName = photoOrigName;
@@ -24,6 +26,7 @@ public class ProfPhotoDTO {
 		this.photoSavedPath = photoSavedPath;
 		this.empNo = empNo;
 	}
+	
 	public int getPhotoNo() {
 		return photoNo;
 	}
@@ -54,6 +57,7 @@ public class ProfPhotoDTO {
 	public void setEmpNo(int empNo) {
 		this.empNo = empNo;
 	}
+	
 	@Override
 	public String toString() {
 		return "ProfPhotoDTO [photoNo=" + photoNo + ", photoOrigName=" + photoOrigName + ", photoSavedName="

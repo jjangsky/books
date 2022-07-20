@@ -15,6 +15,7 @@ public class ProfPhotoDTO {
 	private String photoSavedName;
 	private String photoSavedPath;
 	private int empNo;
+	
 	public ProfPhotoDTO() {
 	}
 	public ProfPhotoDTO(int photoNo, String photoOrigName, String photoSavedName, String photoSavedPath, int empNo) {

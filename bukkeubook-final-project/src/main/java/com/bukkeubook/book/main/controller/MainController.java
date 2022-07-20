@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bukkeubook.book.main.model.service.MainService;
@@ -25,7 +26,7 @@ public class MainController {
 	}
 	
 	/* 메인페이지 이동 */
-	@GetMapping("/")
+	@GetMapping("/main")
 	public ModelAndView main(ModelAndView mv) {
 		
 		int memberCode = 5;
@@ -46,4 +47,11 @@ public class MainController {
 		
 		return mv;
 	}
+	@GetMapping("/")
+	public ModelAndView main2(ModelAndView mv) {
+		mv.setViewName("/main/login/loginMain");
+		return mv;
+	}
+	
+	
 }

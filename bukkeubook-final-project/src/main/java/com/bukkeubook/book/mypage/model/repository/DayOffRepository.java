@@ -9,5 +9,5 @@ import com.bukkeubook.book.manage.model.entity.DayOff;
 public interface DayOffRepository extends JpaRepository<DayOff, Integer>{
 
 	List<DayOff> findAllByEmpNo(int memberCode);
-
+	
 }

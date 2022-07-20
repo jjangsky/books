@@ -2,6 +2,7 @@ package com.bukkeubook.book.common.paging;
 
 public class SelectCriteria implements java.io.Serializable {
 	
+	private static final long serialVersionUID = -4572043634548356601L;
 	private int pageNo;					//요청한 페이지 번호
 	private int totalCount;				//전체 게시물 수
 	private int limit;					//한 페이지에 보여줄 게시물 수

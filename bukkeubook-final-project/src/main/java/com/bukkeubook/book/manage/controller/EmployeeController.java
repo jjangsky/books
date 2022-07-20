@@ -5,13 +5,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,16 +36,17 @@ private EmpService empService;
 private SignService signService;
 	
 	@Autowired
-	public EmployeeController(EmpService empService) {
+	public EmployeeController(EmpService empService, SignService signService) {
 		this.empService = empService;
+		this.signService = signService;
 	}
 	
+	/* 인원현황 조회 */
 	@GetMapping("personnelSelect")
 	public String perconnelList() {
 		return "manage/employee/personnelSelect";
 	}
 
-	
 	/* 사원조회 , 페이징, 검색기능 */
 	@GetMapping("/empList")
 	public ModelAndView searchPage(HttpServletRequest request, ModelAndView mv) {  //ModelAndView 뷰 리졸버의 역할 _리턴할 페이지 설정 , 보내는객체
@@ -106,25 +105,6 @@ private SignService signService;
 	}
 		
 	/* 사원 상세조회 */
-//	@GetMapping("/oneEmp/{empNo}")
-//	public ModelAndView empDetail(ModelAndView mv, @PathVariable String empNo){
-//		
-//		int number = Integer.valueOf(empNo);
-//		
-//		System.out.println("컨트롤러에서       " + empNo);
-//		System.out.println("컨트롤러에서       " + number);
-//		
-//		EmpAndDeptDTO emp  = empService.searchEmpDetail(number);
-//		
-//		System.out.println("컨트롤러에서       ddddddddddddddddddddddddddddddddd" + emp);
-//		
-//		mv.addObject("emp", emp);
-//		mv.setViewName("manage/employee/empDetail");
-//		return mv;
-//		
-//	}
-	
-	/* 사원 상세조회 */
 	@GetMapping("/oneEmp/{empNo}")
 	public ModelAndView empDetail(ModelAndView mv, @PathVariable String empNo){
 		
@@ -134,15 +114,13 @@ private SignService signService;
 		System.out.println("컨트롤러에서       " + number);
 		
 		EmpAndDeptDTO emp  = empService.searchEmpDetail(number);
-		SignDTO mysign  = signService.searchEmpSign(number);
 		
 		System.out.println("컨트롤러에서       ddddddddddddddddddddddddddddddddd" + emp);
 		
 		mv.addObject("emp", emp);
-		mv.addObject("mysign", mysign);
 		mv.setViewName("manage/employee/empDetail");
 		return mv;
-				
+		
 	}
 	
 	/* 퇴사사원 상세조회 */
@@ -172,22 +150,7 @@ private SignService signService;
 		return mv;
 	}
 	
-//	@PostMapping("insert")
-//	public ModelAndView insertEmp(EmpDTO empDTO, ModelAndView mv, RedirectAttributes rttr) {
-//		
-//		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
-//		
-//		String empAddress = "주소";
-//		empDTO.setEmpAddress(empAddress);	
-//		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
-//		
-//		empService.insertNewEmp(empDTO);
-//		
-//		rttr.addFlashAttribute("insertSuccessMessage", "성공"); //addFlashAttribute 한번만 보여주고 감
-//		mv.setViewName("redirect:/manage/empList");
-//		return mv;
-//	};	
-	
+
 	/* 신규 직원 등록  insert */
 	@PostMapping("insert")
 	public ModelAndView insertEmp(EmpDTO empDTO, ModelAndView mv, HttpServletRequest request, 
@@ -291,6 +254,35 @@ private SignService signService;
 		mv.setViewName("redirect:/manage/empList");
 		return mv;
 	};	
+
+	/* 지영님이 하는중 -> 사원 상세페이지에서 수정 페이지로 화면이동 */ 
+//	/* 사원 상세페이지에서 수정 페이지로 화면이동 */
+//	@GetMapping("/empDetailUpdate")
+//	public ModelAndView findEmpDetailModify(ModelAndView mv, int empNo) {
+//		
+//		/* 개인정보 조회 */
+////		int memberCode = 5;
+//		EmpAndDeptDTO empInfo = empService.findEmpInfo(empNo);
+//		System.out.println(empInfo);
+//		
+//		/* 프로필 사진 조회 */
+//		List<ProfPhotoDTO> profile = empService.findEmpProfile(empNo);
+//		System.out.println(profile);
+//		
+//		/* 현재 서명 조회 */
+//		SignDTO empSign = empService.findEmpSign(empNo);
+//		System.out.println(empSign);
+//		
+//		mv.addObject("empInfo", empInfo);
+//		mv.addObject("profile", profile);
+//		mv.addObject("empSign", empSign);
+//		mv.setViewName("manage/detailUpdat/{empNo}");
+//		
+//		return mv;
+//	}
+	
+	
+	/***********************************************************************************************/	
 	
 	/* 사원정보 수정 */
 	@GetMapping("detailUpdate/{empNo}")
@@ -308,93 +300,27 @@ private SignService signService;
 
 	}
 
-	@PostMapping("/empDetailUpdate")
-	public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, EmpDTO emp
-								, String deptCode1, String deptCode2
-								, String empJobCode1, String empJobCode2) {
-		System.out.println("TEST");
-		System.out.println("TEST");
-		System.out.println("TEST");
-		System.out.println("TEST");
-		System.out.println("TEST         "+ deptCode1);
-		System.out.println("TEST         "+ deptCode2);
-		System.out.println("TEST         "+ empJobCode1);
-		System.out.println("TEST         "+ empJobCode2);
-		System.out.println("emp11111111111111111111111111111" + emp);
-		
-//		empService.modifyEmp(emp); 
-		
-		rttr.addFlashAttribute("updateSuccessMessage", "성공");
-//		mv.setViewName("redirect:/");
-		mv.setViewName("redirect:/manage/empList");
-		return mv;
-	}
-	
-//	/* 사원등록- 도장사진 등록 */
-//	@PostMapping("/signRegist")
-//	public ModelAndView registSign(ModelAndView mv, HttpServletRequest request, @RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
-//		
-//		int memberCode = 5;
-//		
-//		String root = System.getProperty("user.dir");
-//		System.out.println("root까지의 경로 : " + root);
-//		
-//		String filePath = root + "/src/main/resources/static/images/sign";
-//		
-//		File mkdir = new File(filePath);	
-//		if(!mkdir.exists()) {
-//			mkdir.mkdirs();
-//		}
-//		
-//		String originFileName = singleFile.getOriginalFilename();
-//		System.out.println("원본 이름 : " + originFileName);
-//		String ext = originFileName.substring(originFileName.lastIndexOf("."));
-//		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
-//		System.out.println("변경한 이름 : " + saveName);
-//		
-//		try {
-//			singleFile.transferTo(new File(filePath + "/" + saveName));
-//			
-//			SignDTO sign = new SignDTO(); 
-//			sign.setEmpNo(memberCode);
-//			sign.setSignName(originFileName);
-//			sign.setSignSavedName(saveName);
-//			sign.setSignPath(filePath);
-//			
-//			signService.registSign(sign);
-//			
-//			rttr.addFlashAttribute("successMessage", "도장 사진 등록을 성공하셨습니다.");
-//			mv.setViewName("redirect:/manage/empList");
-//			
-//		} catch (IllegalStateException | IOException e) {
-//			e.printStackTrace();
-//			
-//			/* 실패 시 파일 삭제 */
-//			new File(filePath + "/" + saveName).delete();
-//			rttr.addFlashAttribute("successMessage", "도장 사진 등록을 실패하셨습니다.");
-//			mv.setViewName("redirect:/main");
-//		}
-//		
-//		return mv;
-//	}
-	
-//	/* 사원 상세조회 - 도장사진 조회 */
-//	@GetMapping("/empSign")
-//	public ModelAndView empDetailSign(ModelAndView mv, @PathVariable String empNo){
-//		
-//		int number = Integer.valueOf(empNo);
-//		
-//		System.out.println("컨트롤러에서       " + empNo);
-//		System.out.println("컨트롤러에서       " + number);
-//		
-//		SignDTO mysign  = signService.searchEmpSign(number);
-//		
-//		System.out.println("컨트롤러에서       ddddddddddddddddddddddddddddddddd" + mysign);
-//		
-//		mv.addObject("mysign", mysign);
-//		mv.setViewName("manage/employee/empDetail");
-//		return mv;
-//	}
+	   @PostMapping("/empDetailUpdate")
+	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, EmpDTO emp
+	                        , String deptCode1, String deptCode2
+	                        , String empJobCode1, String empJobCode2) {
+	      System.out.println("TEST");
+	      System.out.println("TEST");
+	      System.out.println("TEST");
+	      System.out.println("TEST");
+	      System.out.println("TEST         "+ deptCode1);
+	      System.out.println("TEST         "+ deptCode2);
+	      System.out.println("TEST         "+ empJobCode1);
+	      System.out.println("TEST         "+ empJobCode2);
+	      System.out.println("emp11111111111111111111111111111" + emp);
+	      
+//	      empService.modifyEmp(emp); 
+	      
+	      rttr.addFlashAttribute("updateSuccessMessage", "성공");
+//	      mv.setViewName("redirect:/");
+	      mv.setViewName("redirect:/manage/empList");
+	      return mv;
+	   }
 
 }
  

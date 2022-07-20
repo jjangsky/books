@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-@Entity(name="EmpProfile")
+@Entity(name="EmpProfile11")
 @Table(name = "TBL_PROF_PHOTO")
 @SequenceGenerator(
 		name = "PHOTO_SEQ_GENERATOR",

@@ -40,6 +40,7 @@ public class EmpDTO implements Serializable{
 	private String empEndYn;
 	private String empPwd;
 	private int deptCode;
+	
 	public EmpDTO() {
 		super();
 	}
