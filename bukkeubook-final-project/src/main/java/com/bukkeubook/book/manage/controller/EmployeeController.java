@@ -1,6 +1,8 @@
 package com.bukkeubook.book.manage.controller;
 
 import java.io.File;
+
+
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -26,21 +28,26 @@ import com.bukkeubook.book.manage.model.dto.SignDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.service.EmpService;
 import com.bukkeubook.book.manage.model.service.SignService;
+import com.bukkeubook.book.mypage.model.service.MyInfoModifyService;
 
 
 @Controller
 @RequestMapping("/manage") 
 public class EmployeeController {
 
-private EmpService empService;
-private SignService signService;
+private final EmpService empService;
+private final SignService signService;
+private final MyInfoModifyService myInfoModifyService;
 	
 	@Autowired
-	public EmployeeController(EmpService empService, SignService signService) {
+	public EmployeeController(EmpService empService, SignService signService, MyInfoModifyService myInfoModifyService) {
 		this.empService = empService;
 		this.signService = signService;
+		this.myInfoModifyService = myInfoModifyService;
+
 	}
 	
+	/* 인원현황 조회 */
 	@GetMapping("personnelSelect")
 	public String perconnelList() {
 		return "manage/employee/personnelSelect";
@@ -112,13 +119,21 @@ private SignService signService;
 		System.out.println("컨트롤러에서       " + empNo);
 		System.out.println("컨트롤러에서       " + number);
 		
+		/* 회원 개인의 정보 가져와서 상세페이지에 뿌리기 */
 		EmpAndDeptDTO emp  = empService.searchEmpDetail(number);
 		
-		System.out.println("컨트롤러에서       ddddddddddddddddddddddddddddddddd" + emp);
+		/* 마이페이지 service에서 사원 사진 조회 */
+		List<com.bukkeubook.book.mypage.model.dto.ProfPhotoDTO> profile = myInfoModifyService.findMyProfile(number);
+		
+		/* 마이페이지 service에서 도장 사진 조회, 같은 이름으로 임포트 불가능해서 이렇게 설정.*/
+		com.bukkeubook.book.mypage.model.dto.SignDTO mySign = myInfoModifyService.findMySign(number);
 		
 		mv.addObject("emp", emp);
+		mv.addObject("profile", profile);
+		mv.addObject("mySign", mySign);
 		mv.setViewName("manage/employee/empDetail");
 		return mv;
+		
 	}
 	
 	/* 퇴사사원 상세조회 */
@@ -148,6 +163,7 @@ private SignService signService;
 		return mv;
 	}
 	
+
 	/* 신규 직원 등록  insert */
 	@PostMapping("insert")
 	public ModelAndView insertEmp(EmpDTO empDTO, ModelAndView mv, HttpServletRequest request, 
@@ -251,8 +267,8 @@ private SignService signService;
 		mv.setViewName("redirect:/manage/empList");
 		return mv;
 	};	
-	/***********************************************************************************************/
-	
+
+	/* 지영님이 하는중 -> 사원 상세페이지에서 수정 페이지로 화면이동 */ 
 //	/* 사원 상세페이지에서 수정 페이지로 화면이동 */
 //	@GetMapping("/empDetailUpdate")
 //	public ModelAndView findEmpDetailModify(ModelAndView mv, int empNo) {
@@ -280,6 +296,7 @@ private SignService signService;
 	
 	
 	/***********************************************************************************************/	
+	
 	/* 사원정보 수정 */
 	@GetMapping("detailUpdate/{empNo}")
 	public ModelAndView empUpdatePage(ModelAndView mv,  @PathVariable String empNo) {
@@ -296,27 +313,27 @@ private SignService signService;
 
 	}
 
-	@PostMapping("/empDetailUpdate")
-	public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, EmpDTO emp
-								, String deptCode1, String deptCode2
-								, String empJobCode1, String empJobCode2) {
-		System.out.println("TEST");
-		System.out.println("TEST");
-		System.out.println("TEST");
-		System.out.println("TEST");
-		System.out.println("TEST         "+ deptCode1);
-		System.out.println("TEST         "+ deptCode2);
-		System.out.println("TEST         "+ empJobCode1);
-		System.out.println("TEST         "+ empJobCode2);
-		System.out.println("emp11111111111111111111111111111" + emp);
-		
-//		empService.modifyEmp(emp); 
-		
-		rttr.addFlashAttribute("updateSuccessMessage", "성공");
-//		mv.setViewName("redirect:/");
-		mv.setViewName("redirect:/manage/empList");
-		return mv;
-	}
+	   @PostMapping("/empDetailUpdate")
+	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, EmpDTO emp
+	                        , String deptCode1, String deptCode2
+	                        , String empJobCode1, String empJobCode2) {
+	      System.out.println("TEST");
+	      System.out.println("TEST");
+	      System.out.println("TEST");
+	      System.out.println("TEST");
+	      System.out.println("TEST         "+ deptCode1);
+	      System.out.println("TEST         "+ deptCode2);
+	      System.out.println("TEST         "+ empJobCode1);
+	      System.out.println("TEST         "+ empJobCode2);
+	      System.out.println("emp11111111111111111111111111111" + emp);
+	      
+//	      empService.modifyEmp(emp); 
+	      
+	      rttr.addFlashAttribute("updateSuccessMessage", "성공");
+//	      mv.setViewName("redirect:/");
+	      mv.setViewName("redirect:/manage/empList");
+	      return mv;
+	   }
 
 }
  

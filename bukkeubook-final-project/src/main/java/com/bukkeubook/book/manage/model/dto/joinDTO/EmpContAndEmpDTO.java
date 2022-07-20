@@ -1,113 +1,85 @@
-package com.bukkeubook.book.manage.model.entity;
+package com.bukkeubook.book.manage.model.dto.joinDTO;
 
-import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-@Entity
-@Table(name = "TBL_EMP_CONT")
-public class EmpCont implements Serializable{
+import com.bukkeubook.book.manage.model.dto.EmpDTO;
 
-	private static final long serialVersionUID = 2280854708427407012L;
-
-	/* DB 자료형 */
+public class EmpContAndEmpDTO {
 	
-//	CONT_NO			NUMBER				근로계약번호
+//	CONT_NO			UMBER				근로계약번호
 //	CONT_NAME		NVARCHAR2(63 CHAR)	계약서명
 //	CONT_DATE		DATE				개시일
 //	CONT_WRITER		NVARCHAR2(31 CHAR)	작성자
 //	CONT_EXP_DATE	DATE				만료일
 //	EMP_NO			NUMBER				사원번호
 	
-	@Id
-	@Column(name = "CONT_NO")
-	private int contNo;
-	
-	@Column(name = "CONT_NAME")
-	private String contName;
-	
-	@Column(name = "CONT_DATE")
-	private java.sql.Date contDate;
-	
-	@Column(name = "CONT_WRITER")
-	private String contWriter;
-	
-	@Column(name = "CONT_EXP_DATE")
-	private java.sql.Date contExpDate;
-	
-	@Column(name = "EMP_NO")
-	private int empNo;
-
-	public EmpCont() {
+	private int contNo;					// 근로계약번호
+	private String contName;			// 계약서명
+	private java.sql.Date contDate;		// 개시일
+	private String contWriter;			// 작성자
+	private java.sql.Date contExpDate;	// 만료일
+	private int empNo;					// 사원번호
+	private EmpDTO emp;
+	public EmpContAndEmpDTO() {
 	}
-
-	public EmpCont(int contNo, String contName, Date contDate, String contWriter, Date contExpDate, int empNo) {
+	public EmpContAndEmpDTO(int contNo, String contName, Date contDate, String contWriter, Date contExpDate, int empNo,
+			EmpDTO emp) {
 		this.contNo = contNo;
 		this.contName = contName;
 		this.contDate = contDate;
 		this.contWriter = contWriter;
 		this.contExpDate = contExpDate;
 		this.empNo = empNo;
+		this.emp = emp;
 	}
-
 	public int getContNo() {
 		return contNo;
 	}
-
 	public void setContNo(int contNo) {
 		this.contNo = contNo;
 	}
-
 	public String getContName() {
 		return contName;
 	}
-
 	public void setContName(String contName) {
 		this.contName = contName;
 	}
-
 	public java.sql.Date getContDate() {
 		return contDate;
 	}
-
 	public void setContDate(java.sql.Date contDate) {
 		this.contDate = contDate;
 	}
-
 	public String getContWriter() {
 		return contWriter;
 	}
-
 	public void setContWriter(String contWriter) {
 		this.contWriter = contWriter;
 	}
-
 	public java.sql.Date getContExpDate() {
 		return contExpDate;
 	}
-
 	public void setContExpDate(java.sql.Date contExpDate) {
 		this.contExpDate = contExpDate;
 	}
-
 	public int getEmpNo() {
 		return empNo;
 	}
-
 	public void setEmpNo(int empNo) {
 		this.empNo = empNo;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public EmpDTO getEmp() {
+		return emp;
 	}
-
+	public void setEmp(EmpDTO emp) {
+		this.emp = emp;
+	}
 	@Override
 	public String toString() {
-		return "EmpCont [contNo=" + contNo + ", contName=" + contName + ", contDate=" + contDate + ", contWriter="
-				+ contWriter + ", contExpDate=" + contExpDate + ", empNo=" + empNo + "]";
+		return "EmpContAndEmpDTO [contNo=" + contNo + ", contName=" + contName + ", contDate=" + contDate
+				+ ", contWriter=" + contWriter + ", contExpDate=" + contExpDate + ", empNo=" + empNo + ", emp=" + emp
+				+ "]";
 	}
+	
+	
 }

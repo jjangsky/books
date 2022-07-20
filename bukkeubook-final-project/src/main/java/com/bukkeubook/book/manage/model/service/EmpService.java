@@ -170,7 +170,8 @@ public class EmpService {
 		
 	}
 	
-	/* 사원 수정 화면 이동 - 지영 작업 중*/
+	
+	/* 지영 - 사원 수정 화면 이동 */
 //	public EmpAndDeptDTO findEmpInfo(int empNo) {
 //		
 //		EmpAndDeptDTO empInfo = 
@@ -188,7 +189,6 @@ public class EmpService {
 //		// TODO Auto-generated method stub
 //		return null;
 //	}
-
 
 
 }

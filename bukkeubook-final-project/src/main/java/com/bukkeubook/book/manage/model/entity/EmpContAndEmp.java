@@ -1,18 +1,27 @@
 package com.bukkeubook.book.manage.model.entity;
 
-import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-@Entity
+
+@Entity(name = "EmpContAndEmp")
 @Table(name = "TBL_EMP_CONT")
-public class EmpCont implements Serializable{
-
-	private static final long serialVersionUID = 2280854708427407012L;
-
+@SequenceGenerator(
+		name = "CONT_SEQ_GENERATOR",
+		sequenceName = "SEQ_CONT_NO",
+		initialValue = 1,
+		allocationSize = 1
+		)
+public class EmpContAndEmp {
+	
 	/* DB 자료형 */
 	
 //	CONT_NO			NUMBER				근로계약번호
@@ -23,6 +32,10 @@ public class EmpCont implements Serializable{
 //	EMP_NO			NUMBER				사원번호
 	
 	@Id
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "CONT_SEQ_GENERATOR"
+	)
 	@Column(name = "CONT_NO")
 	private int contNo;
 	
@@ -38,19 +51,20 @@ public class EmpCont implements Serializable{
 	@Column(name = "CONT_EXP_DATE")
 	private java.sql.Date contExpDate;
 	
-	@Column(name = "EMP_NO")
-	private int empNo;
+	@ManyToOne
+	@JoinColumn(name = "EMP_NO")
+	private Emp emp;
 
-	public EmpCont() {
+	public EmpContAndEmp() {
 	}
 
-	public EmpCont(int contNo, String contName, Date contDate, String contWriter, Date contExpDate, int empNo) {
+	public EmpContAndEmp(int contNo, String contName, Date contDate, String contWriter, Date contExpDate, Emp emp) {
 		this.contNo = contNo;
 		this.contName = contName;
 		this.contDate = contDate;
 		this.contWriter = contWriter;
 		this.contExpDate = contExpDate;
-		this.empNo = empNo;
+		this.emp = emp;
 	}
 
 	public int getContNo() {
@@ -93,21 +107,20 @@ public class EmpCont implements Serializable{
 		this.contExpDate = contExpDate;
 	}
 
-	public int getEmpNo() {
-		return empNo;
+	public Emp getEmp() {
+		return emp;
 	}
 
-	public void setEmpNo(int empNo) {
-		this.empNo = empNo;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setEmp(Emp emp) {
+		this.emp = emp;
 	}
 
 	@Override
 	public String toString() {
-		return "EmpCont [contNo=" + contNo + ", contName=" + contName + ", contDate=" + contDate + ", contWriter="
-				+ contWriter + ", contExpDate=" + contExpDate + ", empNo=" + empNo + "]";
+		return "EmpContAndEmp [contNo=" + contNo + ", contName=" + contName + ", contDate=" + contDate + ", contWriter="
+				+ contWriter + ", contExpDate=" + contExpDate + ", emp=" + emp + "]";
 	}
+	
+	
+
 }
