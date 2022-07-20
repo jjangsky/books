@@ -17,12 +17,18 @@
 		<div class="wrapper d-flex align-items-stretch">
 			<nav id="sidebar">
         <div class="p-4 pt-5">
-          <a href="/"><img src="/images/ManageMent.png" alt="" style="width: 247px;"></a>
+          <a href="/main"><img src="/images/ManageMent.png" alt="" style="width: 247px;"></a>
           <div>&nbsp;</div>
 		  		<!-- <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo2.jpg);"></a> -->
-          <div id="welcomeLogin" style="text-align: center">${Scope.name}님 반갑습니다!</div>
-          <div>&nbsp;</div>
-
+  		  <th:block sec:authorize="isAnonymous()">
+          	<div id="welcomeLogin" style="text-align: center">로그인을 해주세요</div>
+          	<div>&nbsp;</div>
+          </th:block>
+          <th:block sec:authorize="isAuthenticated()">
+          	<div id="welcomeLogin" style="text-align: center">로그인완료</div>
+          	<span sec:authentication="principal"></span>님 환영합니다.
+			<div>&nbsp;</div>
+		  </th:block>
           <!-- 사이드바 시작 -->
           <!-- 마이페이지 -->
           <ul class="list-unstyled components mb-5">

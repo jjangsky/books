@@ -49,7 +49,8 @@ public class MainController {
 	}
 	@GetMapping("/")
 	public ModelAndView main2(ModelAndView mv) {
-		mv.setViewName("/main/login/loginMain");
+//		mv.setViewName("/member/test");
+		mv.setViewName("/member/login");
 		return mv;
 	}
 	
