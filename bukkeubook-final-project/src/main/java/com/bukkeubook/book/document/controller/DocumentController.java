@@ -69,7 +69,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 	@GetMapping("docInboxList")
 	public ModelAndView toDocList(ModelAndView mv) {
 		
-		int empNo = 7;
+		int empNo = 1;
 		
 		List<InboxListDTO> all = docService.findInboxAllList(empNo);
 		
@@ -568,7 +568,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 		System.out.println(doc);
 		System.out.println("statusApp   " + statusApp);
 		
-		int empNo = 7;
+		int empNo = 1;
 		
 		if("승인".equals(statusApp)) {
 			docService.updateDocStatusApprove(empNo,doc,statusApp);
@@ -587,7 +587,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 	@ResponseBody
 	public List<String> checkButton(@PathVariable String no){
 		
-		int empNo = 7;
+		int empNo = 1;
 		int docNo = Integer.valueOf(no);
 		
 		List<String> list = docService.checkDoc(docNo,empNo);
@@ -600,7 +600,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 	@ResponseBody
 	public List<String> findSignName() {
 		
-		int empNo = 7;
+		int empNo = 1;
 		
 		List<String> signName = docService.findSignName(empNo);
 		
