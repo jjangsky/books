@@ -5,10 +5,19 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 @Entity
 @Table(name = "TBL_EMP_CONT")
+@SequenceGenerator(
+		name = "CONT_SEQ_GENERATOR",
+		sequenceName = "SEQ_CONT_NO",
+		initialValue = 1,
+		allocationSize = 1
+		)
 public class EmpCont implements Serializable{
 
 	private static final long serialVersionUID = 2280854708427407012L;
@@ -23,6 +32,10 @@ public class EmpCont implements Serializable{
 //	EMP_NO			NUMBER				사원번호
 	
 	@Id
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "CONT_SEQ_GENERATOR"
+	)
 	@Column(name = "CONT_NO")
 	private int contNo;
 	

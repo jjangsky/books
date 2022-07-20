@@ -69,11 +69,11 @@ public class DocumentController {		// 전자결재 컨트롤러
 	@GetMapping("docInboxList")
 	public ModelAndView toDocList(ModelAndView mv) {
 		
-		int empNo = 2;
+		int empNo = 1;
 		
 		List<InboxListDTO> all = docService.findInboxAllList(empNo);
 		
-		System.out.println(all);
+//		System.out.println(all);
 		mv.addObject("all", all);
 		mv.setViewName("/document/docInboxList");
 		
@@ -561,4 +561,49 @@ public class DocumentController {		// 전자결재 컨트롤러
 		return vacationInfo;
 	}
 	
+	/* 결재 승인 반려 */
+	@PostMapping("docApproval")
+	public ModelAndView docApproval(ModelAndView mv, @RequestParam String statusApp, TempStoreDocumentDTO doc, RedirectAttributes rttr) {
+		
+		System.out.println(doc);
+		System.out.println("statusApp   " + statusApp);
+		
+		int empNo = 1;
+		
+		if("승인".equals(statusApp)) {
+			docService.updateDocStatusApprove(empNo,doc,statusApp);
+		} else {
+			docService.updateDocStatusRefuse(empNo,doc,statusApp);
+		}
+		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		mv.setViewName("redirect:/document/docInboxList");
+		
+		return mv;
+		
+	}
+	
+	/* 결재 버튼 활성화 체크 */
+	@GetMapping(value = {"checkButton/{no}"}, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public List<String> checkButton(@PathVariable String no){
+		
+		int empNo = 1;
+		int docNo = Integer.valueOf(no);
+		
+		List<String> list = docService.checkDoc(docNo,empNo);
+		
+		return list;
+	}
+	
+	/* 결재시 서명 도장 이름 가져오기 */
+	@GetMapping(value = {"findSignName"}, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public List<String> findSignName() {
+		
+		int empNo = 1;
+		
+		List<String> signName = docService.findSignName(empNo);
+		
+		return signName;
+	}
 }

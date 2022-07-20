@@ -54,10 +54,19 @@
         	console.log("status"+status);
         	for (let i = 0; i < status.length; i++) {
 				if (status[i].innerText=="승인") {
-					status[i].style.color = "blue";		
+					let font = status[i];
+					console.log(font);
+					font.style.cssText = 'color:blue;';
 				}
 				if (status[i].innerText=="반려") {
-					status[i].style.color = "red";		
+					let font = status[i];
+					console.log(font);
+					font.style.cssText = 'color:red;';
+				}
+				if (status[i].innerText=="진행중") {
+					let font = status[i];
+					console.log(font);
+					font.style.cssText = 'color:green;';
 				}
 			}
         </script>

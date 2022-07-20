@@ -8,20 +8,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.bukkeubook.book.manage.model.dto.ContFileDTO;
+import com.bukkeubook.book.manage.model.dto.EmpContDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpContAndEmpDTO;
+import com.bukkeubook.book.manage.model.entity.EmpCont;
 import com.bukkeubook.book.manage.model.entity.EmpContAndEmp;
+import com.bukkeubook.book.manage.model.entity.LaborContFile;
 import com.bukkeubook.book.manage.model.repository.EmpContAndEmpRepository;
+import com.bukkeubook.book.manage.model.repository.EmpContRepository;
+import com.bukkeubook.book.manage.model.repository.LaborContFileRepository;
 
 
 @Service
 public class ContractService {
 	
 	private final EmpContAndEmpRepository empContAndEmpRepository;
+	private final EmpContRepository empContRepository;
+	private final LaborContFileRepository laborContFileRepository;
 	private final ModelMapper modelMapper;
 	
 	@Autowired
-	public ContractService(EmpContAndEmpRepository empContAndEmpRepository, ModelMapper modelMapper) {
+	public ContractService(EmpContAndEmpRepository empContAndEmpRepository, ModelMapper modelMapper, EmpContRepository empContRepository, LaborContFileRepository laborContFileRepository) {
 		this.empContAndEmpRepository = empContAndEmpRepository;
+		this.empContRepository = empContRepository;
+		this.laborContFileRepository = laborContFileRepository;
 		this.modelMapper = modelMapper;
 	}
 	
@@ -39,6 +49,20 @@ public class ContractService {
 		EmpContAndEmp empContDetail = empContAndEmpRepository.findBycontNo(contNo);
 		
 		return modelMapper.map(empContDetail, EmpContAndEmpDTO.class);
+	}
+	
+	/* 근로계약서 테이블 insert */
+	public void registNewContract(EmpContDTO empCont) {
+		
+		empContRepository.save(modelMapper.map(empCont, EmpCont.class));
+		
+	}
+	
+	/* 근로계약서 파일 업로드 */
+	public void registNewFile(ContFileDTO contFile) {
+		
+		laborContFileRepository.save(modelMapper.map(contFile, LaborContFile.class));
+		
 	}
 
 }

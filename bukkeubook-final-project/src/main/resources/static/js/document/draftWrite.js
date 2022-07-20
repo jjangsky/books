@@ -1,6 +1,23 @@
 window.onload = function() {
 	
 	$(function(){
+		$.ajax({
+			url:"/document/findSignName",
+			success: function(data){
+				console.log(data);
+				$("#empSign").val(data[0]);
+				console.log($("#empSign").val());
+				let empSign = $("#empSign").val();
+				
+				$("#sign1").append("<img src='/images/sign/" + empSign + "'>");
+			},
+			error : function(error){
+				console.log(error);
+			}
+		})
+	})
+	
+	$(function(){
 		let empNo = $("#empNo1").val();
 		$.ajax({
 			url:"/document/empInfo/" + empNo,
