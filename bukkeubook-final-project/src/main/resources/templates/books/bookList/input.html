@@ -131,7 +131,7 @@
 		
 	</script>
 	<script>
-		
+		var rownum = 0;
 		$('.addBtn').click(function(){
 			
 			const table = document.getElementById("bottomTable");
@@ -169,7 +169,7 @@
 	            newCell7.innerHTML = '<input type="number" id="outputNum" class="outputValue" name="' + amount + '" value=0 min=0>';
 	            newCell8.innerHTML = '<input class="productBtn delBtn" type="button" value="삭제" onclick="SomeDeleteRowFunction(this)">';
 	            
-	       		var rownum = document.getElementById("rownum");
+	       		rownum = document.getElementById("rownum");
 	            rownum.value = index;
 	            
 	            $(document).ready(function(){
@@ -253,7 +253,14 @@
 	              })
 	 			  return false;
 	  		};
-	  		
+	  		if( rownum == 0 ){
+	  			Swal.fire({
+	                  icon: 'question',
+	                  title: '입고하실 도서를 추가해 주세요',
+	                  text: '',
+	              })
+	 			  return false;
+	  		};
 	  		$("#inputForm").submit();
 		}
 	    /* 행 전체삭제 */
