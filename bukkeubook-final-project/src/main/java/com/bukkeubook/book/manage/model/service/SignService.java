@@ -30,5 +30,12 @@ public class SignService {
 		empSignRepository.save(modelMapper.map(sign, Sign.class));
 		
 	}
+	/* 도장 사진 등록(회원 가입) */
+	@Transactional
+	public void registEmpNameFile(SignDTO signFile) {
+		
+		empSignRepository.save(modelMapper.map(signFile, Sign.class));
+		
+	}
 
 }
