@@ -8,6 +8,11 @@ window.onload = function(){
 				console.log(data);
 				
 				let docStatus = data[0];
+				let place = data[1];
+				console.log(place);
+				$("#place").val(place);
+				console.log($("#place").val());
+				
 				//console.log(docStatus);
 				if(docStatus == "반려" || docStatus == "승인"){
 					Swal.fire({
@@ -18,7 +23,7 @@ window.onload = function(){
 					$("#apply").hide();
 					$("#refuse").hide();
 				}else{
-					if(docStatus == "0" || docStatus == "1"){
+					if(docStatus == "0"){
 						Swal.fire({
 							icon: 'info',
 							title: '결재 요망',
@@ -26,8 +31,8 @@ window.onload = function(){
 						})
 						$("#apply").show();
 						$("#refuse").show();
-					} else if (docStatus == "2" || docStatus == "3"){
-						let isPossible = data[1];
+					} else if(docStatus == "1" || docStatus == "2" || docStatus == "3"){
+						let isPossible = data[2];
 						
 						if(isPossible == "가능"){
 							Swal.fire({
@@ -38,11 +43,6 @@ window.onload = function(){
 							$("#apply").show();
 							$("#refuse").show();
 						} else {
-							Swal.fire({
-								icon: 'info',
-								title: '전결 미확인',
-								text: '이전 결재자의 확인이 필요합니다.'
-							})
 							$("#apply").hide();
 							$("#refuse").hide();
 						}
@@ -74,7 +74,9 @@ window.onload = function(){
 				console.log("dddd");
 				$("#appStatus").val('승인');
 				console.log($("#appStatus").val());
-				$("#submitReport").submit();
+				
+				$("#place").val();
+								
 				$("#app").submit();
 			}
 		})
@@ -92,7 +94,22 @@ window.onload = function(){
 			cancelButtonText: '취소'
 		}).then((result) => {
 			if (result.isConfirmed) {
+				
 				$("#appStatus").val('반려');
+				
+				
+				let place = $("#place").val();
+				if(place == "1"){
+					$("#sign2").append("<img src='/images/document/refuse/refuse.png'>");
+				} else if(place == "2"){
+					$("#sign3").append("<img src='/images/document/refuse/refuse.png'>");
+				} else{
+					$("#sign4").append("<img src='/images/document/refuse/refuse.png'>");
+				}
+				let total = $("#total").html();
+				$("#tagCnt").val(total);
+				
+				console.log($("#tagCnt").val());
 				$("#app").submit();
 			}
 		})

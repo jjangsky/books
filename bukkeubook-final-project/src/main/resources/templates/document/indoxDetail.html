@@ -23,24 +23,25 @@
           <button type="button" class="search btn" id="back">목록으로</button>
         </div>
         <div>
-			<div class="total">
+			<div class="total" id="total">
           		<table th:utext="${doc.tagCnt1}">
           		
           		</table>
+				
+		    </div>
+		    <div class ="ss">
 			    <form action="/document/docApproval" id="app" method="post">
 			    	<input type="hidden" th:value="${doc.docNo1}" name="docNo1" id="docNo">
 			    	<input type="hidden" th:value="${doc.empNo1}" name="empNo1">
 			    	<input type="hidden" th:value="${doc.docTitle1}" name="docTitle1">
-			    	<input type="hidden" th:value="${doc.tagCnt1}" name="tagCnt1">
+			    	<input type="hidden" id ="tagCnt" name="tagCnt1">
 			    	<input type="hidden" th:value="${doc.cnt1}" name="cnt1">
 			    	<input type="hidden" th:value="${doc.wrDate1}" name="wrDate1">
 			    	<input type="hidden" value="진행중" name="docStatus1">
 			    	<input type="hidden" th:value="${doc.formNo1}" name="formNo1">
 			    	<input type="hidden" id="appStatus" name="statusApp">
 			    </form>
-				
-		    </div>
-		    <div class ="ss">
+			    <input type="hidden" id="place">
 		        <div class="select" style="margin-left: 40%;">
 		          <button type="button" class="select btn apply" style="margin-right: 20%;" id="apply">승인</button>
 		          <button type="button" class="select btn refuse" id="refuse">반려</button>

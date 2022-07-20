@@ -71,4 +71,6 @@ public interface DocService {
 
 	List<String> checkDoc(int docNo, int empNo);
 
+	void updateDocStatusRefuse(int empNo, TempStoreDocumentDTO doc, String statusApp);
+
 }
