@@ -18,6 +18,30 @@
         <hr><br><br>
         <h5 class="mb-4" id="sub-text">근로계약서 등록</h5>
         <br>
+        
+        
+        	 <div id="textTable" style="text-align:-webkit-center; overflow:auto; width: 1200px; height: 300px; margin:auto; border: 1px solid grey; border-radius: 20px;">
+          <table id="sampleTable" style=" border: 1px solid grey; border-radius: 20px;">
+              <tr>
+                <th class="th1">사원번호</th>
+                <th class="th1">사원명</th>
+                <th class="th1">부서명</th>
+                <th class="th1">직급</th>
+                <th class="th1">성별</th>
+                <th class="th1">이메일</th>
+              </tr>
+              <tr class="tr1" th:each="emp : ${ empList }">
+                <td th:text="${ emp.empNo }"></td>
+                <td th:text="${ emp.empName }"></td>
+                <td th:text="${ emp.dept.deptName }"></td>
+                <td th:text="${ emp.empJobCode }"></td>
+                <td th:text="${ emp.empGender }"></td>
+                <td th:text="${ emp.empEmail }"></td>
+              </tr>
+          </table>
+          </div>
+          <br><br><hr><br>
+       
 
        <div id="textTable" style="text-align:-webkit-center">
         <h5 class="mb-4" id="sub-text"></h5>
@@ -45,7 +69,7 @@
           <br>
           <div id="newBookDiv">
             <button type="button" class="productBtn newBookBtn backBtn" id="registCont">등록</button>
-            <button type="button" class="productBtn newBookBtn">삭제</button>
+            <button type="button" class="productBtn newBookBtn" onclick="location.href='/cont/findCont'">목록으로</button>
           </div>
         </div> <!------------------------ 본문 종료---------------------------->
           
