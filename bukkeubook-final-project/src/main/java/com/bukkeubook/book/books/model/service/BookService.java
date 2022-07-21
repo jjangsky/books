@@ -208,7 +208,7 @@ public class BookService {
 		int count = selectCriteria.getLimit();
 		String searchValue = selectCriteria.getSearchValue();
 
-		Pageable paging = PageRequest.of(index, count/* , Sort.by("stDate").descending() */);
+		Pageable paging = PageRequest.of(index, count, Sort.by("stDate").descending());
 
 		List<StockListAndEmp> stockListEmp = new ArrayList<StockListAndEmp>();
 		if(searchValue != null) {

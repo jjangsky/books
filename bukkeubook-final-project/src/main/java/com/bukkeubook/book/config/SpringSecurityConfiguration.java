@@ -44,17 +44,19 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 	/* 3. HTTP요청에 대한 권한 설정 */
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		
+		 
 		/* csrf: 토큰 위조공격을 막기 위한 것(default가 'on'인 상태) 크로스사이트리퀘스트포저리(cross cite request forgery)
 		 *       해커가 클라이언트의 정보를 빼돌려서 위조하는 행위 방어 
 		 *       구현의 편의를 위해서 disable로 하자.*/
 		http.csrf().disable()		// 구현의 편리를 위해 disable로 함
 		    .authorizeRequests()	// 요청에 대한 권한체크를 어떻게 할 것인지
 //		        .antMatchers("/book/**").authenticated()							// /menu/**에 대해서는 하나하나 권한을 등록하겠다.(인증된 사용자만 접근 가능(로그인 후))
-//		        .antMatchers("/book/**", "/order/**").hasRole("MASTER")
-//		        .antMatchers("/book/**", "/order/**").hasRole("BOOK")			//이메소드를 통해서 각 회원의 권한을 찾기 때문에 튜플을 저장할 때 ROL_을 꼭 반드시 작성해야 한다.(ROLE_MEMBER와 일치하면 허용하겠다)
-//		        .antMatchers("/main/**").authenticated()
-//		        .antMatchers("/main/**").hasRole("MASTER")
+		        .antMatchers("/book/**", "/order/**").hasRole("MASTER")
+		        .antMatchers("/book/**", "/order/**").hasRole("BOOK")				//이메소드를 통해서 각 회원의 권한을 찾기 때문에 튜플을 저장할 때 ROL_을 꼭 반드시 작성해야 한다.(ROLE_MEMBER와 일치하면 허용하겠다)
+		        
+		        .antMatchers("/dept/**", "/manage/**").hasRole("MASTER")
+		        .antMatchers("/dept/**", "/manage/**").hasRole("MANAGE")
+		        
 		        .anyRequest().permitAll()											// 등록되지 않은 경로는 누구나 접근 가능
 		    .and()	//로그인 요청
 		    	.formLogin()														// 로그인 form 을 따로 이용해 로그인 처리를 할 것이다.
