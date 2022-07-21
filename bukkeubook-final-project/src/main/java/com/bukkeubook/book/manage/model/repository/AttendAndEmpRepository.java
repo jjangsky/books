@@ -17,4 +17,6 @@ public interface AttendAndEmpRepository extends JpaRepository<AttendAndEmp, Inte
 
 	int countByEmp_EmpNameContaining(String searchValue);
 
+	int countByAttDateBetween(Date startDate, Date endDate);
+
 }

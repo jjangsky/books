@@ -38,23 +38,45 @@ public class AttendManageService {
 	public int selectTotalCount(String searchCondition, String searchValue, Date startDate, Date endDate) {
 		
 		int count = 0;
-			if(searchValue != null && startDate != null && endDate != null) {
-				if(startDate != null & endDate !=null) {
+//			if(searchValue != null && startDate != null) {
+//				if(startDate != null) {
+//					if("empNo".equals(searchCondition)) {
+//						count = attendAndEmpRepository.countByEmp_EmpNoAndAttDateBetween(searchValue, startDate, endDate);
+//						}
+//					if("empName".equals(searchCondition)) {
+//						count = attendAndEmpRepository.countByEmp_EmpNameAndAttDateBetween(searchValue, startDate, endDate);
+//						}
+//				}if("empNo".equals(searchCondition)) {
+//					count = attendAndEmpRepository.countByEmp_EmpNoContaining(searchValue);
+//					}
+//				 if("empName".equals(searchCondition)) {
+//					count = attendAndEmpRepository.countByEmp_EmpNameContaining(searchValue);
+//					}
+//			}else {
+//				count = (int)attendAndEmpRepository.count();
+//			}
+			
+			
+			if(startDate != null) {
+				if(searchValue != null) {
 					if("empNo".equals(searchCondition)) {
-						count = attendAndEmpRepository.countByEmp_EmpNoAndAttDateBetween(searchValue, startDate, endDate);
+						//count = attendAndEmpRepository.countByEmp_EmpNoAndAttDateBetween(searchValue, startDate, endDate);
+						count = 1;
 						}
 					if("empName".equals(searchCondition)) {
-						count = attendAndEmpRepository.countByEmp_EmpNameAndAttDateBetween(searchValue, startDate, endDate);
+						//count = attendAndEmpRepository.countByEmp_EmpNameAndAttDateBetween(searchValue, startDate, endDate);
+						count =2;
 						}
-				}if("empNo".equals(searchCondition)) {
-					count = attendAndEmpRepository.countByEmp_EmpNoContaining(searchValue);
-					}
-				 if("empName".equals(searchCondition)) {
-					count = attendAndEmpRepository.countByEmp_EmpNameContaining(searchValue);
-					}
+				}else if (searchValue == null){
+					//count = attendAndEmpRepository.countByAttDateBetween(startDate, endDate);
+					count = 5;
+				}
 			}else {
-				count = (int)attendAndEmpRepository.count();
+//				count = (int)attendAndEmpRepository.count();
+				count = 6;
 			}
+			
+			
 				
 		
 		return count;

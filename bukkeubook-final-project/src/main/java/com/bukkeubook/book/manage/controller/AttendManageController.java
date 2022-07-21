@@ -1,5 +1,6 @@
 package com.bukkeubook.book.manage.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 
@@ -28,21 +29,21 @@ public class AttendManageController {
 	}
 	
 	@GetMapping("/findCheck")
-	public ModelAndView findAttendListManage(HttpServletRequest request, ModelAndView mv, AttendDTO attendDTO) {
+	public ModelAndView findAttendListManage(HttpServletRequest request, ModelAndView mv, Date attStart, Date attEnd) {
 
 		String currentPage = request.getParameter("currentPage");
 		int pageNo = 1;
 		
 		String searchCondition = request.getParameter("searchCondition");
 		String searchValue = request.getParameter("searchValue");
-		java.sql.Date startDate = attendDTO.getAttStart();
-		java.sql.Date endDate = attendDTO.getAttEnd();
+//		java.sql.Date startDate = java.sql.Date.valueOf(request.getParameter("attStart"));
+//		java.sql.Date endDate = java.sql.Date.valueOf(request.getParameter("attEnd"));
 		
 		if(currentPage != null && !"".equals(currentPage)) {
 			pageNo = Integer.parseInt(currentPage);
 		}
 		
-		int totalCount = attendManageService.selectTotalCount(searchCondition, searchValue, startDate, endDate);
+		int totalCount = attendManageService.selectTotalCount(searchCondition, searchValue, attStart, attEnd);
 		
 		
 		
@@ -52,6 +53,10 @@ public class AttendManageController {
 		System.out.println(attendList);
 
 		System.out.println(totalCount);
+		System.out.println("검색 조건" + searchCondition);
+		System.out.println("검색 값" + searchValue);
+		System.out.println("시작 날짜" + attStart);
+		System.out.println("종료 날짜" + attEnd);
 		
 		mv.addObject("attendList", attendList);
 		mv.setViewName("/manage/empAnnual/empAttendanceList");
