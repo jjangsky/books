@@ -1,5 +1,7 @@
 package com.bukkeubook.book.member.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,5 +19,10 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/loginFail")
-	public void loginFail() {}
+	public void loginFail(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+		String message = request.getParameter("exception");
+		System.out.println(message);
+		rttr.addFlashAttribute("loginFailMessage", message);
+		mv.setViewName("/member/loginFail");
+	}
 }
