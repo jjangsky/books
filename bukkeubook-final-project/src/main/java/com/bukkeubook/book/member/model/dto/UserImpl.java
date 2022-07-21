@@ -1,12 +1,14 @@
 package com.bukkeubook.book.member.model.dto;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import com.bukkeubook.book.manage.model.dto.EmpDTO;
+import com.bukkeubook.book.main.model.dto.EmpAndMemberRoleDTO;
+import com.bukkeubook.book.main.model.dto.MemberRoleAndRoleDTO;
 
 public class UserImpl extends User{
 	
@@ -27,13 +29,13 @@ public class UserImpl extends User{
 	private String empPwd;
 	private int deptCode;
 	
-	private List<MemberRoleDTO> memberRoleList;		// 회원별권한리스트
+	private List<MemberRoleAndRoleDTO> memberRoleAndRoleList = new ArrayList<>();		// 회원별권한리스트
 	
 	public UserImpl(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities);
 	}
 	
-	public void setDetails(EmpDTO emp) {
+	public void setDetails(EmpAndMemberRoleDTO emp) {
 	    this.empNo = emp.getEmpNo();
 	    this.empName = emp.getEmpName();
 	    this.empPhone1 = emp.getEmpPhone1();
@@ -50,7 +52,7 @@ public class UserImpl extends User{
 	    this.empEndYn = emp.getEmpEndYn();
 	    this.empPwd = emp.getEmpPwd();
 	    this.deptCode = emp.getDeptCode();
-	    this.memberRoleList = emp.getMemberRoleList();		
+	    this.memberRoleAndRoleList = emp.getMemberRoleAndRoleList();		
 	}
 
 	public int getEmpNo() {
@@ -117,8 +119,8 @@ public class UserImpl extends User{
 		return deptCode;
 	}
 
-	public List<MemberRoleDTO> getMemberRoleList() {
-		return memberRoleList;
+	public List<MemberRoleAndRoleDTO> getMemberRoleAndRoleList() {
+		return memberRoleAndRoleList;
 	}
 
 	@Override
@@ -127,9 +129,11 @@ public class UserImpl extends User{
 				+ empPhone2 + ", empPhone3=" + empPhone3 + ", empBirth=" + empBirth + ", empGender=" + empGender
 				+ ", empEmail=" + empEmail + ", empJobCode=" + empJobCode + ", empAddress=" + empAddress
 				+ ", empDAddress=" + empDAddress + ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate
-				+ ", empEndYn=" + empEndYn + ", empPwd=" + empPwd + ", deptCode=" + deptCode + ", memberRoleList="
-				+ memberRoleList + "]";
+				+ ", empEndYn=" + empEndYn + ", empPwd=" + empPwd + ", deptCode=" + deptCode
+				+ ", memberRoleAndRoleList=" + memberRoleAndRoleList + "]";
 	}
+
+	
 	
 	
 }
