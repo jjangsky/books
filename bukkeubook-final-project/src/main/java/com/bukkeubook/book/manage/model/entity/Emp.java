@@ -5,11 +5,20 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity(name="Emp")
 @Table(name = "TBL_EMP")
+@SequenceGenerator(
+		name = "EMP_SEQ_EMP_NO",
+		sequenceName = "SEQ_EMP_NO",
+		initialValue = 300,
+		allocationSize = 1
+)
 public class Emp implements Serializable{
    
 	private static final long serialVersionUID = -4362283915204163589L;
@@ -32,6 +41,10 @@ public class Emp implements Serializable{
 //	DEPT_CODE		NUMBER				부서코드
 	
    @Id
+   @GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "EMP_SEQ_EMP_NO"
+	)
    @Column(name = "EMP_NO")
    private int empNo;
    
@@ -79,7 +92,7 @@ public class Emp implements Serializable{
    
    @Column(name = "DEPT_CODE")
    private int deptCode;
-
+   
 	public Emp() {
 		super();
 	}
@@ -190,7 +203,7 @@ public class Emp implements Serializable{
 		return empDAddress;
 	}
 
-	public void setEmpDAddreess(String empDAddress) {
+	public void setEmpDAddress(String empDAddress) {
 		this.empDAddress = empDAddress;
 	}
 
@@ -238,10 +251,12 @@ public class Emp implements Serializable{
 	public String toString() {
 		return "Emp [empNo=" + empNo + ", empName=" + empName + ", empPhone1=" + empPhone1 + ", empPhone2=" + empPhone2
 				+ ", empPhone3=" + empPhone3 + ", empBirth=" + empBirth + ", empGender=" + empGender + ", empJobCode="
-				+ empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress + ", empDAddreess="
+				+ empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress + ", empDAddress="
 				+ empDAddress + ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate + ", empEndYn=" + empEndYn
 				+ ", empPwd=" + empPwd + ", deptCode=" + deptCode + "]";
 	}
+
+
 	
 	
    

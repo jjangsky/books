@@ -180,20 +180,24 @@
               </tr>
               <tr class="tbl">
                   <th class="tbl th coloring">문서번호</th>
-                  <th class="tbl th read">1</th>
+                  <th class="tbl th read" id="docnumber">1</th>
                   <th rowspan="4" class="th coloring">결재</th>
                   <th class="tbl th coloring">담당</th>
-                  <th class="tbl th coloring" id="selacc1">결재1</th>
-                  <th class="tbl th coloring" id="selacc2">결재2</th>
-                  <th class="tbl th coloring" id="selacc3">결재3</th>
+                  <th class="tbl th coloring sign" id="selacc1">결재1</th>
+                  <th class="tbl th coloring sign" id="selacc2">결재2</th>
+                  <th class="tbl th coloring sign" id="selacc3">결재3</th>
               </tr>
               <tr class="tbl">
                   <th class="tbl th coloring">작성일자</th>
                   <th class="tbl th" id="date2"><p id="day"></p></th>
-                  <th rowspan="3" class="tbl th sign"></th>
-                  <th rowspan="3" class="tbl th sign"></th>
-                  <th rowspan="3" class="tbl th sign"></th>
-                  <th rowspan="3" class="tbl th sign"></th>
+                  <th rowspan="3" class="tbl th sign" id="sign1">
+                  </th>
+                  <th rowspan="3" class="tbl th sign" id="sign2">
+                  </th>
+                  <th rowspan="3" class="tbl th sign" id="sign3">
+                  </th>
+                  <th rowspan="3" class="tbl th sign" id="sign4">
+                  </th>
               </tr>
               <tr class="tbl">
                   <th class="tbl th coloring">부서명</th>
@@ -216,7 +220,7 @@
               </tr>
           </table>
           <br>
-          
+          <input type="hidden" id="empSign">
       </div>
       <br clear="both">
       <div class="right">

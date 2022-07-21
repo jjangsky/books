@@ -104,7 +104,7 @@ public class MypageController {
 		
 		mypageService.modifyMyCalendar(newCalendar);
 		
-		rttr.addFlashAttribute("registSuccessMessage", "일정을 성공적으로 수정하셨습니다.");
+		rttr.addFlashAttribute("updateSuccessMessage", "일정을 성공적으로 수정하셨습니다.");
 		mv.setViewName("redirect:/mypage/calendar");
 		
 		return mv;
@@ -117,7 +117,7 @@ public class MypageController {
 		int calCode = Integer.parseInt(request.getParameter("no"));
 		mypageService.deleteCalendar(calCode);
 		
-		rttr.addFlashAttribute("registSuccessMessage", "일정을 성공적으로 삭제하셨습니다.");
+		rttr.addFlashAttribute("deleteSuccessMessage", "일정을 성공적으로 삭제하셨습니다.");
 		mv.setViewName("redirect:/mypage/calendar");
 		
 		return mv;
@@ -127,9 +127,7 @@ public class MypageController {
 	/* 마이페이지 연차 조회 */
 	@GetMapping("/myAnnual")
 	public ModelAndView findMyAnnualList(ModelAndView mv, HttpServletRequest request, Date attStart, Date attEnd) {
-		
-		
-		
+
 		String currentPage = request.getParameter("currentPage");
 		int pageNo = 1;
 		int memberCode = 5;

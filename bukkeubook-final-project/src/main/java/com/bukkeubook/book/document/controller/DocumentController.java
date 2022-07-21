@@ -1,9 +1,8 @@
 package com.bukkeubook.book.document.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,8 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bukkeubook.book.document.model.dto.AppRootDTO;
+import com.bukkeubook.book.document.model.dto.AppVacationDTO;
 import com.bukkeubook.book.document.model.dto.ApproverDTO;
+import com.bukkeubook.book.document.model.dto.CancelVacationDTO;
 import com.bukkeubook.book.document.model.dto.DeptDTO;
+import com.bukkeubook.book.document.model.dto.DocWriteInfoDTO;
 import com.bukkeubook.book.document.model.dto.DocumentAndEmpAndFormCateDTO;
 import com.bukkeubook.book.document.model.dto.EmpDTO;
 import com.bukkeubook.book.document.model.dto.FormCateDTO;
@@ -67,11 +69,11 @@ public class DocumentController {		// 전자결재 컨트롤러
 	@GetMapping("docInboxList")
 	public ModelAndView toDocList(ModelAndView mv) {
 		
-		int empNo = 7;
+		int empNo = 1;
 		
 		List<InboxListDTO> all = docService.findInboxAllList(empNo);
 		
-		System.out.println(all);
+//		System.out.println(all);
 		mv.addObject("all", all);
 		mv.setViewName("/document/docInboxList");
 		
@@ -108,6 +110,19 @@ public class DocumentController {		// 전자결재 컨트롤러
 		mv.setViewName("/document/docTempList");
 		
 		return mv;
+	}
+	
+	/* 전자결재 작성시 작성자 이름, 부서명, 문서번호 넣어주기 */
+	@GetMapping(value = {"empInfo/{emp}"}, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public DocWriteInfoDTO docWriteInfo(@PathVariable String emp) {
+		
+		System.out.println("emp     " + emp);
+		int empNo = Integer.valueOf(emp);
+		
+		DocWriteInfoDTO info = docService.findWriterInfo(empNo);
+		
+		return info;
 	}
 	
 	/* 결재라인 지정 ajax select Tag Option Dept */
@@ -411,5 +426,184 @@ public class DocumentController {		// 전자결재 컨트롤러
 		
 		return mv;
 		
+	}
+	
+	/* 휴가 리스트 조회 */
+	@GetMapping("allVacationList")
+	public ModelAndView allVacationList(ModelAndView mv) {
+		
+		int empNo = 10;
+		
+		List<AppVacationDTO> vacaList = docService.allVacationList(empNo);
+		
+		mv.addObject("vacaList", vacaList);
+		
+		mv.setViewName("/document/allVacationList");
+		
+		return mv;
+	}
+	
+	/* 휴가 신청 상세 조회 */
+	@GetMapping("vacationDetail/{no}")
+	public ModelAndView vacationDetail(ModelAndView mv, @PathVariable String no) {
+		
+		int vacNo = Integer.valueOf(no);
+		
+		AppVacationDTO vaca = docService.findByVacNo(vacNo);
+		
+		mv.addObject("vaca", vaca);
+		mv.setViewName("/document/detailVacation");
+		
+		return mv;
+		
+	}
+	
+	/* 휴가취소 리스트 조회 */
+	@GetMapping("allCancelVacationList")
+	public ModelAndView allCancelVacationList(ModelAndView mv) {
+		
+		int empNo = 10;
+		
+		List<CancelVacationDTO> cancelList = docService.allCancelVacationList(empNo);
+		
+		mv.addObject("cancelList", cancelList);
+		
+		mv.setViewName("/document/allCancelVacationList");
+		
+		return mv;
+	}
+	
+	/* 휴가취소 상세조회 */
+	@GetMapping("cancelVacationDetail/{no}")
+	public ModelAndView cancelVacationDetail(ModelAndView mv, @PathVariable String no) {
+		
+		int vacCancNo =Integer.valueOf(no);
+		
+		CancelVacationDTO canc = docService.findByvacCancNo(vacCancNo);
+		
+		mv.addObject("canc", canc);
+		
+		mv.setViewName("/document/detailCancelVacation");
+		
+		return mv;
+	}
+	
+	/* 휴가신청서 상신하기 */
+	@PostMapping("insertNewVacationApp")
+	public ModelAndView insertNewVacationApp(ModelAndView mv, RedirectAttributes rttr , AppVacationDTO vacation,@RequestParam String startDate,@RequestParam String endDate,@RequestParam String date) {
+		
+		System.out.println("Controller         " + vacation);
+		System.out.println("Controller         " + endDate);
+		System.out.println("Controller         " + startDate);
+		System.out.println("Controller         " + date);
+		
+		String vacStatus = "대기";
+		Date vacStartDate = Date.valueOf(startDate);
+		Date vacEndDate = Date.valueOf(endDate);
+		Date vacAppNo = Date.valueOf(date);
+		
+		vacation.setVacStartDate(vacStartDate);
+		vacation.setVacEndDate(vacEndDate);
+		vacation.setVacAppNo(vacAppNo);
+		vacation.setVacStatus(vacStatus);
+		
+		docService.insertNewVacationApp(vacation);
+		
+		System.out.println("Controller         " + vacation);
+		
+		mv.setViewName("redirect:/document/allVacationList");
+		
+		return mv;
+		
+	}
+	
+	/* 취소 신청서 작성시 자신이 작성한 휴가 신청서 리스트 조회  ajax*/
+	@GetMapping(value = {"vacationList"}, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public List<AppVacationDTO> vacationList(){
+		
+		int empNo = 10;
+		
+		List<AppVacationDTO> vacationList = docService.findByEmpNoVacationList(empNo);
+		
+		return vacationList;
+	}
+	
+	/* 휴가 취소신청서 상신 */
+	@PostMapping("insertNewCancelVacation")
+	public ModelAndView insertNewCancelVacation(ModelAndView mv, RedirectAttributes rttr, @RequestParam String date,CancelVacationDTO cancVaca) {
+		
+		System.out.println(cancVaca);
+		
+		String vacStatus = "대기";
+		Date vacAppNo = Date.valueOf(date);
+		
+		cancVaca.setVacCancDate(vacAppNo);
+		cancVaca.setVacCancStatus(vacStatus);
+		
+		System.out.println(cancVaca);
+		
+		docService.insertNewCancelVacation(cancVaca);
+		
+		mv.setViewName("redirect:/document/allVacationList");
+		
+		return mv;
+		
+	}
+		
+	/* 휴가서류 문서번호 조회 */
+	@GetMapping(value = {"vacationInfo"}, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public List<Integer> vacationInfo(){
+		
+		List<Integer> vacationInfo = docService.vacationInfo();
+		
+		return vacationInfo;
+	}
+	
+	/* 결재 승인 반려 */
+	@PostMapping("docApproval")
+	public ModelAndView docApproval(ModelAndView mv, @RequestParam String statusApp, TempStoreDocumentDTO doc, RedirectAttributes rttr) {
+		
+		System.out.println(doc);
+		System.out.println("statusApp   " + statusApp);
+		
+		int empNo = 1;
+		
+		if("승인".equals(statusApp)) {
+			docService.updateDocStatusApprove(empNo,doc,statusApp);
+		} else {
+			docService.updateDocStatusRefuse(empNo,doc,statusApp);
+		}
+		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		mv.setViewName("redirect:/document/docInboxList");
+		
+		return mv;
+		
+	}
+	
+	/* 결재 버튼 활성화 체크 */
+	@GetMapping(value = {"checkButton/{no}"}, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public List<String> checkButton(@PathVariable String no){
+		
+		int empNo = 1;
+		int docNo = Integer.valueOf(no);
+		
+		List<String> list = docService.checkDoc(docNo,empNo);
+		
+		return list;
+	}
+	
+	/* 결재시 서명 도장 이름 가져오기 */
+	@GetMapping(value = {"findSignName"}, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public List<String> findSignName() {
+		
+		int empNo = 1;
+		
+		List<String> signName = docService.findSignName(empNo);
+		
+		return signName;
 	}
 }

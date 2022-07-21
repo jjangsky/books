@@ -22,6 +22,10 @@
                     <td th:text="${ book.no }"></td>
                 </tr>
                 <tr th:each="book : ${ bookList }">
+                    <th>도서 명</th>
+                    <td th:text="${ book.name }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
                     <th>저자</th>
                     <td th:text="${ book.author }"></td>
                 </tr>
@@ -61,8 +65,8 @@
             </form>
           <br>
           <div id="newBookDiv">
-            <button type="button" class="productBtn newBookBtn">발주신청</button>
-            <button type="button" class="productBtn newBookBtn">훼손등록</button>
+            <button type="button" class="productBtn newBookBtn" onclick="location.href='/order/regist'">발주신청</button>
+            <button type="button" class="productBtn newBookBtn damageBtn">훼손등록</button>
             <button type="button" class="productBtn newBookBtn updateBtn">수정하기</button>
             <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
           </div>
@@ -77,6 +81,10 @@
     	 
     	 $('.updateBtn').click(function(){
     		 location.href='/book/bookInfoUpdate?no=' + bb;
+     	 });
+    	 
+    	 $('.damageBtn').click(function(){
+    		 location.href='/book/damageAmount?bkNo=' + bb;
      	 });
       </script>
 </body>

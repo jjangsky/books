@@ -8,19 +8,25 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet"  th:href="@{/css/common/style.css}">
+	<!-- 개발자도구 수정 방지 스크립트 -->
+	<!-- <script src="/js/common/devBan.js"></script> -->
 </head>
 <body>
 
-    
 		<div class="wrapper d-flex align-items-stretch">
 			<nav id="sidebar">
         <div class="p-4 pt-5">
-          <a href="/"><img src="/images/ManageMent.png" alt="" style="width: 247px;"></a>
-          <div>&nbsp</div>
+          <a href="/main"><img src="/images/ManageMent.png" alt="" style="width: 247px;"></a>
+          <div>&nbsp;</div>
 		  		<!-- <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo2.jpg);"></a> -->
-          <div id="welcomeLogin" style="text-align: center">${Scope.name}님 반갑습니다!</div>
-          <div>&nbsp</div>
-
+  		  <th:block sec:authorize="isAnonymous()">
+          	<div id="welcomeLogin" style="text-align: center">로그인을 해주세요</div>
+          	<div>&nbsp;</div>
+          </th:block>
+          <th:block sec:authorize="isAuthenticated()">
+          	<div id="welcomeLogin" style="text-align: center" th:text="${#authentication.principal.empName} + '님 환영합니다.'"></div>
+			<div>&nbsp;</div>
+		  </th:block>
           <!-- 사이드바 시작 -->
           <!-- 마이페이지 -->
           <ul class="list-unstyled components mb-5">
@@ -49,11 +55,23 @@
                 <li>
                     <a href="/document/docTempList">임시저장 내역</a>
                 </li>
+                
                 <li>
-                    <a href="/document/docInboxList">수신함</a>
+                  <a href="#management2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">상신함</a>
+                  <ul class="collapse list-unstyled" id="management2">
+                    <li>
+                       <a href="/document/reqApprovalList">결재서류</a>
+                    </li>
+                    <li>
+                      <a href="/document/allVacationList">휴가서류</a>
+                    </li>
+                    <li>
+                      <a href="/document/allCancelVacationList">휴가취소서류</a>
+                    </li>
+                  </ul>
                 </li>
                 <li>
-                    <a href="/document/reqApprovalList">상신함</a>
+                    <a href="/document/docInboxList">수신함</a>
                 </li>
 	            </ul>
 	          </li>
@@ -110,7 +128,7 @@
                       <a href="/empAnnual/restSelect">휴가조회</a>
                     </li>
                     <li>
-                      <a href="#">휴가취소조회</a>
+                      <a href="/empAnnual/restCancelSelect">휴가취소조회</a>
                     </li>
                     <li>
                       <a href="/empAttendanceList">사원근태 내역</a>
@@ -128,7 +146,17 @@
                     </li>
                   </ul>
                 </li>
-                
+                <li>
+                  <a href="#management6" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">근로계약서 관리</a>
+                  <ul class="collapse list-unstyled" id="management6">
+                    <li>
+                      <a href="/cont/findCont">근로계약서 조회</a>
+                    </li>
+                    <li>
+                      <a href="/cont/registPage">근로계약서 등록</a>
+                    </li>
+                  </ul>
+                </li>              
               </ul>
 	          </li>
 
@@ -146,7 +174,7 @@
                     <a href="#">회의관리</a>
                 </li>
                 <li>
-                    <a href="#">게시판관리</a>
+                    <a href="/secretary/board">게시판관리</a>
                 </li>
               </ul>
 	          </li>
@@ -184,7 +212,7 @@
                   <a href="/order/selectHistory">발주관리</a>
                 </li>
                 <li>
-                  <a href="#">훼손도서관리</a>
+                  <a href="/book/damageList">훼손도서관리</a>
                 </li>
               </ul>
 	          </li>
@@ -231,11 +259,18 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/myInfo/updatePage">${SessionScope.name} (직책)</a>
+                    <th:block sec:authorize="isAnonymous()">
+			          	<a class="nav-link" href="/">로그인</a>
+			          </th:block>
+			          <th:block sec:authorize="isAuthenticated()">
+			          	<a class="nav-link" href="/myInfo/updatePage" th:text="${#authentication.principal.empName} +' ' + ${#authentication.principal.memberRoleAndRoleList[0].role.roleDesc}"></a>
+					  </th:block>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">로그아웃</a>
-                </li>
+                <th:block sec:authorize="isAuthenticated()">
+	                <li class="nav-item active">
+	                    <a class="nav-link" href="/member/logout">로그아웃</a>
+	                </li>
+                </th:block>
               </ul>
             </div>
           </div>
@@ -249,5 +284,6 @@
     <script src="/js/common/popper.js"></script>
     <script src="/js/common/bootstrap.min.js"></script>
     <script src="/js/common/main.js"></script>
+    
   </body>
 </html>

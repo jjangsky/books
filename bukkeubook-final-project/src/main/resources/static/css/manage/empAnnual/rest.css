@@ -9,6 +9,15 @@
     height: 500px;
 }
 
+.emp.rest.detail {
+	/* width: 60%; */
+    margin-top: 50px;
+    margin-right: 100px;
+    margin-left: 130px;
+    text-align:center;
+    height: 500px;
+}
+
 /* 버튼 효과 */
 .just.shape {
     background-color: #D9D9D9;
@@ -19,18 +28,22 @@
     margin-left: 450px;
     background-color: #D9D9D9;
     border-radius: 10px;
+    margin-bottom: 30px;
+    
 }
 .list.btn{
     margin: auto;
     background-color: #D9D9D9;
     border-radius: 10px;
     margin-left: 30px;
+    margin-bottom: 30px;
 }
 .cancle.btn{
     margin: auto;
     background-color: #D9D9D9;
     border-radius: 10px;
     margin-left: 30px;
+    margin-bottom: 30px;
 }
 .delete.btn {
     margin: auto;
@@ -88,6 +101,8 @@
     background-color: #FEFCC6;
 }
 
+<<<<<<< HEAD
+=======
 /* 페이징 효과 */
 .pagination{
     float: left;
@@ -121,3 +136,4 @@
 #sub-text a{
 	color: #515151 !important;
 }
+>>>>>>> main

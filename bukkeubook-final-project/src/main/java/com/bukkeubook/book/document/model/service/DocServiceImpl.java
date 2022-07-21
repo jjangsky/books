@@ -12,8 +12,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.bukkeubook.book.document.model.dto.AppRootDTO;
+import com.bukkeubook.book.document.model.dto.AppVacationDTO;
 import com.bukkeubook.book.document.model.dto.ApproverDTO;
+import com.bukkeubook.book.document.model.dto.CancelVacationDTO;
 import com.bukkeubook.book.document.model.dto.DeptDTO;
+import com.bukkeubook.book.document.model.dto.DocWriteInfoDTO;
 import com.bukkeubook.book.document.model.dto.DocumentAndEmpAndFormCateDTO;
 import com.bukkeubook.book.document.model.dto.EmpDTO;
 import com.bukkeubook.book.document.model.dto.FormCateDTO;
@@ -23,6 +26,9 @@ import com.bukkeubook.book.document.model.dto.TempStoreDocumentDTO;
 import com.bukkeubook.book.document.model.entity.AppRoot;
 import com.bukkeubook.book.document.model.entity.Approver;
 import com.bukkeubook.book.document.model.entity.Dept;
+import com.bukkeubook.book.document.model.entity.DocAppVacation;
+import com.bukkeubook.book.document.model.entity.DocCancelVacation;
+import com.bukkeubook.book.document.model.entity.DocSign;
 import com.bukkeubook.book.document.model.entity.Document;
 import com.bukkeubook.book.document.model.entity.DocumentAndEmpAndFormCate;
 import com.bukkeubook.book.document.model.entity.Emp;
@@ -30,11 +36,14 @@ import com.bukkeubook.book.document.model.entity.FormCate;
 import com.bukkeubook.book.document.model.entity.SubmitApprover;
 import com.bukkeubook.book.document.model.entity.SubmitDocument;
 import com.bukkeubook.book.document.model.repository.AppRootRepository;
+import com.bukkeubook.book.document.model.repository.AppVacationRepository;
 import com.bukkeubook.book.document.model.repository.ApproverRepository;
 import com.bukkeubook.book.document.model.repository.ApproverRepository2;
+import com.bukkeubook.book.document.model.repository.CancelVacationRepository;
 import com.bukkeubook.book.document.model.repository.DocDeptRepository;
 import com.bukkeubook.book.document.model.repository.DocEmpFormCateRepository;
 import com.bukkeubook.book.document.model.repository.DocEmpRepository;
+import com.bukkeubook.book.document.model.repository.DocSignRepository;
 import com.bukkeubook.book.document.model.repository.DocumentRepository;
 import com.bukkeubook.book.document.model.repository.FormCateRepository;
 import com.bukkeubook.book.document.model.repository.SubmitDocumentRepository;
@@ -51,6 +60,9 @@ public class DocServiceImpl implements DocService{
 	private final AppRootRepository appRootRepository;
 	private final ApproverRepository approverRepository;
 	private final ApproverRepository2 approverRepository2;
+	private final AppVacationRepository vacationRepository;
+	private final CancelVacationRepository cancelVacaRepository;
+	private final DocSignRepository signRepository;
 	private final ModelMapper modelMapper;
 	
 	@Autowired
@@ -63,7 +75,10 @@ public class DocServiceImpl implements DocService{
 						  AppRootRepository appRootRepository,
 						  ApproverRepository approverRepository,
 						  ApproverRepository2 approverRepository2,
-						  SubmitDocumentRepository subDocRepository) {
+						  SubmitDocumentRepository subDocRepository,
+						  AppVacationRepository vacationRepository,
+						  CancelVacationRepository cancelVacaRepository,
+						  DocSignRepository signRepository) {
 		this.docDeptRepository = docDeptRepository;
 		this.modelMapper = modelMapper;
 		this.formRepository = formRepository;
@@ -74,6 +89,9 @@ public class DocServiceImpl implements DocService{
 		this.approverRepository = approverRepository;
 		this.approverRepository2 = approverRepository2;
 		this.subDocRepository = subDocRepository;
+		this.vacationRepository = vacationRepository;
+		this.cancelVacaRepository = cancelVacaRepository;
+		this.signRepository = signRepository;
 	}
 
 	/* 전자결재 작성 첫화면 - 양식 고르기 */
@@ -119,7 +137,7 @@ public class DocServiceImpl implements DocService{
 	@Override
 	public List<DocumentAndEmpAndFormCateDTO> findTempDocList(int tempEmpNo, String docStatus) {
 
-		List<DocumentAndEmpAndFormCate> tempDocList = docEmpFormCateRepository.findByEmpNoAndDocStatus(tempEmpNo,docStatus,Sort.by("docNo"));
+		List<DocumentAndEmpAndFormCate> tempDocList = docEmpFormCateRepository.findByEmpNoAndDocStatus(tempEmpNo,docStatus,Sort.by("wrDate").descending());
 		
 //		System.out.println("임시저장 리스트 조회 --------------------여기는 서비스에서 엔티티 조회했을때양" + tempDocList);
 		
@@ -343,7 +361,7 @@ public class DocServiceImpl implements DocService{
 	@Override
 	public List<DocumentAndEmpAndFormCateDTO> findByDocNoList(int empNo , String docStatus) {
 
-		List<DocumentAndEmpAndFormCate> docList = docEmpFormCateRepository.findByEmpNoAndDocStatusNot(empNo,docStatus);
+		List<DocumentAndEmpAndFormCate> docList = docEmpFormCateRepository.findByEmpNoAndDocStatusNot(empNo,docStatus,Sort.by("wrDate").descending());
 		
 		return docList.stream().map(doc -> modelMapper.map(doc, DocumentAndEmpAndFormCateDTO.class)).toList();
 	}
@@ -358,6 +376,482 @@ public class DocServiceImpl implements DocService{
 		return modelMapper.map(doc, TempStoreDocumentDTO.class);
 	}
 
-	
+	/* 전자결재 작성시 작성자 이름, 부서명, 문서번호 넣어주기 */
+	@Override
+	public DocWriteInfoDTO findWriterInfo(int empNo) {
+		
+		DocWriteInfoDTO info = new DocWriteInfoDTO();
+		
+		Emp emp = docEmpRepository.findById(empNo).get();
+		EmpDTO e = modelMapper.map(emp, EmpDTO.class);
+		info.setEmpName(e.getEmpName());
+		info.setEmpJobCode(e.getEmpJobCode());
+		
+		int deptCode = e.getDeptCode();
+		Dept dept = docDeptRepository.findById(deptCode).get();
+		DeptDTO d = modelMapper.map(dept, DeptDTO.class);
+		info.setDeptName(d.getDeptName());
+		
+		int currentDocNo = docRepository.findCurrentSeqDoc() + 1;
+		info.setDocNo(currentDocNo);
+		
+		System.out.println(info);
+		
+		return info;
+	}
+
+	/* 휴가신청서 상신하기 */
+	@Override
+	@Transactional
+	public void insertNewVacationApp(AppVacationDTO vacation) {
+
+		int vacNo = vacationRepository.findCurrentSeq() + 10;
+		vacation.setVacNo(vacNo);
+		System.out.println("Service       " +vacation);
+		
+		vacationRepository.save(modelMapper.map(vacation, DocAppVacation.class));
+		
+	}
+
+	/* 취소 신청서 작성시 자신이 작성한 휴가 신청서 리스트 조회 */
+	@Override
+	public List<AppVacationDTO> findByEmpNoVacationList(int empNo) {
+		
+		List<DocAppVacation> vacationByOneList = vacationRepository.findByEmpNo(empNo,Sort.by("vacAppNo").descending());
+		
+		return vacationByOneList.stream().map(vac -> modelMapper.map(vac, AppVacationDTO.class)).toList();
+	}
+
+	/* 휴가 취소신청서 상신 */
+	@Override
+	@Transactional
+	public void insertNewCancelVacation(CancelVacationDTO cancVaca) {
+		cancelVacaRepository.save(modelMapper.map(cancVaca, DocCancelVacation.class));
+	}
+
+	/* 휴가서류 문서번호 조회 */
+	@Override
+	public List<Integer> vacationInfo() {
+		
+		int vacNo = vacationRepository.findCurrentSeq() + 1;
+		int cancVacNo = cancelVacaRepository.findCurrentSeq() +1;
+		List<Integer> vacationInfo = new ArrayList<>();
+		
+		vacationInfo.add(vacNo);
+		vacationInfo.add(cancVacNo);
+		
+		return vacationInfo;
+	}
+
+	/* 휴가 리스트 조회 */
+	@Override
+	public List<AppVacationDTO> allVacationList(int empNo) {
+		
+		List<DocAppVacation> allVacationList = vacationRepository.findByEmpNo(empNo,Sort.by("vacAppNo").descending());
+		
+		return allVacationList.stream().map(vaca -> modelMapper.map(vaca, AppVacationDTO.class)).toList();
+	}
+
+	/* 휴가취소 리스트 조회 */
+	@Override
+	public List<CancelVacationDTO> allCancelVacationList(int empNo) {
+
+		List<DocCancelVacation> cancelList = cancelVacaRepository.findByEmpNo(empNo,Sort.by("vacCancDate").descending());
+		
+		return cancelList.stream().map(can -> modelMapper.map(can, CancelVacationDTO.class)).toList();
+	}
+
+	/* 휴가 신청 상세 조회 */
+	@Override
+	public AppVacationDTO findByVacNo(int vacNo) {
+
+		DocAppVacation vaca = vacationRepository.findById(vacNo).get();
+		
+		return modelMapper.map(vaca, AppVacationDTO.class);
+	}
+
+	/* 휴가취소 상세조회 */
+	@Override
+	public CancelVacationDTO findByvacCancNo(int vacCancNo) {
+
+		DocCancelVacation canc = cancelVacaRepository.findById(vacCancNo).get();
+		
+		return modelMapper.map(canc, CancelVacationDTO.class);
+	}
+
+	/* 결재 승인 */
+	@Override
+	@Transactional
+	public void updateDocStatusApprove(int empNo, TempStoreDocumentDTO doc, String statusApp) {
+
+		/* 결재자의 결재상태 업데이트 */
+		/* 해당문서 정보 조회 */
+		Document document = docRepository.findById(doc.getDocNo1()).get();
+		document.setTagCnt1(doc.getTagCnt1());
+		
+		/* 결재자가 몇단계인지 확인, 결재자 정확한 튜플 가져오기 위한 결재경로 번호 가져오기 */
+		AppRoot appRoot =  appRootRepository.findByDocNo(doc.getDocNo1());
+		
+		AppRootDTO realAppRoot = modelMapper.map(appRoot, AppRootDTO.class);
+		
+		int stepNo = realAppRoot.getStepNo();
+		int appRootNo = realAppRoot.getAppRootNo();
+		
+		if(stepNo ==1) {	// 1단계일 경우 - 1단계는 그 단계로 종료
+			/* 결재자 상태 수정 */
+//			System.out.println("여기여기");
+//			System.out.println("여기여기");
+//			System.out.println("여기여기");
+//			System.out.println("여기여기");
+//			System.out.println("여기여기");
+//			System.out.println("여기여기");
+//			System.out.println("여기여기");
+//			System.out.println("1단계1단계1단계1단계1단계1단계");
+			
+			Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
+			approver.setAppStatus(statusApp);
+			
+			/* 문서상태 수정 */
+			document.setDocStatus1(statusApp);
+		} else if(stepNo == 2 || stepNo ==3) {		// 2단계일 경우  현재 로그인한 사람이 몇번째인지 알아야 함 
+			
+//			System.out.println("여기여기");
+//			System.out.println("여기여기");
+//			System.out.println("여기여기");
+//			System.out.println("여기여기");
+//			System.out.println("여기여기");
+//			System.out.println("여기여기");
+//			System.out.println("여기여기");
+			
+			/* 결재자 상태 수정 */
+			Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
+			approver.setAppStatus(statusApp);
+			int mine = approver.getAppNo();
+			
+			/* 로그인한 사람을 제외한 해당 문서를 결재하는 결재자 조회 */
+			List<Approver> approverList = approverRepository2.findByAppRootNoAndAppNoNot(appRootNo,mine);
+			System.out.println("여기여기" + approverList);
+			
+			List<Integer> appNos = new ArrayList<>();
+			for(int i=0; i<approverList.size(); i++) {
+				int no = approverList.get(i).getAppNo();
+				appNos.add(no);
+			}
+			
+			int step = 0;					// 단계 확인
+			int appNo1 = 0;					// 해당 문서의 다른 결재자의 결재자 번호1
+			int appNo2 = 0;					// 해당 문서의 다른 결재자의 결재자 번호2
+			
+			if(appNos.size() == 0) {		// 로그인한 사람이 1단계, 다른 결재자 없음
+				
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("로그인한 사람이 1단계");
+//				System.out.println("로그인한 사람이 1단계     " + mine);
+//				System.out.println("로그인한 사람이 1단계     " + step);
+//				System.out.println("로그인한 사람이 1단계     " +appNos);
+				
+			} else if(appNos.size() == 1) {	// 다른 결재자가 1명있을 때
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기여기여기" + appNos);
+//				System.out.println(appNos);
+				appNo1 = appNos.get(0);
+				if(appNo1 > mine) {
+//					System.out.println("로그인한 사람이 1단계");
+					step = 1;
+				} else { 
+//					System.out.println("로그인한 사람이 2단계");
+					step = 2;
+				}
+			} else {							// 다른 결재자가 2명있을 때
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기");
+//				System.out.println("여기여기여기여기" + appNos);
+//				System.out.println(appNos);
+				appNo1 = appNos.get(0);
+	  			appNo2 = appNos.get(1);
+				if( mine < appNo1 && mine < appNo2 ) {
+//					System.out.println("로그인한 사람이 1단계");
+					step = 1;
+				} else if (( mine > appNo1 && mine < appNo2 ) || ( mine < appNo1 && mine > appNo2 )) {
+//					System.out.println("로그인한 사람이 2단계");
+					step = 2;
+				} else if ( mine > appNo1 && mine > appNo2 ) {
+//					System.out.println("로그인한 사람이 3단계");
+					step = 3;
+				}
+			}
+			if(step == 1) {
+				document.setDocStatus1("진행중");
+			} else if(step == 2) {
+				if(stepNo == 2) {
+					document.setDocStatus1(statusApp);
+				} else {
+					/* 문서상태 수정 */
+//					System.out.println("진행중진행중진행중진행중진행중진행중");
+					document.setDocStatus1("진행중");
+				}
+			} else if (step == 3) {
+				document.setDocStatus1(statusApp);
+			}
+			
+		} 
+		
+	}
+
+	/* 결재 버튼 활성화 체크 */
+	@Override
+	public List<String> checkDoc(int docNo, int empNo) {
+
+		/* 컨트롤러에 넘길 리스트 */
+		List<String> list = new ArrayList<>();
+		
+		/* 현재 문서 상태 확인 */
+		Document document = docRepository.findById(docNo).get();
+		TempStoreDocumentDTO doc = modelMapper.map(document, TempStoreDocumentDTO.class);
+		String docStatus = doc.getDocStatus1();
+		String place = "";
+		if("반려".equals(docStatus) || "승인".equals(docStatus)) {
+			
+			/* 이미 끝난 결재건은 바로 비활성화 처리 할 수 있게 이것만 내보낸다. */
+			list.add(docStatus);
+		} else {
+			
+			/* 아닌 경우 단계를 알아내야함 */
+			/* 우선 경로 번호를 뽑아내자 */
+			AppRoot appRoot =  appRootRepository.findByDocNo(doc.getDocNo1());
+			int appRootNo = appRoot.getAppRootNo();
+			
+			/* 알아낸 경로번호와 현재 로그인한 사람의 정보로 결재자 번호 확인 */
+			Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
+			int mine = approver.getAppNo();
+			String mineStatus = approver.getAppStatus();
+			
+			System.out.println("여기여기");
+			System.out.println("여기여기");
+			System.out.println("여기여기");
+			System.out.println("여기여기");
+			System.out.println("여기여기");
+			System.out.println("여기여기");
+			System.out.println("여기여기");
+			System.out.println(mineStatus);
+			
+			
+			/* 로그인한 사람을 제외한 해당 문서를 결재하는 결재자 조회 */
+			List<Approver> approverList = approverRepository2.findByAppRootNoAndAppNoNot(appRootNo,mine);
+			System.out.println(approverList);
+			
+			List<Integer> appNos = new ArrayList<>();
+			for(int i=0; i<approverList.size(); i++) {
+				int no = approverList.get(i).getAppNo();
+				appNos.add(no);
+			}
+			
+			String preStatus = "";			// 바로 전 결재자 결재여부
+			String step = "";				// 단계 확인
+			int appNo1 = 0;					// 해당 문서의 다른 결재자의 결재자 번호1
+			int appNo2 = 0;					// 해당 문서의 다른 결재자의 결재자 번호2
+			
+			if(appNos.size() == 0) {		// 로그인한 사람이 1단계, 다른 결재자 없음
+				step = "0";
+				place = "1";
+				System.out.println(mine);
+			} else if(appNos.size() == 1) {	// 다른 결재자가 1명있을 때
+				System.out.println(appNos);
+				appNo1 = appNos.get(0);
+				if(appNo1 > mine) {
+					step = "1";
+					place = "1";
+				} else { 
+					step = "2";
+					place = "2";
+				}
+			}else {							// 다른 결재자가 2명있을 때
+				System.out.println(appNos);
+				appNo1 = appNos.get(0);
+	  			appNo2 = appNos.get(1);
+				if( mine < appNo1 && mine < appNo2 ) {
+					step = "1";
+					place = "1";
+				} else if (( mine > appNo1 && mine < appNo2 ) || ( mine < appNo1 && mine > appNo2 )) {
+					step = "2";
+					place = "2";
+				} else if ( mine > appNo1 && mine > appNo2 ) {
+					step = "3";
+					place = "3";
+				}
+			}
+			list.add(step);
+			list.add(place);
+			/* 로그인 한 사람이 결재 단계가 2, 3 일 경우 전단계 사람이 결재했는지도 확인해준다. */
+			List<String> statusApps = new ArrayList<>();
+			String isChecked = "대기";
+			if("1".equals(step)) {
+				
+				if(("대기").equals(mineStatus)) {
+					list.add("가능");
+				} else {
+					list.add("불가능");
+				}
+				
+			} else if("2".equals(step)) {
+				Approver approver2 = approverRepository2.findById(appNo1).get();
+				preStatus = approver2.getAppStatus();
+				
+				if((isChecked.equals(approver2.getAppStatus()))) {
+					list.add("불가능");
+				} else if (("대기").equals(mineStatus)){
+					list.add("가능");
+				} else {
+					list.add("불가능");
+				}
+				
+			} else if("3".equals(step)) {
+				for (int i =0; i<approverList.size(); i++) {
+					String s = approverList.get(i).getAppStatus();
+					statusApps.add(s);
+				}
+				
+				if((isChecked.equals(statusApps.get(0))) && (isChecked.equals(statusApps.get(1)))) {
+					list.add("불가능");
+				} else if (("대기").equals(mineStatus)){
+					list.add("가능");
+				} else {
+					list.add("불가능");
+				}
+			}
+			
+		}		
+		
+		
+		
+		return list;
+	}
+
+	/* 결재 반려 */
+	@Override
+	@Transactional
+	public void updateDocStatusRefuse(int empNo, TempStoreDocumentDTO doc, String statusApp) {
+
+		/* 결재자의 결재상태 업데이트 */
+		/* 해당문서 정보 조회 */
+		Document document = docRepository.findById(doc.getDocNo1()).get();
+		document.setTagCnt1(doc.getTagCnt1());
+		
+		/* 결재자가 몇단계인지 확인, 결재자 정확한 튜플 가져오기 위한 결재경로 번호 가져오기 */
+		AppRoot appRoot =  appRootRepository.findByDocNo(doc.getDocNo1());
+		
+		AppRootDTO realAppRoot = modelMapper.map(appRoot, AppRootDTO.class);
+		
+		int stepNo = realAppRoot.getStepNo();
+		int appRootNo = realAppRoot.getAppRootNo();
+		
+		if(stepNo ==1) {	// 1단계일 경우 - 1단계는 그 단계로 종료
+			/* 결재자 상태 수정 */
+			Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
+			approver.setAppStatus(statusApp);
+			
+			/* 문서상태 수정 */
+			document.setDocStatus1(statusApp);
+		} else if(stepNo == 2 || stepNo ==3) {		// 2,3단계일 경우  현재 로그인한 사람이 몇번째인지 알아야 함 
+			
+			/* 결재자 상태 수정 */
+			Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
+			approver.setAppStatus(statusApp);
+			int mine = approver.getAppNo();
+			
+			/* 로그인한 사람을 제외한 해당 문서를 결재하는 결재자 조회 */
+			List<Approver> approverList = approverRepository2.findByAppRootNoAndAppNoNot(appRootNo,mine);
+			System.out.println("여기여기" + approverList);
+			
+			List<Integer> appNos = new ArrayList<>();
+			for(int i=0; i<approverList.size(); i++) {
+				int no = approverList.get(i).getAppNo();
+				appNos.add(no);
+			}
+			
+			int step = 0;					// 단계 확인
+			int appNo1 = 0;					// 해당 문서의 다른 결재자의 결재자 번호1
+			int appNo2 = 0;					// 해당 문서의 다른 결재자의 결재자 번호2
+			
+			if(appNos.size() == 1) {	// 다른 결재자가 1명있을 때
+//				System.out.println("여기여기여기여기" + appNos);
+//				System.out.println(appNos);
+				appNo1 = appNos.get(0);
+				if(appNo1 > mine) {
+//					System.out.println("로그인한 사람이 1단계");
+					step = 1;
+				} else { 
+//					System.out.println("로그인한 사람이 2단계");
+					step = 2;
+				}
+			} else {							// 다른 결재자가 2명있을 때
+//				System.out.println("여기여기여기여기" + appNos);
+//				System.out.println(appNos);
+				appNo1 = appNos.get(0);
+	  			appNo2 = appNos.get(1);
+				if( mine < appNo1 && mine < appNo2 ) {
+//					System.out.println("로그인한 사람이 1단계");
+					step = 1;
+				} else if (( mine > appNo1 && mine < appNo2 ) || ( mine < appNo1 && mine > appNo2 )) {
+//					System.out.println("로그인한 사람이 2단계");
+					step = 2;
+				} else if ( mine > appNo1 && mine > appNo2 ) {
+//					System.out.println("로그인한 사람이 3단계");
+					step = 3;
+				}
+			}
+			if(step == 1) {
+				document.setDocStatus1(statusApp);
+				for(int i=0; i<approverList.size(); i++) {
+					approverList.get(i).setAppStatus("전단계 반려");
+				}
+				
+			} else if(step == 2) {
+				document.setDocStatus1(statusApp);
+				for(int i=0; i<approverList.size(); i++) {
+					approverList.get(i).setAppStatus("전단계 반려");
+				}
+				
+			} else if (step == 3) {
+				document.setDocStatus1(statusApp);
+			}
+			
+		} 
+		
+		
+	}
+
+	/* 결재시 서명 도장 이름 가져오기 */
+	@Override
+	public List<String> findSignName(int empNo) {
+
+		List<String> list = new ArrayList<>();
+		
+		DocSign sign = signRepository.findById(empNo).get();
+		
+		String signName = sign.getSignSavedName();
+		list.add(signName);
+		
+		return list;
+	}
+
 	
 }

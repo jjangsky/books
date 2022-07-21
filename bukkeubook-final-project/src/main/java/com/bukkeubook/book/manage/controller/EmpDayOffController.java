@@ -2,7 +2,6 @@ package com.bukkeubook.book.manage.controller;
 
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bukkeubook.book.manage.model.dto.DayOffDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.DayOffAndEmpAndDeptDTO;
-import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.service.EmpDayOffService;
 
 @Controller
@@ -28,7 +27,7 @@ public class EmpDayOffController {
    /* 사원 연차 조회 */
    @GetMapping("/empDayOffList")
    public ModelAndView findDayOffList(ModelAndView mv) {
-      System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
+//      System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
       List<DayOffAndEmpAndDeptDTO> dayOffList= empDayOffService.findDayOffList();
       
       mv.addObject("dayOffList", dayOffList);
@@ -43,17 +42,47 @@ public class EmpDayOffController {
 		
 		int number = Integer.valueOf(empNo);
 		
-		System.out.println("컨트롤러에서       " + empNo);
-		System.out.println("컨트롤러에서       " + number);
+//		System.out.println("컨트롤러에서       " + empNo);
+//		System.out.println("컨트롤러에서       " + number);
 		
 		DayOffAndEmpAndDeptDTO emp  = empDayOffService.searchEmpDayOffDetail(number);
 		
-		System.out.println("컨트롤러에서       " + emp);
+//		System.out.println("컨트롤러에서       " + emp);
 		
 		mv.addObject("emp", emp);
 		mv.setViewName("/manage/empAnnual/empDayOffDetail");
 		return mv;
 	}
    
-
+//	@GetMapping("/empDayOffList")
+//	public ModelAndView updateDayOffInfo(DayOffDTO dayOffDTO, int empNo, ModelAndView mv) {
+//		
+//		List<DayOffDTO> dayOffList = empDayOffService.findDayOffByNo(empNo);
+//		
+//		mv.addObject("dayOffList", dayOffList);
+//		mv.setViewName("/empAnnual/empDayOffDetail");
+//		
+//		System.out.println("나오니?" + dayOffList);
+//		System.out.println("나오니?" + dayOffList);
+//		System.out.println("나오니?" + dayOffList);
+//		System.out.println("나오니?" + dayOffList);
+//		System.out.println("나오니?" + dayOffList);
+//		System.out.println("나오니?" + dayOffList);
+//		System.out.println("나오니?" + dayOffList);
+//		System.out.println("나오니?" + dayOffList);
+//		System.out.println("나오니?" + dayOffList);
+//		
+//		return mv;
+//	}
+	
+//	@Transactional
+//	@PostMapping("/empDayOffList")
+//	public ModelAndView modifyDayOffInfo(RedirectAttributes rttr, DayOffDTO dayOffDTO, ModelAndView mv, @ModelAttribute AppVacationDTO appVacationDTO) {
+//		
+//		empDayOffService.modifyDayOffInfo(dayOffDTO, appVacationDTO);
+//		
+//		mv.setViewName("redirect:/empAnnual/empDayOffList");
+//		return mv;
+//		
+//	};
 }

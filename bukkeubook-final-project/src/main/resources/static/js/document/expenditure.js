@@ -1,4 +1,41 @@
 window.onload = function() {
+	
+	$(function(){
+		$.ajax({
+			url:"/document/findSignName",
+			success: function(data){
+				console.log(data);
+				$("#empSign").val(data[0]);
+				console.log($("#empSign").val());
+				let empSign = $("#empSign").val();
+				
+				$("#sign1").append("<img src='/images/sign/" + empSign + "'>");
+			},
+			error : function(error){
+				console.log(error);
+			}
+		})
+	})
+	
+	$(function(){
+		let empNo = $("#empNo1").val();
+		$.ajax({
+			url:"/document/empInfo/" + empNo,
+			success: function(data){
+				console.log(data.empName);
+				console.log(data.deptName);
+				console.log(data.docNo);
+				console.log(data);
+				
+				$("#writer2").text(data.empName);
+				$("#dept2").text(data.deptName);
+				$("#docnumber").text(data.docNo);
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+	});
 
 	$("#clear").click(function(){
 		$("#account1").val("");
@@ -37,9 +74,9 @@ window.onload = function() {
 		console.log(account);
 		console.log(deptName);
 		let approver1 = deptName + "<br>" + account
-		$("#account1").val(appro);
-		$("#acco1").val(account);
-		$("#deptName1").val(deptName);
+		$("#account2").val(appro);
+		$("#acco2").val(account);
+		$("#deptName2").val(deptName);
 		$("#selacc2").html(approver1);
 	});
 	
@@ -51,9 +88,9 @@ window.onload = function() {
 		console.log(account);
 		console.log(deptName);
 		let approver1 = deptName + "<br>" + account
-		$("#account1").val(appro);
-		$("#acco1").val(account);
-		$("#deptName1").val(deptName);
+		$("#account3").val(appro);
+		$("#acco3").val(account);
+		$("#deptName3").val(deptName);
 		$("#selacc3").html(approver1);
 	});
 
@@ -88,16 +125,18 @@ window.onload = function() {
 		$.ajax({
 			url: "/document/emp/" + deptValue,
 			success: function(data) {
-				console.log(data[0].empName);
-				console.log(data);
-				console.table(data);
+				//console.log(data[0].empName);
+				//console.log(data);
+				//console.table(data);
 
+				
 				const $empList = $("#empList");
 
 				$empList.text("");
 
 				for (let index in data) {
-					$empList.append($("<option>").val(data[index].empNo).text(data[index].empName));
+					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
+					$empList.append($("<option>").val(data[index].empNo).text(jobEmp));
 				}
 			},
 			error: function(error) {
@@ -112,16 +151,17 @@ window.onload = function() {
 		$.ajax({
 			url: "/document/emp/" + deptValue,
 			success: function(data) {
-				console.log(data[0].empName);
-				console.log(data);
-				console.table(data);
+				//console.log(data[0].empName);
+				//console.log(data);
+				//console.table(data);
 
 				const $empList = $("#empList2");
 
 				$empList.text("");
 
 				for (let index in data) {
-					$empList.append($("<option>").val(data[index].empNo).text(data[index].empName));
+					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
+					$empList.append($("<option>").val(data[index].empNo).text(jobEmp));
 				}
 			},
 			error: function(error) {
@@ -136,16 +176,17 @@ window.onload = function() {
 		$.ajax({
 			url: "/document/emp/" + deptValue,
 			success: function(data) {
-				console.log(data[0].empName);
-				console.log(data);
-				console.table(data);
+				//console.log(data[0].empName);
+				//console.log(data);
+				//console.table(data);
 
 				const $empList = $("#empList3");
 
 				$empList.text("");
 
 				for (let index in data) {
-					$empList.append($("<option>").val(data[index].empNo).text(data[index].empName));
+					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
+					$empList.append($("<option>").val(data[index].empNo).text(jobEmp));
 				}
 			},
 			error: function(error) {
@@ -359,88 +400,103 @@ function sendData() {
 	
 	let check = true;
 	let countCheck = 0;
+	let countCheck2 = 0;
 
-	if ($("#stepNo").val() == "") {
-		Swal.fire({
-			icon: 'warning',
-			title: '결재단계 확인',
-			text: '단계 지정버튼을 눌러주세요!'
-		})
-	} else{countCheck ++;}
-	console.log(countCheck);
-	if ($("#submitTitle").val() == ""){
-		Swal.fire({
-			icon: 'warning',
-			title: '제목 없음',
-			text: '제목을 작성해주세요!'
-		})
-	} else{countCheck += 1;}
-	console.log(countCheck);
-	if(check){
-		for (let i = 0; i < amts.length; i++) {
-			if (!(Number(amts[i].innerText) || amts[i].innerText === '')) {
-				//alert('숫자 아닌거 있음');
+	Swal.fire({
+			title: '결재 상신',
+			text: "작성하신 문서를 상신 하시겠습니까?",
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#c5bfbf',
+			cancelButtonColor: '#c5bfbf',
+			confirmButtonText: '확인',
+			cancelButtonText: '취소'
+		}).then((result) => {
+	
+			if ($("#stepNo").val() == "") {
 				Swal.fire({
 					icon: 'warning',
-					title: '금액란 입력 오류',
-					text: '금액란에 숫자만 입력해주세요!',
+					title: '결재단계 확인',
+					text: '단계 지정버튼을 눌러주세요!'
 				})
-				break;
-			} else if (amts[0].innerText.length < 1) {
-				//console.log(amts[0].innerText);
-				//alert('내용 한개이상 입력해야함');
+			} else{countCheck ++;}
+			console.log(countCheck);
+			if ($("#submitTitle").val() == ""){
 				Swal.fire({
 					icon: 'warning',
-					title: '등록된 금액이 없습니다!',
-					text: '내용을 한개이상 입력해주세요!',
+					title: '제목 없음',
+					text: '제목을 작성해주세요!'
 				})
-				break;
-			} else {
-				totalamt += Number(amts[i].innerText);
+			} else{countCheck += 1;}
+			console.log(countCheck);
+			if(check){
+				for (let i = 0; i < amts.length; i++) {
+					if (!(Number(amts[i].innerText) || amts[i].innerText === '')) {
+						//alert('숫자 아닌거 있음');
+						Swal.fire({
+							icon: 'warning',
+							title: '금액란 입력 오류',
+							text: '금액란에 숫자만 입력해주세요!',
+						})
+						break;
+					} else if (amts[0].innerText.length < 1) {
+						//console.log(amts[0].innerText);
+						//alert('내용 한개이상 입력해야함');
+						Swal.fire({
+							icon: 'warning',
+							title: '등록된 금액이 없습니다!',
+							text: '내용을 한개이상 입력해주세요!',
+						})
+						break;
+					} else {
+						totalamt += Number(amts[i].innerText);
+					}
+				}
+				countCheck2 +=1;
+				for (let i = 0; i < cnts.length; i++) {
+					if (cnts[0].innerText.length < 1) {
+						//console.log(cnts[0].innerText);
+						//alert('내용없음 한개이상 입력해야함');
+						Swal.fire({
+							icon: 'warning',
+							title: '등록된 내용이 없습니다!',
+							text: '내용을 한개이상 입력해주세요!',
+						})
+						break;
+					} else {
+						resultamts[i].innerText = amts[i].innerText
+						resultcnts[i].innerText = cnts[i].innerText
+						resultmemos[i].innerText = memos[i].innerText
+			
+						// console.log(totalamt);
+			
+						document.getElementById("sumamt").innerText = totalamt;
+						
+					}
+				}
+				countCheck2 +=1;
 			}
-		}
-	
-		for (let i = 0; i < cnts.length; i++) {
-			if (cnts[0].innerText.length < 1) {
-				//console.log(cnts[0].innerText);
-				//alert('내용없음 한개이상 입력해야함');
-				Swal.fire({
-					icon: 'warning',
-					title: '등록된 내용이 없습니다!',
-					text: '내용을 한개이상 입력해주세요!',
-				})
-				break;
-			} else {
-				resultamts[i].innerText = amts[i].innerText
-				resultcnts[i].innerText = cnts[i].innerText
-				resultmemos[i].innerText = memos[i].innerText
-	
-				// console.log(totalamt);
-	
-				document.getElementById("sumamt").innerText = totalamt;
+			if(countCheck2 ==2){countCheck += 1;}
+			console.log(countCheck);
+			if(countCheck == 3){
 				
+				let text = $("#title").text();
+				console.log(text);
+				console.log($("#submitTitle").val(text));
+				
+				
+				let sendDraft = $("#insertin").html();
+				console.log(sendDraft);
+				
+				let cnt = $("#writein").html();
+				console.log(cnt)
+				
+				$("#draftcnt2").val(sendDraft);
+				$("#cnttt2").val(cnt);
+				$("#docStatus2").val("대기");
+				$("#submitReport").submit();
 			}
-		}countCheck +=1;
-	} 
-	console.log(countCheck);
-	if(countCheck == 3){
-		
-		let text = $("#title").text();
-		console.log(text);
-		console.log($("#submitTitle").val(text));
-		
-		
-		let sendDraft = $("#insertin").html();
-		console.log(sendDraft);
-		
-		let cnt = $("#writein").html();
-		console.log(cnt)
-		
-		$("#draftcnt2").val(sendDraft);
-		$("#cnttt2").val(cnt);
-		$("#docStatus2").val("대기");
-		$("#submitReport").submit();
-	}
+	});
 
 }
 
@@ -468,6 +524,8 @@ function selectacc() {
 				stepNo = "1";
 				$("#stepNo").val(stepNo);
 				$("#step").text(stepNo);
+				$("#selacc2").text("");
+				$("#selacc3").text("");
 			}
 		})
 	} else if ($("#account3").val() == "") {
@@ -485,6 +543,7 @@ function selectacc() {
 				stepNo = "2";
 				$("#stepNo").val(stepNo);
 				$("#step").text(stepNo);
+				$("#selacc3").text("");
 			}
 		})
 	} else {

@@ -24,13 +24,16 @@ public class repositoryTest {
 	private AppRootRepository rootRe;
 	private ModelMapper modelMapper;
 	private DocumentRepository docRe;
+	private AppVacationRepository vare;
 	
 	@Autowired
-	public repositoryTest(ApproverRepository2 approverRe,ModelMapper modelMapper, AppRootRepository rootRe, DocumentRepository docRe) {
+	public repositoryTest(ApproverRepository2 approverRe,ModelMapper modelMapper, AppRootRepository rootRe
+						, DocumentRepository docRe, AppVacationRepository vare) {
 		this.approverRe = approverRe;
 		this.modelMapper = modelMapper;
 		this.rootRe = rootRe;
 		this.docRe = docRe;
+		this.vare = vare;
 	}
 	
 	@Test
@@ -38,6 +41,11 @@ public class repositoryTest {
 	public void 사원과_맞는_결제자_조회() {
 		List<Object[]> list = approverRe.findByApproverNoDocList(17);
 		assertNotNull(list);		// Success!!
+	}
+	
+	@Test
+	public void 시퀀스조회() {
+		int no = vare.findCurrentSeq();		// Success!!
 	}
 	
 //	@Test

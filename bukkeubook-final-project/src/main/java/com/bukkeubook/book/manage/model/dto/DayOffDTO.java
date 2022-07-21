@@ -23,6 +23,7 @@ public class DayOffDTO implements Serializable {
 	
 	public DayOffDTO() {
 	}
+	
 	public DayOffDTO(int doffNo, Date doffYear, int doffAmount, int doffRemain, int doffUse, int empNo) {
 		this.doffNo = doffNo;
 		this.doffYear = doffYear;

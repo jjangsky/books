@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bukkeubook.book.books.model.dto.BookDTO;
+import com.bukkeubook.book.books.model.dto.DamBookDTO;
 import com.bukkeubook.book.books.model.dto.RelBkListAndBookAndRelListDTO;
 import com.bukkeubook.book.books.model.dto.RelBkListDTO;
 import com.bukkeubook.book.books.model.dto.RelListAndEmpDTO;
@@ -25,6 +27,7 @@ import com.bukkeubook.book.books.model.dto.StockListDTO;
 import com.bukkeubook.book.books.model.service.BookService;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
+import com.bukkeubook.book.member.model.dto.UserImpl;
 
 @Controller
 @RequestMapping("/book")
@@ -36,18 +39,6 @@ public class BookController extends HttpServlet{
 	public BookController(BookService bookService) {
 		this.bookService = bookService;
 	}
-	
-	/*
-	 * @GetMapping("/lookupList") public ModelAndView findBookList(ModelAndView mv)
-	 * {
-	 * 
-	 * List<BookDTO> bookList = bookService.findBookList();
-	 *  mv.addObject("bookList", bookList); 
-	 *  mv.setViewName("books/bookList/lookupList");
-	 * 
-	 * return mv; }
-	 */
-	
 	
 	@GetMapping("/lookupList")
 	public ModelAndView searchPage(HttpServletRequest request, ModelAndView mv) {
@@ -83,7 +74,7 @@ public class BookController extends HttpServlet{
 
 		for(BookDTO book : bookList) {
 			System.out.println(book);
-		}
+		} 
 
 		mv.addObject("bookList", bookList);
 		mv.addObject("selectCriteria", selectCriteria);
@@ -115,10 +106,10 @@ public class BookController extends HttpServlet{
 	}
 	
 	@PostMapping("/bookInfoUpdate2")
-	public ModelAndView modifyBookInfo(BookDTO bookDTO, ModelAndView mv) {
+	public ModelAndView modifyBookInfo(BookDTO bookDTO, ModelAndView mv, RedirectAttributes rttr) {
 		
 		bookService.modifyBookInfo(bookDTO);
-		
+		rttr.addFlashAttribute("updateSuccessMessage", "성공");
 		mv.setViewName("redirect:/book/lookupList");
 		return mv;
 	};
@@ -132,7 +123,9 @@ public class BookController extends HttpServlet{
 	}
 	
 	@PostMapping("/newBook2")
-	public ModelAndView insertBook(BookDTO bookDTO, ModelAndView mv, RedirectAttributes rttr) {
+	public ModelAndView insertBook(BookDTO bookDTO, ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request) {
+//		String cate = request.getParameter("cate");
+//		System.out.println(cate);
 		bookService.insertBook(bookDTO);
 		rttr.addFlashAttribute("insertSuccessMessage", "성공");
 		mv.setViewName("redirect:/book/lookupList");
@@ -200,7 +193,6 @@ public class BookController extends HttpServlet{
 
 		String searchCondition = request.getParameter("searchCondition");
 		String searchValue = request.getParameter("searchValue");
-
 		int totalCount = bookService.selectTotalCount(searchCondition, searchValue);
 
 		int limit = 10;		
@@ -318,16 +310,16 @@ public class BookController extends HttpServlet{
 	}
 	
 	@PostMapping("/outputReceipt")
-	public ModelAndView outputReceipt(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+	public ModelAndView outputReceipt(@AuthenticationPrincipal UserImpl user, HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
 		int rownum = Integer.valueOf(request.getParameter("rownum"));
-		
+		int empNo = user.getEmpNo();
 		for(int i = 1; i <= 1; i++) {
 			
 			RelListDTO relList = new RelListDTO();
 			RelBkListDTO relBkList = new RelBkListDTO();
 			
 			relList.setRelDate(new java.sql.Date(System.currentTimeMillis()));
-			relList.setEmpNo(20);	// 사번은 로그인 구현후 변경하기
+			relList.setEmpNo(empNo);	// 사번은 로그인 구현후 변경하기
 			
 			int relNo = bookService.outputReceipt(relList);
 			
@@ -356,10 +348,12 @@ public class BookController extends HttpServlet{
 	}
 	
 	@PostMapping("/inputReceipt")
-	public ModelAndView inputReceipt(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+	public ModelAndView inputReceipt(@AuthenticationPrincipal UserImpl customUser, HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+		int empNo = customUser.getEmpNo();
 		
 		int rownum = Integer.valueOf(request.getParameter("rownum"));
 		String selectInput = request.getParameter("selectInput");
+		
 		for(int i = 1; i <= 1; i++) {
 			
 			StockListDTO stockList = new StockListDTO();
@@ -367,7 +361,7 @@ public class BookController extends HttpServlet{
 			
 			stockList.setStDate(new java.sql.Date(System.currentTimeMillis()));
 			stockList.setStType(selectInput);
-			stockList.setEmpNo(21);	// 사번은 로그인 구현후 변경하기
+			stockList.setEmpNo(empNo);
 			
 			int stCode = bookService.inputReceipt(stockList);
 			
@@ -377,7 +371,8 @@ public class BookController extends HttpServlet{
 				stockBookList.setBkNo(no);
 				stockBookList.setStockBkAmount(amount);
 				stockBookList.setStCode(stCode);
-				
+				System.out.println(no);
+				System.out.println(amount);
 				bookService.inputReceipt2(stockBookList);
 				
 				BookDTO bookDTO = new BookDTO();
@@ -390,4 +385,67 @@ public class BookController extends HttpServlet{
 		mv.setViewName("redirect:/book/inputList");
 		return mv;
 	}
+	
+	@GetMapping("/damageList")
+	public ModelAndView damageList(HttpServletRequest request, ModelAndView mv) {
+		String currentPage = request.getParameter("currentPage");
+		int pageNo = 1;
+
+		if(currentPage != null && !"".equals(currentPage)) {
+			pageNo = Integer.parseInt(currentPage);
+		}
+
+		String searchCondition = request.getParameter("searchCondition");
+		String searchValue = request.getParameter("searchValue");
+
+		int totalCount = bookService.selectTotalCount(searchCondition, searchValue);
+
+		int limit = 10;		
+
+		int buttonAmount = 5;
+
+		SelectCriteria selectCriteria = null;
+		if(searchValue != null && !"".equals(searchValue)) {
+			selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		} else {
+			selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount);
+		}
+		System.out.println(selectCriteria);
+
+		List<BookDTO> bookDTO = bookService.searchDamageBook(selectCriteria);
+
+		for(BookDTO book : bookDTO) {
+			System.out.println(book);
+		}
+		
+		mv.addObject("damageList", bookDTO);
+		
+		mv.addObject("selectCriteria", selectCriteria);
+		mv.setViewName("books/bookList/damageBookList");
+		return mv;
+	}
+	
+	@GetMapping("/damageAmount")
+	public ModelAndView damBookInfo(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+		String no = request.getParameter("bkNo");
+		List<BookDTO> bookList = bookService.findBookByNo(no);
+		System.out.println(bookList);
+		mv.addObject("bookList", bookList);
+		mv.setViewName("books/bookList/damBookInfo");
+		return mv;
+	}
+	
+	@GetMapping("/damAmountUpdate")
+	public ModelAndView damAmountUpdate(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+		String no = request.getParameter("no");
+		int amount = Integer.valueOf(request.getParameter("amount"));
+		int updateAmount = Integer.valueOf(request.getParameter("updateAmount"));
+		
+		DamBookDTO bookList = bookService.findByNo(no, updateAmount);
+		bookService.findBookByNo(no, updateAmount, amount);
+		rttr.addFlashAttribute("updateSuccessMessage", "성공");
+		mv.setViewName("redirect:/book/damageList");
+		return mv;
+	}
+	
 }

@@ -36,15 +36,15 @@
                 </tr>
                 <tr th:each="book : ${ bookList }">
                     <th>가격</th>
-                    <td><input class="updateInput" type="text" th:value="${ book.price }" name="price"></td>
+                    <td><input class="updateInput price" type="text" th:value="${ book.price }" name="price"></td>
                 </tr>
                 <tr th:each="book : ${ bookList }">
                     <th>매장 재고수량</th>
-                    <td><input class="updateInput" type="text" th:value="${ book.storeSt }" name="storeSt"></td>
+                    <td><input class="updateInput storeSt" type="text" th:value="${ book.storeSt }" name="storeSt"></td>
                 </tr>
                 <tr th:each="book : ${ bookList }">
                     <th>창고 재고수량</th>
-                    <td><input class="updateInput" type="text" th:value="${ book.whSt }" name="whSt"></td>
+                    <td><input class="updateInput whSt" type="text" th:value="${ book.whSt }" name="whSt"></td>
                 </tr>
                 <tr th:each="book : ${ bookList }">
                     <th>최근입고일</th>
@@ -67,9 +67,7 @@
             
           <br>
           <div id="newBookDiv">
-            <button type="button" class="productBtn newBookBtn">발주신청</button>
-            <button type="button" class="productBtn newBookBtn">훼손등록</button>
-            <button type="button" class="productBtn newBookBtn updateBtn">수정완료</button>
+            <button type="button" class="productBtn newBookBtn updateBtn" onclick='formCheck();'>수정완료</button>
             <button type="button" class="productBtn newBookBtn backBtn">뒤로가기</button>
           </div>
           </form>
@@ -103,17 +101,115 @@
 		    });
 		});
 		
-        $(".updateBtn").click(function () {
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: '수정이 성공적으로 완료되었습니다!',
-            }).then(function(){
-
-			$("#updateForm").submit();
-			});
-        });
       </script>  
-      
+      <script>	// 정규표현식
+		const priceExp = /^[0-9]{3,6}$/;
+		const prodExp = /^[0-9]{1,6}$/;
+		const tagExp = /(<([^>]+)>)/gi;
+		$('.price').blur(function(){
+			if(tagExp.test($('.price').val())){
+				Swal.fire({
+                  icon: 'error',
+                  title: '태그쓰지마세요',
+                  text: '',
+              }).then(function(){
+              	$('.price').val('');
+	    		$('.price').focus();
+              })
+			} else if(!priceExp.test($('.price').val()) && $('.price').val() != ''){
+					Swal.fire({
+	                    icon: 'error',
+	                    title: '입력 오류!',
+	                    text: '100 ~ 999,999 사이의 가격을 입력 해 주세요.',
+	                }).then(function(){
+	                	$('.price').val('');
+		    			$('.price').focus();
+	                })
+				}
+			});
+		
+		
+		$('.whSt').blur(function(){
+			if(tagExp.test($('.whSt').val())){
+				Swal.fire({
+                  icon: 'error',
+                  title: '태그쓰지마세요',
+                  text: '',
+              }).then(function(){
+              	$('.whSt').val('');
+	    			$('.whSt').focus();
+              })
+			} else if(!prodExp.test($('.whSt').val()) && $('.whSt').val() != ''){
+					Swal.fire({
+	                    icon: 'error',
+	                    title: '입력 오류!',
+	                    text: '1 ~ 999,999 사이의 가격을 입력 해 주세요.',
+	                }).then(function(){
+	                	$('.whSt').val('');
+		    			$('.whSt').focus();
+	                })
+				}
+			});
+		
+		
+		$('.storeSt').focusout(function(){
+			if(tagExp.test($('.storeSt').val())){
+				Swal.fire({
+                  icon: 'error',
+                  title: '태그쓰지마세요',
+                  text: '',
+              }).then(function(){
+              	$('.storeSt').val('');
+	    			$('.storeSt').focus();
+              })
+			} else if(!prodExp.test($('.storeSt').val()) && $('.storeSt').val() != ''){
+					Swal.fire({
+	                    icon: 'error',
+	                    title: '입력 오류!',
+	                    text: '1 ~ 999,999 사이의 가격을 입력 해 주세요.',
+	                }).then(function(){
+	                	$('.storeSt').val('');
+		    			$('.storeSt').focus();
+	                })
+				}
+			});
+      </script>
+      <script>
+      function formCheck(){
+	  		if( $('.price').val() == '' ){
+	  			Swal.fire({
+	                  icon: 'question',
+	                  title: '도서정보가 부족합니다!',
+	                  text: '가격을 입력 해 주세요.',
+	              }).then(function(){
+		    			$('.price').focus();
+	              })
+	 				return false;
+	  		};
+	  		
+	  		if( $('.whSt').val() == '' ){
+	  			Swal.fire({
+	                  icon: 'question',
+	                  title: '도서정보가 부족합니다!',
+	                  text: '창고 재고수량을 입력 해 주세요.',
+	              }).then(function(){
+		    			$('.whSt').focus();
+	              })
+	 				return false;
+	  		};
+	  		
+	  		if( $('.storeSt').val() == '' ){
+	  			Swal.fire({
+	                  icon: 'question',
+	                  title: '도서정보가 부족합니다!',
+	                  text: '매장 재고수량을 입력 해 주세요.',
+	              }).then(function(){
+		    			$('.storeSt').focus();
+	              })
+	 				return false;
+	  		};
+  			$("#updateForm").submit();
+      };
+      </script>
 </body>
 </html>

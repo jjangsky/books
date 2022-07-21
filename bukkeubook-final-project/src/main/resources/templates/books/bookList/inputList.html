@@ -26,9 +26,10 @@
 						<option value="date" th:selected="${ searchCondition } == 'date'">입고날짜</option>
 						<option value="name" th:selected="${ searchCondition } == 'name'">입고자</option>
 					</select>
+				<input type="hidden" id="searchDate" name="searchValue">
 				<input type="text" style="display:none;"><!-- 엔터키 새로고침 방지용 --> 
 				<input type="hidden" name="currentPage" value="1">
-				<input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}">
+				<input type="search" id="inputFind" name="searchValue" maxlength=50 th:value="${selectCriteria.searchValue}">
 				<button class="productBtn findBtn" id="findBtn" type="button">검색하기</button>
 			</form>
 		</div>
@@ -68,7 +69,7 @@
 	                icon: 'question',
 	                title: '',
 	                text: '분류와 검색어를 입력 해 주세요.',
-	            })} else if(inputFind.value == ""){
+	            })} else if(!inputFind.value == ""){
 	        	Swal.fire({
 	                icon: 'question',
 	                title: '',
@@ -83,6 +84,19 @@
 		   			$('#loginForm').submit();
 	   			};
 			});
+		$('#inputFind').blur(function(){
+			const tagExp = /(<([^>]+)>)/gi;
+			if(tagExp.test($('#inputFind').val())){
+				Swal.fire({
+                    icon: 'error',
+                    title: '태그쓰지마세요',
+                    text: '',
+                }).then(function(){
+                	$('#inputFind').val('');
+	    			$('#inputFind').focus();
+                })
+			}
+		});
 	</script>
 	<script>
 		const inputSuccessmessage = "[[${inputSuccessMessage}]]"
@@ -97,6 +111,23 @@
 			console.log(inputSuccessmessage)
 		}
 	</script>
-
+	<script>
+		$(document).ready(function(){
+	       	$('#searchCondition').change( function(){
+			     if($('#searchCondition').val() == "date"){
+			     	$('#searchDate').prop("type", "date");
+			     	$('#inputFind').prop("type", "hidden");
+	       	     }
+			     if($('#searchCondition').val() == "name"){
+			     	$('#searchDate').prop("type", "hidden");
+			     	$('#inputFind').prop("type", "search");
+	       	     }
+			     if($('#searchCondition').val() == "select"){
+			     	$('#searchDate').prop("type", "hidden");
+			     	$('#inputFind').prop("type", "search");
+	       	     }
+	       	});
+       	});
+	</script>
 </body>
 </html>

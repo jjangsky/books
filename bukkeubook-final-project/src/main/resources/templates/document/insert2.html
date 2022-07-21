@@ -26,7 +26,7 @@
 	</div>
 
 	<div class="total">
-		<br><br>
+		<br><br><br>
 		<h4 style="padding-left:30px;">결재라인 지정</h4>
 		<table class="tbl2" border="1px solid gray">
 			<tr>
@@ -233,7 +233,7 @@
 			</tr>
 			<tr>
 				<th class="coloring view">문서번호</th>
-				<th class="read view">1</th>
+				<th class="read view" id="docnumber"></th>
 				<th rowspan="4" class="coloring view">결재</th>
 				<th class="coloring view" id="selacc4">담당</th>
 				<th class="coloring view" id="selacc1">결재1</th>
@@ -243,19 +243,19 @@
 			<tr>
 				<th class="coloring view">작성일자</th>
 				<th id="date"></th>
-				<th rowspan="3" class="sign view"></th>
-				<th rowspan="3" class="sign view"></th>
-				<th rowspan="3" class="sign view"></th>
-				<th rowspan="3" class="sign view"></th>
+				<th rowspan="3" class="sign view" id="sign1"></th>
+				<th rowspan="3" class="sign view" id="sign2"></th>
+				<th rowspan="3" class="sign view" id="sign3"></th>
+				<th rowspan="3" class="sign view" id="sign4"></th>
 			</tr>
 			<tr>
 				<th class="coloring view">부서명</th>
-				<th class="view"></th>
+				<th class="view" id="dept2"></th>
 
 			</tr>
 			<tr>
 				<th class="coloring view">작성자</th>
-				<th class="view"></th>
+				<th class="view" id="writer2"></th>
 			</tr>
 			<tr>
 				<th class="coloring view">제목</th>
@@ -335,6 +335,7 @@
 				<th class="view coloring" colspan="3"></th>
 			</tr>
 		</table>
+		<input type="hidden" id="empSign">
 	</div>
 	<br clear="both">
 	<div class="right">

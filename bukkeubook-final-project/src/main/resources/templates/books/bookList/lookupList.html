@@ -34,7 +34,7 @@
 					</select>
 				<input type="text" style="display:none;"> <!-- 엔터키 새로고침 방지용 -->
 				<input type="hidden" name="currentPage" value="1">
-				<input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}">
+				<input type="search" id="inputFind" name="searchValue" maxlength=50 th:value="${selectCriteria.searchValue}">
 				<button class="productBtn findBtn" id="findBtn" type="button">검색하기</button>
 			</form>
 		</div>
@@ -53,6 +53,7 @@
                 <th class="th1">매장재고</th>
               </tr>
               <tr class="tr1" th:each="book : ${ bookList }" th:onclick="'location.href = \'' + @{/book/bookInfo/(no=${book.no})} + '\''">
+              	
             	<td th:text="${ book.no }"></td>
                 <td th:text="${ book.name }"></td>
                 <td th:text="${ book.author }"></td>
@@ -90,43 +91,60 @@
 		}); */
 		
 		$('#findBtn').click(function(){
-			if(inputFind.value == "" && searchCondition.value == 'select'){
+				if(inputFind.value == "" && searchCondition.value == 'select'){
+					Swal.fire({
+		                icon: 'question',
+		                title: '',
+		                text: '분류와 검색어를 입력 해 주세요.',
+		            })} else if(inputFind.value == ""){
+	            	Swal.fire({
+		                icon: 'question',
+		                title: '',
+		                text: '검색어를 입력 해 주세요.',
+		                
+	            	})} else if(searchCondition.value == 'select'){
+	           		Swal.fire({
+	   	                icon: 'question',
+	   	                title: '',
+	   	                text: '분류를 선택 해 주세요.',
+	            	})} else{
+			   			$('#loginForm').submit();
+		   			};
+				});
+		
+		$('#inputFind').blur(function(){
+			const tagExp = /(<([^>]+)>)/gi;
+			if(tagExp.test($('#inputFind').val())){
 				Swal.fire({
-	                icon: 'question',
-	                title: '',
-	                text: '분류와 검색어를 입력 해 주세요.',
-	            })} else if(inputFind.value == ""){
-            	Swal.fire({
-	                icon: 'question',
-	                title: '',
-	                text: '검색어를 입력 해 주세요.',
-	                
-            	})} else if(searchCondition.value == 'select'){
-           		Swal.fire({
-   	                icon: 'question',
-   	                title: '',
-   	                text: '분류를 선택 해 주세요.',
-            	})} else{
-		   			$('#loginForm').submit();
-	   			};
-			});
-		
-		
+                    icon: 'error',
+                    title: '태그쓰지마세요',
+                    text: '',
+                }).then(function(){
+                	$('#inputFind').val('');
+	    			$('#inputFind').focus();
+                })
+			}
+		});
 		
 		$('.newBookBtn').click(function(){
 			location.href='/book/newBook';
 		});
 		
 		const insertSuccessmessage = "[[${insertSuccessMessage}]]"
-		
+		const updateSuccessMessage = "[[${updateSuccessMessage}]]"
 		if(insertSuccessmessage){
 			Swal.fire({
                 icon: 'success',
                 title: 'Success!',
                 text: '등록이 성공적으로 완료되었습니다!',
             })
+		} else if(updateSuccessMessage){
+			Swal.fire({
+	            icon: 'success',
+	            title: 'Success!',
+	            text: '수정이 성공적으로 완료되었습니다!',
+	        })
 		}
-		
 		
 	</script>
 

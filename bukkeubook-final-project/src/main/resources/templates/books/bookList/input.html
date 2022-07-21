@@ -30,7 +30,7 @@
 					</select>
 				<input type="text" style="display:none;"><!-- 엔터키 새로고침 방지용 -->
 				<input type="hidden" name="currentPage" value="1">
-				<input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}">
+				<input type="search" id="inputFind" name="searchValue" maxlength=50 th:value="${selectCriteria.searchValue}">
 				<button class="productBtn findBtn" id="findBtn" type="button">검색하기</button>
 			</form>
 		</div>
@@ -63,12 +63,13 @@
           <form id="inputForm" action="/book/inputReceipt" method="post">
           <div class="selectInput" align="center">
           <span class="inputSpan">입고분류를 선택 하세요 : </span>
-	          <select class="selectInput" name="selectInput">
+	          <select class="selectInput" id="inputSearch" name="selectInput">
 	          	<option value = "select">--분류--</option>
 	          	<option value = "일반입고">일반입고</option>
 	          	<option value = "발주입고">발주입고</option>
 	          </select>
           </div>   
+          <input type="hidden" th:value="${#authentication.principal}">
           <div id="textTable" style="text-align:-webkit-center">
           <table class="sampleTable" id="bottomTable">
               <tr>
@@ -84,7 +85,7 @@
           </table><br><br>
         <div id="newBookDiv">
           <input type="hidden" id="rownum" name="rownum" value="0">	
-          <button type="button" id="inputSubmit" class="productBtn newBookBtn">등록완료</button>
+          <button type="button" id="inputSubmit" class="productBtn newBookBtn" onclick="formCheck();">등록완료</button>
           <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
          </div>       
         </form>
@@ -92,7 +93,7 @@
 	
 	<br><br>
 	<script th:inline="javascript">
-		
+	
 		$('#findBtn').click(function(){
 			if(inputFind.value == "" && searchCondition.value == 'select'){
 				Swal.fire({
@@ -114,9 +115,24 @@
 		   			$('#loginForm').submit();
 	   			};
 			});
+		$('#inputFind').blur(function(){
+			const tagExp = /(<([^>]+)>)/gi;
+			if(tagExp.test($('#inputFind').val())){
+				Swal.fire({
+                    icon: 'error',
+                    title: '태그쓰지마세요',
+                    text: '',
+                }).then(function(){
+                	$('#inputFind').val('');
+	    			$('#inputFind').focus();
+                })
+			}
+		
+		});
+		
 	</script>
 	<script>
-		
+		var rownum = 0;
 		$('.addBtn').click(function(){
 			
 			const table = document.getElementById("bottomTable");
@@ -128,7 +144,7 @@
             console.log("클릭한 Row의 모든 데이터 : "+tr.text());
             
             var whSt = td.eq(4).text();
-            if(whSt.substr(0 , 1) > 0){
+            
 	            
 	            const newRow = table.insertRow();
 	            
@@ -151,57 +167,103 @@
 	            newCell4.innerHTML = td.eq(3).text();
 	            newCell5.innerHTML = td.eq(4).text();
 	            newCell6.innerHTML = td.eq(5).text();
-	            newCell7.innerHTML = '<input type="number" class="outputValue" name="' + amount + '" value="1" min="1">';
+	            newCell7.innerHTML = '<input type="number" id="outputNum" class="outputValue" name="' + amount + '" value=0 min=0>';
 	            newCell8.innerHTML = '<input class="productBtn delBtn" type="button" value="삭제" onclick="SomeDeleteRowFunction(this)">';
 	            
-	       		var rownum = document.getElementById("rownum");
+	       		rownum = document.getElementById("rownum");
 	            rownum.value = index;
+	            
+	            $(document).ready(function(){
+	            	$('#inputSearch').change( function(){
+	            		$('.outputValue').val(0);
+	            	});
+	            });
+	            
+	            
+	            $('.outputValue').blur(function(){
+	    			const test1 = $('.outputValue').val();
+	    			if( $('.outputValue').val() < 0){
+	    	  			Swal.fire({
+	    	                  icon: 'question',
+	    	                  title: '입고수량을 입력 해 주세요!',
+	    	                  text: '음수는 불가능 합니다.',
+	    	              }).then(function(){
+	    		    			$('.outputValue').val(0);
+	    		    			$('.outputValue').focus();
+	    	              })
+	    	 			  return false;
+	    	  		}
+	    			const prodExp = /^[0-9]{1,6}$/;
+	    			if(!prodExp.test($('.outputValue').val())){
+	    	  			Swal.fire({
+	    	                  icon: 'question',
+	    	                  title: '입고수량을 입력 해 주세요!',
+	    	                  text: '숫자만 입력 가능 합니다.',
+	    	              }).then(function(){
+	    		    			$('.outputValue').val(0);
+	    		    			$('.outputValue').focus();
+	    	              })
+	    	 			  return false;
+	    	  		}
+	    			
+	    		});
 	            
 	            $(document).ready(function(){
 		        	$('.outputValue').change( function(){
 						var apap = $(this);
 						var tr2 = apap.parent().parent();
 		       			var td2 = tr2.children();
-				        var a = $('.outputValue').val();
-				        var b = Number(td2.eq(5).text().substr(0, 2));
-			            if(a > b){
+				        var a = Number(td2.eq(5).text().substr(0, 2));
+				        var b = $('.outputValue').val();
+				        const afaf = '';
+				        console.log('a' + a);
+				        console.log('b' + b);
+				        
+			            if(a < b && $('#inputSearch').val()=='일반입고'){
 							Swal.fire({
 			                    icon: 'warning',
 			                    title: '재고수량을 확인 해 주세요!',
-			                    text: '일반입고는 매장수량을 초과하여 입고할 수 없습니다.',
+			                    text: '일반입고는 매장 보유재고를 초과하여 입고할 수 없습니다.',
 		              		 }).then(function(){
 									$(document).ready(function() {
-								        $('.outputValue').val(b);
+								        $('.outputValue').val(a);
 								   	});
 								});
 						}
 			        });
 	            });
-	            
-	            
-            } else {
-            	Swal.fire({
-                    icon: 'warning',
-                    title: '재고수량을 확인 해 주세요!',
-                    text: '수량이 1ea 이상인 도서만 출고 가능합니다.',
-                })
-            }
             
-            
-            
-		})
+			})
 		
-		$('#inputSubmit').click(function(){
+		
+		function formCheck(){
 			if($('.selectInput option:selected').val() == 'select'){
 				Swal.fire({
                     icon: 'question',
                     title: '입고분류를 선택 해 주세요!',
                 })
-			} else{
-				$('#inputForm').submit();
+                return false;
 			}
-		});
-		
+	  		if( $('.outputValue').val() == '' || $('.outputValue').val() == 0 ){
+	  			Swal.fire({
+	                  icon: 'question',
+	                  title: '입고수량을 입력 해 주세요!',
+	                  text: '',
+	              }).then(function(){
+		    			$('.outputValue').focus();
+	              })
+	 			  return false;
+	  		};
+	  		if( rownum == 0 ){
+	  			Swal.fire({
+	                  icon: 'question',
+	                  title: '입고하실 도서를 추가해 주세요',
+	                  text: '',
+	              })
+	 			  return false;
+	  		};
+	  		$("#inputForm").submit();
+		}
 	    /* 행 전체삭제 */
 	    function AllDel(){
 	      $('#bottomTable tr:not(:first)').remove();
@@ -235,6 +297,7 @@
 		        })
 		    });
 		});
+		    	  
       </script>
 
 </body>

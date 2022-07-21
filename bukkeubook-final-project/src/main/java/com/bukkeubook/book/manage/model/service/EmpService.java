@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -16,21 +14,30 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
+import com.bukkeubook.book.manage.model.dto.ProfPhotoDTO;
+import com.bukkeubook.book.manage.model.dto.SignDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.Emp;
 import com.bukkeubook.book.manage.model.entity.EmpAndDept;
+import com.bukkeubook.book.manage.model.entity.ProfPhoto;
 import com.bukkeubook.book.manage.model.repository.EmpRepository;
+import com.bukkeubook.book.manage.model.repository.OriginalEmpRepository;
+import com.bukkeubook.book.manage.model.repository.ProfilePhotoRepository;
 
 @Service
 public class EmpService {
 	
 	private final EmpRepository empRepository;
+	private final OriginalEmpRepository originEmpRepository;
+	private final ProfilePhotoRepository profilePhotoRepository;
 	private final ModelMapper modelMapper;		//앤티티를 디티오로 변환 or 디티오를 엔티티로 변환
 
 	@Autowired
-	public EmpService(EmpRepository empRepository, ModelMapper modelMapper) {
+	public EmpService(EmpRepository empRepository, ModelMapper modelMapper,OriginalEmpRepository originEmpRepository, ProfilePhotoRepository profilePhotoRepository) {
 		this.empRepository = empRepository;
 		this.modelMapper = modelMapper;
+		this.originEmpRepository = originEmpRepository;
+		this.profilePhotoRepository = profilePhotoRepository;
 	}
 
 	/* 사원조회 & 검색기능 & 페이징 */
@@ -105,10 +112,84 @@ public class EmpService {
 		
 		return modelMapper.map(emp, EmpAndDeptDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
 	}
+
+	/* 신규 사원 등록 */
+	@Transactional
+	public void insertNewEmp(EmpDTO emp) {
+		
+		System.out.println("Service                      sssssssssssss" + emp);
+		
+		originEmpRepository.save(modelMapper.map(emp, Emp.class));
+	}
 	
+	/* 사원정보 수정 */
+	public EmpDTO findEmpByEmpNo(int empNo) {
+		System.out.println("확인1111111111111");
+
+		Emp emp = originEmpRepository.findById(empNo).get();
+		System.out.println("확인222222222222222");
+
+		
+		System.out.println("레포지토리      " + emp);
+		
+		return modelMapper.map(emp, EmpDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
+	}
+	
+	@Transactional
+	public void modifyEmp(EmpDTO emp) {
+		
+		Emp foundemp = originEmpRepository.findById(emp.getEmpNo()).get();
+		
+		foundemp.setEmpName(emp.getEmpName());
+		foundemp.setDeptCode(emp.getDeptCode());
+		foundemp.setEmpJobCode(emp.getEmpJobCode());
+		foundemp.setEmpPhone1(emp.getEmpPhone1());
+		foundemp.setEmpPhone2(emp.getEmpPhone2());
+		foundemp.setEmpPhone3(emp.getEmpPhone3());
+		foundemp.setEmpEmail(emp.getEmpEmail());
+		foundemp.setEmpAddress(emp.getEmpAddress());
+		foundemp.setEmpDAddress(emp.getEmpDAddress());
+		foundemp.setEmpPwd(emp.getEmpPwd());
+		
+	}
+	
+	/* 방금 가입한 사원 조회 */
+	public List<EmpAndDeptDTO> selectLastEmp() {
+		
+		List<EmpAndDept> lastEmp = empRepository.findAll(Sort.by("empNo").descending());
+		
+		return lastEmp.stream().map(insertEmp -> modelMapper.map(insertEmp, EmpAndDeptDTO.class)).collect(Collectors.toList());
+	}
+
+	/* 회원 가입시 프로필 사진 저장*/
+	@Transactional
+	public void registEmpProFile(ProfPhotoDTO profile) {
+		
+		profilePhotoRepository.save(modelMapper.map(profile, ProfPhoto.class));
+		
+		
+	}
+	
+	
+	/* 지영 - 사원 수정 화면 이동 */
+	/* push for comment */
+//	public EmpAndDeptDTO findEmpInfo(int empNo) {
+//		
+//		EmpAndDeptDTO empInfo = 
+//		
+//		
+//		return null;
+//	}
+//
+//	public List<ProfPhotoDTO> findEmpProfile(int empNo) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	public SignDTO findEmpSign(int empNo) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+
 }
-
-
-	
-
-	

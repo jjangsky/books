@@ -1,5 +1,42 @@
 window.onload = function() {
-
+	
+	$(function(){
+		$.ajax({
+			url:"/document/findSignName",
+			success: function(data){
+				console.log(data);
+				$("#empSign").val(data[0]);
+				console.log($("#empSign").val());
+				let empSign = $("#empSign").val();
+				
+				$("#sign1").append("<img src='/images/sign/" + empSign + "'>");
+			},
+			error : function(error){
+				console.log(error);
+			}
+		})
+	})
+	
+	$(function(){
+		let empNo = $("#empNo1").val();
+		$.ajax({
+			url:"/document/empInfo/" + empNo,
+			success: function(data){
+				console.log(data.empName);
+				console.log(data.deptName);
+				console.log(data.docNo);
+				console.log(data);
+				
+				$("#writer2").text(data.empName);
+				$("#dept2").text(data.deptName);
+				$("#docnumber").text(data.docNo);
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+	});
+	
 	$("#clear").click(function(){
 		$("#account1").val("");
 		$("#acco1").val("");
@@ -37,9 +74,9 @@ window.onload = function() {
 		console.log(account);
 		console.log(deptName);
 		let approver1 = deptName + "<br>" + account
-		$("#account1").val(appro);
-		$("#acco1").val(account);
-		$("#deptName1").val(deptName);
+		$("#account2").val(appro);
+		$("#acco2").val(account);
+		$("#deptName2").val(deptName);
 		$("#selacc2").html(approver1);
 	});
 	
@@ -51,9 +88,9 @@ window.onload = function() {
 		console.log(account);
 		console.log(deptName);
 		let approver1 = deptName + "<br>" + account
-		$("#account1").val(appro);
-		$("#acco1").val(account);
-		$("#deptName1").val(deptName);
+		$("#account3").val(appro);
+		$("#acco3").val(account);
+		$("#deptName3").val(deptName);
 		$("#selacc3").html(approver1);
 	});
 
@@ -93,12 +130,14 @@ window.onload = function() {
 				//console.log(data);
 				//console.table(data);
 
+				
 				const $empList = $("#empList");
 
 				$empList.text("");
 
 				for (let index in data) {
-					$empList.append($("<option>").val(data[index].empNo).text(data[index].empName));
+					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
+					$empList.append($("<option>").val(data[index].empNo).text(jobEmp));
 				}
 			},
 			error: function(error) {
@@ -122,7 +161,8 @@ window.onload = function() {
 				$empList.text("");
 
 				for (let index in data) {
-					$empList.append($("<option>").val(data[index].empNo).text(data[index].empName));
+					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
+					$empList.append($("<option>").val(data[index].empNo).text(jobEmp));
 				}
 			},
 			error: function(error) {
@@ -146,7 +186,8 @@ window.onload = function() {
 				$empList.text("");
 
 				for (let index in data) {
-					$empList.append($("<option>").val(data[index].empNo).text(data[index].empName));
+					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
+					$empList.append($("<option>").val(data[index].empNo).text(jobEmp));
 				}
 			},
 			error: function(error) {
@@ -373,6 +414,8 @@ function selectacc() {
 				stepNo = "1";
 				$("#stepNo").val(stepNo);
 				$("#step").text(stepNo);
+				$("#selacc2").text("");
+				$("#selacc3").text("");
 			}
 		})
 	} else if ($("#account3").val() == "") {
@@ -390,6 +433,7 @@ function selectacc() {
 				stepNo = "2";
 				$("#stepNo").val(stepNo);
 				$("#step").text(stepNo);
+				$("#selacc3").text("");
 			}
 		})
 	} else {
