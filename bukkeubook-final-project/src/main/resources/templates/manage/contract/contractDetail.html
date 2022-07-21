@@ -41,7 +41,7 @@
                 </tr>
                 <tr>
                     <th>근로계약서 파일</th>
-                    <td></td>
+                    <td><a th:href="@{/cont/attach/{id}(id=${file.cfileNo})}" th:text="${file.cfileOrigName}"></a></td>
                 </tr>
                 <tr>
                     <th>작성자</th>
@@ -56,7 +56,7 @@
             </form>
           <br>
           <div id="newBookDiv">
-            <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
+            <button type="button" class="productBtn newBookBtn backBtn" onclick="location.href='/cont/findCont'">목록으로</button>
             <button type="button" class="productBtn newBookBtn" id="deleteBtn">삭제</button>
           </div>
         </div> <!------------------------ 본문 종료---------------------------->
