@@ -1,5 +1,20 @@
 window.onload = function(){
 	
+	$(function(){
+		$.ajax({
+			url:"/document/findSignName",
+			success: function(data){
+				console.log(data);
+				$("#empSign").val(data[0]);
+				console.log($("#empSign").val());
+			},
+			error : function(error){
+				console.log(error);
+			}
+		})
+	})
+	
+	
 	let docNo = $("#docNo").val();
 	$(function(){
 		$.ajax({
@@ -75,7 +90,20 @@ window.onload = function(){
 				$("#appStatus").val('승인');
 				console.log($("#appStatus").val());
 				
-				$("#place").val();
+				let empSign = $("#empSign").val();
+				let place = $("#place").val();
+				
+				if(place == "1"){
+					$("#sign2").append("<img src='/images/sign/" + empSign + "'>");
+				} else if(place == "2"){
+					$("#sign3").append("<img src='/images/sign/" + empSign + "'>");
+				} else{
+					$("#sign4").append("<img src='/images/sign/" + empSign + "'>");
+				}
+				let total = $("#total").html();
+				$("#tagCnt").val(total);
+				
+				console.log($("#tagCnt").val());
 								
 				$("#app").submit();
 			}

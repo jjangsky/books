@@ -5,39 +5,48 @@ public class RoleDTO {
 //	ROLE_NAME	VARCHAR2(63 BYTE)	// 권한명
 //	ROLE_DESC	VARCHAR2(255 BYTE)	// 권한설명
 	
-	private int code;
-	private String name;
-	private String desc;
+	private int roleCode;
+	private String roleName;
+	private String roleDesc;
 	
 	public RoleDTO() {
 	}
-	public RoleDTO(int code, String name, String desc) {
-		this.code = code;
-		this.name = name;
-		this.desc = desc;
+
+	public RoleDTO(int roleCode, String roleName, String roleDesc) {
+		this.roleCode = roleCode;
+		this.roleName = roleName;
+		this.roleDesc = roleDesc;
 	}
-	public int getCode() {
-		return code;
+
+	public int getRoleCode() {
+		return roleCode;
 	}
-	public void setCode(int code) {
-		this.code = code;
+
+	public void setRoleCode(int roleCode) {
+		this.roleCode = roleCode;
 	}
-	public String getName() {
-		return name;
+
+	public String getRoleName() {
+		return roleName;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
-	public String getDesc() {
-		return desc;
+
+	public String getRoleDesc() {
+		return roleDesc;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+
+	public void setRoleDesc(String roleDesc) {
+		this.roleDesc = roleDesc;
 	}
+
 	@Override
 	public String toString() {
-		return "RoleDTO [code=" + code + ", name=" + name + ", desc=" + desc + "]";
+		return "RoleDTO [roleCode=" + roleCode + ", roleName=" + roleName + ", roleDesc=" + roleDesc + "]";
 	}
+	
 	
 	
 }

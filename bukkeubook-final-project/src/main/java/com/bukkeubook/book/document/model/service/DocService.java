@@ -73,4 +73,6 @@ public interface DocService {
 
 	void updateDocStatusRefuse(int empNo, TempStoreDocumentDTO doc, String statusApp);
 
+	List<String> findSignName(int empNo);
+
 }
