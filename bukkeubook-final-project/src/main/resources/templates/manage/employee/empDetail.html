@@ -14,7 +14,6 @@
   </head>
 <body>
    <div th:replace="/common/topSideBar.html"></div>
-<!-- <h2 class="mb-4" id="main-text">사원관리</h2> -->
    <h2 class="mb-4" id="main-text">사원관리</h2>
         <hr><br><br>
         <h5 class="mb-4" id="sub-text">사원 상세 정보조회</h5>
@@ -91,9 +90,9 @@
              <button type="submit" class="modify btn" 
              th:onclick="'location.href = \'' +  @{/manage/detailUpdate/{empNo}(empNo=${emp.empNo})} + '\''">수정하기</button>
               <button type="button" class="list btn backBtn">목록으로</button> 
-        </div>            
+         </div>            
         </div>
-        <script th:inline="javascript">
+      <script th:inline="javascript">
         $('.backBtn').click(function(){
              window.history.back(); 
            }); 

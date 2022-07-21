@@ -79,6 +79,9 @@ public class EmpService {
 			if("empJobCode".equals(selectCriteria.getSearchCondition())) {
 				empList = empRepository.findByEmpJobCodeContaining(selectCriteria.getSearchValue(), paging);
 			}
+//	         if("Dept".equals(selectCriteria.getSearchCondition())) {
+//	        	 empList = empRepository.findByemp_Dept_DeptNameContaining(selectCriteria.getSearchValue(), paging);
+//	          }
 		} else {
 			empList = empRepository.findAll(paging).toList();
 		}
