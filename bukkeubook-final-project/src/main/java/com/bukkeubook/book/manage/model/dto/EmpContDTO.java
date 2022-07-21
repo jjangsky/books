@@ -15,9 +15,9 @@ public class EmpContDTO implements Serializable {
 //	EMP_NO			NUMBER				사원번호
 	
 	private int contNo;					// 근로계약번호
-	private String contName;			// 계약서명
-	private java.sql.Date contDate;		// 개시일
-	private String contWriter;			// 작성자
+	private String contName;			// 계약서명 
+	private java.sql.Date contDate;		// 개시일 ,자바Date으로 사용
+	private String contWriter;			// 작성자 ,empName으로 사용
 	private java.sql.Date contExpDate;	// 만료일
 	private int empNo;					// 사원번호
 	

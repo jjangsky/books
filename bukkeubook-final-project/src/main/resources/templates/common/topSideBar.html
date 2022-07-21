@@ -16,12 +16,17 @@
 		<div class="wrapper d-flex align-items-stretch">
 			<nav id="sidebar">
         <div class="p-4 pt-5">
-          <a href="/"><img src="/images/ManageMent.png" alt="" style="width: 247px;"></a>
+          <a href="/main"><img src="/images/ManageMent.png" alt="" style="width: 247px;"></a>
           <div>&nbsp;</div>
 		  		<!-- <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo2.jpg);"></a> -->
-          <div id="welcomeLogin" style="text-align: center">${Scope.name}님 반갑습니다!</div>
-          <div>&nbsp;</div>
-
+  		  <th:block sec:authorize="isAnonymous()">
+          	<div id="welcomeLogin" style="text-align: center">로그인을 해주세요</div>
+          	<div>&nbsp;</div>
+          </th:block>
+          <th:block sec:authorize="isAuthenticated()">
+          	<div id="welcomeLogin" style="text-align: center" th:text="${#authentication.principal.empName} + '님 환영합니다.'"></div>
+			<div>&nbsp;</div>
+		  </th:block>
           <!-- 사이드바 시작 -->
           <!-- 마이페이지 -->
           <ul class="list-unstyled components mb-5">
@@ -98,9 +103,6 @@
                       <a href="/manage/leaveEmpList">퇴사사원조회</a>
                     </li>
                     <li>
-                      <a href="/cont/findCont">근로계약서</a>
-                    </li>
-                    <li>
                       <a href="#">인원현황</a>
                     </li>
                   </ul>
@@ -152,7 +154,10 @@
                   <a href="#management6" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">근로계약서 관리</a>
                   <ul class="collapse list-unstyled" id="management6">
                     <li>
-                      <a href="/labor/select">근로계약서 조회</a>
+                      <a href="/cont/findCont">근로계약서 조회</a>
+                    </li>
+                    <li>
+                      <a href="/cont/registPage">근로계약서 등록</a>
                     </li>
                   </ul>
                 </li>              
@@ -258,11 +263,18 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/myInfo/updatePage">${SessionScope.name} (직책)</a>
+                    <th:block sec:authorize="isAnonymous()">
+			          	<a class="nav-link" href="/">로그인</a>
+			          </th:block>
+			          <th:block sec:authorize="isAuthenticated()">
+			          	<a class="nav-link" href="/myInfo/updatePage" th:text="${#authentication.principal.empName} +' ' + ${#authentication.principal.memberRoleAndRoleList[0].role.roleDesc}"></a>
+					  </th:block>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">로그아웃</a>
-                </li>
+                <th:block sec:authorize="isAuthenticated()">
+	                <li class="nav-item active">
+	                    <a class="nav-link" href="/member/logout">로그아웃</a>
+	                </li>
+                </th:block>
               </ul>
             </div>
           </div>

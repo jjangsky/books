@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ import com.bukkeubook.book.document.model.dto.TempStoreDocumentDTO;
 import com.bukkeubook.book.document.model.entity.Approver;
 import com.bukkeubook.book.document.model.entity.SubmitApprover;
 import com.bukkeubook.book.document.model.service.DocService;
+import com.bukkeubook.book.member.model.dto.UserImpl;
 
 @Controller
 @RequestMapping("document/*")
@@ -67,13 +69,13 @@ public class DocumentController {		// 전자결재 컨트롤러
 	
 	/* 수신함 리스트 조회 */
 	@GetMapping("docInboxList")
-	public ModelAndView toDocList(ModelAndView mv) {
+	public ModelAndView toDocList(ModelAndView mv, @AuthenticationPrincipal UserImpl customUser) {
 		
-		int empNo = 2;
+		int empNo = customUser.getEmpNo();
 		
 		List<InboxListDTO> all = docService.findInboxAllList(empNo);
 		
-		System.out.println(all);
+//		System.out.println(all);
 		mv.addObject("all", all);
 		mv.setViewName("/document/docInboxList");
 		
@@ -97,9 +99,9 @@ public class DocumentController {		// 전자결재 컨트롤러
 	
 	/* 임시저장 리스트 조회 */
 	@GetMapping("docTempList")
-	public ModelAndView toTempDocList(ModelAndView mv) {
+	public ModelAndView toTempDocList(ModelAndView mv,@AuthenticationPrincipal UserImpl customUser) {
 		
-		int tempEmpNo = 10;
+		int tempEmpNo = customUser.getEmpNo();
 		String docStatus = "임시저장";
 		
 		List<DocumentAndEmpAndFormCateDTO> tempDocList = docService.findTempDocList(tempEmpNo,docStatus);
@@ -113,12 +115,14 @@ public class DocumentController {		// 전자결재 컨트롤러
 	}
 	
 	/* 전자결재 작성시 작성자 이름, 부서명, 문서번호 넣어주기 */
-	@GetMapping(value = {"empInfo/{emp}"}, produces="application/json;charset=UTF-8")
+	@GetMapping(value = {"empInfo"}, produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public DocWriteInfoDTO docWriteInfo(@PathVariable String emp) {
+	public DocWriteInfoDTO docWriteInfo(@AuthenticationPrincipal UserImpl customUser) {
 		
-		System.out.println("emp     " + emp);
-		int empNo = Integer.valueOf(emp);
+//		System.out.println("emp     " + emp);
+		int empNo = customUser.getEmpNo();
+		
+		System.out.println(empNo);
 		
 		DocWriteInfoDTO info = docService.findWriterInfo(empNo);
 		
@@ -159,12 +163,14 @@ public class DocumentController {		// 전자결재 컨트롤러
 	
 	/* 임시저장 */
 	@PostMapping("tempStore")
-	public ModelAndView tempSave(TempStoreDocumentDTO newDoc, RedirectAttributes rttr, ModelAndView mv) {
+	public ModelAndView tempSave(TempStoreDocumentDTO newDoc, RedirectAttributes rttr, ModelAndView mv,@AuthenticationPrincipal UserImpl customUser) {
 		
 //		System.out.println("djhkfghdjsgkfdjdfjdffffffffffffffffffffffffffffffffffffffffff");
 		String docStatus = "임시저장";
+		int empNo = customUser.getEmpNo();
 		
 		newDoc.setDocStatus1(docStatus);
+		newDoc.setEmpNo1(empNo);
 		System.out.println(newDoc);
 		
 		docService.insertNewtempDocument(newDoc);
@@ -177,10 +183,10 @@ public class DocumentController {		// 전자결재 컨트롤러
 	
 	/* 임시저장 수정 페이지 접속*/
 	@GetMapping("tempInfo/{docNo}")
-	public ModelAndView toUpdateTempDocPage(ModelAndView mv,@PathVariable String docNo) {
+	public ModelAndView toUpdateTempDocPage(ModelAndView mv,@PathVariable String docNo,@AuthenticationPrincipal UserImpl customUser) {
 		
 		int selectedDocNo = Integer.valueOf(docNo);
-		int tempEmpNo = 10;
+		int tempEmpNo = customUser.getEmpNo();
 		String docStatus = "임시저장";
 		System.out.println("여기컨트롤러에서 번호 잘받았니      " + selectedDocNo);
 		
@@ -202,9 +208,11 @@ public class DocumentController {		// 전자결재 컨트롤러
 	
 	/* 임시저장 수정하기 */
 	@PostMapping("tempUpdate")
-	public ModelAndView updateTempDoc(ModelAndView mv, TempStoreDocumentDTO updateDoc, RedirectAttributes rttr) {
+	public ModelAndView updateTempDoc(ModelAndView mv, TempStoreDocumentDTO updateDoc, RedirectAttributes rttr,@AuthenticationPrincipal UserImpl customUser) {
 		
 		System.out.println("수정할 아이 챙겨왔니    " + updateDoc);
+		int empNo = customUser.getEmpNo();
+		updateDoc.setEmpNo1(empNo);
 		
 		docService.updateTempDocument(updateDoc);
 		
@@ -237,7 +245,8 @@ public class DocumentController {		// 전자결재 컨트롤러
 	@PostMapping("submitReport")
 	public ModelAndView draftSubmitReport(ModelAndView mv,SubmitDocumentDTO newDoc, RedirectAttributes rttr
 										, @RequestParam("app1") String app1, @RequestParam String approver1
-										, @RequestParam String approver2, @RequestParam String approver3, @RequestParam String submitTitle) {
+										, @RequestParam String approver2, @RequestParam String approver3
+										, @RequestParam String submitTitle, @AuthenticationPrincipal UserImpl customUser) {
 		System.out.println("잘 가져 왔니");
 		System.out.println(newDoc);
 		System.out.println("number1          " + app1);
@@ -247,9 +256,11 @@ public class DocumentController {		// 전자결재 컨트롤러
 		System.out.println(submitTitle);
 		String appStatus = "대기";
 		String docStatus = "대기";
+		int empNo = customUser.getEmpNo();
 		/* 일단 문서 인서트 */
 		newDoc.setDocTitle2(submitTitle);
 		newDoc.setDocStatus2(docStatus);
+		newDoc.setEmpNo2(empNo);
 		
 		/* 다음은 결재경로 */
 		AppRootDTO appRoot = new AppRootDTO();
@@ -319,7 +330,8 @@ public class DocumentController {		// 전자결재 컨트롤러
 	@PostMapping("submitTempReport")
 	public ModelAndView submitTempReport (ModelAndView mv,SubmitDocumentDTO tempDoc, RedirectAttributes rttr
 										, @RequestParam("app1") String app1, @RequestParam String approver1
-										, @RequestParam String approver2, @RequestParam String approver3, @RequestParam String submitTitle) {
+										, @RequestParam String approver2, @RequestParam String approver3
+										, @RequestParam String submitTitle,@AuthenticationPrincipal UserImpl customUser) {
 		
 		System.out.println("잘 가져 왔니");
 		System.out.println(tempDoc);
@@ -329,8 +341,10 @@ public class DocumentController {		// 전자결재 컨트롤러
 		System.out.println(approver3);
 		System.out.println(submitTitle);
 		String appStatus = "대기";
+		int emoNo = customUser.getEmpNo();
 		/* 일단 문서 인서트 */
 		tempDoc.setDocTitle2(submitTitle);
+		tempDoc.setEmpNo2(emoNo);
 		
 		/* 다음은 결재경로 */
 		AppRootDTO appRoot = new AppRootDTO();
@@ -399,10 +413,9 @@ public class DocumentController {		// 전자결재 컨트롤러
 	
 	/* 상신함 전체리스트 조회 */
 	@GetMapping("reqApprovalList")
-	public ModelAndView toReqApprovalList(ModelAndView mv) {
+	public ModelAndView toReqApprovalList(ModelAndView mv, @AuthenticationPrincipal UserImpl customUser) {
 		
-//		int empNo = Integer.valueOf(0)
-		int empNo = 10;
+		int empNo = customUser.getEmpNo();
 		String docStatus = "임시저장";
 		
 		List<DocumentAndEmpAndFormCateDTO> docList = docService.findByDocNoList(empNo,docStatus);
@@ -430,9 +443,9 @@ public class DocumentController {		// 전자결재 컨트롤러
 	
 	/* 휴가 리스트 조회 */
 	@GetMapping("allVacationList")
-	public ModelAndView allVacationList(ModelAndView mv) {
+	public ModelAndView allVacationList(ModelAndView mv,@AuthenticationPrincipal UserImpl customUser) {
 		
-		int empNo = 10;
+		int empNo = customUser.getEmpNo();
 		
 		List<AppVacationDTO> vacaList = docService.allVacationList(empNo);
 		
@@ -460,9 +473,9 @@ public class DocumentController {		// 전자결재 컨트롤러
 	
 	/* 휴가취소 리스트 조회 */
 	@GetMapping("allCancelVacationList")
-	public ModelAndView allCancelVacationList(ModelAndView mv) {
+	public ModelAndView allCancelVacationList(ModelAndView mv,@AuthenticationPrincipal UserImpl customUser) {
 		
-		int empNo = 10;
+		int empNo = customUser.getEmpNo();
 		
 		List<CancelVacationDTO> cancelList = docService.allCancelVacationList(empNo);
 		
@@ -490,7 +503,10 @@ public class DocumentController {		// 전자결재 컨트롤러
 	
 	/* 휴가신청서 상신하기 */
 	@PostMapping("insertNewVacationApp")
-	public ModelAndView insertNewVacationApp(ModelAndView mv, RedirectAttributes rttr , AppVacationDTO vacation,@RequestParam String startDate,@RequestParam String endDate,@RequestParam String date) {
+	public ModelAndView insertNewVacationApp(ModelAndView mv, RedirectAttributes rttr 
+										   , AppVacationDTO vacation,@RequestParam String startDate
+										   , @RequestParam String endDate,@RequestParam String date
+										   ,@AuthenticationPrincipal UserImpl customUser) {
 		
 		System.out.println("Controller         " + vacation);
 		System.out.println("Controller         " + endDate);
@@ -501,11 +517,13 @@ public class DocumentController {		// 전자결재 컨트롤러
 		Date vacStartDate = Date.valueOf(startDate);
 		Date vacEndDate = Date.valueOf(endDate);
 		Date vacAppNo = Date.valueOf(date);
+		int empNo = customUser.getEmpNo();
 		
 		vacation.setVacStartDate(vacStartDate);
 		vacation.setVacEndDate(vacEndDate);
 		vacation.setVacAppNo(vacAppNo);
 		vacation.setVacStatus(vacStatus);
+		vacation.setEmpNo(empNo);
 		
 		docService.insertNewVacationApp(vacation);
 		
@@ -520,26 +538,32 @@ public class DocumentController {		// 전자결재 컨트롤러
 	/* 취소 신청서 작성시 자신이 작성한 휴가 신청서 리스트 조회  ajax*/
 	@GetMapping(value = {"vacationList"}, produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public List<AppVacationDTO> vacationList(){
+	public List<AppVacationDTO> vacationList(@AuthenticationPrincipal UserImpl customUser){
 		
-		int empNo = 10;
+		int empNo = customUser.getEmpNo();
 		
-		List<AppVacationDTO> vacationList = docService.findByEmpNoVacationList(empNo);
+		List<AppVacationDTO> vacationList = new ArrayList<>();
+		
+		vacationList = docService.findByEmpNoVacationList(empNo);
 		
 		return vacationList;
 	}
 	
 	/* 휴가 취소신청서 상신 */
 	@PostMapping("insertNewCancelVacation")
-	public ModelAndView insertNewCancelVacation(ModelAndView mv, RedirectAttributes rttr, @RequestParam String date,CancelVacationDTO cancVaca) {
+	public ModelAndView insertNewCancelVacation(ModelAndView mv, RedirectAttributes rttr
+											  , @RequestParam String date,CancelVacationDTO cancVaca
+											  , @AuthenticationPrincipal UserImpl customUser) {
 		
 		System.out.println(cancVaca);
 		
 		String vacStatus = "대기";
 		Date vacAppNo = Date.valueOf(date);
+		int empNo = customUser.getEmpNo();
 		
 		cancVaca.setVacCancDate(vacAppNo);
 		cancVaca.setVacCancStatus(vacStatus);
+		cancVaca.setEmpNo(empNo);
 		
 		System.out.println(cancVaca);
 		
@@ -561,4 +585,51 @@ public class DocumentController {		// 전자결재 컨트롤러
 		return vacationInfo;
 	}
 	
+	/* 결재 승인 반려 */
+	@PostMapping("docApproval")
+	public ModelAndView docApproval(ModelAndView mv, @RequestParam String statusApp
+								  , TempStoreDocumentDTO doc, RedirectAttributes rttr
+								  , @AuthenticationPrincipal UserImpl customUser) {
+		
+		System.out.println(doc);
+		System.out.println("statusApp   " + statusApp);
+		
+		int empNo = customUser.getEmpNo();
+		
+		if("승인".equals(statusApp)) {
+			docService.updateDocStatusApprove(empNo,doc,statusApp);
+		} else {
+			docService.updateDocStatusRefuse(empNo,doc,statusApp);
+		}
+		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		mv.setViewName("redirect:/document/docInboxList");
+		
+		return mv;
+		
+	}
+	
+	/* 결재 버튼 활성화 체크 */
+	@GetMapping(value = {"checkButton/{no}"}, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public List<String> checkButton(@PathVariable String no,@AuthenticationPrincipal UserImpl customUser){
+		
+		int empNo = customUser.getEmpNo();
+		int docNo = Integer.valueOf(no);
+		
+		List<String> list = docService.checkDoc(docNo,empNo);
+		
+		return list;
+	}
+	
+	/* 결재시 서명 도장 이름 가져오기 */
+	@GetMapping(value = {"findSignName"}, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public List<String> findSignName(@AuthenticationPrincipal UserImpl customUser) {
+		
+		int empNo =  customUser.getEmpNo();
+		
+		List<String> signName = docService.findSignName(empNo);
+		
+		return signName;
+	}
 }

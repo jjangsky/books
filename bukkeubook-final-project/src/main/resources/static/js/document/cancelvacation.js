@@ -9,15 +9,22 @@ window.onload = function() {
 				
 				const $vacationList = $("#vacationList");
 
-				for (let index in data) {
+				if(data.length == 0){
+					$vacationList.append($("<option>").val("").text("신청한 휴가신청서가 없습니다."));
+				}else{
 					
-					let vacNo = data[index].vacNo;
-					let vacStartDate = data[index].vacStartDate;
-					let vacEndDate = data[index].vacEndDate;
-					let option = "문서: " + vacNo +"/신청기간: "+vacStartDate +" ~ " +vacEndDate;
-					
-					$vacationList.append($("<option>").val(data[index].vacNo).text(option));
+					for (let index in data) {
+						
+						let vacNo = data[index].vacNo;
+						let vacStartDate = data[index].vacStartDate;
+						let vacEndDate = data[index].vacEndDate;
+						let option = "문서: " + vacNo +"/신청기간: "+vacStartDate +" ~ " +vacEndDate;
+						
+						$vacationList.append($("<option>").val(data[index].vacNo).text(option));
+					}
 				}
+				
+
 			},
 			error: function(error) {
 				console.log(error);
@@ -41,9 +48,9 @@ window.onload = function() {
 	});
 	
 	$(function(){
-		let empNo = $("#empNo1").val();
+		//let empNo = $("#empNo1").val();
 		$.ajax({
-			url:"/document/empInfo/" + empNo,
+			url:"/document/empInfo/",
 			success: function(data){
 				//console.log(data.empName);
 				//console.log(data.deptName);

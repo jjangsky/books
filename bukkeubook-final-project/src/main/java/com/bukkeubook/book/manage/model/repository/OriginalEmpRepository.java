@@ -8,7 +8,7 @@ import com.bukkeubook.book.manage.model.entity.Emp;
 
 public interface OriginalEmpRepository extends JpaRepository<Emp, Integer>{
 
-	List<Emp> findEmpByEmpNo(int empNo);
+	List<Emp> findMemberByempNo(int empNo);
 
 
 

@@ -1,9 +1,9 @@
 window.onload = function() {
 	
 	$(function(){
-		let empNo = $("#empNo1").val();
+		//let empNo = $("#empNo1").val();
 		$.ajax({
-			url:"/document/empInfo/" + empNo,
+			url:"/document/empInfo/",
 			success: function(data){
 				console.log(data.empName);
 				console.log(data.deptName);
@@ -57,9 +57,9 @@ window.onload = function() {
 		console.log(account);
 		console.log(deptName);
 		let approver1 = deptName + "<br>" + account
-		$("#account1").val(appro);
-		$("#acco1").val(account);
-		$("#deptName1").val(deptName);
+		$("#account2").val(appro);
+		$("#acco2").val(account);
+		$("#deptName2").val(deptName);
 		$("#selacc2").html(approver1);
 	});
 	
@@ -71,9 +71,9 @@ window.onload = function() {
 		console.log(account);
 		console.log(deptName);
 		let approver1 = deptName + "<br>" + account
-		$("#account1").val(appro);
-		$("#acco1").val(account);
-		$("#deptName1").val(deptName);
+		$("#account3").val(appro);
+		$("#acco3").val(account);
+		$("#deptName3").val(deptName);
 		$("#selacc3").html(approver1);
 	});
 

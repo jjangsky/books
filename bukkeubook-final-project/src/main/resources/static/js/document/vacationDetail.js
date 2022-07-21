@@ -5,10 +5,10 @@ window.onload = function() {
 	})
 
 	$(function(){
-		let empNo = $("#empNo1").val();
-		console.log(empNo);
+		//let empNo = $("#empNo1").val();
+		//console.log(empNo);
 		$.ajax({
-			url:"/document/empInfo/" + empNo,
+			url:"/document/empInfo/" ,
 			success: function(data){
 				console.log(data.empName);
 				console.log(data.deptName);
