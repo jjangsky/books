@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,7 @@ import com.bukkeubook.book.books.model.dto.StockListDTO;
 import com.bukkeubook.book.books.model.service.BookService;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
+import com.bukkeubook.book.member.model.dto.UserImpl;
 
 @Controller
 @RequestMapping("/book")
@@ -308,16 +310,16 @@ public class BookController extends HttpServlet{
 	}
 	
 	@PostMapping("/outputReceipt")
-	public ModelAndView outputReceipt(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+	public ModelAndView outputReceipt(@AuthenticationPrincipal UserImpl user, HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
 		int rownum = Integer.valueOf(request.getParameter("rownum"));
-		
+		int empNo = user.getEmpNo();
 		for(int i = 1; i <= 1; i++) {
 			
 			RelListDTO relList = new RelListDTO();
 			RelBkListDTO relBkList = new RelBkListDTO();
 			
 			relList.setRelDate(new java.sql.Date(System.currentTimeMillis()));
-			relList.setEmpNo(20);	// 사번은 로그인 구현후 변경하기
+			relList.setEmpNo(empNo);	// 사번은 로그인 구현후 변경하기
 			
 			int relNo = bookService.outputReceipt(relList);
 			
@@ -346,10 +348,12 @@ public class BookController extends HttpServlet{
 	}
 	
 	@PostMapping("/inputReceipt")
-	public ModelAndView inputReceipt(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+	public ModelAndView inputReceipt(@AuthenticationPrincipal UserImpl customUser, HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+		int empNo = customUser.getEmpNo();
 		
 		int rownum = Integer.valueOf(request.getParameter("rownum"));
 		String selectInput = request.getParameter("selectInput");
+		
 		for(int i = 1; i <= 1; i++) {
 			
 			StockListDTO stockList = new StockListDTO();
@@ -357,7 +361,7 @@ public class BookController extends HttpServlet{
 			
 			stockList.setStDate(new java.sql.Date(System.currentTimeMillis()));
 			stockList.setStType(selectInput);
-			stockList.setEmpNo(21);	// 사번은 로그인 구현후 변경하기
+			stockList.setEmpNo(empNo);
 			
 			int stCode = bookService.inputReceipt(stockList);
 			
