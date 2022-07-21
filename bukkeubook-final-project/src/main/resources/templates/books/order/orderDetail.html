@@ -24,47 +24,43 @@
 	        <table id="orderTable">
 	            <tr>
 	            	<td class="cate">발주번호</td>
-	            	<td colspan="5" th:text="${ order.orderNo }"></td>
+	            	<td th:text="${ order.orderNo }"></td>
 	            </tr>
 	            <tr>
 	            	<td class="cate">등록날짜</td>
-	            	<td colspan="5" th:text="${ order.orderDate }"></td>
+	            	<td th:text="${ order.orderDate }"></td>
 	            </tr>
 	            <tr>
 	            	<td class="cate">도서번호</td>
-	            	<td colspan="5" th:text="${ order.book.getNo() }"></td>
+	            	<td th:text="${ order.book.getNo() }"></td>
 	            </tr>
 	            <tr>
 	            	<td class="cate">도서명</td>
-	            	<td colspan="5" th:text="${ order.book.getName() }"></td>
+	            	<td th:text="${ order.book.getName() }"></td>
 	            </tr>
 	            <tr>
 	            	<td class="cate">발주 수량</td>
-	            	<td colspan="5" th:text="${ order.orderAmount }"></td>
+	            	<td th:text="${ order.orderAmount }"></td>
 	            </tr>
 	            <tr>
 	            	<td class="cate">거래처번호</td>
-	            	<td colspan="5" th:text="${ order.cntNo }"></td>
+	            	<td th:text="${ order.cntNo }"></td>
 	            </tr>
 	            <tr>
 	            	<td class="cate">담당자명</td>
-	            	<td colspan="5" th:text="${ order.emp.getEmpName() }"></td>
+	            	<td th:text="${ order.emp.getEmpName() }"></td>
 	            </tr>
 	            <tr>
 	            	<td class="cate">담당자 연락처</td>
-	            	<td th:text="${ order.emp.getEmpPhone1 }"></td>
-	            	<td class="short">-</td>
-	            	<td th:text="${ order.emp.getEmpPhone2 }"></td>
-	            	<td class="short">-</td>
-	            	<td th:text="${ order.emp.getEmpPhone3 }"></td>
+	            	<td th:text="${ order.emp.getEmpPhone1 + '-' + order.emp.getEmpPhone2 + '-' + order.emp.getEmpPhone3 }"></td>
 	            </tr>
 	            <tr>
 	            	<td class="cate">승인현황</td>
 	            	<td colspan="5" th:text="${ order.orderApprYn }"></td>
 	            </tr>
         	</table>
-        	<button type="button" onclick="location.href='/order/regist'">발주신청</button>
-        	<button type="button">입고등록</button>
+        	<button class="btn" type="button" onclick="location.href='/order/regist'">발주신청</button>
+        	<button class="btn" type="button">입고등록</button>
         </div> <!------------------------ 본문 종료---------------------------->
 
 		<script src="../js/jquery.min.js"></script>
