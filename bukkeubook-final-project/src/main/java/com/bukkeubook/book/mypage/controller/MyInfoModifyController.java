@@ -53,7 +53,7 @@ public class MyInfoModifyController {
 		/* 현재 서명 조회 */
 		SignDTO mySign = myInfoModifyService.findMySign(memberCode);
 		System.out.println(mySign);
-			
+		
 		mv.addObject("myInfo", myInfo);
 		mv.addObject("profile", profile);
 		mv.addObject("mySign", mySign);
