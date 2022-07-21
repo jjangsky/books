@@ -76,3 +76,10 @@ td,th{
 .search.btn:hover{
     background-color: #FEFCC6;
 }
+
+#result span{
+	font-size: 18px !important;
+	font-family: "Poppins", Arial, sans-serif !important;
+	font-weight: normal !important;
+	color: gray !important;
+}
