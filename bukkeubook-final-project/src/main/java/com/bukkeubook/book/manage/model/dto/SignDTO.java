@@ -4,17 +4,20 @@ public class SignDTO {
 	
 //	TBL_SIGN 서명 테이블
 //	
-//	SIGN_NAME	VARCHAR2(255 BYTE)
-//	SIGN_SAVED_NAME	VARCHAR2(255 BYTE)
-//	SIGN_PATH	VARCHAR2(255 BYTE)
-//	EMP_NO	NUMBER
+//	SIGN_NAME			VARCHAR2(255 BYTE)	파일본명
+//	SIGN_SAVED_NAME		VARCHAR2(255 BYTE)	변경된파일명
+//	SIGN_PATH			VARCHAR2(255 BYTE)	저장경로
+//	EMP_NO				NUMBER				사원번호
+
 	
 	private int empNo; 
 	private String signName;
 	private String signSavedName;
 	private String signPath;
+	
 	public SignDTO() {
 	}
+	
 	public SignDTO(int empNo, String signName, String signSavedName, String signPath) {
 		this.empNo = empNo;
 		this.signName = signName;
@@ -45,6 +48,7 @@ public class SignDTO {
 	public void setSignPath(String signPath) {
 		this.signPath = signPath;
 	}
+	
 	@Override
 	public String toString() {
 		return "SignDTO [empNo=" + empNo + ", signName=" + signName + ", signSavedName=" + signSavedName + ", signPath="

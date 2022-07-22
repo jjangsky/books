@@ -7,8 +7,9 @@ import com.bukkeubook.book.manage.model.entity.Sign;
 
 @Repository
 public interface EmpSignRepository extends JpaRepository<Sign, Integer>{
-
-	Sign findByEmpNo(int memberCode);
+	
+	/* 도장 사진 수정 */
+	Sign findByEmpNo(int empNo);
 
 
 }

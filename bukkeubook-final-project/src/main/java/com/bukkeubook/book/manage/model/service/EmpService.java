@@ -171,13 +171,25 @@ public class EmpService {
 	}
 
 	/* ********************************************************************************** */
+	/* 프로필 사진 수정(조회) */
+	@Transactional
+	public List<ProfPhotoDTO> findEmpProfile(int number) {
+		
+		List<ProfPhoto> empProfPhoto = profilePhotoRepository.findByEmpNo(number, Sort.by("photoNo").descending());
+		
+		return empProfPhoto.stream().map(profile2 -> modelMapper.map(profile2, ProfPhotoDTO.class)).collect(Collectors.toList());
+	}
+	
+	/* 사원 수정 페이지에서 프로필 사진 수정하기 */
 	@Transactional
 	public void modifyProfile(ProfPhotoDTO profile) {
 		
-		ProfPhoto profPhoto = profilePhotoRepository.findByEmpNo(profile.getEmpNo());
-		profPhoto.setPhotoOrigName(profile.getPhotoOrigName());
-		profPhoto.setPhotoSavedName(profile.getPhotoSavedName());
+		profilePhotoRepository.save(modelMapper.map(profile, ProfPhoto.class));
+
 	}
+
+
+
 
 	
 	

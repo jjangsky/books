@@ -42,14 +42,21 @@ public class SignService {
 	}
 	
 	/******************************************************************/
+	/* 사원 상세페이지에서 Get으로 수정 페이지로 넘어갈 때 쓰는 서명 조회 */
+	public SignDTO findEmpSign(int number) {
+		Sign sign = empSignRepository.findByEmpNo(number);
+		
+		return modelMapper.map(sign, SignDTO.class);
+	}
+	
 	/* 사원 정보 수정 서명 */
 	@Transactional
 	public void modifySign(SignDTO sign) {
 		
-		Sign sign2 = empSignRepository.findByEmpNo(sign.getEmpNo());
-		sign2.setSignName(sign2.getSignName());
-		sign2.setSignSavedName(sign2.getSignSavedName());
+		empSignRepository.save(modelMapper.map(sign, Sign.class));
+		
 	}
 
 
 }
+

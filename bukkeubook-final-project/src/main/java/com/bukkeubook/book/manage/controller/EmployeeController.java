@@ -59,7 +59,7 @@ private final MyInfoModifyService myInfoModifyService;
 		String currentPage = request.getParameter("currentPage");
 		int pageNo = 1;
 
-		if(currentPage != null && !"".equals(currentPage)) {
+		if (currentPage != null && !"".equals(currentPage)) {
 			pageNo = Integer.parseInt(currentPage);
 		}
 
@@ -191,7 +191,7 @@ private final MyInfoModifyService myInfoModifyService;
 		String root = System.getProperty("user.dir");
 		System.out.println("root까지의 경로 : " + root);
 		
-		String filePath = root + "/src/main/resources/static/images/mypage";  // 프사 저장 루트
+		String filePath = root + "/src/main/resources/static/images/manage/employee";  // 프사 저장 루트
 		String signPath = root + "/src/main/resources/static/images/sign"; 	  // 서명 저장 루트
 		
 		/* 파일 없으면 만들어줌 */
@@ -219,28 +219,6 @@ private final MyInfoModifyService myInfoModifyService;
 		System.out.println("변경한 이름 : " + saveName);
 		System.out.println("변경한 이름 : " + saveName1);
 		
-		/* 프로필 사진 저장 처리 */
-		try {
-			proFile.transferTo(new File(filePath + "/" + saveName));
-			
-			/* DB에 저장할 파일 정보를 DTO에 담기 */
-			ProfPhotoDTO profile = new ProfPhotoDTO();
-			profile.setEmpNo(registEmp);
-			profile.setPhotoOrigName(originFileName);
-			profile.setPhotoSavedName(saveName);
-			profile.setPhotoSavedPath(filePath);
-			
-			/* 서비스로 보내서 DB로 전송 */
-			empService.registEmpProFile(profile);
-			
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-			
-			/* 실패 시 파일 삭제 */
-			new File(filePath + "/" + saveName).delete();
-		}
-		
-		
 		/* 서명 사진 저장 처리 */
 		try {
 			nameFile.transferTo(new File(signPath + "/" + saveName1));
@@ -260,7 +238,6 @@ private final MyInfoModifyService myInfoModifyService;
 			/* 실패 시 파일 삭제 */
 			new File(signPath + "/" + saveName1).delete();
 		}
-				
 		
 		rttr.addFlashAttribute("insertSuccessMessage", "성공"); //addFlashAttribute 한번만 보여주고 감
 		mv.setViewName("redirect:/manage/empList");
@@ -275,15 +252,26 @@ private final MyInfoModifyService myInfoModifyService;
 		int number = Integer.valueOf(empNo);
 		
 		EmpDTO emp = empService.findEmpByEmpNo(number);
+		System.out.println("1231231523" + emp);
+
+		/* 프로필 사진 조회 */
+		List<ProfPhotoDTO> profile = empService.findEmpProfile(number);
+		System.out.println("이제는 좀 나와주라 이눔아" + profile);
+		
+		/* 현재 서명 조회 */
+		SignDTO empSign = signService.findEmpSign(number);
+		System.out.println("너도 나와 이눔아22" + empSign);
 		
 		mv.addObject("emp", emp);
-		mv.setViewName("manage/employee/empDetail"
-				+ "Update");
-		
-		return mv;
+		mv.addObject("profile", profile);
+		mv.addObject("empSign", empSign);
+		mv.setViewName("manage/employee/empDetail" + "Update");
+
+		return mv; 
 
 	}
-
+	/***********************************************************************************************/	
+		/* 사원 정보를 가져오는 곳 */
 	   @PostMapping("/empDetailUpdate")
 	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, EmpDTO emp
 	                        , String deptCode1, String deptCode2
@@ -306,33 +294,36 @@ private final MyInfoModifyService myInfoModifyService;
 	      return mv;
 	   }
 
-	   
 	/***********************************************************************************************/	
 	/* 도장 사진 수정 */
 	@PostMapping("detailUpdate")
-	public ModelAndView modifySign(ModelAndView mv, HttpServletRequest request, @RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
+	public ModelAndView modifySign(ModelAndView mv, HttpServletRequest request,
+			@RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
 		
-		int memberCode = 5;
+		int empNo = 5;
+		
+		System.out.println("야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야");
 		
 		String root = System.getProperty("user.dir");
 		System.out.println("root까지의 경로 : " + root);
 		
-		String filePath = root + "/src/main/resources/static/images/sign";
+		String filePath = root + "/src/main/resources/static/images/manage/employee/empSign";
 		
 		String originFileName = singleFile.getOriginalFilename();
 		System.out.println("원본 이름 : " + originFileName);
 		String ext = originFileName.substring(originFileName.lastIndexOf("."));
 		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
 		System.out.println("변경한 이름 : " + saveName);
-		
-		
+		System.out.println("나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와");
+
 		try {
 			singleFile.transferTo(new File(filePath + "/" + saveName));
 			
 			SignDTO sign = new SignDTO();
-			sign.setEmpNo(memberCode);
+			sign.setEmpNo(empNo);
 			sign.setSignName(originFileName);
 			sign.setSignSavedName(saveName);
+			sign.setSignPath(filePath);
 			
 			signService.modifySign(sign);
 			
@@ -354,7 +345,8 @@ private final MyInfoModifyService myInfoModifyService;
 	/***********************************************************************************************/	
 	/* 프로필 사진 수정 */
 	@PostMapping("detailUpdate2")
-	public ModelAndView modifyProfile(ModelAndView mv, HttpServletRequest request, @RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
+	public ModelAndView modifyProfile(ModelAndView mv, HttpServletRequest request, 
+			@RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
 		
 		int memberCode = 5;
 		
@@ -368,7 +360,7 @@ private final MyInfoModifyService myInfoModifyService;
 		String ext = originFileName.substring(originFileName.lastIndexOf("."));
 		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
 		System.out.println("변경한 이름 : " + saveName);
-		
+		System.out.println("프로필 사진 수정 부분 나와 이자식아");
 		
 		try {
 			singleFile.transferTo(new File(filePath + "/" + saveName));
@@ -377,12 +369,11 @@ private final MyInfoModifyService myInfoModifyService;
 			profile.setEmpNo(memberCode);
 			profile.setPhotoOrigName(originFileName);
 			profile.setPhotoSavedName(saveName);
-			
-			
-			
+			profile.setPhotoSavedPath(filePath);
+
 			empService.modifyProfile(profile);
 			
-			rttr.addFlashAttribute("successMessage", "서명 변경을 성공하셨습니다.");
+			rttr.addFlashAttribute("successMessage", "프로필 변경을 성공하셨습니다.");
 			mv.setViewName("redirect:/");
 			
 		} catch (IllegalStateException | IOException e) {
