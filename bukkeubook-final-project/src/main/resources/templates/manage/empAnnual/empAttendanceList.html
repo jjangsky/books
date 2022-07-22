@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="../css/style.css">
+      <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
       <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
       <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
   </head>
@@ -31,7 +33,7 @@
 	             </label>
 	             </div>
              	 <div>
-		             <button class="search btn" type="submit">검색</button> 
+		             <button class="search btn" type="button" id="submitButton">검색</button> 
 		            <input class="search in" type="text" placeholder="검색어 입력" name="searchValue">
 		            <select class="search select" name="searchCondition" required>
 		              <option value="null">--</option>
@@ -60,5 +62,49 @@
               </tr>
           </table><br>
         </div>
+        <br><br>
+        <div th:replace="/manage/empAnnual/attendPaging.html"></div>
+        
+        
+        
+        
+        <script>
+        
+        $("#submitButton").click(function(){ 
+			let date = new Date();
+			
+
+			let start = $("#startDay").val();
+			let end = $("#endDay").val();
+			
+				
+			let startArr = start.split('-');
+			let endArr = end.split('-');
+				
+				
+			let startDateCompare = new Date(startArr[0], parseInt(startArr[1])-1, startArr[2]);
+			let endDateCompare = new Date(endArr[0], parseInt(endArr[1])-1, endArr[2]);
+        
+			if(startDateCompare.getTime() > endDateCompare.getTime()){
+				Swal.fire({
+		            icon: 'error',                        
+		            title: '입력값을 확인해 주세요',   
+		            text: '시작 날짜가 종료 날짜보다 값이 큽니다.', 
+		        });
+			}else if(($("#startDay").val() !== "")&& ($("#endDay").val() !== "")){
+				$("#searchForm").submit();
+			}else{
+				Swal.fire({
+		            icon: 'error',                        
+		            title: '입력값을 확인해 주세요',   
+		            text: '검색 기능을 실행하기 위해 필수적으로 날짜를 입력해 주셔야 합니다.', 
+		        });
+			}
+			
+        })
+        
+        
+        
+        </script>
 </body>
 </html>

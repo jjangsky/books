@@ -133,10 +133,19 @@
 				
 			
 			if(startDateCompare.getTime() > endDateCompare.getTime()){
-				alert("시작 날짜와 종료 날짜를 확인해 주세요!");
-				$("#startDay").focus();
-			}else {
+				Swal.fire({
+		            icon: 'error',                        
+		            title: '입력값을 확인해 주세요',   
+		            text: '시작 날짜가 종료 날짜보다 값이 큽니다.', 
+		        });
+			}else if(($("#startDay").val() !== "")&& ($("#endDay").val() !== "")){
 				$("#searchForm").submit();
+			}else{
+				Swal.fire({
+		            icon: 'error',                        
+		            title: '입력값을 확인해 주세요',   
+		            text: '검색 기능을 실행하기 위해 필수적으로 날짜를 입력해 주셔야 합니다.', 
+		        });
 			}
 			 
 		}) 
