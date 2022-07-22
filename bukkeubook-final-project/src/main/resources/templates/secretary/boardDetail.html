@@ -42,7 +42,7 @@
             </tr>
           </table>
           <button class="btn btn-success" style="margin-left:10%"  type="submit">목록으로</button>
-          <button class="btn btn-info" style="margin-left:50%"  type="submit">수정하기</button>
+          <button class="btn btn-info" style="margin-left:50%"  type="submit" th:onclick="'location.href = \'' +  @{/secretary/boardUpdate/(no=${board.no})} + '\''">수정하기</button>
           <button class="btn btn-dark" style="margin-left:20px" type="submit">삭제하기</button>
 
       </div>
