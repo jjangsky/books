@@ -32,9 +32,13 @@ public class MemberController {
 //		return mv;
 	}
 	
-	@PostMapping("/member/logout")
+	@GetMapping("/logout")
 	public String memberLogout() {
-		System.out.println("여기타냐");
-		return "/";
+		return "/member/login";
+	}
+	
+	@GetMapping("/member/login")
+	public String memberLogin() {
+		return "redirect:/";
 	}
 }

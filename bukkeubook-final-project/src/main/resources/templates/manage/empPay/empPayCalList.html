@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>급여 계산</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+      <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+  </head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	 <h2 class="mb-4" id="main-text">급여관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">급여 계산</h5>
+        <br>
+			<button type="button" id="monthChoice" class="select btn">선택</button>
+       		<select class="search select" required id="selectMonth">
+              <option value="month">월</option>
+              <option value="1">1월</option>
+              <option value="2">2월</option>
+              <option value="3">3월</option>
+              <option value="4">4월</option>
+              <option value="5">5월</option>
+              <option value="6">6월</option>
+              <option value="7">7월</option>
+              <option value="8">8월</option>
+              <option value="9">9월</option>
+              <option value="10">10월</option>
+              <option value="11">11월</option>
+              <option value="12">12월</option>
+            </select>
+			<br><br><br>
+	  <div id="textTable" style="text-align:-webkit-center">
+        <table id="sampleTable">
+          <thead>
+              <tr>
+                <th class="th1">사원번호</th>
+                <th class="th1">사원명</th>
+                <th class="th1">부서명</th>
+                <th class="th1">직급</th>
+                <th class="th1">입력</th>
+              </tr>
+              </thead>
+              <tbody>
+               <tr class="hover">
+ 				<td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+      			<td><button type="button" class="select btn" th:onclick="">선택</button></td>
+              </tr>
+              </tbody>
+          </table>
+          <script>
+          	document.getElementById("monthChoice").onclick = function(){
+          		const choiceMonth = selectMonth.value;
+          		console.log(choiceMonth)
+          		
+          		$.ajax({
+          			url:empPay/empPayCalList,
+          			type: "get",
+          			data :{
+          				choiceMonth : choiceMonth
+          			},
+          			success : function(data){
+          				
+          			},
+          			
+          			error : function(){
+          				
+          			}
+          			
+          		});
+          	};
+          </script>
+          <script>
+			  const insertSuccessmessage = "[[${insertSuccessMessage}]]" 
+	
+			  if(insertSuccessmessage){
+				  Swal.fire({
+            	  icon: 'success',
+            	  title: 'Success!',
+            	  text: '등록이 성공적으로 완료되었습니다!',
+        	  })
+		   }
+	    </script>
+	   </div>
+	</body>
+</html>

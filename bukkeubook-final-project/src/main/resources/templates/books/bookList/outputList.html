@@ -22,8 +22,8 @@
 			<form id="loginForm" action="/book/outputList" method="get" style="display: inline-block">
 					<select th:with="searchCondition = ${selectCriteria.searchCondition}"
 						id="searchCondition" name="searchCondition">
-						<option value="select">--분류--</option>
-						<option value="date" th:selected="${ searchCondition } == 'date'">출고날짜</option>
+						<!-- <option value="select">--분류--</option>
+						<option value="date" th:selected="${ searchCondition } == 'date'">출고날짜</option> -->
 						<option value="name" th:selected="${ searchCondition } == 'name'">출고자</option>
 					</select>
 				<input type="text" style="display:none;"> <!-- 엔터키 새로고침 방지용 -->

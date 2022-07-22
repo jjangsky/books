@@ -389,5 +389,29 @@ public class BookService {
 		book.setWhSt(whst - updateAmount);
 	}
 
+	public List<BookDTO> searchBookList(String searchCondition, String searchValue) {
+		List<Book> bookList = new ArrayList<Book>();
+		if(searchValue != null) {
+
+			if("name".equals(searchCondition)) {
+				bookList = bookRepository.findByNameContaining(searchValue, Sort.by("no"));
+			}
+
+			if("author".equals(searchCondition)) {
+				bookList = bookRepository.findByAuthorContaining(searchValue, Sort.by("no"));
+			}
+			
+			if("no".equals(searchCondition)) {
+				bookList = bookRepository.findByNoContaining(searchValue, Sort.by("no"));
+			}
+		} else {
+			bookList = bookRepository.findAll(Sort.by("no"));
+		}
+
+		/* 자바의 Stream API와 ModelMapper를 이용하여 entity를 DTO로 변환 후 List<MenuDTO>로 반환 */
+		return bookList.stream().map(Book -> modelMapper.map(Book, BookDTO.class)).collect(Collectors.toList());
+	
+	}
+
 	
 }

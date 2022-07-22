@@ -73,3 +73,15 @@ color: white !important;
 .inputSpan {
 	font-weight: bold;	
 }
+.searchTable1{
+	/* width: 1200px !important; */
+	height: 300px !important;
+	overflow: auto !important;
+}
+#sampleTable th{
+   position: sticky;
+   top: 0px !important;
+   text-align: center !important;
+   color: #808080 !important;
+   background-color: white !important;
+}

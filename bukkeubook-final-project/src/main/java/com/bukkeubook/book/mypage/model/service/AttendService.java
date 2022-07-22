@@ -36,10 +36,8 @@ public class AttendService {
 
 			if(attendDTO.getAttStart()!=null && attendDTO.getAttEnd()!=null) {
 				count = attendRepository.countByEmpNoAndAttDateBetween(memberCode, attendDTO.getAttStart(), attendDTO.getAttEnd());
-			}
-			
-		 else {
-			count = (int)attendRepository.countByEmpNo(memberCode);
+				}else {
+					count = (int)attendRepository.countByEmpNo(memberCode);
 		}
 		
 		return count;

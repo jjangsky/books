@@ -98,4 +98,26 @@ public class ClientService {
 		foundClient.setCntManaEmail(client.getCntManaEmail());
 	}
 
+	@Transactional
+	public void stopClient(int cntNo) {
+		
+		Client foundClient = clientRepository.findById(cntNo).get();
+		
+		System.out.println("Service 에서 Client : " +foundClient);
+		
+		foundClient.setCntTradeYn("N");
+		
+	}
+
+	@Transactional
+	public void startClient(int cntNo) {
+		
+		Client foundClient = clientRepository.findById(cntNo).get();
+		
+		System.out.println("Service 에서 Client : " +foundClient);
+		
+		foundClient.setCntTradeYn("Y");
+		
+	}
+
 }

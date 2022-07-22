@@ -69,8 +69,16 @@
 
 .searchTable1{
 	width: 1200px !important;
-	height: 300px !important;
+	height: 290px !important;
 	overflow: auto !important;
+}
+
+#searchTable th{
+	position: sticky;
+	top: 0px !important;
+	text-align: center !important;
+	color: white !important;
+	background-color: gray !important;
 }
 
 td{

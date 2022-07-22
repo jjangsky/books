@@ -18,7 +18,7 @@
 .detailtitle{
     height: 100px;
     width: 1900px;
-    font-size: 30px;
+    font-size: 25px;
     background-color: #D9D9D9;
 }
 .detailpay{
@@ -79,5 +79,18 @@
 .detailtitle2{
     height: 100px;
     font-size: 30px;
+}
+.emp.detail.list2{
+    margin-top: 50px;
+    margin-left: 160px;
+    text-align:center;
+    height: 70px;
+    width: 800px;
+}
+.detailtitle3{
+    height: 100px;
+    width: 1900px;
+    font-size: 20px;
+    background-color: #D9D9D9;
 }
 

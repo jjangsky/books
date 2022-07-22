@@ -27,14 +27,26 @@ public interface EmpRepository extends JpaRepository<EmpAndDept, Integer>{
 	int countByEmpNameContaining(String searchValue);
 	
 	int countByempJobCodeContaining(String searchValue);
+	
+//	int countByemp_Dept_DeptNameContaining(String searchValue);
 
 	List<EmpAndDept> findByEmpNameContaining(String searchValue, Pageable paging);
 
 	List<EmpAndDept> findByEmpJobCodeContaining(String searchValue, Pageable paging);
 
+//	List<EmpAndDept> findByemp_Dept_DeptNameContaining(String searchValue, Pageable paging);
+	
+
 	/* 신규사원 등록 */
 //	@Query(value = "SELECT (TO_NUMBER(SUBSTR(MAX(EMP_NO), 6, 2))+1) FROM TBL_EMP", nativeQuery = true)
 //	int empNo();
+	
+	/* // /* 급여 계산을 위한 퇴사여부 n 인 직원 리스트 */
+//
+//	List<EmpAndDept> findByNameContaining(String searchValue, Sort by);
+//
+//	List<EmpAndDept> findByJobCodeContaining(String searchValue, Sort by);
+
 
 
 

@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
 
 </head>
@@ -89,10 +90,19 @@
 			
 		
 		if(startDateCompare.getTime() > endDateCompare.getTime()){
-			alert("시작 날짜와 종료 날짜를 확인해 주세요!");
-			$("#startTime").focus();
-		}else {
+			Swal.fire({
+	            icon: 'error',                        
+	            title: '입력값을 확인해 주세요',   
+	            text: '시작 날짜가 종료 날짜보다 값이 큽니다.', 
+	        });
+		}else if(($("#startTime").val() !== "")&& ($("#endTime").val() !== "")){
 			$("#searchForm1").submit();
+		}else{
+			Swal.fire({
+	            icon: 'error',                        
+	            title: '입력값을 확인해 주세요',   
+	            text: '검색 기능을 실행하기 위해 필수적으로 날짜를 입력해 주셔야 합니다.', 
+	        });
 		}
 		 
 	}) 

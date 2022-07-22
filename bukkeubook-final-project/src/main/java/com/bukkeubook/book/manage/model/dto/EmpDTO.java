@@ -26,6 +26,7 @@ public class EmpDTO implements Serializable{
 //	EMP_END_YN	VARCHAR2(3 BYTE)		퇴사여부
 //	EMP_PWD	VARCHAR2(255 BYTE)			비밀번호
 //	DEPT_CODE	NUMBER					부서코드
+//	EMP_TOTAL_SAL	NUMBER				연봉
 	
 	private int empNo;
 	private String empName;
@@ -43,16 +44,19 @@ public class EmpDTO implements Serializable{
 	private String empEndYn;
 	private String empPwd;
 	private int deptCode;
+	private int empTotalSal;
 
 	private List<MemberRoleDTO> memberRoleList;		// 회원별권한리스트
 
 	public EmpDTO() {
+		super();
 	}
 
 	public EmpDTO(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3, Date empBirth,
 			String empGender, String empEmail, String empJobCode, String empAddress, String empDAddress,
-			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, int deptCode,
+			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, int deptCode, int empTotalSal,
 			List<MemberRoleDTO> memberRoleList) {
+		super();
 		this.empNo = empNo;
 		this.empName = empName;
 		this.empPhone1 = empPhone1;
@@ -69,6 +73,7 @@ public class EmpDTO implements Serializable{
 		this.empEndYn = empEndYn;
 		this.empPwd = empPwd;
 		this.deptCode = deptCode;
+		this.empTotalSal = empTotalSal;
 		this.memberRoleList = memberRoleList;
 	}
 
@@ -200,6 +205,14 @@ public class EmpDTO implements Serializable{
 		this.deptCode = deptCode;
 	}
 
+	public int getEmpTotalSal() {
+		return empTotalSal;
+	}
+
+	public void setEmpTotalSal(int empTotalSal) {
+		this.empTotalSal = empTotalSal;
+	}
+
 	public List<MemberRoleDTO> getMemberRoleList() {
 		return memberRoleList;
 	}
@@ -218,9 +231,11 @@ public class EmpDTO implements Serializable{
 				+ empPhone2 + ", empPhone3=" + empPhone3 + ", empBirth=" + empBirth + ", empGender=" + empGender
 				+ ", empEmail=" + empEmail + ", empJobCode=" + empJobCode + ", empAddress=" + empAddress
 				+ ", empDAddress=" + empDAddress + ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate
-				+ ", empEndYn=" + empEndYn + ", empPwd=" + empPwd + ", deptCode=" + deptCode + ", memberRoleList="
-				+ memberRoleList + "]";
+				+ ", empEndYn=" + empEndYn + ", empPwd=" + empPwd + ", deptCode=" + deptCode + ", empTotalSal="
+				+ empTotalSal + ", memberRoleList=" + memberRoleList + "]";
 	}
+
+	
 	
 	
 	
