@@ -6,27 +6,33 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.bukkeubook.book.secretary.model.dto.BoardDTO;
 import com.bukkeubook.book.secretary.model.dto.join.BoardAndEmpAndBoardCateDTO;
+import com.bukkeubook.book.secretary.model.entity.Board;
 import com.bukkeubook.book.secretary.model.entity.BoardAndEmpAndBoardCate;
+import com.bukkeubook.book.secretary.model.repository.BasicBoardRepository;
 import com.bukkeubook.book.secretary.model.repository.SecretaryBoardRepository;
 
 @Service
 public class BoardService {
 	
 	private final SecretaryBoardRepository secretaryBoardRepository;
+	private final BasicBoardRepository basicBoardRepository;
 	private final ModelMapper modelMapper;
 	
 	@Autowired
-	public BoardService(SecretaryBoardRepository secretaryBoardRepository, ModelMapper modelMapper) {
+	public BoardService(SecretaryBoardRepository secretaryBoardRepository, ModelMapper modelMapper, BasicBoardRepository basicBoardRepository) {
 		this.secretaryBoardRepository = secretaryBoardRepository;
+		this.basicBoardRepository = basicBoardRepository;
 		this.modelMapper = modelMapper;
 	}
 
 	/* 총무부 전사게시판 조회*/
 	public List<BoardAndEmpAndBoardCateDTO> findBoardList() {
 		
-		List<BoardAndEmpAndBoardCate> boardList = secretaryBoardRepository.findAll();
+		List<BoardAndEmpAndBoardCate> boardList = secretaryBoardRepository.findByBoardYn("N");
 		
 		return boardList.stream().map(board -> modelMapper.map(board, BoardAndEmpAndBoardCateDTO.class)).collect(Collectors.toList());
 	}
@@ -37,6 +43,34 @@ public class BoardService {
 		BoardAndEmpAndBoardCate board = secretaryBoardRepository.findById(boardNo).get();
 		
 		return modelMapper.map(board, BoardAndEmpAndBoardCateDTO.class);
+	}
+
+	/* 총무부 전사게시판 수정하기 */
+	@Transactional
+	public void modifyBoardContent(BoardAndEmpAndBoardCateDTO board) {
+		
+		Board boardUpdate = basicBoardRepository.findById(board.getNo()).get();
+		boardUpdate.setCateNo(board.getCateNo());
+		boardUpdate.setTitle(board.getTitle());
+		boardUpdate.setContent(board.getContent());
+		
+	}
+	
+	/* 전사게시판 등록하기 */
+	@Transactional
+	public void registBoardContent(BoardDTO board) {
+		
+		basicBoardRepository.save(modelMapper.map(board, Board.class));
+		
+	}
+	
+	/* 전사게시판 삭제하기 */
+	@Transactional
+	public void deleteBoardContent(int boardNo, String boardYn) {
+		
+		Board deleteBoard = basicBoardRepository.findById(boardNo).get();
+		deleteBoard.setBoardYn(boardYn);
+		
 	}
 
 }

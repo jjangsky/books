@@ -16,9 +16,9 @@ public class Salary {
 	
 //	SAL_NO	NUMBER	목록번호
 //	SAL_MONTH DATE	지급월
-//	SAL_BASE	NUMBER	기본급
-//	SAL_PENSION	NUMBER	국민연금
-//	SAL_HEALTH	NUMBER	건강보험
+//	SAL_BASE	NUMBER	기본급 ooooo
+//	SAL_PENSION	NUMBER	국민연금  dddd
+//	SAL_HEALTH	NUMBER	건강보험 
 //	SAL_CARE	NUMBER	요양보험
 //	SAL_HIRE	NUMBER	고용보험
 //	SAL_INC_TAX	NUMBER	근로소득세
@@ -32,13 +32,13 @@ public class Salary {
 	private int salNo;
 	
 	@Column(name = "SAL_MONTH")
-	private java.sql.Date salMonth;
+	private java.sql.Date salMonth; 
 	
 	@Column(name = "SAL_BASE")
-	private int salBase;
+	private int salBase;  
 	
 	@Column(name = "SAL_PENSION")
-	private int salPension;
+	private int salPension; 
 	
 	@Column(name = "SAL_HEALTH")
 	private int salHealth;

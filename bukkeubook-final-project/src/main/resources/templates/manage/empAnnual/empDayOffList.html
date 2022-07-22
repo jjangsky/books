@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <head>
-     <title>Insert title here</title>
+     <title>연차조회</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -15,10 +15,10 @@
    <div th:replace="/common/topSideBar.html"></div>
         <h2 class="mb-4" id="main-text">근태관리</h2>
         <hr><br><br>
-        <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/empDayOff/empDayOffList">연차조회</a></h5>
+        <h5 class="mb-4" id="sub-text">연차조회</h5>
         <br>
-        <div id="sampleTable" style="text-align:-webkit-center">
-          <form class="search select" action="/empDayOff/empDayOffList"ost"></form>
+        <div id="sampleTable">
+          <form class="search select" action="/empDayOff/empDayOffList"></form>
           <table id="sampleTable">
               <tr>
                 <th class="th1">사원번호</th>

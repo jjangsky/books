@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
-     <title>Insert title here</title>
+     <title>사원조회</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -29,6 +29,7 @@
               <option value="select">분류</option>
               <option value="empName" th:selected="${ searchCondition } == 'empName'">사원명</option>
               <option value="empJobCode" th:selected="${ searchCondition } == 'empJobCode'">직급명</option>
+ <!--              <option value="Dept" th:selected="${ searchCondition } == 'Dept'">부서</option> -->
            </select>
          </form>
        </div>

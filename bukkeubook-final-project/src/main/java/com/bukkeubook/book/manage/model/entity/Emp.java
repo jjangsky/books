@@ -39,6 +39,7 @@ public class Emp implements Serializable{
 //	EMP_END_YN		VARCHAR2(3 BYTE)	퇴사여부
 //	EMP_PWD			VARCHAR2(255 BYTE)	비밀번호
 //	DEPT_CODE		NUMBER				부서코드
+//	EMP_TOTAL_SAL	NUMBER				연봉
 	
    @Id
    @GeneratedValue(
@@ -93,13 +94,16 @@ public class Emp implements Serializable{
    @Column(name = "DEPT_CODE")
    private int deptCode;
    
+   @Column(name = "EMP_TOTAL_SAL")
+   private int empTotalSal;
+
 	public Emp() {
 		super();
 	}
 
 	public Emp(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3, Date empBirth,
 			String empGender, String empJobCode, String empEmail, String empAddress, String empDAddress,
-			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, int deptCode) {
+			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, int deptCode, int empTotalSal) {
 		super();
 		this.empNo = empNo;
 		this.empName = empName;
@@ -117,6 +121,7 @@ public class Emp implements Serializable{
 		this.empEndYn = empEndYn;
 		this.empPwd = empPwd;
 		this.deptCode = deptCode;
+		this.empTotalSal = empTotalSal;
 	}
 
 	public int getEmpNo() {
@@ -247,18 +252,29 @@ public class Emp implements Serializable{
 		this.deptCode = deptCode;
 	}
 
+	public int getEmpTotalSal() {
+		return empTotalSal;
+	}
+
+	public void setEmpTotalSal(int empTotalSal) {
+		this.empTotalSal = empTotalSal;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
 		return "Emp [empNo=" + empNo + ", empName=" + empName + ", empPhone1=" + empPhone1 + ", empPhone2=" + empPhone2
 				+ ", empPhone3=" + empPhone3 + ", empBirth=" + empBirth + ", empGender=" + empGender + ", empJobCode="
-				+ empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress + ", empDAddress="
-				+ empDAddress + ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate + ", empEndYn=" + empEndYn
-				+ ", empPwd=" + empPwd + ", deptCode=" + deptCode + "]";
+				+ empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress + ", empDAddress=" + empDAddress
+				+ ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate + ", empEndYn=" + empEndYn + ", empPwd="
+				+ empPwd + ", deptCode=" + deptCode + ", empTotalSal=" + empTotalSal + "]";
 	}
-
-
 	
 	
+   
    
 
 

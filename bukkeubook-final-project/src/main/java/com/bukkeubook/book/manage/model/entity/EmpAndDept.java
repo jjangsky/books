@@ -63,16 +63,18 @@ public class EmpAndDept {
       
       @ManyToOne // 다대일 관계일때 사용
       @JoinColumn(name = "DEPT_CODE", insertable=false, updatable=false)
-//      private Dept dept;
-     private DeptAndEmp dept;
-
+      private DeptAndEmp dept;
+      
+      @Column(name = "EMP_TOTAL_SAL")
+      private int empTotalSal;
+      
 	public EmpAndDept() {
 		super();
 	}
 
 	public EmpAndDept(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3, Date empBirth,
 			String empGender, String empJobCode, String empEmail, String empAddress, String empDAddress,
-			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, DeptAndEmp dept) {
+			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, int empTotalSal, DeptAndEmp dept) {
 		super();
 		this.empNo = empNo;
 		this.empName = empName;
@@ -89,6 +91,7 @@ public class EmpAndDept {
 		this.empEndDate = empEndDate;
 		this.empEndYn = empEndYn;
 		this.empPwd = empPwd;
+		this.empTotalSal = empTotalSal;
 		this.dept = dept;
 	}
 
@@ -212,6 +215,14 @@ public class EmpAndDept {
 		this.empPwd = empPwd;
 	}
 
+	public int getEmpTotalSal() {
+		return empTotalSal;
+	}
+
+	public void setEmpTotalSal(int empTotalSal) {
+		this.empTotalSal = empTotalSal;
+	}
+
 	public DeptAndEmp getDept() {
 		return dept;
 	}
@@ -226,9 +237,11 @@ public class EmpAndDept {
 				+ empPhone2 + ", empPhone3=" + empPhone3 + ", empBirth=" + empBirth + ", empGender=" + empGender
 				+ ", empJobCode=" + empJobCode + ", empEmail=" + empEmail + ", empAddress=" + empAddress
 				+ ", empDAddress=" + empDAddress + ", empEntDate=" + empEntDate + ", empEndDate=" + empEndDate
-				+ ", empEndYn=" + empEndYn + ", empPwd=" + empPwd + ", dept=" + dept.getDeptName() + "]";
+				+ ", empEndYn=" + empEndYn + ", empPwd=" + empPwd + ", empTotalSal=" + empTotalSal + ", dept=" + dept.getDeptName()
+				+ "]";
 	}
 
+	
 	
 }
 

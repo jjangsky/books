@@ -9,7 +9,7 @@ window.onload = function() {
 				console.log($("#empSign").val());
 				let empSign = $("#empSign").val();
 				
-				$("#sign1").append("<img src='/images/sign/" + empSign + "'>");
+				$("#sign1").append("<img src='/images/sign/" + empSign +  "'style='width: 65px; height:70px;'>");
 			},
 			error : function(error){
 				console.log(error);
@@ -49,6 +49,15 @@ window.onload = function() {
 		$("#deptName3").val("");
 		$("#stepNo").val("");
 		$("#step").text("");
+		$("#selacc1").text("");
+		$("#selacc2").text("");
+		$("#selacc3").text("");
+		$("#empList option:eq(0)").prop("selected", true);
+		$("#empList2 option:eq(0)").prop("selected", true);
+		$("#empList3 option:eq(0)").prop("selected", true);
+		$("#deptCode option:eq(0)").prop("selected", true);
+		$("#deptCode2 option:eq(0)").prop("selected", true);
+		$("#deptCode3 option:eq(0)").prop("selected", true);
 	})
 
 	$("#empList").change(function(){
@@ -134,6 +143,8 @@ window.onload = function() {
 				const $empList = $("#empList");
 
 				$empList.text("");
+				
+				$empList.append($("<option>").val("").text("----"));
 
 				for (let index in data) {
 					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
@@ -159,6 +170,8 @@ window.onload = function() {
 				const $empList = $("#empList2");
 
 				$empList.text("");
+				
+				$empList.append($("<option>").val("").text("----"));
 
 				for (let index in data) {
 					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
@@ -184,6 +197,8 @@ window.onload = function() {
 				const $empList = $("#empList3");
 
 				$empList.text("");
+				
+				$empList.append($("<option>").val("").text("----"));
 
 				for (let index in data) {
 					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;

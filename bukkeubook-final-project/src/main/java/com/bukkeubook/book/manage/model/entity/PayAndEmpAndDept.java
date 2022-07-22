@@ -12,9 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-@Entity(name="SalaryAndEmpAndDept")
+@Entity(name="PayAndEmpAndDept")
 @Table(name = "TBL_SALARY")
-public class SalaryAndEmpAndDept {
+public class PayAndEmpAndDept {
 	
 //	SAL_NO	NUMBER	목록번호
 //	SAL_MONTH DATE	지급월
@@ -70,11 +70,11 @@ public class SalaryAndEmpAndDept {
 	@JoinColumn(name="EMP_NO" , insertable=false, updatable=false)
 	private EmpAndDept EmpAndDept;
 
-	public SalaryAndEmpAndDept() {
+	public PayAndEmpAndDept() {
 		super();
 	}
 
-	public SalaryAndEmpAndDept(int salNo, Date salMonth, int salBase, int salPension, int salHealth, int salCare,
+	public PayAndEmpAndDept(int salNo, Date salMonth, int salBase, int salPension, int salHealth, int salCare,
 			int salHire, int salIncTax, int salLocalTax, int salRealAmount, int salTotalMinus, int empNo,
 			com.bukkeubook.book.manage.model.entity.EmpAndDept empAndDept) {
 		super();
@@ -199,13 +199,12 @@ public class SalaryAndEmpAndDept {
 
 	@Override
 	public String toString() {
-		return "SalaryAndEmpAndDept [salNo=" + salNo + ", salMonth=" + salMonth + ", salBase=" + salBase
-				+ ", salPension=" + salPension + ", salHealth=" + salHealth + ", salCare=" + salCare + ", salHire="
-				+ salHire + ", salIncTax=" + salIncTax + ", salLocalTax=" + salLocalTax + ", salRealAmount="
-				+ salRealAmount + ", salTotalMinus=" + salTotalMinus + ", empNo=" + empNo + ", EmpAndDept=" + EmpAndDept
-				+ "]";
+		return "PayAndEmpAndDept [salNo=" + salNo + ", salMonth=" + salMonth + ", salBase=" + salBase + ", salPension="
+				+ salPension + ", salHealth=" + salHealth + ", salCare=" + salCare + ", salHire=" + salHire
+				+ ", salIncTax=" + salIncTax + ", salLocalTax=" + salLocalTax + ", salRealAmount=" + salRealAmount
+				+ ", salTotalMinus=" + salTotalMinus + ", empNo=" + empNo + ", EmpAndDept=" + EmpAndDept + "]";
 	}
-	 
+
 	
 }
 

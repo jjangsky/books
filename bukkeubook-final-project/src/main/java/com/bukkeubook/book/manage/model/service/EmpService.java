@@ -79,6 +79,9 @@ public class EmpService {
 			if("empJobCode".equals(selectCriteria.getSearchCondition())) {
 				empList = empRepository.findByEmpJobCodeContaining(selectCriteria.getSearchValue(), paging);
 			}
+//	         if("Dept".equals(selectCriteria.getSearchCondition())) {
+//	        	 empList = empRepository.findByemp_Dept_DeptNameContaining(selectCriteria.getSearchValue(), paging);
+//	          }
 		} else {
 			empList = empRepository.findAll(paging).toList();
 		}
@@ -170,6 +173,16 @@ public class EmpService {
 		
 	}
 
+	/* 사원 등록시 사원번호 조회 */
+//	public List<Integer> findEmpNo(int i) {
+//
+//		List<Integer> emp = new ArrayList<>();
+//		int empNo = originEmpRepository.findCurrentSeqEmpNo();
+//		emp.add(empNo);
+//		
+//		return emp;
+//	}
+
 	/* ********************************************************************************** */
 	/* 프로필 사진 수정(조회) */
 	@Transactional
@@ -187,13 +200,6 @@ public class EmpService {
 		profilePhotoRepository.save(modelMapper.map(profile, ProfPhoto.class));
 
 	}
-
-
-
-
-	
-	
-
 
 
 }

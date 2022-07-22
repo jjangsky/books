@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -170,11 +171,11 @@ private final MyInfoModifyService myInfoModifyService;
 										RedirectAttributes rttr) 
 	{
 		
-//		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
+		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
 		/* 여기는 왜 그럴까요? */
 		String empAddress = "주소";
 		empDTO.setEmpAddress(empAddress);	
-//		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
+		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
 		
 		/* 프로필 사진, 도장 사진을 제외한 나머지 회원 정보 insert */
 		empService.insertNewEmp(empDTO);
@@ -190,7 +191,7 @@ private final MyInfoModifyService myInfoModifyService;
 		String root = System.getProperty("user.dir");
 		System.out.println("root까지의 경로 : " + root);
 		
-		String filePath = root + "/src/main/resources/static/images/manage/employee";  // 프사 저장 루트
+		String filePath = root + "/src/main/resources/static/images/mypage";  // 프사 저장 루트
 		String signPath = root + "/src/main/resources/static/images/sign"; 	  // 서명 저장 루트
 		
 		/* 파일 없으면 만들어줌 */
@@ -218,6 +219,28 @@ private final MyInfoModifyService myInfoModifyService;
 		System.out.println("변경한 이름 : " + saveName);
 		System.out.println("변경한 이름 : " + saveName1);
 		
+		/* 프로필 사진 저장 처리 */
+		try {
+			proFile.transferTo(new File(filePath + "/" + saveName));
+			
+			/* DB에 저장할 파일 정보를 DTO에 담기 */
+			ProfPhotoDTO profile = new ProfPhotoDTO();
+			profile.setEmpNo(registEmp);
+			profile.setPhotoOrigName(originFileName);
+			profile.setPhotoSavedName(saveName);
+			profile.setPhotoSavedPath(filePath);
+			
+			/* 서비스로 보내서 DB로 전송 */
+			empService.registEmpProFile(profile);
+			
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+			
+			/* 실패 시 파일 삭제 */
+			new File(filePath + "/" + saveName).delete();
+		}
+		
+		
 		/* 서명 사진 저장 처리 */
 		try {
 			nameFile.transferTo(new File(signPath + "/" + saveName1));
@@ -237,11 +260,22 @@ private final MyInfoModifyService myInfoModifyService;
 			/* 실패 시 파일 삭제 */
 			new File(signPath + "/" + saveName1).delete();
 		}
+				
 		
-		rttr.addFlashAttribute("insertSuccessMessage", "성공"); // addFlashAttribute 한번만 보여주고 감
+		rttr.addFlashAttribute("insertSuccessMessage", "성공"); //addFlashAttribute 한번만 보여주고 감
 		mv.setViewName("redirect:/manage/empList");
 		return mv;
 	};	
+
+//	   /* 사원 등록시 사원번호 조회 */
+//	   @GetMapping(value = {"empInfo"}, produces="application/json;charset=UTF-8")
+//	   @ResponseBody
+//	   public List<Integer> findEmpNo(){
+//		   
+//		   List<Integer> emp = empService.findEmpNo(0);
+//		   
+//		   return emp;
+//	   }
 
 	/***********************************************************************************************/	
 	/* 사원정보 수정 */
