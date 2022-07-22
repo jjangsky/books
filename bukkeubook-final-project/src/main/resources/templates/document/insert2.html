@@ -129,7 +129,7 @@
 	          <input type="hidden" id="draftcnt2" name="tagCnt2">
 	          <input type="hidden" id="wrDate2" name="wrDate2">
 	          <input type="hidden" id="docStatus2" name="docStatus2">
-	          <input type="text" value="10" id="empNo2" name="empNo2">
+	          <!-- <input type="text" value="10" id="empNo2" name="empNo2"> -->
 	          <input type="hidden" id="submitTitle" name="submitTitle" placeholder="여긴 상신 제목이양">
 	          <input type="hidden" id="cnttt2" name="cnt2" readonly>
           </form>
@@ -219,7 +219,7 @@
 		        <input type="hidden" id="draftcnt1" name="tagCnt1" placeholder="여긴 임시저장 태그내용이양">
 		        <input type="hidden" id="wrDate1" name="wrDate1">
 		        <input type="hidden" id="docStatus1" name="docStatus1">
-		        <input type="text" value="10" id="empNo1" name="empNo1">
+		        <!-- <input type="text" value="10" id="empNo1" name="empNo1"> -->
 		        <input type="hidden" id="docTitle1" name="docTitle1" placeholder="여긴 임시저장 제목이양">
 		        <input type="hidden" id="cnttt1" name="cnt1" readonly placeholder="여긴 임시저장 내용이양">
 				<button class="select btn" type="button" onclick="takeout()">반영하기</button>
@@ -232,16 +232,16 @@
 				<th class="coloring view" colspan="7"><h5>지출결의서</h5></th>
 			</tr>
 			<tr>
-				<th class="coloring view">문서번호</th>
+				<th class="coloring view">문서<br>번호</th>
 				<th class="read view" id="docnumber"></th>
-				<th rowspan="4" class="coloring view">결재</th>
+				<th rowspan="4" class="coloring view" style="width:60px">결재</th>
 				<th class="coloring view" id="selacc4">담당</th>
 				<th class="coloring view" id="selacc1">결재1</th>
 				<th class="coloring view" id="selacc2">결재2</th>
 				<th class="coloring view" id="selacc3">결재3</th>
 			</tr>
 			<tr>
-				<th class="coloring view">작성일자</th>
+				<th class="coloring view">작성<br>일자</th>
 				<th id="date"></th>
 				<th rowspan="3" class="sign view" id="sign1"></th>
 				<th rowspan="3" class="sign view" id="sign2"></th>
