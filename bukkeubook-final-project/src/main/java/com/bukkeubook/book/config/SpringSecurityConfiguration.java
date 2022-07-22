@@ -60,17 +60,17 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 		    	.failureHandler(authFailureHandler)
 		    	.successForwardUrl("/main")										
 		    .and()	//로그아웃 페이지
-		    	.logout()															// 로그아웃 설정
-		    	.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))	// 로그아웃 시 요청 경로
-		    	.deleteCookies("JSESSIONID")										// 쿠키 제거
-		    	.invalidateHttpSession(true)										//Session정보 무효화
-		    	.logoutSuccessUrl("/")
+		    	.logout()															
+		    	.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))	
+		    	.deleteCookies("JSESSIONID")										
+		    	.invalidateHttpSession(true)										
+		    	.logoutSuccessUrl("/logout")
 		    .and()	//에러 페이지
-		    	.exceptionHandling()												//exception 핸들링 설정
-		    	.accessDeniedPage("/common/denied");								//접근 거부시 경로 설정
+		    	.exceptionHandling()												
+		    	.accessDeniedPage("/common/denied");								
 				
 	}
-//	
+	
 //	/* 4. 권한을 등록할 때 인증할 비즈니스 로직이 어떤것인지 등록(MemberService 계층에서 할 예정) */
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception{

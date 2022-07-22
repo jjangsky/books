@@ -32,9 +32,24 @@ public class MemberController {
 //		return mv;
 	}
 	
-	@PostMapping("/member/logout")
+	@GetMapping("/logout")
 	public String memberLogout() {
 		System.out.println("여기타냐");
-		return "/";
+		System.out.println("여기타냐");
+		System.out.println("여기타냐");
+		System.out.println("여기타냐");
+		System.out.println("여기타냐");
+		System.out.println("여기타냐");
+		System.out.println("여기타냐");
+		System.out.println("여기타냐");
+		System.out.println("여기타냐");
+		System.out.println("여기타냐");
+		System.out.println("여기타냐");
+		System.out.println("여기타냐");
+		System.out.println("여기타냐");
+		System.out.println("여기타냐");
+		System.out.println("여기타냐");
+		System.out.println("여기타냐");
+		return "/member/login";
 	}
 }

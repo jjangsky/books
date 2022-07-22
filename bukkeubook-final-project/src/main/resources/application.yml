@@ -1,9 +1,9 @@
 # server port config
-logging:
-  level:
-    root: "warn"
-    org.springframework.web: "debug"
-    org.hibernate: "error"
+#logging:
+#  level:
+#    root: "warn"
+#    org.springframework.web: "debug"
+#    org.hibernate: "error"
 server:
   port: 8080
 
