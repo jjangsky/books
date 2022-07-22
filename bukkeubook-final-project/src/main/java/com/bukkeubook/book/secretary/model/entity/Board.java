@@ -4,11 +4,20 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity(name="Board")
 @Table(name = "TBL_BOARD")
+@SequenceGenerator(
+		name = "BOARD_SEQ_GENERATOR",
+		sequenceName = "SEQ_BOARD_NO",
+		initialValue = 1,
+		allocationSize = 1
+		)
 public class Board {
 	
 	// TBL_BOARD 전사 게시판 테이블
@@ -23,6 +32,10 @@ public class Board {
 //		EMP_NO	NUMBER
 	
 	@Id
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "BOARD_SEQ_GENERATOR"
+	)
 	@Column(name = "BOARD_NO")
 	private int no;
 	
