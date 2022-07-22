@@ -28,6 +28,7 @@ import com.bukkeubook.book.document.model.entity.Approver;
 import com.bukkeubook.book.document.model.entity.Dept;
 import com.bukkeubook.book.document.model.entity.DocAppVacation;
 import com.bukkeubook.book.document.model.entity.DocCancelVacation;
+import com.bukkeubook.book.document.model.entity.DocDayOff;
 import com.bukkeubook.book.document.model.entity.DocSign;
 import com.bukkeubook.book.document.model.entity.Document;
 import com.bukkeubook.book.document.model.entity.DocumentAndEmpAndFormCate;
@@ -40,6 +41,7 @@ import com.bukkeubook.book.document.model.repository.AppVacationRepository;
 import com.bukkeubook.book.document.model.repository.ApproverRepository;
 import com.bukkeubook.book.document.model.repository.ApproverRepository2;
 import com.bukkeubook.book.document.model.repository.CancelVacationRepository;
+import com.bukkeubook.book.document.model.repository.DocDayOffRepository;
 import com.bukkeubook.book.document.model.repository.DocDeptRepository;
 import com.bukkeubook.book.document.model.repository.DocEmpFormCateRepository;
 import com.bukkeubook.book.document.model.repository.DocEmpRepository;
@@ -63,6 +65,7 @@ public class DocServiceImpl implements DocService{
 	private final AppVacationRepository vacationRepository;
 	private final CancelVacationRepository cancelVacaRepository;
 	private final DocSignRepository signRepository;
+	private final DocDayOffRepository dayoffRepository;
 	private final ModelMapper modelMapper;
 	
 	@Autowired
@@ -78,7 +81,8 @@ public class DocServiceImpl implements DocService{
 						  SubmitDocumentRepository subDocRepository,
 						  AppVacationRepository vacationRepository,
 						  CancelVacationRepository cancelVacaRepository,
-						  DocSignRepository signRepository) {
+						  DocSignRepository signRepository,
+						  DocDayOffRepository dayoffRepository) {
 		this.docDeptRepository = docDeptRepository;
 		this.modelMapper = modelMapper;
 		this.formRepository = formRepository;
@@ -92,6 +96,7 @@ public class DocServiceImpl implements DocService{
 		this.vacationRepository = vacationRepository;
 		this.cancelVacaRepository = cancelVacaRepository;
 		this.signRepository = signRepository;
+		this.dayoffRepository = dayoffRepository;
 	}
 
 	/* 전자결재 작성 첫화면 - 양식 고르기 */
@@ -437,14 +442,19 @@ public class DocServiceImpl implements DocService{
 
 	/* 휴가서류 문서번호 조회 */
 	@Override
-	public List<Integer> vacationInfo() {
+	public List<Integer> vacationInfo(int empNo) {
 		
 		int vacNo = vacationRepository.findCurrentSeq() + 1;
 		int cancVacNo = cancelVacaRepository.findCurrentSeq() +1;
+		DocDayOff dayoff = dayoffRepository.findByEmpNo(empNo);
+		int dayAmount = dayoff.getDoffAmount();
+		int dayRemain = dayoff.getDoffRemain();
 		List<Integer> vacationInfo = new ArrayList<>();
 		
 		vacationInfo.add(vacNo);
 		vacationInfo.add(cancVacNo);
+		vacationInfo.add(dayAmount);
+		vacationInfo.add(dayRemain);
 		
 		return vacationInfo;
 	}

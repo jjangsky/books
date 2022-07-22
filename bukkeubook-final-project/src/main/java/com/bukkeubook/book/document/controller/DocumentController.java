@@ -583,9 +583,10 @@ public class DocumentController {		// 전자결재 컨트롤러
 	/* 휴가서류 문서번호 조회 */
 	@GetMapping(value = {"vacationInfo"}, produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public List<Integer> vacationInfo(){
+	public List<Integer> vacationInfo(@AuthenticationPrincipal UserImpl customUser){
 		
-		List<Integer> vacationInfo = docService.vacationInfo();
+		int empNo = customUser.getEmpNo();
+		List<Integer> vacationInfo = docService.vacationInfo(empNo);
 		
 		return vacationInfo;
 	}
