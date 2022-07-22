@@ -21,8 +21,6 @@
         <br>
 
         <div class="search-area" align="center">
-        	<button class="btn" type="button" onclick="location.href='/order/regist'">발주신청</button>
-            <button class="btn" type="button" onclick="location.href='/book/input'">입고등록</button>
 			<form id="loginForm" action="/order/selectHistory" method="get" style="display: inline-block">
 				<input type="hidden" name="searchCondition">
 				<input type="hidden" name="currentPage" value="1">
@@ -34,9 +32,10 @@
 						<option value="반려" th:selected="${ searchValue } == '반려'">반려</option>
 				</select>
 				<button class="findBtn" type="submit">검색하기</button>
+        	<button class="btn" type="button" onclick="location.href='/order/regist'">발주신청</button>
+            <button class="btn" type="button" onclick="location.href='/book/input'">입고등록</button>
 			</form>
 		</div>
-
         <div id="textTable" style="text-align:-webkit-center">
           <table id="sampleTable">
               <tr>

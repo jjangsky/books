@@ -7,11 +7,6 @@
     margin-right: 20%;
     font-size: 0.7vw;
 }
-.findBtn {
-    margin-left: 20px;
-    border-radius: 20px;
-    width: 6vw;
-}
 #productFind {
     font-size: 0.8vw;
     text-align: center;
@@ -20,7 +15,7 @@
     border-width: 1px 1px 1px 1px;
     background: #fafafa;
     width: 20em;
-    margin-left: 2em;
+    margin-left: 230px !important;
     text-align: center;
 }
 #inputFind:focus {
@@ -44,66 +39,84 @@
     border-radius: 20px;
     background: #c5bfbf;
     border: none;
-    height: 37px;
+    height: 28px;
     width: 100px !important;
     font-size: 13px;
+    vertical-align: middle;
+    text-align: center;
+    margin-left: 10px;
 }
 .findBtn:hover {
     background-color: #FEFCC6;
 }
-.newBookBtn {
-    border-radius: 10px;
-    background: #c5bfbf;
-    border: none;
-    height: 37px;
+.btn {
+    border-radius: 10px !important;
+    background: #c5bfbf !important;
+    border: none !important;
+    height: 28px !important;
     width: 100px !important;
-    font-size: 13px;
+    font-size: 13px !important;
+    vertical-align: middle;
+    text-align: center;
+    margin-right: 10px;
+    margin-bottom: 5px;
 }
-.newBookBtn:hover {
-    background-color: #FEFCC6;
+.btn:hover {
+    background-color: #FEFCC6 !important;
+}
+
+.findBtn:hover{
+	background-color: #FEFCC6 !important;
 }
 
 #orderTable{
 	border: 1px solid #444444;
-	
-}
-
-tr{
-	height: 25px !important;
 }
 
 td{
 	font-size: 13pt;
-	width: 300px;
+	width: 60px;
+	height: 10px;
 	border-bottom: 1px solid #444444;
 	text-align: center;
-	color: black;
 }
 
 .cate{
 	border: 1px solid #444444;
-	font-size: 13pt;
-	width: 200px;
-	font-weight: bold;
-	color: black;
+	width: 160px;
 }
 
 .short{
 	width: 20px;
 }
 
-.btn {
-    border-radius: 10px !important;
-    background: #c5bfbf !important;
-    border: none !important;
-    height: 35px !important;
-    width: 100px !important;
-    font-size: 16px !important;
+.pagingArea button {
+	border-style: none;
+	margin: 3px;
+	background: #c5bfbf;
+	border-radius: 5px;
+	width: 30px;
+}
+.pagingArea button:hover {
+	background-color: #FEFCC6;
+}
+
+.search-area{
+	margin-bottom: 10px;
+}
+
+#searchValue{
+	height: 28px;
+    width: 100px;
+    font-size: 13px;
     vertical-align: middle;
     text-align: center;
-    margin-right: 10px;
-    margin-top: 15px;
 }
-.btn:hover {
-    background-color: #FEFCC6 !important;
+
+#textTable{
+	margin-bottom: 15px;
 }
+
+
+
+
