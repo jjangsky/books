@@ -11,7 +11,6 @@ import com.bukkeubook.book.manage.model.entity.EmpAndDept;
 import com.bukkeubook.book.manage.model.entity.Sign;
 import com.bukkeubook.book.manage.model.repository.EmpSignRepository;
 
-
 @Service
 public class SignService {
 	
@@ -54,6 +53,10 @@ public class SignService {
 	public void modifySign(SignDTO sign) {
 		
 		empSignRepository.save(modelMapper.map(sign, Sign.class));
+		
+//		Sign empSign = empSignRepository.findByEmpNo(sign.getEmpNo());
+//		empSign.setSignName(sign.getSignName());
+//		empSign.setSignSavedName(sign.getSignSavedName());
 		
 	}
 

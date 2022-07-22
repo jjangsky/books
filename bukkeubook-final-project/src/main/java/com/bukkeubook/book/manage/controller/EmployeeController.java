@@ -47,10 +47,10 @@ private final MyInfoModifyService myInfoModifyService;
 	}
 	
 	/* 인원현황 조회 */
-	@GetMapping("personnelSelect")
-	public String perconnelList() {
-		return "manage/employee/personnelSelect";
-	}
+//	@GetMapping("personnelSelect")
+//	public String perconnelList() {
+//		return "manage/employee/personnelSelect";
+//	}
 
 	/* 사원조회 , 페이징, 검색기능 */
 	@GetMapping("/empList")
@@ -115,8 +115,8 @@ private final MyInfoModifyService myInfoModifyService;
 		
 		int number = Integer.valueOf(empNo);
 		
-		System.out.println("컨트롤러에서       " + empNo);
-		System.out.println("컨트롤러에서       " + number);
+//		System.out.println("컨트롤러에서       " + empNo);
+//		System.out.println("컨트롤러에서       " + number);
 		
 		/* 회원 개인의 정보 가져와서 상세페이지에 뿌리기 */
 		EmpAndDeptDTO emp  = empService.searchEmpDetail(number);
@@ -162,7 +162,6 @@ private final MyInfoModifyService myInfoModifyService;
 		return mv;
 	}
 	
-
 	/* 신규 직원 등록  insert */
 	@PostMapping("insert")
 	public ModelAndView insertEmp(EmpDTO empDTO, ModelAndView mv, HttpServletRequest request, 
@@ -171,11 +170,11 @@ private final MyInfoModifyService myInfoModifyService;
 										RedirectAttributes rttr) 
 	{
 		
-		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
+//		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
 		/* 여기는 왜 그럴까요? */
 		String empAddress = "주소";
 		empDTO.setEmpAddress(empAddress);	
-		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
+//		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
 		
 		/* 프로필 사진, 도장 사진을 제외한 나머지 회원 정보 insert */
 		empService.insertNewEmp(empDTO);
@@ -239,7 +238,7 @@ private final MyInfoModifyService myInfoModifyService;
 			new File(signPath + "/" + saveName1).delete();
 		}
 		
-		rttr.addFlashAttribute("insertSuccessMessage", "성공"); //addFlashAttribute 한번만 보여주고 감
+		rttr.addFlashAttribute("insertSuccessMessage", "성공"); // addFlashAttribute 한번만 보여주고 감
 		mv.setViewName("redirect:/manage/empList");
 		return mv;
 	};	
@@ -259,12 +258,12 @@ private final MyInfoModifyService myInfoModifyService;
 //		System.out.println("이제는 좀 나와주라 이눔아" + profile);
 		
 		/* 현재 서명 조회 */
-		SignDTO empSign = signService.findEmpSign(number);
+		SignDTO mySign = signService.findEmpSign(number);
 //		System.out.println("너도 나와 이눔아22" + empSign);
 		
 		mv.addObject("emp", emp);
 		mv.addObject("profile", profile);
-		mv.addObject("empSign", empSign);
+		mv.addObject("mySign", mySign);
 		mv.setViewName("manage/employee/empDetail" + "Update");
 
 		return mv; 
@@ -276,27 +275,17 @@ private final MyInfoModifyService myInfoModifyService;
 	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, EmpDTO emp
 	                        , String deptCode1, String deptCode2
 	                        , String empJobCode1, String empJobCode2) {
-	      System.out.println("TEST");
-	      System.out.println("TEST");
-	      System.out.println("TEST");
-	      System.out.println("TEST");
-	      System.out.println("TEST         "+ deptCode1);
-	      System.out.println("TEST         "+ deptCode2);
-	      System.out.println("TEST         "+ empJobCode1);
-	      System.out.println("TEST         "+ empJobCode2);
-	      System.out.println("emp11111111111111111111111111111" + emp);
 	      
-//	      empService.modifyEmp(emp); 
+	      empService.modifyEmp(emp); 
 	      
 	      rttr.addFlashAttribute("updateSuccessMessage", "성공");
-//	      mv.setViewName("redirect:/");
 	      mv.setViewName("redirect:/manage/empList");
 	      return mv;
 	   }
 
 	/***********************************************************************************************/	
 	/* 도장 사진 수정 */
-	@PostMapping("detailUpdate")
+	@PostMapping("detailUpdate23")
 	public ModelAndView modifySign(ModelAndView mv, HttpServletRequest request,
 			@RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
 		
@@ -307,7 +296,8 @@ private final MyInfoModifyService myInfoModifyService;
 		String root = System.getProperty("user.dir");
 		System.out.println("root까지의 경로 : " + root);
 		
-		String filePath = root + "/src/main/resources/static/images/manage/employee/empSign";
+		/* 유찬님이랑 경로 맞출 것 */
+		String filePath = root + "/src/main/resources/static/images/sign";
 		
 		String originFileName = singleFile.getOriginalFilename();
 		System.out.println("원본 이름 : " + originFileName);
@@ -328,7 +318,7 @@ private final MyInfoModifyService myInfoModifyService;
 			signService.modifySign(sign);
 			
 			rttr.addFlashAttribute("successMessage", "서명 변경을 성공하셨습니다.");
-			mv.setViewName("redirect:/");
+			mv.setViewName("redirect:/manage/detailUpdate23");
 			
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
@@ -373,7 +363,7 @@ private final MyInfoModifyService myInfoModifyService;
 			empService.modifyProfile(profile);
 			
 			rttr.addFlashAttribute("successMessage", "프로필 변경을 성공하셨습니다.");
-			mv.setViewName("redirect:/");
+			mv.setViewName("redirect:/manage/detailUpdate2");
 			
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
