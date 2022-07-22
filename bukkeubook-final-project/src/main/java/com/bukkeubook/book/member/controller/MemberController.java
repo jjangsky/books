@@ -34,22 +34,11 @@ public class MemberController {
 	
 	@GetMapping("/logout")
 	public String memberLogout() {
-		System.out.println("여기타냐");
-		System.out.println("여기타냐");
-		System.out.println("여기타냐");
-		System.out.println("여기타냐");
-		System.out.println("여기타냐");
-		System.out.println("여기타냐");
-		System.out.println("여기타냐");
-		System.out.println("여기타냐");
-		System.out.println("여기타냐");
-		System.out.println("여기타냐");
-		System.out.println("여기타냐");
-		System.out.println("여기타냐");
-		System.out.println("여기타냐");
-		System.out.println("여기타냐");
-		System.out.println("여기타냐");
-		System.out.println("여기타냐");
 		return "/member/login";
+	}
+	
+	@GetMapping("/member/login")
+	public String memberLogin() {
+		return "redirect:/";
 	}
 }
