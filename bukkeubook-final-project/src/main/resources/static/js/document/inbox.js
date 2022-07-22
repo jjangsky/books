@@ -94,11 +94,11 @@ window.onload = function(){
 				let place = $("#place").val();
 				
 				if(place == "1"){
-					$("#sign2").append("<img src='/images/sign/" + empSign + "'>");
+					$("#sign2").append("<img src='/images/sign/" + empSign +  "'style='width: 65px; height:70px;'>");
 				} else if(place == "2"){
-					$("#sign3").append("<img src='/images/sign/" + empSign + "'>");
+					$("#sign3").append("<img src='/images/sign/" + empSign +  "'style='width: 65px; height:70px;'>");
 				} else{
-					$("#sign4").append("<img src='/images/sign/" + empSign + "'>");
+					$("#sign4").append("<img src='/images/sign/" + empSign +  "'style='width: 65px; height:70px;'>");
 				}
 				let total = $("#total").html();
 				$("#tagCnt").val(total);

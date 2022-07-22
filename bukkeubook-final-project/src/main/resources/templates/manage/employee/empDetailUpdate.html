@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <head>
-     <title>Insert title here</title>
+     <title>사원 정보 수정</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -95,15 +95,7 @@
               </tr>
               <tr class="deemp" >
                 <td>연락처</td>
-                <td>
-                <select class="sel1" th:value="${ emp.empPhone1 }" name="empPhone1">
-                    <option value="010">010</option>
-                    <option value="011">011</option>
-                    <option value="019">019</option>
-                    <option value="016">016</option>
-                  </select>
-<!--                 <input type="text" th:value="${ emp.empPhone1 }" name="empPhone1"> -->
-                </td>
+				<td><input type="text" th:value="${ emp.empPhone1 }" name="empPhone1"></td>
                 <td><input type="text" th:value="${ emp.empPhone2 }" name="empPhone2"></td>
                 <td><input type="text" th:value="${ emp.empPhone3 }" name="empPhone3"></td>
               </tr>
@@ -127,7 +119,7 @@
                 <td colspan="3"><input type="text" th:value="${ emp.empPwd }" name="empPwd"></td>
               </tr>
             </tbody>
-          </table><br>
+          </table><br>p
           <input type="hidden" name="empNo" th:value="${emp.empNo}">
           <div id="newBookDiv">
           	<button id="leaveUpdateEmp" class="modify btn">퇴사처리</button>

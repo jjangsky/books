@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -335,5 +336,15 @@ private final MyInfoModifyService myInfoModifyService;
 	      return mv;
 	   }
 
+//	   /* 사원 등록시 사원번호 조회 */
+//	   @GetMapping(value = {"empInfo"}, produces="application/json;charset=UTF-8")
+//	   @ResponseBody
+//	   public List<Integer> findEmpNo(){
+//		   
+//		   List<Integer> emp = empService.findEmpNo(0);
+//		   
+//		   return emp;
+//	   }
+	   
 }
  

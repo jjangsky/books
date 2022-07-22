@@ -57,7 +57,7 @@ public interface DocService {
 
 	void insertNewCancelVacation(CancelVacationDTO cancVaca);
 
-	List<Integer> vacationInfo();
+	List<Integer> vacationInfo(int empNo);
 
 	List<AppVacationDTO> allVacationList(int empNo);
 

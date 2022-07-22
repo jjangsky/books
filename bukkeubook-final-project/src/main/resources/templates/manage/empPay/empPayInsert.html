@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>급여 계산내역 입력</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+      <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  </head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+   		<h2 class="mb-4" id="main-text">급여관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">사원 급여등록</h5>
+        <br>
+     <form action="/empPay/insert" method="post" id="insertForm">
+        <div class="emp detail list2"> 
+          <table border="2">
+          <thead>
+             <tr class="detailtitle3">
+              <td colspan="2" id="selectDept">부서명
+             	 <select name="deptCode" id="deptCode">
+                 	<option value=""></option>
+				<!-- ajax -->
+               	  </select>
+              </td>
+              <td colspan="2">사원명
+              	<select name="empList" id="empList">
+                   <option value=""></option>
+                </select>
+              </td>
+            </tr>
+            <tr class="detailpay">
+              <th colspan="2">연봉<br>연봉보여주기</th>
+              <th colspan="2">지급월<br><input type="date"></th>
+            </tr>
+            <tr class="detailpay">
+              <th colspan="2">지급내역</th>
+              <th colspan="2" >공제내역</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="payft1">기본급</td>
+              <div id="input" hidden>
+              <td class="payft1"><input id='salBase' onkeyup='printName()'/></td>
+            </div>
+              <td class="payft1">국민연금</td>
+              <td class="payft1" required id="salPension"></td>
+            </tr>
+            <tr> 
+              <td></td> 
+              <td></td> 
+              <td class="payft1">건강보험</td>
+              <td class="payft1" id="salHealth" required></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="payft1">요양보험</td>
+              <td class="payft1" id="salCare" required></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="payft1">고용보험</td>
+              <td class="payft1" id="salHire" required></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="payft1">소득세</td>
+              <td class="payft1" id="salIncTax" required></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="payft1">지방소득세</td>
+              <td class="payft1" id="salLocalTax" required></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="payft1">공제액 계</td>
+              <td class="payft1" id="salTotalMinus" required></td>
+            </tr>
+            <tr>
+              <td class="payft1">차인 지급액</td>
+              <td colspan="3" class="payft1" id="salRealAmount" required></td>
+            </tr>
+           </tbody>
+           </table>
+          <br><br>
+           <div id="newBookDiv">
+          <button type="button" id="updatePay" class="modify btn" onclick="location.href='empPayList.html'">등록하기</button>
+          <button type="button" class="list btn backBtn">목록으로</button> 
+    	</div>
+       </div>
+     </form>
+     <script th:inline="javascript">
+         	$().ready(function () {
+          		$(".backBtn").click(function () {
+              		Swal.fire({
+                  	title: '작성내용이 모두 사라집니다.',
+                 	 text: "진행 하시겠습니까?",
+                 	 icon: 'warning',
+                 	 showCancelButton: true,
+                  	confirmButtonColor: '#c5bfbf',
+                  	cancelButtonColor: '#c5bfbf',
+                  	confirmButtonText: '확인',
+                  	cancelButtonText: '취소'
+              	}).then((result) => {
+                 	 if (result.isConfirmed) {
+                      	window.history.back();
+                  	}	
+              	})
+         	 });
+     	 });
+      
+         $("#insert").click(function () {
+         $("#insertForm").submit();
+        });
+      </script> 
+      <script>
+            function printName() {
+                var salBase = document.getElementById('salBase').value;
+                var salPension, salHealth, salCare, salHire, salIncTax, salLocalTax, salRealAmount, salTotalMinus;
+                salPension = Math.round(salBase*0.045);
+                salHealth = Math.round(salBase*0.03495);
+                salCare = Math.round(salHealth*0.1227);
+                salHire = Math.round(salBase*0.008);
+                salIncTax = Math.round(salBase*0.04);
+                salLocalTax = Math.round(salIncTax*0.1);
+                salTotalMinus = salPension+salHealth+salCare+salHire+salIncTax+salLocalTax
+                salRealAmount = salBase-salPension-salHealth-salCare-salHire-salIncTax-salLocalTax;
+                document.getElementById("input").innerText = salBase;
+                document.getElementById("salPension").innerText = salPension;
+                document.getElementById("salHealth").innerText = salHealth;
+                document.getElementById("salCare").innerText = salCare;
+                document.getElementById("salHire").innerText = salHire;
+                document.getElementById("salIncTax").innerText = salIncTax;
+                document.getElementById("salLocalTax").innerText = salLocalTax;
+                document.getElementById("salTotalMinus").innerText = salTotalMinus;
+                document.getElementById("salRealAmount").innerText = salRealAmount;
+            }
+            </script>
+	</body>
+</html>

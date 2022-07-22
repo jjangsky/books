@@ -9,8 +9,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
-	<link rel="stylesheet"  th:href="@{/css/books/order/orderDetail.css}">
+	<link rel="stylesheet"  th:href="@{/css/finance/clientDetail.css}">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
     <div th:replace="/common/topSideBar.html"></div>
@@ -25,6 +25,10 @@
                     <tr>
                         <td>거래처명</td>
                         <td colspan="3" th:text="${ client.cntName }"></td>
+                    </tr>
+                    <tr>
+                        <td>거래여부</td>
+                        <td colspan="3" th:text="${ client.cntTradeYn }"></td>
                     </tr>
                     <tr>
                         <td>업종</td>
@@ -69,27 +73,53 @@
                         <td th:text="${ client.cntManaEmail }"></td>
                     </tr>
                 </table>
-                <form action="/client/modify/" method="get">
+                <form id="modifyForm" action="/client/modify/" method="get">
                 	<input type="hidden" name="cntNo" th:value="${ client.cntNo }">
-	                <button type="submit" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''">수정</button>
+	                <button class="btn" type="submit" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''">수정</button>
 	            </form>
-                <button type="button" onclick="checkStop()">거래중지</button>
-                <button type="button" onclick="location.href='/client/select'">목록</button>
+	            <form id="stopForm" action="/client/stop/" method="get">
+	            	<input type="hidden" name="cntNo" th:value="${ client.cntNo }">	
+	                <button class="btn" type="button" onclick="checkStop()" th:if="${client.cntTradeYn.toString().equals('Y')}">거래중지</button>
+				</form>
+	            <form id="startForm" action="/client/start/" method="get">
+	            	<input type="hidden" name="cntNo" th:value="${ client.cntNo }">	
+	                <button class="btn" type="button" onclick="checkStart()" th:if="${client.cntTradeYn.toString().equals('N')}">거래재개</button>
+				</form>
+	                <button class="btn" type="button" onclick="location.href='/client/select'">목록</button>
         </div>
 
     <script>
       function checkStop(){
-        var result = confirm("선택하신 거래처들을 거래 중지로 바꾸시겠습니까?");
-
-        if(result == true){
-          alert("거래처가 거래 중지 처리되었습니다.");
-          location = "client_select.html";
-        }
+    	  
+    	  Swal.fire({
+        		icon: 'warning',
+        		title: '거래 중지 확인',
+        		text: '해당 거래처를 거래 중지 상태로 바꾸시겠습니까?',
+        		showCancelButton: true,
+        		confirmButtonText: '확인',
+        		cancelButtonText: '취소'
+        	}).then((result) => {
+        		if(result.isConfirmed){
+        			$("#stopForm").submit();
+        		}
+        	});
+      }
+      
+	function checkStart(){
+    	  
+    	  Swal.fire({
+        		icon: 'warning',
+        		title: '거래 재개 확인',
+        		text: '해당 거래처와 거래를 재개하시겠습니까?',
+        		showCancelButton: true,
+        		confirmButtonText: '확인',
+        		cancelButtonText: '취소'
+        	}).then((result) => {
+        		if(result.isConfirmed){
+        			$("#startForm").submit();
+        		}
+        	});
       }
     </script>
-		<script src="../js/jquery.min.js"></script>
-    <script src="../js/popper.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/main.js"></script>
   </body>
 </html>

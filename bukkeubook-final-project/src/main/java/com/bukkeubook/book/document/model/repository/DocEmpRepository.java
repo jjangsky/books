@@ -10,6 +10,6 @@ import com.bukkeubook.book.document.model.entity.Emp;
 
 public interface DocEmpRepository extends JpaRepository<Emp, Integer>{
 
-	List<Emp> findByDeptCode(int dept, Sort sort);
+	List<Emp> findByDeptCodeAndEmpEndYn(int dept, String empEndYn, Sort sort);
 
 }

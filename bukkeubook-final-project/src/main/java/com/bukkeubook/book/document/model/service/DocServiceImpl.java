@@ -28,6 +28,7 @@ import com.bukkeubook.book.document.model.entity.Approver;
 import com.bukkeubook.book.document.model.entity.Dept;
 import com.bukkeubook.book.document.model.entity.DocAppVacation;
 import com.bukkeubook.book.document.model.entity.DocCancelVacation;
+import com.bukkeubook.book.document.model.entity.DocDayOff;
 import com.bukkeubook.book.document.model.entity.DocSign;
 import com.bukkeubook.book.document.model.entity.Document;
 import com.bukkeubook.book.document.model.entity.DocumentAndEmpAndFormCate;
@@ -40,6 +41,7 @@ import com.bukkeubook.book.document.model.repository.AppVacationRepository;
 import com.bukkeubook.book.document.model.repository.ApproverRepository;
 import com.bukkeubook.book.document.model.repository.ApproverRepository2;
 import com.bukkeubook.book.document.model.repository.CancelVacationRepository;
+import com.bukkeubook.book.document.model.repository.DocDayOffRepository;
 import com.bukkeubook.book.document.model.repository.DocDeptRepository;
 import com.bukkeubook.book.document.model.repository.DocEmpFormCateRepository;
 import com.bukkeubook.book.document.model.repository.DocEmpRepository;
@@ -63,6 +65,7 @@ public class DocServiceImpl implements DocService{
 	private final AppVacationRepository vacationRepository;
 	private final CancelVacationRepository cancelVacaRepository;
 	private final DocSignRepository signRepository;
+	private final DocDayOffRepository dayoffRepository;
 	private final ModelMapper modelMapper;
 	
 	@Autowired
@@ -78,7 +81,8 @@ public class DocServiceImpl implements DocService{
 						  SubmitDocumentRepository subDocRepository,
 						  AppVacationRepository vacationRepository,
 						  CancelVacationRepository cancelVacaRepository,
-						  DocSignRepository signRepository) {
+						  DocSignRepository signRepository,
+						  DocDayOffRepository dayoffRepository) {
 		this.docDeptRepository = docDeptRepository;
 		this.modelMapper = modelMapper;
 		this.formRepository = formRepository;
@@ -92,6 +96,7 @@ public class DocServiceImpl implements DocService{
 		this.vacationRepository = vacationRepository;
 		this.cancelVacaRepository = cancelVacaRepository;
 		this.signRepository = signRepository;
+		this.dayoffRepository = dayoffRepository;
 	}
 
 	/* 전자결재 작성 첫화면 - 양식 고르기 */
@@ -118,7 +123,8 @@ public class DocServiceImpl implements DocService{
 	@Override
 	public List<EmpDTO> findEmp(int dept) {
 
-		List<Emp> empList = docEmpRepository.findByDeptCode(dept,Sort.by("empNo").descending());
+		String empEndYn = "N";
+		List<Emp> empList = docEmpRepository.findByDeptCodeAndEmpEndYn(dept,empEndYn,Sort.by("empNo").descending());
 		
 		return empList.stream().map(emp -> modelMapper.map(emp, EmpDTO.class)).toList();
 //		return empList.stream().map(emp -> modelMapper.map(emp, EmpDTO.class)).toList();
@@ -137,7 +143,7 @@ public class DocServiceImpl implements DocService{
 	@Override
 	public List<DocumentAndEmpAndFormCateDTO> findTempDocList(int tempEmpNo, String docStatus) {
 
-		List<DocumentAndEmpAndFormCate> tempDocList = docEmpFormCateRepository.findByEmpNoAndDocStatus(tempEmpNo,docStatus,Sort.by("wrDate").descending());
+		List<DocumentAndEmpAndFormCate> tempDocList = docEmpFormCateRepository.findByEmpNoAndDocStatus(tempEmpNo,docStatus,Sort.by("docNo").descending());
 		
 //		System.out.println("임시저장 리스트 조회 --------------------여기는 서비스에서 엔티티 조회했을때양" + tempDocList);
 		
@@ -205,6 +211,7 @@ public class DocServiceImpl implements DocService{
 
 	/* 새로작성한 기안서, 지결서 상신하기 - 결재자 2, 3명일 때 */
 	@Override
+	@Transactional
 	public void insertNewDocThreeAcc(SubmitDocumentDTO newDoc, AppRootDTO appRoot, List<SubmitApprover> approverList) {
 
 		subDocRepository.save(modelMapper.map(newDoc, SubmitDocument.class));
@@ -230,6 +237,7 @@ public class DocServiceImpl implements DocService{
 
 	/* 임시저장된 기안서, 지결서 상신하기 - 결재자 1명일 때 */
 	@Override
+	@Transactional
 	public void submitTempDocOneAcc(SubmitDocumentDTO tempDoc, AppRootDTO appRoot, ApproverDTO approver) {
 
 		SubmitDocument foundDoc = subDocRepository.findById(tempDoc.getDocNo2()).get();
@@ -250,6 +258,7 @@ public class DocServiceImpl implements DocService{
 
 	/* 임시저장된 기안서, 지결서 상신하기 - 결재자 2명,3명 일 때 */
 	@Override
+	@Transactional
 	public void submitTempDocTwoAcc(SubmitDocumentDTO tempDoc, AppRootDTO appRoot, List<SubmitApprover> approverList) {
 
 		SubmitDocument foundDoc = subDocRepository.findById(tempDoc.getDocNo2()).get();
@@ -361,7 +370,7 @@ public class DocServiceImpl implements DocService{
 	@Override
 	public List<DocumentAndEmpAndFormCateDTO> findByDocNoList(int empNo , String docStatus) {
 
-		List<DocumentAndEmpAndFormCate> docList = docEmpFormCateRepository.findByEmpNoAndDocStatusNot(empNo,docStatus,Sort.by("wrDate").descending());
+		List<DocumentAndEmpAndFormCate> docList = docEmpFormCateRepository.findByEmpNoAndDocStatusNot(empNo,docStatus,Sort.by("docNo").descending());
 		
 		return docList.stream().map(doc -> modelMapper.map(doc, DocumentAndEmpAndFormCateDTO.class)).toList();
 	}
@@ -407,8 +416,8 @@ public class DocServiceImpl implements DocService{
 	@Transactional
 	public void insertNewVacationApp(AppVacationDTO vacation) {
 
-		int vacNo = vacationRepository.findCurrentSeq() + 10;
-		vacation.setVacNo(vacNo);
+//		int vacNo = vacationRepository.findCurrentSeq() + 10;
+//		vacation.setVacNo(vacNo);
 		System.out.println("Service       " +vacation);
 		
 		vacationRepository.save(modelMapper.map(vacation, DocAppVacation.class));
@@ -433,14 +442,19 @@ public class DocServiceImpl implements DocService{
 
 	/* 휴가서류 문서번호 조회 */
 	@Override
-	public List<Integer> vacationInfo() {
+	public List<Integer> vacationInfo(int empNo) {
 		
 		int vacNo = vacationRepository.findCurrentSeq() + 1;
 		int cancVacNo = cancelVacaRepository.findCurrentSeq() +1;
+		DocDayOff dayoff = dayoffRepository.findByEmpNo(empNo);
+		int dayAmount = dayoff.getDoffAmount();
+		int dayRemain = dayoff.getDoffRemain();
 		List<Integer> vacationInfo = new ArrayList<>();
 		
 		vacationInfo.add(vacNo);
 		vacationInfo.add(cancVacNo);
+		vacationInfo.add(dayAmount);
+		vacationInfo.add(dayRemain);
 		
 		return vacationInfo;
 	}
