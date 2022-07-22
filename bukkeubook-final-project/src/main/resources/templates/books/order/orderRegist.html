@@ -59,17 +59,17 @@
 			               <td th:text="${ book.pub }"></td>
 			               <td th:text="${ #numbers.formatInteger(book.price, 3, 'COMMA') + '원' }"></td>
 			               <td th:text="${ book.whSt + book.storeSt } + ' ea'"></td>
-			               <td><button class="btn" type="button">목록에 추가</button></td>
+			               <td><button class="addBtn btn" type="button">목록에 추가</button></td>
 		               </tr>
 		       	   </tbody>
 		        </table>
 	        </div>
 		
-	       <br><br><br>
+	       <br><br>
 	
-	       <button onclick="deleteRows()">목록에서 삭제</button>
+	       <button class="btn" id="deleteBtn" type="button">삭제</button>
 	       <div id="textTable" style="text-align:-webkit-center">
-	       	<form action="/order/regist" method="post">
+	       	<form action="/order/regist" id="registInfo" method="post">
 				<table id="sampleTable">
 					<tr>
 		                <th class="th1"></th>
@@ -82,8 +82,8 @@
 					</tr>
 				</table>
 				<input type="hidden" id="rownum" name="rownum" value="0">
-			    <button type="submit" onclick="checkComplete()">등록</button>
-			    <button type="button" onclick="checkCancel()">취소</button>
+			    <button class="btn" type="button" onclick="checkComplete()">등록</button>
+			    <button class="btn" type="button" onclick="checkCancel()">취소</button>
 	       	</form>
 			<div id="test">
 			</div>
@@ -110,13 +110,13 @@
 	    						str+="<td>"+item.pub+"</td>";
 	    						str+="<td>"+pr+"원</td>";
 	    						str+="<td>"+st+"ea</td>";
-	    						str+="<td><button class='btn' type='button'>목록에 추가</button></td>";
+	    						str+="<td><button class='addBtn' type='button'>목록에 추가</button></td>";
 	    						str+="</tr>";
 	    						$("#searchTable").append(str);
 	    					})
 	    				}
 	    				
-	    				$(".btn").click(function(){ 
+	    				$(".addBtn").click(function(){ 
 
 	    		            const table = document.getElementById("sampleTable");
 	    		            var bookInfo = new Array();
@@ -160,7 +160,7 @@
 	    		})
     		};
     		
-        $(".btn").click(function(){ 
+        $(".addBtn").click(function(){ 
 
             const table = document.getElementById("sampleTable");
             var bookInfo = new Array();
@@ -200,43 +200,91 @@
             console.log(rownum);
         });
 
-        function deleteRows(){
-            const table = document.getElementById("sampleTable");
-
-            for(var i = 1; i < table.rows.length; i++){
+        $("#deleteBtn").click(function () {
+			
+        	const table = document.getElementById("sampleTable");
+    		var n = 0;
+    		
+    		for(var i = 1; i < table.rows.length; i++){
                 var chkbox = table.rows[i].cells[0].childNodes[0].checked;
-
+                
                 if(chkbox){
-                    table.deleteRow(i);
-                    i--;
+                	n += 1;
                 }
-            }
-        }
+    		}
+    		
+    		if(n == 0){
+    			Swal.fire({
+ 	                icon: 'error',
+ 	                title: '',
+ 	                text: '체크된 항목이 없습니다.',
+          		})
+    		} else{
+    			Swal.fire({
+            		icon: 'warning',
+            		title: '삭제 확인',
+            		text: '체크한 항목들을 정말로 삭제하시겠습니까?',
+            		showCancelButton: true,
+            		confirmButtonText: '확인',
+            		cancelButtonText: '취소'
+            	}).then((result) => {
+            		
+            		if(result.isConfirmed){
+
+                        for(var i = 1; i < table.rows.length; i++){
+                            var chkbox = table.rows[i].cells[0].childNodes[0].checked;
+
+                            if(chkbox){
+                                table.deleteRow(i);
+                                i--;
+                            }
+                        }
+            		}
+            	});
+    		}
+        });
 
         function checkComplete(){
-        var result = confirm("발주 신청을 진행하시겠습니까?");
-
-        console.log(result);
-
-        if(result == true){
-
-          alert("발주 신청이 완료되었습니다.");
-
-          location = "/order/detail";
-        }
-      }
+        	
+        	var rows = document.getElementById("textTable").getElementsByTagName("tr");
+        	var rownum = rows.length;
+        	
+        	if(rownum == 1){
+        		Swal.fire({
+            		icon: 'error',
+            		title: '잘못된 요청',
+            		text: '발주 요청하실 도서를 담아주세요.',
+            	})
+        	} else{
+        		Swal.fire({
+            		icon: 'warning',
+            		title: '등록 확인',
+            		text: '발주 신청을 진행하시겠습니까?',
+            		showCancelButton: true,
+            		confirmButtonText: '확인',
+            		cancelButtonText: '취소'
+            	}).then((result) => {
+            		if(result.isConfirmed){
+            			$('#registInfo').submit();
+            		}
+            	});
+        	}
+	    }
       
       function checkCancel(){
-        var result = confirm("발주 신청을 취소하시겠습니까?\n수정사항은 저장되지 않습니다.");
-
-        console.log(result);
-
-        if(result == true){
-
-          alert("발주 신청을 취소하셨습니다.");
-
-          location = "/order/selectHistory";
-        }
+    	  
+   	  	Swal.fire({
+      		icon: 'warning',
+      		title: '취소 확인',
+      		text: '발주 신청을 취소하시겠습니까?\n수정사항은 저장되지 않습니다.',
+      		showCancelButton: true,
+      		confirmButtonText: '확인',
+      		cancelButtonText: '취소'
+      	}).then((result) => {
+      		if(result.isConfirmed){
+      			location = "/order/selectHistory";
+      		}
+      	});
       }
       
       $('#findBtn').click(function(){
@@ -257,13 +305,17 @@
  	                icon: 'question',
  	                title: '',
  	                text: '분류를 선택 해 주세요.',
-          	})} else if(pattern_spc.test()){
-         		Swal.fire({
- 	                icon: 'error',
- 	                title: '',
- 	                text: '태그쓰지마세요',
           	})} else{
-          			getSearchList();
+          			const pattern_spc = /[~!@#$%^&*()_+|<>?:{}]/;
+          			if(pattern_spc.test(inputFind.value)){
+          				Swal.fire({
+          					icon: 'error',
+          					title: '',
+          					text: '특수문자 및 태그를 입력하지 마세요'
+          				})
+          			} else{
+	          			getSearchList();
+          			}
 	   			};
 			});
     </script>

@@ -7,12 +7,6 @@
     margin-right: 20%;
     font-size: 0.7vw;
 }
-.findBtn {
-    margin-left: 10px;
-    margin-right: 300px;
-    border-radius: 20px;
-    width: 6vw;
-}
 #productFind {
     font-size: 0.8vw;
     text-align: center;
@@ -21,7 +15,7 @@
     border-width: 1px 1px 1px 1px;
     background: #fafafa;
     width: 20em;
-    margin-left: 2em;
+    margin-left: 230px !important;
     text-align: center;
 }
 #inputFind:focus {
@@ -50,6 +44,7 @@
     font-size: 13px;
     vertical-align: middle;
     text-align: center;
+    margin-left: 10px;
 }
 .findBtn:hover {
     background-color: #FEFCC6;
@@ -64,9 +59,14 @@
     vertical-align: middle;
     text-align: center;
     margin-right: 10px;
+    margin-bottom: 5px;
 }
 .btn:hover {
     background-color: #FEFCC6 !important;
+}
+
+.findBtn:hover{
+	background-color: #FEFCC6 !important;
 }
 
 #orderTable{
@@ -74,9 +74,9 @@
 }
 
 td{
-	font-size: 12pt;
-	height: 40px !important;
+	font-size: 13pt;
 	width: 60px;
+	height: 10px;
 	border-bottom: 1px solid #444444;
 	text-align: center;
 }

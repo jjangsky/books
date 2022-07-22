@@ -55,9 +55,10 @@
     border-radius: 10px !important;
     background: #c5bfbf !important;
     border: none !important;
-    height: 37px !important;
     width: 100px !important;
     font-size: 13px !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
 }
 .btn:hover {
     background-color: #FEFCC6 !important;
@@ -82,7 +83,7 @@
 }
 
 td{
-	font-size: 13pt;
+	font-size: 10pt;
 	width: 60px;
 	height: 10px;
 	border-bottom: 1px solid #444444;
