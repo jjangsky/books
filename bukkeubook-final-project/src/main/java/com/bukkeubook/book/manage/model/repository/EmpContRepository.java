@@ -7,4 +7,6 @@ import com.bukkeubook.book.manage.model.entity.EmpCont;
 
 public interface EmpContRepository extends JpaRepository<EmpCont, Integer>{
 
+	void deleteByContNo(int No);
+
 }

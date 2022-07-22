@@ -392,7 +392,9 @@ public class DocServiceImpl implements DocService{
 		DeptDTO d = modelMapper.map(dept, DeptDTO.class);
 		info.setDeptName(d.getDeptName());
 		
-		int currentDocNo = docRepository.findCurrentSeqDoc() + 1;
+		int currentDocNo = 0;
+		currentDocNo = docRepository.findCurrentSeqDoc() + 1;
+		
 		info.setDocNo(currentDocNo);
 		
 		System.out.println(info);
