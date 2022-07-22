@@ -134,4 +134,30 @@ public class ClientController {
 		
 		return mv;
 	}
+	
+	@GetMapping("/stop")
+	public ModelAndView stopClient(ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request) {
+		
+		int cntNo = Integer.valueOf(request.getParameter("cntNo"));
+		
+		clientService.stopClient(cntNo);
+		
+		rttr.addFlashAttribute("registSuccessMessage", "거래처 거래 중지 처리에 성공하셨습니다");
+		mv.setViewName("redirect:/client/detail/?cntNo=" + cntNo);
+		
+		return mv;
+	}
+	
+	@GetMapping("/start")
+	public ModelAndView startClient(ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request) {
+		
+		int cntNo = Integer.valueOf(request.getParameter("cntNo"));
+		
+		clientService.startClient(cntNo);
+		
+		rttr.addFlashAttribute("registSuccessMessage", "거래처 거래 재개에 성공하셨습니다");
+		mv.setViewName("redirect:/client/detail/?cntNo=" + cntNo);
+		
+		return mv;
+	}
 }

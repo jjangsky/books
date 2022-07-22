@@ -77,6 +77,7 @@
 	          </li>
 	          
             <!-- 재무부 -->
+            <th:block sec:authorize="hasAnyRole('FINANCE', 'MASTER')">
 	          <li>
               <a href="#finance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">재무부</a>
               <ul class="collapse list-unstyled" id="finance">
@@ -88,8 +89,10 @@
                 </li>
               </ul>
 	          </li>
-
+			</th:block>
+			
             <!-- 인사부 -->
+            <th:block sec:authorize="hasAnyRole('MANAGE', 'MASTER')">
             <li>
               <a href="#management1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">인사부</a>
               <ul class="collapse list-unstyled" id="management1">
@@ -135,7 +138,7 @@
                       <a href="/empAnnual/restCancelSelect">휴가취소조회</a>
                     </li>
                     <li>
-                      <a href="/empAttendanceList">사원근태 내역</a>
+                      <a href="/check/findCheck">사원근태 내역</a>
                     </li>
                   </ul>
                 </li>
@@ -163,8 +166,10 @@
                 </li>              
               </ul>
 	          </li>
-
+			</th:block>
+			
             <!-- 총무부 -->
+            <th:block sec:authorize="hasAnyRole('SECRETARY', 'MASTER')">
             <li>
               <a href="#General" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">총무부</a>
               <ul class="collapse list-unstyled" id="General">
@@ -182,8 +187,10 @@
                 </li>
               </ul>
 	          </li>
-
+			</th:block>
+			
             <!-- 도서 물류부 -->
+            <th:block sec:authorize="hasAnyRole('BOOK', 'MASTER')">
             <li>
               <a href="#product1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">도서물류부</a>
               <ul class="collapse list-unstyled" id="product1">
@@ -220,7 +227,7 @@
                 </li>
               </ul>
 	          </li>
-
+			</th:block>
             <!-- 전사게시판 -->
             <li>
               <a href="#">전사게시판</a>
@@ -272,7 +279,10 @@
                 </li>
                 <th:block sec:authorize="isAuthenticated()">
 	                <li class="nav-item active">
-	                    <a class="nav-link" href="/member/logout">로그아웃</a>
+	                	<form action="/member/logout" method="post" id="logout">
+	                		<input type="hidden">
+	                    </form>
+	                    	<a class="nav-link" href="#" onclick="document.getElementById('logout').submit();">로그아웃</a>
 	                </li>
                 </th:block>
               </ul>
