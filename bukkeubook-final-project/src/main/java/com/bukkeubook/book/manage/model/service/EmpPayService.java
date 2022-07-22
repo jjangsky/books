@@ -14,12 +14,19 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.bukkeubook.book.common.paging.SelectCriteria;
+import com.bukkeubook.book.document.model.entity.Emp;
+import com.bukkeubook.book.manage.model.dto.DeptDTO;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.SalaryDTO;
+import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.PayAndEmpAndDeptDTO;
+import com.bukkeubook.book.manage.model.entity.Dept;
+import com.bukkeubook.book.manage.model.entity.EmpAndDept;
 import com.bukkeubook.book.manage.model.entity.PayAndEmpAndDept;
 import com.bukkeubook.book.manage.model.entity.Salary;
 import com.bukkeubook.book.manage.model.repository.EmpPayRepository;
+import com.bukkeubook.book.manage.model.repository.EmpRepository;
+import com.bukkeubook.book.manage.model.repository.SimpleDeptRepository;
 
 
 @Service
@@ -27,10 +34,15 @@ public class EmpPayService {
    
    private final ModelMapper modelMapper;
    private final EmpPayRepository empPayRepository;
+   private final EmpRepository empRepository;
+   private final SimpleDeptRepository simpleDeptRepository;
    
    @Autowired
-   public EmpPayService(EmpPayRepository empPayRepository, ModelMapper modelMapper) {
+   public EmpPayService(EmpPayRepository empPayRepository, EmpRepository empRepository, 
+		   				SimpleDeptRepository simpleDeptRepository,ModelMapper modelMapper) {
       this.empPayRepository = empPayRepository;
+      this.empRepository = empRepository;
+      this.simpleDeptRepository = simpleDeptRepository;
       this.modelMapper = modelMapper;
    }
    
@@ -38,7 +50,7 @@ public class EmpPayService {
    /* 급여계산내역 조회 & 검색기능 & 페이징 */
 	public int selectTotalCount(String searchCondition, String searchValue) {
 
-		int count = 0;
+		int count = 0;;
 		if(searchValue != null) {
 
 //			if("empName".equals(searchCondition)) {
@@ -99,6 +111,25 @@ public class EmpPayService {
 		return modelMapper.map(pay, PayAndEmpAndDeptDTO.class);
 		
 	}
+
+	/* 부서선택- 사원선택지정 ajax select Tag Option Dept */
+	public List<DeptDTO> findDept() {
+		
+		List<Dept> deptList = simpleDeptRepository.findAll(Sort.by("deptCode"));
+				
+		return deptList.stream().map(dept -> modelMapper.map(dept, DeptDTO.class)).toList();
+	}
+
+
+	public List<EmpDTO> findEmp(int dept) {
+		
+		List<Emp> empList = simpleDeptRepository.findByDeptCode(dept,Sort.by("empNo").descending());
+		
+		return empList.stream().map(emp -> modelMapper.map(emp, EmpDTO.class)).toList();
+				
+	}
+
+
   
 	
 

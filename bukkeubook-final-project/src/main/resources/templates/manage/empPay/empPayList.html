@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <head>
-     <title>Insert title here</title>
+     <title>급여 계산내역 조회</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -72,7 +72,25 @@
              </tbody>
             </table>
             <br><br>
+            <div id="newEmpDiv">
+         	 <button type="button" class="insert btn newbtn">등록</button>
+          </div> 
           <div th:replace="/manage/empPay/empPaypaging.html"></div>
         </div>
+        <script>
+
+ 	$('.newbtn').click(function(){
+		location.href='/empPay/empPayInsert';
+	}); 
+	const insertSuccessmessage = "[[${insertSuccessMessage}]]" 
+	
+	if(insertSuccessmessage){
+		Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '등록이 성공적으로 완료되었습니다!',
+        })
+	}
+	</script> 
 	</body>
 </html>

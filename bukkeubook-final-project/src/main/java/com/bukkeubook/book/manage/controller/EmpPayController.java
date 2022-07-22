@@ -1,5 +1,6 @@
 package com.bukkeubook.book.manage.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,11 +10,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bukkeubook.book.books.model.dto.BookDTO;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
+import com.bukkeubook.book.document.model.dto.DeptDTO;
+import com.bukkeubook.book.document.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.SalaryDTO;
+import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.PayAndEmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.service.EmpPayService;
 
@@ -116,4 +122,46 @@ public class EmpPayController {
 		return "manage/empPay/empPayCalList";
 	}
 	
+	/* 급여등록 기능(insert) 원본*/
+	@GetMapping("empPayInsert")
+	public ModelAndView empInsertPage(ModelAndView mv) {
+		
+		mv.setViewName("/manage/empPay/empPayInsert");
+		
+		return mv;
+	}
+	
+	/* 부서선택- 사원선택지정 ajax select Tag Option Dept */
+	@GetMapping(value = {"dept"}, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public List<com.bukkeubook.book.manage.model.dto.DeptDTO> findDeptList(){
+		
+		List<com.bukkeubook.book.manage.model.dto.DeptDTO> list = new ArrayList<>();
+		
+		list = empPayService.findDept();
+		
+//		System.out.println(list);
+		
+		return list;
+	}
+	
+	@GetMapping(value = {"emp/{deptValue}"}, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public List<com.bukkeubook.book.manage.model.dto.EmpDTO> findEmpList(@PathVariable String deptValue){
+		
+		System.out.println("ttttttttttttttttttttttttttttttttttttttttttttttt" + deptValue);
+		
+		List<com.bukkeubook.book.manage.model.dto.EmpDTO> list = new ArrayList<>();
+		
+		int dept = Integer.valueOf(deptValue);
+		
+		list = empPayService.findEmp(dept);
+		
+		System.out.println(list);
+		
+		return list;
+		
+	}
+		
+		
 }
