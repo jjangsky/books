@@ -339,8 +339,8 @@ window.onload = function() {
 							document.getElementById("sumamt").innerText = totalamt;
 							
 						}
-					}countCheck +=1;
-				} 
+					}
+				} countCheck +=1;
 				
 				console.log(countCheck);
 				

@@ -9,7 +9,7 @@ window.onload = function() {
 				console.log($("#empSign").val());
 				let empSign = $("#empSign").val();
 				
-				$("#sign1").append("<img src='/images/sign/" + empSign + "'>");
+				$("#sign1").append("<img src='/images/sign/" + empSign +  "'style='width: 65px; height:70px;'>");
 			},
 			error : function(error){
 				console.log(error);
