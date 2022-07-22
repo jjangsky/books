@@ -41,7 +41,7 @@ public class MainController {
 		
 		mv.addObject("boardList", boardList);
 		mv.addObject("calendar", calendar);
-		mv.setViewName("/main");
+		mv.setViewName("redirect:/main");
 		return mv;
 	}
 	
@@ -68,4 +68,5 @@ public class MainController {
 		mv.setViewName("/main");
 		return mv;
 	}
+	
 }
