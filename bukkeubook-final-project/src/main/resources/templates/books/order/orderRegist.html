@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
 	<link rel="stylesheet"  th:href="@{/css/books/order/orderRegist.css}">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
     <div th:replace="/common/topSideBar.html"></div>
@@ -33,7 +34,7 @@
 				</select>
 				<input type="text" style="display:none;"> <!-- 엔터키 새로고침 방지용 -->
 				<input type="search" id="inputFind" name="searchValue" value="">
-				<button type="button" onclick="getSearchList()" class="findBtn" id="findBtn">검색하기</button>
+				<button type="button" class="findBtn" id="findBtn">검색하기</button>
 			</form>
 		</div>
 	       <br>
@@ -238,20 +239,33 @@
         }
       }
       
-      function findTest(){
+      $('#findBtn').click(function(){
+    	  	var pattern_spc = /[~!@#$%^&*()_+|<>?:{}]/;
 			if(inputFind.value == "" && searchCondition.value == 'select'){
-				alert('분류와 검색어를 입력 해 주세요.');
-				return;
-			} else if(searchCondition.value == 'select'){
-				alert('분류를 선택 해 주세요.');
-				return;
-			} else if(inputFind.value == ""){
-				alert('검색어를 입력 해 주세요.')
-				return;
-			} else {
-				$('#loginForm').submit();
-			}
-		}
+				Swal.fire({
+	                icon: 'question',
+	                title: '',
+	                text: '분류와 검색어를 입력 해 주세요.',
+	            })} else if(inputFind.value == ""){
+          	Swal.fire({
+	                icon: 'question',
+	                title: '',
+	                text: '검색어를 입력 해 주세요.',
+	                
+          	})} else if(searchCondition.value == 'select'){
+         		Swal.fire({
+ 	                icon: 'question',
+ 	                title: '',
+ 	                text: '분류를 선택 해 주세요.',
+          	})} else if(pattern_spc.test()){
+         		Swal.fire({
+ 	                icon: 'error',
+ 	                title: '',
+ 	                text: '태그쓰지마세요',
+          	})} else{
+          			getSearchList();
+	   			};
+			});
     </script>
   </body>
 </html>
