@@ -55,11 +55,11 @@ public class TradeService {
 		int count = selectCriteria.getLimit();
 		String searchValue = selectCriteria.getSearchValue();
 
-		Pageable paging = PageRequest.of(index, count, Sort.by("tlDate"));
+		Pageable paging = PageRequest.of(index, count, Sort.by("tlDate").descending());
 
 		List<TradeAndClientAndBookAndEmp> tradeList = new ArrayList<TradeAndClientAndBookAndEmp>();
 		if(searchValue != null) {
-			tradeList = tradeJoinRepository.findByTlDateContaining(searchValue, paging);
+			tradeList = tradeJoinRepository.findByTlDateContaining(java.sql.Date.valueOf(searchValue), paging);
 		} else {
 			tradeList = tradeJoinRepository.findAll(paging).toList();
 		}

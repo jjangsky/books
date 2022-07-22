@@ -9,7 +9,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+	<link rel="stylesheet"  th:href="@{/css/finance/tradeModify.css}">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
   <body>
 		<div th:replace="/common/topSideBar.html"></div>
@@ -21,7 +22,7 @@
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
         <div id="textTable" style="text-align:-webkit-center">
-        	<form action="/trade/modify" method="post">
+        	<form id="registForm" action="/trade/modify" method="post">
 	            <table id="sampleTable" align="center">
 	                <tr>
 	                    <td>거래번호</td>
@@ -33,8 +34,8 @@
 	                </tr>
 	                <tr>
 	                    <td>도서번호</td>
-	                    <td><input type="text" name="bkNo" id="bkNo" th:value="${ trade.book.getNo() }"></td>
-	                    <td><button onclick="popupForBook()" type="button">검색</button></td>
+	                    <td colspan="2"><input type="text" name="bkNo" id="bkNo" disabled th:value="${ trade.book.getNo() }">
+	                    <button class="btn" onclick="popupForBook()" type="button">검색</button></td>
 	                </tr>
 	                <tr>
 	                    <td>도서수량</td>
@@ -42,8 +43,8 @@
 	                </tr>
 	                <tr>
 	                    <td>거래처번호</td>
-	                    <td><input type="text" name="cntNo" id="cntNo" th:value="${ trade.client.getCntNo() }"></td>
-	                    <td><button onclick="popupForClient()" type="button">검색</button></td>
+	                    <td colspan="2"><input type="text" name="cntNo" id="cntNo" disabled th:value="${ trade.client.getCntNo() }">
+	                    <button class="btn" onclick="popupForClient()" type="button">검색</button></td>
 	                </tr>
 	                <tr>
 	                    <td>상세내용</td>
@@ -55,15 +56,11 @@
 	            <input type="hidden" name="tlNo1" th:value="${ trade.tlNo }">
                	<input type="hidden" id="bkNo1" name="bkNo1" th:value="${ trade.book.getNo() }">
                	<input type="hidden" id="cntNo1" name="cntNo1" th:value="${ trade.client.getCntNo() }">
-                <button type="submit">완료</button>
+                <button class="btn" type="button" onclick="checkComplete()">완료</button>
+	            <button class="btn" type="button" onclick="checkCancel()">취소</button>
         	</form>
-            <button type="button" onclick="checkCancel()">취소</button>
     </div> <!------------------------ 본문 종료---------------------------->
 
-		<script src="../js/jquery.min.js"></script>
-    <script src="../js/popper.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/main.js"></script>
     <script th:inline="javascript">
         function popupForClient(){
             var url = "/trade/clientPopup";
@@ -96,30 +93,34 @@
         }
 
         function checkComplete(){
-              var result = confirm("거래내역 등록을 진행하시겠습니까?");
-
-              console.log(result);
-
-              if(result == true){
-
-                alert("거래내역 등록이 완료되었습니다.");
-
-                location = "trade_detail.html";
-              }
-            }
-            
-            function checkCancel(){
-              var result = confirm("정말로 거래내역 등록을 취소하시겠습니까?\n수정사항은 저장되지 않습니다.");
-
-              console.log(result);
-
-              if(result == true){
-
-                alert("거래내역 등록을 취소하셨습니다.");
-
-                location = "trade_history.html";
-              }
-            }
+      	  Swal.fire({
+          		icon: 'warning',
+          		title: '수정 확인',
+          		text: '거래내역 수정을 진행하시겠습니까?',
+          		showCancelButton: true,
+          		confirmButtonText: '확인',
+          		cancelButtonText: '취소'
+          	}).then((result) => {
+          		if(result.isConfirmed){
+          			$("#registForm").submit();
+          		}
+          	});
+        }
+        
+        function checkCancel(){
+      	  Swal.fire({
+  	      		icon: 'warning',
+  	      		title: '취소 확인',
+  	      		text: '정말로 거래내역 수정을 취소하시겠습니까?',
+  	      		showCancelButton: true,
+  	      		confirmButtonText: '확인',
+  	      		cancelButtonText: '취소'
+  	      	}).then((result) => {
+  	      		if(result.isConfirmed){
+  	      			location="/trade/select"
+  	      		}
+  	      	});
+        }
     </script>
   </body>
 </html>
