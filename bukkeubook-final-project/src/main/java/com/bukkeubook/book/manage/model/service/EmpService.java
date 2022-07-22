@@ -169,6 +169,16 @@ public class EmpService {
 		
 		
 	}
+
+//	/* 사원 등록시 사원번호 조회 */
+//	public List<Integer> findEmpNo(int i) {
+//
+//		List<Integer> emp = new ArrayList<>();
+//		int empNo = originEmpRepository.findCurrentSeqEmpNo();
+//		emp.add(empNo);
+//		
+//		return emp;
+//	}
 	
 	
 	/* 지영 - 사원 수정 화면 이동 */

@@ -118,7 +118,8 @@ public class DocServiceImpl implements DocService{
 	@Override
 	public List<EmpDTO> findEmp(int dept) {
 
-		List<Emp> empList = docEmpRepository.findByDeptCode(dept,Sort.by("empNo").descending());
+		String empEndYn = "N";
+		List<Emp> empList = docEmpRepository.findByDeptCodeAndEmpEndYn(dept,empEndYn,Sort.by("empNo").descending());
 		
 		return empList.stream().map(emp -> modelMapper.map(emp, EmpDTO.class)).toList();
 //		return empList.stream().map(emp -> modelMapper.map(emp, EmpDTO.class)).toList();
@@ -137,7 +138,7 @@ public class DocServiceImpl implements DocService{
 	@Override
 	public List<DocumentAndEmpAndFormCateDTO> findTempDocList(int tempEmpNo, String docStatus) {
 
-		List<DocumentAndEmpAndFormCate> tempDocList = docEmpFormCateRepository.findByEmpNoAndDocStatus(tempEmpNo,docStatus,Sort.by("wrDate").descending());
+		List<DocumentAndEmpAndFormCate> tempDocList = docEmpFormCateRepository.findByEmpNoAndDocStatus(tempEmpNo,docStatus,Sort.by("docNo").descending());
 		
 //		System.out.println("임시저장 리스트 조회 --------------------여기는 서비스에서 엔티티 조회했을때양" + tempDocList);
 		
@@ -205,6 +206,7 @@ public class DocServiceImpl implements DocService{
 
 	/* 새로작성한 기안서, 지결서 상신하기 - 결재자 2, 3명일 때 */
 	@Override
+	@Transactional
 	public void insertNewDocThreeAcc(SubmitDocumentDTO newDoc, AppRootDTO appRoot, List<SubmitApprover> approverList) {
 
 		subDocRepository.save(modelMapper.map(newDoc, SubmitDocument.class));
@@ -230,6 +232,7 @@ public class DocServiceImpl implements DocService{
 
 	/* 임시저장된 기안서, 지결서 상신하기 - 결재자 1명일 때 */
 	@Override
+	@Transactional
 	public void submitTempDocOneAcc(SubmitDocumentDTO tempDoc, AppRootDTO appRoot, ApproverDTO approver) {
 
 		SubmitDocument foundDoc = subDocRepository.findById(tempDoc.getDocNo2()).get();
@@ -250,6 +253,7 @@ public class DocServiceImpl implements DocService{
 
 	/* 임시저장된 기안서, 지결서 상신하기 - 결재자 2명,3명 일 때 */
 	@Override
+	@Transactional
 	public void submitTempDocTwoAcc(SubmitDocumentDTO tempDoc, AppRootDTO appRoot, List<SubmitApprover> approverList) {
 
 		SubmitDocument foundDoc = subDocRepository.findById(tempDoc.getDocNo2()).get();
@@ -361,7 +365,7 @@ public class DocServiceImpl implements DocService{
 	@Override
 	public List<DocumentAndEmpAndFormCateDTO> findByDocNoList(int empNo , String docStatus) {
 
-		List<DocumentAndEmpAndFormCate> docList = docEmpFormCateRepository.findByEmpNoAndDocStatusNot(empNo,docStatus,Sort.by("wrDate").descending());
+		List<DocumentAndEmpAndFormCate> docList = docEmpFormCateRepository.findByEmpNoAndDocStatusNot(empNo,docStatus,Sort.by("docNo").descending());
 		
 		return docList.stream().map(doc -> modelMapper.map(doc, DocumentAndEmpAndFormCateDTO.class)).toList();
 	}
@@ -407,8 +411,8 @@ public class DocServiceImpl implements DocService{
 	@Transactional
 	public void insertNewVacationApp(AppVacationDTO vacation) {
 
-		int vacNo = vacationRepository.findCurrentSeq() + 10;
-		vacation.setVacNo(vacNo);
+//		int vacNo = vacationRepository.findCurrentSeq() + 10;
+//		vacation.setVacNo(vacNo);
 		System.out.println("Service       " +vacation);
 		
 		vacationRepository.save(modelMapper.map(vacation, DocAppVacation.class));
