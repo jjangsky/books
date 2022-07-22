@@ -256,11 +256,11 @@ private final MyInfoModifyService myInfoModifyService;
 
 		/* 프로필 사진 조회 */
 		List<ProfPhotoDTO> profile = empService.findEmpProfile(number);
-		System.out.println("이제는 좀 나와주라 이눔아" + profile);
+//		System.out.println("이제는 좀 나와주라 이눔아" + profile);
 		
 		/* 현재 서명 조회 */
 		SignDTO empSign = signService.findEmpSign(number);
-		System.out.println("너도 나와 이눔아22" + empSign);
+//		System.out.println("너도 나와 이눔아22" + empSign);
 		
 		mv.addObject("emp", emp);
 		mv.addObject("profile", profile);
@@ -302,7 +302,7 @@ private final MyInfoModifyService myInfoModifyService;
 		
 		int empNo = 5;
 		
-		System.out.println("야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야");
+//		System.out.println("야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야");
 		
 		String root = System.getProperty("user.dir");
 		System.out.println("root까지의 경로 : " + root);
@@ -314,7 +314,7 @@ private final MyInfoModifyService myInfoModifyService;
 		String ext = originFileName.substring(originFileName.lastIndexOf("."));
 		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
 		System.out.println("변경한 이름 : " + saveName);
-		System.out.println("나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와");
+//		System.out.println("나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와");
 
 		try {
 			singleFile.transferTo(new File(filePath + "/" + saveName));
@@ -360,7 +360,6 @@ private final MyInfoModifyService myInfoModifyService;
 		String ext = originFileName.substring(originFileName.lastIndexOf("."));
 		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
 		System.out.println("변경한 이름 : " + saveName);
-		System.out.println("프로필 사진 수정 부분 나와 이자식아");
 		
 		try {
 			singleFile.transferTo(new File(filePath + "/" + saveName));
@@ -387,6 +386,8 @@ private final MyInfoModifyService myInfoModifyService;
 		
 		return mv;
 	}
+
+	
 }
  
 

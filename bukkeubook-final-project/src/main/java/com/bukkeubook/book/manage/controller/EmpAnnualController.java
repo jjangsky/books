@@ -103,10 +103,10 @@ public class EmpAnnualController {
 	
 	/* 승인 클릭시 연차 횟수 차감 트랜잭션 */
 	// 이 경우 연결되는 Service는 DayOffService에서 처리...
+	// 휴가 -> 연차 요청
 //	@GetMapping("/empDayOffUpdate")
 //	public ModelAndView updateAppVacInfo(AppVacationDTO appVacationDTO, int vacNo, ModelAndView mv) {
 //
-//		
 //		List<AppVacationDTO> appVacList = empDayOffService.findAppVacByEmpNo(vacNo);
 //		
 //		mv.addObject("appVacList", appVacList);		// 보내는 객체 설정
