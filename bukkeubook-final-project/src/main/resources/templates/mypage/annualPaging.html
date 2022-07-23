@@ -52,11 +52,18 @@
 	<script>
 		const link = "/mypage/myAnnual";
 		let searchText = "";
-		let searchConditionExist = "[[${ selectCriteria.startDate }]]";
-		let searchValueExist = "[[${ selectCriteria.endDate }]]";
+		let startExist = "[[${ selectCriteria.startDate }]]";
+		let endExist = "[[${ selectCriteria.endDate }]]";
 		
+		/* 시작 날짜 값의 유무에 따른 경로 처리 */
+		if(startExist) {
+			searchText += "&attStart=" + startExist;
+		}
 
-
+		/* 종료 날짜 값에 따른 경로 처리 */
+		if(endExist) {
+			searchText += "&attEnd=" + endExist;
+		}
 		/* 첫 페이지 버튼 click 이벤트 처리 */
 		if(document.getElementById("startPage")) {
 			const $startPage = document.getElementById("startPage");
