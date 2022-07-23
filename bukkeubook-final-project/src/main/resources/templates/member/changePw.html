@@ -12,11 +12,11 @@
   </head>
   <body>
     <div class="login_img">
-      <img src="images/main/login/mainImage.png" alt="">
+      <a href="/member/login"><img src="/images/main/login/mainImage.png" alt=""></a>
     </div>
     <div class="wrap">
       <div class="login">
-        <form action="/member/login" method="post"><!-- 액션바꿈 -->
+        <form action="/member/changePw" method="post"><!-- 액션바꿈 -->
           <div class="login_input">
             <div class="login_id">
               <h4>사번</h4>
@@ -25,21 +25,45 @@
 			
             <div class="login_pw">
               <h4>비밀번호</h4>
-              <input type="password" name="password" id="" placeholder="Password">
+              <input type="password" name="password1" id="" placeholder="Password">
             </div>
-
+            
+            <div class="login_pw">
+              <h4>변경 할 비밀번호</h4>
+              <input type="password" name="password2" id="" placeholder="변경 할 비밀번호">
+            </div>
+			
+			<div class="login_pw">
+              <h4>비밀번호 확인</h4>
+              <input type="password" name="password3" id="" placeholder="비밀번호 확인">
+            </div>
+			
             <div class="login_submit">
-              <input class="loginBtn" type="submit" name="" id="" value="LOGIN">
-            </div>
-
-            <div>
-              <a href="/member/changePw">비밀번호변경</a>
+              <input class="loginBtn" type="submit" name="" id="" value="변경하기">
             </div>
           </div>
         </form>
       </div>
     </div>
-    <script th:inline="javascript">
+    <script>
+	    const notMatched = "[[${notMatched}]]";
+	    const fail = "[[${fail}]]";
+	    console.log(notMatched);
+	    console.log(fail);
+	    if(notMatched == "정보조회실패"){
+				Swal.fire({
+	                icon: 'warning',
+	                title: '변경 실패!',
+	                text: '입력하신 회원정보에 일치하는 회원이 없습니다.',
+	            })
+			}
+	    if(fail == "실패"){
+	    	Swal.fire({
+                icon: 'warning',
+                title: '변경 실패!',
+                text: '변경 할 비밀번호와 비밀번호 확인값이 다릅니다.',
+            })
+	    }
 	    const updateSuccessMessage = "[[${updateSuccessMessage}]]";
 	    console.log(updateSuccessMessage);
 			if(updateSuccessMessage == "성공"){
@@ -47,6 +71,8 @@
 	                icon: 'success',
 	                title: 'Success!',
 	                text: '비밀번호 변경이 성공적으로 완료되었습니다!',
+	            }).then(function(){
+	            	location.href="/member/login";
 	            })
 			}
     </script>
