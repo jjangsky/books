@@ -37,9 +37,8 @@ public class MemberServiceImpl implements MemberService{
 		if(emp == null) {
 			emp = new EmpAndMemberRole();
 		}
+		 
 		EmpAndMemberRoleDTO emp2 = modelMapper.map(emp, EmpAndMemberRoleDTO.class);
-//		emp.stream().map(empList -> modelMapper.map(empList, EmpAndMemberRoleDTO.class));
-//		emp.getMemberRoleAndRoleList();
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		if(emp2.getMemberRoleAndRoleList() != null) {
 			List<MemberRoleAndRoleDTO> roleList = emp2.getMemberRoleAndRoleList();
@@ -49,9 +48,15 @@ public class MemberServiceImpl implements MemberService{
 				 authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
 			}
 		}
+		
 		UserImpl user = new UserImpl(String.valueOf(emp.getEmpNo()), emp.getEmpPwd(), authorities);
 		user.setDetails(emp2);
-		System.out.println("dddddddddddddddddddddddddddddd" + user);
+		System.out.println("유저정보" + user);
+		
+		/* 퇴사처리용 구현 중단 */
+//		if(user.getEmpEndYn().equals("Y")) {
+//			user = new UserImpl(empNo, empNo, authorities);
+//		}
 		return user;
 	}
 	
