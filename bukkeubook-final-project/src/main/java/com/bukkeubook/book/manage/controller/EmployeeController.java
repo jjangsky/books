@@ -171,8 +171,6 @@ private final MyInfoModifyService myInfoModifyService;
 										RedirectAttributes rttr) 
 	{
 		
-		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
-		/* 여기는 왜 그럴까요? */
 		String empAddress = "주소";
 		empDTO.setEmpAddress(empAddress);	
 		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
@@ -261,7 +259,6 @@ private final MyInfoModifyService myInfoModifyService;
 			new File(signPath + "/" + saveName1).delete();
 		}
 				
-		
 		rttr.addFlashAttribute("insertSuccessMessage", "성공"); //addFlashAttribute 한번만 보여주고 감
 		mv.setViewName("redirect:/manage/empList");
 		return mv;

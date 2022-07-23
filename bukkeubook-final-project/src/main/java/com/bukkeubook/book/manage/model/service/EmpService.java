@@ -154,6 +154,7 @@ public class EmpService {
 		foundemp.setEmpAddress(emp.getEmpAddress());
 		foundemp.setEmpDAddress(emp.getEmpDAddress());
 		foundemp.setEmpPwd(emp.getEmpPwd());
+		foundemp.setEmpTotalSal(emp.getEmpTotalSal());
 		
 	}
 	
