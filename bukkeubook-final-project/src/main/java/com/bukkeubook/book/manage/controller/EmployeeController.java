@@ -352,7 +352,7 @@ private final MyInfoModifyService myInfoModifyService;
 				signService.modifySign(sign);
 				
 				rttr.addFlashAttribute("successMessage", "서명 변경을 성공하셨습니다.");
-				mv.setViewName("redirect:/manage/detailUpdate23");
+				mv.setViewName("redirect:/manage/empList");
 				
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
@@ -377,7 +377,7 @@ private final MyInfoModifyService myInfoModifyService;
 			String root = System.getProperty("user.dir");
 			System.out.println("root까지의 경로 : " + root);
 			
-			String filePath = root + "/src/main/resources/static/images/manage/employee";
+			String filePath = root + "/src/main/resources/static/images/mypage";
 			
 			String originFileName = singleFile.getOriginalFilename();
 			System.out.println("원본 이름 : " + originFileName);
@@ -397,7 +397,7 @@ private final MyInfoModifyService myInfoModifyService;
 				empService.modifyProfile(profile);
 				
 				rttr.addFlashAttribute("successMessage", "프로필 변경을 성공하셨습니다.");
-				mv.setViewName("redirect:/manage/detailUpdate2");
+				mv.setViewName("redirect:/manage/empList");
 				
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
