@@ -53,7 +53,7 @@ public class SignService {
 	public void modifySign(SignDTO sign) {
 		
 		empSignRepository.save(modelMapper.map(sign, Sign.class));
-		
+//		
 //		Sign empSign = empSignRepository.findByEmpNo(sign.getEmpNo());
 //		empSign.setSignName(sign.getSignName());
 //		empSign.setSignSavedName(sign.getSignSavedName());

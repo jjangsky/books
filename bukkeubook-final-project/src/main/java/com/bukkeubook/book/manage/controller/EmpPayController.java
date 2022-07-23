@@ -43,7 +43,6 @@ public class EmpPayController {
 //	public String severancePayDetail() {
 //		return "";
 //	}
-
 	
 	@GetMapping("/empPayList")
 	

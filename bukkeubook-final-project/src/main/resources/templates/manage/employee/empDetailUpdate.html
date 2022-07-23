@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="../css/style.css">
-      <link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
+      
+<link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
       <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
       <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -111,7 +112,7 @@
                 <td colspan="3"><input type="text" th:value="${ emp.empDAddress }" name="empDAddress"></td>
               </tr>
             </tbody>
-          </table><br>p
+          </table><br>
           <input type="hidden" name="empNo" th:value="${emp.empNo}">
           <div id="newBookDiv">
           	<button id="leaveUpdateEmp" class="modify btn">퇴사처리</button>
@@ -155,7 +156,6 @@
               
 	  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script>
-		/* 다음 API */
 			const searchZipCode = document.getElementById("searchZipCode");
 			
 			searchZipCode.onclick = function() {
@@ -169,7 +169,6 @@
 				}).open();
 			}
 
-			/* 알터창 */
 			$("#save").click(function(){
 				
 				if(!(Number($("#phone1").val())&&Number($("#phone2").val())&&Number($("#phone3").val()))){

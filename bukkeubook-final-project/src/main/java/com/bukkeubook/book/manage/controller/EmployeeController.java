@@ -318,101 +318,98 @@ private final MyInfoModifyService myInfoModifyService;
 	   }
 
 	/***********************************************************************************************/	
-	/* 도장 사진 수정 */
-	@PostMapping("detailUpdate23")
-	public ModelAndView modifySign(ModelAndView mv, HttpServletRequest request,
-			@RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
-		
-		int empNo = 5;
-		
-//		System.out.println("야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야");
-		
-		String root = System.getProperty("user.dir");
-		System.out.println("root까지의 경로 : " + root);
-		
-		/* 유찬님이랑 경로 맞출 것 */
-		String filePath = root + "/src/main/resources/static/images/sign";
-		
-		String originFileName = singleFile.getOriginalFilename();
-		System.out.println("원본 이름 : " + originFileName);
-		String ext = originFileName.substring(originFileName.lastIndexOf("."));
-		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
-		System.out.println("변경한 이름 : " + saveName);
-//		System.out.println("나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와");
+		/* 도장 사진 수정 */
+		@PostMapping("detailUpdate23")
+		public ModelAndView modifySign(ModelAndView mv, HttpServletRequest request,
+				@RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
+			
+			int empNo = 5;
+			
+//			System.out.println("야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야");
+			
+			String root = System.getProperty("user.dir");
+			System.out.println("root까지의 경로 : " + root);
+			
+			/* 유찬님이랑 경로 맞출 것 */
+			String filePath = root + "/src/main/resources/static/images/sign";
+			
+			String originFileName = singleFile.getOriginalFilename();
+			System.out.println("원본 이름 : " + originFileName);
+			String ext = originFileName.substring(originFileName.lastIndexOf("."));
+			String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
+			System.out.println("변경한 이름 : " + saveName);
+//			System.out.println("나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와");
 
-		try {
-			singleFile.transferTo(new File(filePath + "/" + saveName));
+			try {
+				singleFile.transferTo(new File(filePath + "/" + saveName));
+				
+				SignDTO sign = new SignDTO();
+				sign.setEmpNo(empNo);
+				sign.setSignName(originFileName);
+				sign.setSignSavedName(saveName);
+				sign.setSignPath(filePath);
+				
+				signService.modifySign(sign);
+				
+				rttr.addFlashAttribute("successMessage", "서명 변경을 성공하셨습니다.");
+				mv.setViewName("redirect:/manage/detailUpdate23");
+				
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+				
+				/* 실패 시 파일 삭제 */
+				new File(filePath + "/" + saveName).delete();
+				rttr.addFlashAttribute("successMessage", "서명 사진 변경을 실패하셨습니다.");
+				mv.setViewName("redirect:/main");
+			}
 			
-			SignDTO sign = new SignDTO();
-			sign.setEmpNo(empNo);
-			sign.setSignName(originFileName);
-			sign.setSignSavedName(saveName);
-			sign.setSignPath(filePath);
-			
-			signService.modifySign(sign);
-			
-			rttr.addFlashAttribute("successMessage", "서명 변경을 성공하셨습니다.");
-			mv.setViewName("redirect:/manage/detailUpdate23");
-			
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-			
-			/* 실패 시 파일 삭제 */
-			new File(filePath + "/" + saveName).delete();
-			rttr.addFlashAttribute("successMessage", "서명 사진 변경을 실패하셨습니다.");
-			mv.setViewName("redirect:/main");
+			return mv;
 		}
 		
-		return mv;
-	}
-	
-	/***********************************************************************************************/	
-	/* 프로필 사진 수정 */
-	@PostMapping("detailUpdate2")
-	public ModelAndView modifyProfile(ModelAndView mv, HttpServletRequest request, 
-			@RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
-		
-		int memberCode = 5;
-		
-		String root = System.getProperty("user.dir");
-		System.out.println("root까지의 경로 : " + root);
-		
-		String filePath = root + "/src/main/resources/static/images/manage/employee";
-		
-		String originFileName = singleFile.getOriginalFilename();
-		System.out.println("원본 이름 : " + originFileName);
-		String ext = originFileName.substring(originFileName.lastIndexOf("."));
-		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
-		System.out.println("변경한 이름 : " + saveName);
-		
-		try {
-			singleFile.transferTo(new File(filePath + "/" + saveName));
+		/***********************************************************************************************/	
+		/* 프로필 사진 수정 */
+		@PostMapping("detailUpdate2")
+		public ModelAndView modifyProfile(ModelAndView mv, HttpServletRequest request, 
+				@RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
 			
-			ProfPhotoDTO profile = new ProfPhotoDTO();
-			profile.setEmpNo(memberCode);
-			profile.setPhotoOrigName(originFileName);
-			profile.setPhotoSavedName(saveName);
-			profile.setPhotoSavedPath(filePath);
+			int memberCode = 5;
+			
+			String root = System.getProperty("user.dir");
+			System.out.println("root까지의 경로 : " + root);
+			
+			String filePath = root + "/src/main/resources/static/images/manage/employee";
+			
+			String originFileName = singleFile.getOriginalFilename();
+			System.out.println("원본 이름 : " + originFileName);
+			String ext = originFileName.substring(originFileName.lastIndexOf("."));
+			String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
+			System.out.println("변경한 이름 : " + saveName);
+			
+			try {
+				singleFile.transferTo(new File(filePath + "/" + saveName));
+				
+				ProfPhotoDTO profile = new ProfPhotoDTO();
+				profile.setEmpNo(memberCode);
+				profile.setPhotoOrigName(originFileName);
+				profile.setPhotoSavedName(saveName);
+				profile.setPhotoSavedPath(filePath);
 
-			empService.modifyProfile(profile);
+				empService.modifyProfile(profile);
+				
+				rttr.addFlashAttribute("successMessage", "프로필 변경을 성공하셨습니다.");
+				mv.setViewName("redirect:/manage/detailUpdate2");
+				
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+				
+				/* 실패 시 파일 삭제 */
+				new File(filePath + "/" + saveName).delete();
+				rttr.addFlashAttribute("successMessage", "서명 사진 변경을 실패하셨습니다.");
+				mv.setViewName("redirect:/main");
+			}
 			
-			rttr.addFlashAttribute("successMessage", "프로필 변경을 성공하셨습니다.");
-			mv.setViewName("redirect:/manage/detailUpdate2");
-			
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-			
-			/* 실패 시 파일 삭제 */
-			new File(filePath + "/" + saveName).delete();
-			rttr.addFlashAttribute("successMessage", "서명 사진 변경을 실패하셨습니다.");
-			mv.setViewName("redirect:/main");
+			return mv;
 		}
+
 		
-		return mv;
 	}
-
-	
-}
- 
-
- 
