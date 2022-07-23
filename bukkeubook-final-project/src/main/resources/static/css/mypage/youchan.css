@@ -21,7 +21,7 @@
   }
   .inline{
     width: 50%;
-    height: 20%;
+    height: 40%;
     float: left;  
 }
   
@@ -192,13 +192,13 @@
 }
 .cardImg1{
   width:50%; 
-  height: 250px;
-  margin-left: 20%;
+  height: 70%; 
+  margin-left: 25%;
 }
 .cardImg2{
   width:50%; 
   height: 250px; 
-  margin-left: 20%;
+  margin-left: 25%;
 }
 .marginLeft35{
   margin-left: 35%;
