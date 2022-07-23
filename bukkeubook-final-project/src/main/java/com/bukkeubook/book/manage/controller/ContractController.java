@@ -2,7 +2,6 @@ package com.bukkeubook.book.manage.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -232,15 +230,30 @@ public class ContractController {
 		
 		ContFileDTO file = contractService.findPkFileCont(id);
 		
-		UrlResource resource = new UrlResource("file:" + file.getCfilePath());
+		System.out.println("여기"+file.getCfilePath() + file.getCfileSavedName());
+		
+		UrlResource resource = new UrlResource("file:" + file.getCfilePath() + "/" + file.getCfileSavedName());
 		
 		String encodedFileName = UriUtils.encode(file.getCfileOrigName(), StandardCharsets.UTF_8);
 		
 		String contentDisposition = "attachment; filename=\"" + encodedFileName + "\"";
 		
 		
-		 return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,contentDisposition).body(resource);
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,contentDisposition).body(resource);
 	}
+	
+	
+	
+//	ContFileDTO file = contractService.findPkFileCont(id);
+//	
+//	UrlResource resource = new UrlResource("file:" + file.getCfilePath());
+//	
+//	String encodedFileName = UriUtils.encode(file.getCfileOrigName(), StandardCharsets.UTF_8);
+//	
+//	String contentDisposition = "attachment; filename=\"" + encodedFileName + "\"";
+//	
+//	
+//	return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,contentDisposition).body(resource);
 	
 	
 
