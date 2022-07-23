@@ -9,6 +9,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.bukkeubook.book.common.paging.DatePagenation;
 import com.bukkeubook.book.common.paging.DateSelectCriteria;
 import com.bukkeubook.book.manage.model.dto.AttendDTO;
+import com.bukkeubook.book.member.model.dto.UserImpl;
 import com.bukkeubook.book.mypage.model.service.AttendService;
 
 @Controller
@@ -34,17 +36,24 @@ public class AttendController {
 	
 	/* 근태 조회 페이지 이동 */
 	@GetMapping("/findPage")
-	public ModelAndView findMyAttend(ModelAndView mv, HttpServletRequest request, AttendDTO attendDTO) {
+	public ModelAndView findMyAttend(@AuthenticationPrincipal UserImpl customUser, ModelAndView mv, HttpServletRequest request, AttendDTO attendDTO) {
 			
 		String currentPage = request.getParameter("currentPage");
 		int pageNo = 1;
-		int memberCode = 5;
+		int memberCode = customUser.getEmpNo();
 		
 		System.out.println(attendDTO.getAttStart());
 		System.out.println(attendDTO.getAttEnd());
 		
 		if(currentPage != null && !"".equals(currentPage)) {
 			pageNo = Integer.parseInt(currentPage);
+		}
+		
+		/* 날짜 연산처리 */
+		if(!(attendDTO.getAttEnd() == null)) {
+			long endTime = attendDTO.getAttEnd().getTime() + 86399999;
+			java.sql.Date endDate1 = new java.sql.Date(endTime);
+			attendDTO.setAttEnd(endDate1);
 		}
 		
 		
@@ -92,7 +101,7 @@ public class AttendController {
 	
 	/* 출근 등록 버튼 */
 	@PostMapping("/checkIn")
-	public ModelAndView registCheckIn(ModelAndView mv, RedirectAttributes rttr, Locale locale){
+	public ModelAndView registCheckIn(@AuthenticationPrincipal UserImpl customUser, ModelAndView mv, RedirectAttributes rttr, Locale locale){
 		
 		
 		Date today = new Date();
@@ -100,7 +109,7 @@ public class AttendController {
 		java.sql.Date startDate = new java.sql.Date(time);
 		
 
-		int memberInfo = 5;
+		int memberInfo = customUser.getEmpNo();
 		
 		AttendDTO attend = new AttendDTO();
 		
@@ -112,14 +121,14 @@ public class AttendController {
 		 attendService.registCheckIn(attend);
 		 
 		 rttr.addFlashAttribute("successMessage", "출근 등록이 정상적으로 처리 되었습니다.");
-		 mv.setViewName("redirect:/");
+		 mv.setViewName("redirect:/main");
 		
 		return mv;
 	}
 	
 	/* 퇴근 등록 버튼 */
 	@PostMapping("/checkOut")
-	public ModelAndView updateCheckOut(ModelAndView mv, RedirectAttributes rttr, Locale locale) {
+	public ModelAndView updateCheckOut(@AuthenticationPrincipal UserImpl customUser, ModelAndView mv, RedirectAttributes rttr, Locale locale) {
 		
 		AttendDTO attend = new AttendDTO();
 		
@@ -129,12 +138,14 @@ public class AttendController {
 		
 		attend.setAttDate(startDate);
 		
+		int memberInfo = customUser.getEmpNo();
+		
 		System.out.println(attend);
 		
-		attendService.modifyCheckOut(attend);
+		attendService.modifyCheckOut(attend, memberInfo);
 		
 		rttr.addFlashAttribute("successMessage", "퇴근 등록이 정상적으로 처리 되었습니다.");
-		mv.setViewName("redirect:/");
+		mv.setViewName("redirect:/main");
 		
 		return mv;
 		

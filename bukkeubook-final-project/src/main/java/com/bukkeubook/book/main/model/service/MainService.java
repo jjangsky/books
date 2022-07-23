@@ -27,7 +27,7 @@ public class MainService {
 	/* 최근 전사 게시판 우선순위 5개 조회 */
 	public List<BoardAndCateDTO> findBoardList() {
 		
-			List<BoardAndCate> boardList = boardRepository.findAll(Sort.by("date").descending());
+			List<BoardAndCate> boardList = boardRepository.findAll(Sort.by("no").descending());
 		
 		return boardList.stream().map(board -> modelMapper.map(board, BoardAndCateDTO.class)).collect(Collectors.toList());
 	}
