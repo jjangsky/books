@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bukkeubook.book.books.model.entity.Book;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.ProfPhotoDTO;
@@ -31,7 +33,6 @@ public class EmpService {
 	private final OriginalEmpRepository originEmpRepository;
 	private final ProfilePhotoRepository profilePhotoRepository;
 	private final ModelMapper modelMapper;		//앤티티를 디티오로 변환 or 디티오를 엔티티로 변환
-
 	@Autowired
 	public EmpService(EmpRepository empRepository, ModelMapper modelMapper,OriginalEmpRepository originEmpRepository, ProfilePhotoRepository profilePhotoRepository) {
 		this.empRepository = empRepository;
@@ -173,7 +174,7 @@ public class EmpService {
 		
 	}
 
-//	/* 사원 등록시 사원번호 조회 */
+	/* 사원 등록시 사원번호 조회 */
 //	public List<Integer> findEmpNo(int i) {
 //
 //		List<Integer> emp = new ArrayList<>();
@@ -182,27 +183,33 @@ public class EmpService {
 //		
 //		return emp;
 //	}
+
+	/* ********************************************************************************** */
+	/* 프로필 사진 수정(조회) */
+	@Transactional
+	public List<ProfPhotoDTO> findEmpProfile(int number) {
+		
+		List<ProfPhoto> empProfPhoto = profilePhotoRepository.findByEmpNo(number, Sort.by("photoNo").descending());
+		
+		return empProfPhoto.stream().map(profile2 -> modelMapper.map(profile2, ProfPhotoDTO.class)).collect(Collectors.toList());
+	}
 	
+	/* 사원 수정 페이지에서 프로필 사진 수정하기 */
+	@Transactional
+	public void modifyProfile(ProfPhotoDTO profile) {
+		
+		profilePhotoRepository.save(modelMapper.map(profile, ProfPhoto.class));
+
+	}
 	
-	/* 지영 - 사원 수정 화면 이동 */
-	/* push for comment */
-//	public EmpAndDeptDTO findEmpInfo(int empNo) {
-//		
-//		EmpAndDeptDTO empInfo = 
-//		
-//		
-//		return null;
-//	}
-//
-//	public List<ProfPhotoDTO> findEmpProfile(int empNo) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	public SignDTO findEmpSign(int empNo) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	/* 큰담 비밀번호 수정 */
+	public EmpDTO findEmpByEmpNo2(int no, String password1, String password2, String password3) {
+		BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+		Emp emp = originEmpRepository.findById(no).get();
+		emp.setEmpPwd(bc.encode(password2));
+		originEmpRepository.save(emp);
+		return modelMapper.map(emp, EmpDTO.class);
+	}
 
 
 }

@@ -36,7 +36,7 @@
                 <td>사원명</td>
                 <td th:text="${ emp.empName }"></td>
                <td rowspan="5"><img th:src="@{/images/mypage/{imageFile}(imageFile=${profile[0].photoSavedName})}" width="200px"/></td>
-                <td rowspan="5"><img th:src="@{/images/sign/{signFile}(signFile=${mySign.signSavedName})}" width="200px"></td> 
+                <td rowspan="5"><img src="@{/images/manage/employee/{signFile}(signFile=${empSign.signSavedName})}" width="200px"></td> 
               </tr>
                <tr class="deemp2">
                 <td>부서명</td>
@@ -80,15 +80,10 @@
                 <td>상세주소</td>
                 <td colspan="3" th:text="${ emp.empDAddress }"></td>
               </tr>
-              <tr class="deemp">
-                <td>비밀번호</td>
-                <td colspan="3" th:text="${ emp.empPwd }"></td>
-              </tr>
             </tbody>
           </table><br>
           <div id="newBookDiv">
-             <button type="submit" class="modify btn" 
-             th:onclick="'location.href = \'' +  @{/manage/detailUpdate/{empNo}(empNo=${emp.empNo})} + '\''">수정하기</button>
+              <button type="submit" class="modify btn" th:onclick="'location.href = \'' +  @{/manage/detailUpdate/{empNo}(empNo=${emp.empNo})} + '\''">수정하기</button>
               <button type="button" class="list btn backBtn">목록으로</button> 
          </div>            
         </div>

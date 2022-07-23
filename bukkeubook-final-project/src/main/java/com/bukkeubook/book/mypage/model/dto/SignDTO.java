@@ -13,8 +13,10 @@ public class SignDTO {
 	private String signName;
 	private String signSavedName;
 	private String signPath;
+	
 	public SignDTO() {
 	}
+	
 	public SignDTO(int empNo, String signName, String signSavedName, String signPath) {
 		this.empNo = empNo;
 		this.signName = signName;

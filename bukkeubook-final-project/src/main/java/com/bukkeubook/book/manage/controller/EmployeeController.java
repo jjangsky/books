@@ -2,7 +2,6 @@ package com.bukkeubook.book.manage.controller;
 
 import java.io.File;
 
-
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -49,10 +48,10 @@ private final MyInfoModifyService myInfoModifyService;
 	}
 	
 	/* 인원현황 조회 */
-	@GetMapping("personnelSelect")
-	public String perconnelList() {
-		return "manage/employee/personnelSelect";
-	}
+//	@GetMapping("personnelSelect")
+//	public String perconnelList() {
+//		return "manage/employee/personnelSelect";
+//	}
 
 	/* 사원조회 , 페이징, 검색기능 */
 	@GetMapping("/empList")
@@ -61,7 +60,7 @@ private final MyInfoModifyService myInfoModifyService;
 		String currentPage = request.getParameter("currentPage");
 		int pageNo = 1;
 
-		if(currentPage != null && !"".equals(currentPage)) {
+		if (currentPage != null && !"".equals(currentPage)) {
 			pageNo = Integer.parseInt(currentPage);
 		}
 
@@ -117,8 +116,8 @@ private final MyInfoModifyService myInfoModifyService;
 		
 		int number = Integer.valueOf(empNo);
 		
-		System.out.println("컨트롤러에서       " + empNo);
-		System.out.println("컨트롤러에서       " + number);
+//		System.out.println("컨트롤러에서       " + empNo);
+//		System.out.println("컨트롤러에서       " + number);
 		
 		/* 회원 개인의 정보 가져와서 상세페이지에 뿌리기 */
 		EmpAndDeptDTO emp  = empService.searchEmpDetail(number);
@@ -164,7 +163,6 @@ private final MyInfoModifyService myInfoModifyService;
 		return mv;
 	}
 	
-
 	/* 신규 직원 등록  insert */
 	@PostMapping("insert")
 	public ModelAndView insertEmp(EmpDTO empDTO, ModelAndView mv, HttpServletRequest request, 
@@ -269,73 +267,6 @@ private final MyInfoModifyService myInfoModifyService;
 		return mv;
 	};	
 
-	/* 지영님이 하는중 -> 사원 상세페이지에서 수정 페이지로 화면이동 */ 
-//	/* 사원 상세페이지에서 수정 페이지로 화면이동 */
-//	@GetMapping("/empDetailUpdate")
-//	public ModelAndView findEmpDetailModify(ModelAndView mv, int empNo) {
-//		 
-//		/* 개인정보 조회 */
-////		int memberCode = 5;
-//		EmpAndDeptDTO empInfo = empService.findEmpInfo(empNo);
-//		System.out.println(empInfo);
-//		
-//		/* 프로필 사진 조회 */
-//		List<ProfPhotoDTO> profile = empService.findEmpProfile(empNo);
-//		System.out.println(profile);
-//		
-//		/* 현재 서명 조회 */
-//		SignDTO empSign = empService.findEmpSign(empNo);
-//		System.out.println(empSign);
-//		
-//		mv.addObject("empInfo", empInfo);
-//		mv.addObject("profile", profile);
-//		mv.addObject("empSign", empSign);
-//		mv.setViewName("manage/detailUpdat/{empNo}");
-//		
-//		return mv;
-//	}
-	
-	
-	/***********************************************************************************************/	
-	
-	/* 사원정보 수정 */
-	@GetMapping("detailUpdate/{empNo}")
-	public ModelAndView empUpdatePage(ModelAndView mv,  @PathVariable String empNo) {
-		
-		int number = Integer.valueOf(empNo);
-		
-		EmpDTO emp = empService.findEmpByEmpNo(number);
-		
-		mv.addObject("emp", emp);
-		mv.setViewName("manage/employee/empDetail"
-				+ "Update");
-		
-		return mv;
-
-	}
-
-	   @PostMapping("/empDetailUpdate")
-	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, EmpDTO emp
-	                        , String deptCode1, String deptCode2
-	                        , String empJobCode1, String empJobCode2) {
-	      System.out.println("TEST");
-	      System.out.println("TEST");
-	      System.out.println("TEST");
-	      System.out.println("TEST");
-	      System.out.println("TEST         "+ deptCode1);
-	      System.out.println("TEST         "+ deptCode2);
-	      System.out.println("TEST         "+ empJobCode1);
-	      System.out.println("TEST         "+ empJobCode2);
-	      System.out.println("emp11111111111111111111111111111" + emp);
-	      
-//	      empService.modifyEmp(emp); 
-	      
-	      rttr.addFlashAttribute("updateSuccessMessage", "성공");
-//	      mv.setViewName("redirect:/");
-	      mv.setViewName("redirect:/manage/empList");
-	      return mv;
-	   }
-
 //	   /* 사원 등록시 사원번호 조회 */
 //	   @GetMapping(value = {"empInfo"}, produces="application/json;charset=UTF-8")
 //	   @ResponseBody
@@ -345,6 +276,140 @@ private final MyInfoModifyService myInfoModifyService;
 //		   
 //		   return emp;
 //	   }
-	   
-}
- 
+
+	/***********************************************************************************************/	
+	/* 사원정보 수정 */
+	@GetMapping("detailUpdate/{empNo}")
+	public ModelAndView empUpdatePage(ModelAndView mv, @PathVariable String empNo) {
+		
+		int number = Integer.valueOf(empNo);
+		
+		EmpDTO emp = empService.findEmpByEmpNo(number);
+		System.out.println("1231231523" + emp);
+
+		/* 프로필 사진 조회 */
+		List<ProfPhotoDTO> profile = empService.findEmpProfile(number);
+//		System.out.println("이제는 좀 나와주라 이눔아" + profile);
+		
+		/* 현재 서명 조회 */
+		SignDTO mySign = signService.findEmpSign(number);
+//		System.out.println("너도 나와 이눔아22" + empSign);
+		
+		mv.addObject("emp", emp);
+		mv.addObject("profile", profile);
+		mv.addObject("mySign", mySign);
+		mv.setViewName("manage/employee/empDetail" + "Update");
+
+		return mv; 
+
+	}
+	/***********************************************************************************************/	
+		/* 사원 정보를 가져오는 곳 */
+	   @PostMapping("/empDetailUpdate")
+	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, EmpDTO emp
+	                        , String deptCode1, String deptCode2
+	                        , String empJobCode1, String empJobCode2) {
+	      
+	      empService.modifyEmp(emp); 
+	      
+	      rttr.addFlashAttribute("updateSuccessMessage", "성공");
+	      mv.setViewName("redirect:/manage/empList");
+	      return mv;
+	   }
+
+	/***********************************************************************************************/	
+		/* 도장 사진 수정 */
+		@PostMapping("detailUpdate23")
+		public ModelAndView modifySign(ModelAndView mv, HttpServletRequest request,
+				@RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
+			
+			int empNo = 5;
+			
+//			System.out.println("야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야");
+			
+			String root = System.getProperty("user.dir");
+			System.out.println("root까지의 경로 : " + root);
+			
+			/* 유찬님이랑 경로 맞출 것 */
+			String filePath = root + "/src/main/resources/static/images/sign";
+			
+			String originFileName = singleFile.getOriginalFilename();
+			System.out.println("원본 이름 : " + originFileName);
+			String ext = originFileName.substring(originFileName.lastIndexOf("."));
+			String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
+			System.out.println("변경한 이름 : " + saveName);
+//			System.out.println("나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와");
+
+			try {
+				singleFile.transferTo(new File(filePath + "/" + saveName));
+				
+				SignDTO sign = new SignDTO();
+				sign.setEmpNo(empNo);
+				sign.setSignName(originFileName);
+				sign.setSignSavedName(saveName);
+				sign.setSignPath(filePath);
+				
+				signService.modifySign(sign);
+				
+				rttr.addFlashAttribute("successMessage", "서명 변경을 성공하셨습니다.");
+				mv.setViewName("redirect:/manage/empList");
+				
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+				
+				/* 실패 시 파일 삭제 */
+				new File(filePath + "/" + saveName).delete();
+				rttr.addFlashAttribute("successMessage", "서명 사진 변경을 실패하셨습니다.");
+				mv.setViewName("redirect:/main");
+			}
+			
+			return mv;
+		}
+		
+		/***********************************************************************************************/	
+		/* 프로필 사진 수정 */
+		@PostMapping("detailUpdate2")
+		public ModelAndView modifyProfile(ModelAndView mv, HttpServletRequest request, 
+				@RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
+			
+			int memberCode = 5;
+			
+			String root = System.getProperty("user.dir");
+			System.out.println("root까지의 경로 : " + root);
+			
+			String filePath = root + "/src/main/resources/static/images/mypage";
+			
+			String originFileName = singleFile.getOriginalFilename();
+			System.out.println("원본 이름 : " + originFileName);
+			String ext = originFileName.substring(originFileName.lastIndexOf("."));
+			String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
+			System.out.println("변경한 이름 : " + saveName);
+			
+			try {
+				singleFile.transferTo(new File(filePath + "/" + saveName));
+				
+				ProfPhotoDTO profile = new ProfPhotoDTO();
+				profile.setEmpNo(memberCode);
+				profile.setPhotoOrigName(originFileName);
+				profile.setPhotoSavedName(saveName);
+				profile.setPhotoSavedPath(filePath);
+
+				empService.modifyProfile(profile);
+				
+				rttr.addFlashAttribute("successMessage", "프로필 변경을 성공하셨습니다.");
+				mv.setViewName("redirect:/manage/empList");
+				
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+				
+				/* 실패 시 파일 삭제 */
+				new File(filePath + "/" + saveName).delete();
+				rttr.addFlashAttribute("successMessage", "서명 사진 변경을 실패하셨습니다.");
+				mv.setViewName("redirect:/main");
+			}
+			
+			return mv;
+		}
+
+		
+	}

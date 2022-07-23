@@ -33,16 +33,16 @@ public class EmpPayController {
 	   public EmpPayController(EmpPayService empPayService) {
 		 this.empPayService = empPayService;
 	 }
-	
-	@GetMapping("severancePay")
-	public String severancePayList() {
-		return "manage/empPay/severancePay";
-	}
-		
-	@GetMapping("severancePayDetail")
-	public String severancePayDetail() {
-		return "";
-	}
+	/* 퇴직금 */
+//	@GetMapping("severancePay")
+//	public String severancePayList() {
+//		return "manage/empPay/severancePay";
+//	}
+//		
+//	@GetMapping("severancePayDetail")
+//	public String severancePayDetail() {
+//		return "";
+//	}
 	
 	@GetMapping("/empPayList")
 	

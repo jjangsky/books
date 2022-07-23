@@ -31,6 +31,7 @@
 				<input type="search" id="inputFind" name="searchValue">
 				<button class="productBtn findBtn" id="findBtn" type="button">검색하기</button>
 			</form>
+
 		</div>
         <br>
 
@@ -54,9 +55,25 @@
             	<td th:text="${ board.hits }"></td>
               </tr>
           </table>
+          <br>
+          <div>
+					<button class="btn btn-info" type="submit" onclick="location.href='/secretary/boardRegist'" style="margin-left:70%;">게시글 등록</button>
+			</div>
           <br>    
         </div> <!------------------------ 본문 종료---------------------------->
 	<br><br>
+	
+	
+		<script>
+				const successMessage = "[[${ successMessage }]]";
+					if(successMessage){
+						Swal.fire({
+			                icon: 'success',
+			                title: 'Success!',
+			                text: '성공적으로 완료되었습니다!',
+	         	  		 })
+	       		    }
+		</script>
 	
 	
 	

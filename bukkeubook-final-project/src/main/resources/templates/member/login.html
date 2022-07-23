@@ -33,11 +33,22 @@
             </div>
 
             <div>
-              <a href="">비밀번호변경</a>
+              <a href="/member/changePw">비밀번호변경</a>
             </div>
           </div>
         </form>
       </div>
     </div>
+    <script th:inline="javascript">
+	    const updateSuccessMessage = "[[${updateSuccessMessage}]]";
+	    console.log(updateSuccessMessage);
+			if(updateSuccessMessage == "성공"){
+				Swal.fire({
+	                icon: 'success',
+	                title: 'Success!',
+	                text: '비밀번호 변경이 성공적으로 완료되었습니다!',
+	            })
+			}
+    </script>
   </body>
 </html>
