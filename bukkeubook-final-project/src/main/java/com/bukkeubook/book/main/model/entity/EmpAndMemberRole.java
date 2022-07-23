@@ -98,7 +98,7 @@ public class EmpAndMemberRole implements Serializable{
    private int deptCode;
    
    @OneToMany(fetch=FetchType.EAGER)
-   @JoinColumn(name = "ROLE_CODE")
+   @JoinColumn(name = "EMP_NO")
    private List<MemberRoleAndRole> memberRoleAndRoleList = new ArrayList<>();
 
    public EmpAndMemberRole() {
