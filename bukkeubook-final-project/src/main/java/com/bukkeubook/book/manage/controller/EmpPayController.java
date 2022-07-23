@@ -19,6 +19,7 @@ import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.document.model.dto.DeptDTO;
 import com.bukkeubook.book.document.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.SalaryDTO;
+import com.bukkeubook.book.manage.model.dto.SalaryEmpDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.PayAndEmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.service.EmpPayService;
@@ -33,19 +34,8 @@ public class EmpPayController {
 	   public EmpPayController(EmpPayService empPayService) {
 		 this.empPayService = empPayService;
 	 }
-	/* 퇴직금 */
-//	@GetMapping("severancePay")
-//	public String severancePayList() {
-//		return "manage/empPay/severancePay";
-//	}
-//		
-//	@GetMapping("severancePayDetail")
-//	public String severancePayDetail() {
-//		return "";
-//	}
 	
 	@GetMapping("/empPayList")
-	
 	/* 급여계산내역 조회 , 페이징, 검색기능 */
 	public ModelAndView searchPage(HttpServletRequest request, ModelAndView mv) {  //ModelAndView 뷰 리졸버의 역할 _리턴할 페이지 설정 , 보내는객체
 		System.out.println("ddddddddddddddddddddddddddddddddddddd");
@@ -102,26 +92,6 @@ public class EmpPayController {
 		return mv;
 	}
 	
-	/* 급여계산 내역 수정 페이지*/
-	@GetMapping("/payUpdate/{salNo}")
-	public ModelAndView payUpdatePage(ModelAndView mv,  @PathVariable String salNo) {
-		
-		int number = Integer.valueOf(salNo);
-		
-		PayAndEmpAndDeptDTO pay = empPayService.findEmpPayBySalNo(number);
-		
-		mv.addObject("pay", pay);
-		mv.setViewName("manage/empPay/empPayUpdate");
-		
-		return mv;
-	}
-	
-	/* 급여계산 직원목록 리스트 */
-	@GetMapping("empPayCalList")
-	public String empPayCalList() {
-		return "manage/empPay/empPayCalList";
-	}
-	
 	/* 급여등록 기능(insert) 원본*/
 	@GetMapping("empPayInsert")
 	public ModelAndView empInsertPage(ModelAndView mv) {
@@ -145,23 +115,17 @@ public class EmpPayController {
 		return list;
 	}
 	
-	@GetMapping(value = {"emp/{deptValue}"}, produces="application/json;charset=UTF-8")
+	/* 전월 급여 내역 조회 */
+	@GetMapping(value = {"payInfo/{emp}"}, produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public List<com.bukkeubook.book.manage.model.dto.EmpDTO> findEmpList(@PathVariable String deptValue){
+	public SalaryEmpDTO findByEmpNoSalary(@PathVariable String emp){
 		
-		System.out.println("ttttttttttttttttttttttttttttttttttttttttttttttt" + deptValue);
+		int empNo = Integer.valueOf(emp);
 		
-		List<com.bukkeubook.book.manage.model.dto.EmpDTO> list = new ArrayList<>();
+		SalaryEmpDTO salaryInfo = empPayService.findByEmpNoSalary(empNo);
 		
-		int dept = Integer.valueOf(deptValue);
-		
-		list = empPayService.findEmp(dept);
-		
-		System.out.println(list);
-		
-		return list;
+		return salaryInfo;
 		
 	}
-		
 		
 }
