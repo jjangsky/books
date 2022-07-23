@@ -68,6 +68,42 @@ public class BoardController {
 		return mv;
 	}
 	
+	/* 공용 전사게시판 전체 조회하기 */
+	@GetMapping("/commonBoard")
+	public ModelAndView commonBoardList(HttpServletRequest request, ModelAndView mv) {
+		
+		String currentPage = request.getParameter("currentPage");
+		int pageNo = 1;
+		
+		if(currentPage != null && !"".equals(currentPage)) {
+			pageNo = Integer.parseInt(currentPage);
+		}
+		
+		String searchCondition = request.getParameter("searchCondition");
+		String searchValue = request.getParameter("searchValue");
+		
+		int totalCount = boardService.selectTotalCount(searchCondition, searchValue);
+		System.out.println(totalCount);
+		
+		int limit = 10;
+		int buttonAmount = 5;
+		
+		SelectCriteria selectCriteria = null;
+		if(searchValue != null && !"".equals(searchValue)) {
+			selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		} else {
+			selectCriteria = Pagenation.getSelectCriteria(pageNo, totalCount, limit, buttonAmount);
+		}
+		System.out.println(selectCriteria);
+		
+		List<BoardAndEmpAndBoardCateDTO> boardList = boardService.findSearchBoardList(selectCriteria);
+		
+		mv.addObject("boardList", boardList);
+		mv.addObject("selectCriteria", selectCriteria);
+		mv.setViewName("/secretary/commonBoard");
+		return mv;
+	}
+	
 	/* 총무부 전사게시판 상세 조회 */
 	@GetMapping("/boardDetail")
 	public ModelAndView secBoardDetail(HttpServletRequest request, String no, ModelAndView mv) {
@@ -152,6 +188,7 @@ public class BoardController {
 		
 		return mv;
 	}
+	
 	
 	
 }

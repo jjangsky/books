@@ -86,6 +86,8 @@ public class BoardService {
 				count = secretaryBoardRepository.countByBoardYnAndCate_CateNameContaining("N", searchValue);
 			}
 			
+		} else {
+			count = (int) secretaryBoardRepository.count();
 		}
 		
 		return count;
@@ -127,6 +129,8 @@ public class BoardService {
 		
 		return boardList.stream().map(board -> modelMapper.map(board, BoardAndEmpAndBoardCateDTO.class)).collect(Collectors.toList());
 	}
+
+
 	
 
 }

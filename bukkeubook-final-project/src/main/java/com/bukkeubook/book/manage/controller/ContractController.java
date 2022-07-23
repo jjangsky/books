@@ -244,17 +244,6 @@ public class ContractController {
 	
 	
 	
-//	ContFileDTO file = contractService.findPkFileCont(id);
-//	
-//	UrlResource resource = new UrlResource("file:" + file.getCfilePath());
-//	
-//	String encodedFileName = UriUtils.encode(file.getCfileOrigName(), StandardCharsets.UTF_8);
-//	
-//	String contentDisposition = "attachment; filename=\"" + encodedFileName + "\"";
-//	
-//	
-//	return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,contentDisposition).body(resource);
-	
 	
 
 }
