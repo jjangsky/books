@@ -149,6 +149,7 @@
             }).open();
          }
    </script>
+   
    <script th:inline="javascript">
          $().ready(function () {
           $(".backBtn").click(function () {
@@ -172,7 +173,7 @@
         $("#insert").click(function () {
         	let nameFile = $("#nameFile").val();       	
         	console.log(nameFile);
-        	//$("#insertForm").submit();
+        	$("#insertForm").submit();
         });
       </script> 
 </body>
