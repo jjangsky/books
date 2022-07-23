@@ -84,20 +84,22 @@
 		});
 
      function delayClick() {
-         var cancleReason = document.getElementById("cancleReason");
+
          let text;
          if(confirm("반려하시겠습니까?")) {
            let delayReson = prompt("반려 사유를 입력해주세요");
            if(delayReson.length == 0) {
-             alert("사유를 입력하지 않아 반려 등록이 취소되었습니다.")
+             alert("사유를 입력하지 않아 반려 사유 등록이 취소되었습니다.")
            } else {
              alert("반려 사유가 등록되었습니다.")
-             cancleReason.innerText = delayReson;
+             // reason.innerText = delayReson;
+             $('#reason').text(delayReson);
            }
          } else {
            alert("반려가 취소되었습니다.")
          }
        }
+       
      </script>
      
 <!--      

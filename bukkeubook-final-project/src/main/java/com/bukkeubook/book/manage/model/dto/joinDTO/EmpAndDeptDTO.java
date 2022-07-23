@@ -49,7 +49,7 @@ public class EmpAndDeptDTO implements Serializable{
 	public EmpAndDeptDTO() {
 		super();
 	}
-
+	
 	public EmpAndDeptDTO(int empNo, String empName, String empPhone1, String empPhone2, String empPhone3, Date empBirth,
 			String empGender, String empEmail, String empJobCode, String empAddress, String empDAddress,
 			Date empEntDate, Date empEndDate, String empEndYn, String empPwd, int deptCode, int empTotalSal,

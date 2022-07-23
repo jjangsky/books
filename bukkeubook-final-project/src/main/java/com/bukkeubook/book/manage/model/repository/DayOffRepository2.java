@@ -8,6 +8,6 @@ import com.bukkeubook.book.manage.model.entity.DayOff;
 @Repository
 public interface DayOffRepository2 extends JpaRepository <DayOff, Integer> {
 
-	DayOff findByEmpNo(int empNo);
+//	DayOff findByEmpNo(int empNo);
 
 }

@@ -8,14 +8,14 @@
 <body>
 	<div class="pagingArea" align="center">
 		<!-- 맨 앞으로 이동 버튼 -->
-	    <button id="startPage"><<</button>
+	    <button id="startPage"></button>
 		
 		<!-- 이전 페이지 버튼 -->
 		<th:block th:if="${ selectCriteria.pageNo <= 1 }">
-			<button disabled><</button>
+			<button disabled></button>
 		</th:block>
 		<th:block th:if="${ selectCriteria.pageNo > 1 }">
-			<button id="prevPage"><</button>
+			<button id="prevPage"></button>
 		</th:block>
 
 		<!-- 숫자 버튼 -->
@@ -33,14 +33,14 @@
 
 		<!-- 다음 페이지 버튼 -->
 		<th:block th:if="${ selectCriteria.pageNo >= selectCriteria.maxPage }">
-			<button disabled>></button>
+			<button disabled></button>
 		</th:block>
 		<th:block th:if="${ selectCriteria.pageNo < selectCriteria.maxPage }">
 			<button id="nextPage">></button>
 		</th:block>
 
 		<!-- 마지막 페이지로 이동 버튼 -->
-		<button id="maxPage">>></button>
+		<button id="maxPage"></button>
 	</div>
 
 	<script>

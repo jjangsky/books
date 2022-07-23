@@ -62,28 +62,29 @@ public class EmpDayOffService {
 //		List<AppVacation> appVacList = appVacRepository.findAppVacByNo(vacNo);
 //		return appVacList.stream().map(appVac -> modelMapper.map(appVac, AppVacationDTO.class)).collect(Collectors.toList());
 //	}
-   @Transactional
-   public void updateAppVac(AppVacationDTO appVacationDTO) {
-		
-	   AppVacation appVac = appVacRepository.findByVacNo(appVacationDTO.getVacNo());
-	   appVac.setVacStatus(appVacationDTO.getVacStatus());
-	   appVac.setVacStartDate(appVacationDTO.getVacStartDate());
-	   appVac.setVacEndDate(appVacationDTO.getVacEndDate());
-	   
-	   System.out.println("^____________________^" + appVac);
-		
-	}
+//	
+//   @Transactional
+//   public void updateAppVac(AppVacationDTO appVacationDTO) {
+//		
+//	   AppVacation appVac = appVacRepository.findByVacNo(appVacationDTO.getVacNo());
+//	   appVac.setVacStatus(appVacationDTO.getVacStatus());
+//	   appVac.setVacStartDate(appVacationDTO.getVacStartDate());
+//	   appVac.setVacEndDate(appVacationDTO.getVacEndDate());
+//	   
+//	   System.out.println("^____________________^" + appVac);
+//		
+//	}
 
-   @Transactional
-	public void modifyDayOffInfo(DayOffDTO dayOffDTO) {
-		
-	   DayOff dayOff = dayOffRepository2.findByEmpNo(dayOffDTO.getEmpNo());
-	   dayOff.setDoffAmount(dayOffDTO.getDoffAmount());		// 총 연차 횟수	
-	   dayOff.setDoffRemain(dayOff.getDoffRemain());		// 잔여 연차 횟수
-	   dayOff.setDoffUse(dayOffDTO.getDoffUse());			// 사용 연차 횟수
-	   
-	   System.out.println("^____________________^" + dayOff);
-	}
+//   @Transactional
+//	public void modifyDayOffInfo(DayOffDTO dayOffDTO) {
+//		
+//	   DayOff dayOff = dayOffRepository2.findByEmpNo(dayOffDTO.getEmpNo());
+//	   dayOff.setDoffAmount(dayOffDTO.getDoffAmount());		// 총 연차 횟수	
+//	   dayOff.setDoffRemain(dayOff.getDoffRemain());		// 잔여 연차 횟수
+//	   dayOff.setDoffUse(dayOffDTO.getDoffUse());			// 사용 연차 횟수
+//	   
+//	   System.out.println("^____________________^" + dayOff);
+//	}
 	/****************************************************************/
 
 }

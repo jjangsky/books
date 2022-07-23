@@ -2,6 +2,8 @@ package com.bukkeubook.book.document.controller;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bukkeubook.book.document.compare.InboxListComparator;
 import com.bukkeubook.book.document.model.dto.AppRootDTO;
 import com.bukkeubook.book.document.model.dto.AppVacationDTO;
 import com.bukkeubook.book.document.model.dto.ApproverDTO;
@@ -74,6 +77,8 @@ public class DocumentController {		// 전자결재 컨트롤러
 		int empNo = customUser.getEmpNo();
 		
 		List<InboxListDTO> all = docService.findInboxAllList(empNo);
+		
+		Collections.sort(all, new InboxListComparator().reversed());
 		
 //		System.out.println(all);
 		mv.addObject("all", all);
@@ -578,9 +583,10 @@ public class DocumentController {		// 전자결재 컨트롤러
 	/* 휴가서류 문서번호 조회 */
 	@GetMapping(value = {"vacationInfo"}, produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public List<Integer> vacationInfo(){
+	public List<Integer> vacationInfo(@AuthenticationPrincipal UserImpl customUser){
 		
-		List<Integer> vacationInfo = docService.vacationInfo();
+		int empNo = customUser.getEmpNo();
+		List<Integer> vacationInfo = docService.vacationInfo(empNo);
 		
 		return vacationInfo;
 	}
