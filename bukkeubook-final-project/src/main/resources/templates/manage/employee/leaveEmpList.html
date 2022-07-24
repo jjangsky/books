@@ -25,6 +25,7 @@
                 <th class="th1">사원명</th>
                 <th class="th1">부서</th>
                 <th class="th1">직급</th>
+                <th class="th1">퇴사일자</th>
                 <th class="th1">상세보기</th>
               </tr>
               <tr th:each="emp : ${ leaveEmpList }" class="hover">
@@ -32,6 +33,7 @@
                 <td th:text="${ emp.empName }"></td>
                 <td th:text="${ emp.dept.deptName }"></td>
                 <td th:text="${ emp.empJobCode }"></td>
+                <td th:text="${ emp.empEndDate }"></td>
                 <td><button type="button" class="select btn" th:onclick="'location.href = \'' + @{/manage/oneLeaveEmp/{empNo}(empNo=${emp.empNo})} + '\''">확인</button></td>
               </tr>
           </table>
