@@ -22,10 +22,12 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	private MemberService memberService;
 	private AuthFailureHandler authFailureHandler;
+	private LoginSuccessHandler loginSuccessHandler;
 	@Autowired
-	public SpringSecurityConfiguration(AuthFailureHandler authFailureHandler, MemberService memberService) {
+	public SpringSecurityConfiguration(LoginSuccessHandler loginSuccessHandler, AuthFailureHandler authFailureHandler, MemberService memberService) {
 		this.memberService = memberService;
 		this.authFailureHandler = authFailureHandler;
+		this.loginSuccessHandler = loginSuccessHandler;
 	}
 	
 	
@@ -56,15 +58,17 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 		        .anyRequest().permitAll()											
 		    .and()	
 		    	.formLogin()														
-		    	.loginPage("/member/login")											
+		    	.loginPage("/member/login")
+		    	.successHandler(new LoginSuccessHandler())
 		    	.failureHandler(authFailureHandler)
-		    	.successForwardUrl("/main")										
+//		    	.successForwardUrl("/main")										
 		    .and()	//로그아웃 페이지
 		    	.logout()															
 		    	.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))	
 		    	.deleteCookies("JSESSIONID")										
 		    	.invalidateHttpSession(true)										
 		    	.logoutSuccessUrl("/")
+		    	.clearAuthentication(true)
 		    .and()	//에러 페이지
 		    	.exceptionHandling()												
 		    	.accessDeniedPage("/common/denied");								

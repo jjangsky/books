@@ -28,49 +28,49 @@
                     </tr>
                     <tr>
                         <td>거래처명</td>
-                        <td colspan="3"><input type="text" name="cntName" th:value="${ client.cntName }"></td>
+                        <td colspan="3"><input id="cntName" type="text" name="cntName" th:value="${ client.cntName }"></td>
                     </tr>
                     <tr>
                         <td>업종</td>
-                        <td><input type="text" name="cntCate" th:value="${ client.cntCate }"></td>
+                        <td><input id="cntCate" type="text" name="cntCate" th:value="${ client.cntCate }"></td>
                         <td>사업자등록번호</td>
-                        <td><input type="text" name="cntRegNo" th:value="${ client.cntRegNo}"></td>
+                        <td><input id="cntRegNo" type="text" name="cntRegNo" th:value="${ client.cntRegNo}"></td>
                     </tr>
                     <tr>
                         <td>업태</td>
-                        <td><input type="text" name="cntType" th:value="${ client.cntType }"></td>
+                        <td><input id="cntType" type="text" name="cntType" th:value="${ client.cntType }"></td>
                         <td>법인등록번호</td>
-                        <td><input type="text" name="corpRegNo" th:value="${ client.corpRegNo }"></td>
+                        <td><input id="corpRegNo" type="text" name="corpRegNo" th:value="${ client.corpRegNo }"></td>
                     </tr>
                     <tr>
                         <td>대표자</td>
-                        <td colspan="3"><input type="text" name="cntRepName" th:value="${ client.cntRepName }"></td>
+                        <td colspan="3"><input id="cntRepName" type="text" name="cntRepName" th:value="${ client.cntRepName }"></td>
                     </tr>
                     <tr>
                         <td>개업일</td>
-                        <td colspan="3" th:text="${ client.cntOpenDate }"></td>
+                        <td colspan="3" id="cntOpenDate" th:text="${ client.cntOpenDate }"></td>
                     </tr>
                     <tr>
                         <td>소재지</td>
-                        <td colspan="3"><input class="addr" type="text" name="cntAddress" th:value="${ client.cntAddress }"></td>
+                        <td colspan="3"><input id="cntAddress" class="addr" type="text" name="cntAddress" th:value="${ client.cntAddress }"></td>
                     </tr>
                     <tr>
                         <td>연락처</td>
-                        <td><input type="text" name="cntPhone" th:value="${ client.cntPhone }"></td>
+                        <td><input id="cntPhone" type="text" name="cntPhone" th:value="${ client.cntPhone }"></td>
                         <td>담당자</td>
-                        <td><input type="text" name="cntManaName" th:value="${ client.cntManaName }"></td>
+                        <td><input id="cntManaName" type="text" name="cntManaName" th:value="${ client.cntManaName }"></td>
                     </tr>
                     <tr>
                         <td>이메일</td>
-                        <td><input type="email" name="cntEmail" th:value="${ client.cntEmail }"></td>
+                        <td><input id="cntEmail" type="email" name="cntEmail" th:value="${ client.cntEmail }"></td>
                         <td>담당자 연락처</td>
-                        <td><input type="text" name="cntManaPhone" th:value="${ client.cntManaPhone }"></td>
+                        <td><input id="cntManaPhone" type="text" name="cntManaPhone" th:value="${ client.cntManaPhone }"></td>
                     </tr>
                     <tr>
                         <td>FAX</td>
-                        <td><input type="text" name="cntFax" th:value="${ client.cntFax }"></td>
+                        <td><input id="cntFax" type="text" name="cntFax" th:value="${ client.cntFax }"></td>
                         <td>담당자 이메일</td>
-                        <td><input type="email" name="cntManaEmail" th:value="${ client.cntManaEmail }"><input type="hidden" name="cntNo" th:value="${ client.cntNo }"></td>
+                        <td><input id="cntManaEmail" type="email" name="cntManaEmail" th:value="${ client.cntManaEmail }"><input type="hidden" name="cntNo" th:value="${ client.cntNo }"></td>
                     </tr>
                 </table>
                 <button class="btn" type="button" onclick="checkComplete()">등록</button>
@@ -79,11 +79,200 @@
         </div> <!------------------------ 본문 종료---------------------------->
 
     <script>
-      function checkComplete(){
-    	  Swal.fire({
+    
+    $('#cntRegNo').blur(function(){
+		const prodExp = /([0-9]{3})-?([0-9]{2})-?([0-9]{5})/;
+		if(!prodExp.test($('#cntRegNo').val())){
+  			Swal.fire({
+                  icon: 'question',
+                  title: '잘못된 입력 형식!',
+                  text: '올바른 사업자등록번호 양식을 입력해주세요',
+              }).then(function(){
+	    			$('#cntRegNo').val("");
+              })
+ 			  return false;
+  		}
+	});	
+    
+    $('#corpRegNo').blur(function(){
+		const prodExp = /^([0-9]{6})\-([0-9]{6})$/;
+		if(!prodExp.test($('#corpRegNo').val())){
+  			Swal.fire({
+                  icon: 'question',
+                  title: '잘못된 입력 형식!',
+                  text: '올바른 법인등록번호 양식을 입력해주세요',
+              }).then(function(){
+	    			$('#corpRegNo').val("");
+              })
+ 			  return false;
+  		}
+	});	
+    
+    $('#cntPhone').blur(function(){
+		const prodExp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+		if(!prodExp.test($('#cntPhone').val())){
+  			Swal.fire({
+                  icon: 'question',
+                  title: '잘못된 입력 형식!',
+                  text: '올바른 전화번호 형식을 입력하세요.',
+              }).then(function(){
+	    			$('#cntPhone').val("");
+              })
+ 			  return false;
+  		}
+	});	
+    
+    $('#cntManaPhone').blur(function(){
+		const prodExp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+		if(!prodExp.test($('#cntManaPhone').val())){
+  			Swal.fire({
+                  icon: 'question',
+                  title: '잘못된 입력 형식!',
+                  text: '올바른 전화번호 형식을 입력하세요.',
+              }).then(function(){
+	    			$('#cntManaPhone').val("");
+              })
+ 			  return false;
+  		}
+	});	
+    
+    $('#cntFax').blur(function(){
+		const prodExp = /([0-9]{2})-?([0-9]{3})-?([0-9]{4})/;
+		if(!prodExp.test($('#cntFax').val())){
+  			Swal.fire({
+                  icon: 'question',
+                  title: '잘못된 입력 형식!',
+                  text: '올바른 FAX번호 형식을 입력하세요.',
+              }).then(function(){
+	    			$('#cntFax').val("");
+              })
+ 			  return false;
+  		}
+	});	
+    
+    $('#cntEmail').blur(function(){
+    	const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+		if(!regEmail.test($('#cntEmail').val())){
+  			Swal.fire({
+                  icon: 'question',
+                  title: '잘못된 입력 형식!',
+                  text: '올바른 이메일 주소를 입력해주세요.',
+              }).then(function(){
+	    			$('#cntEmail').val("");
+              })
+ 			  return false;
+  		}
+	});	
+    
+    $('#cntManaEmail').blur(function(){
+    	const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+		if(!regEmail.test($('#cntManaEmail').val())){
+  			Swal.fire({
+                  icon: 'question',
+                  title: '잘못된 입력 형식!',
+                  text: '올바른 이메일 주소를 입력해주세요.',
+              }).then(function(){
+	    			$('#cntManaEmail').val("");
+              })
+ 			  return false;
+  		}
+	});	
+    
+    function checkComplete(){
+    	const prodExp = /^[0-9]{1,6}$/;
+    	const pattern_spc = /[~!#$%^&*()+|<>?:{}]/;
+    	
+    	if($('#cntName').val() == ""){
+    		Swal.fire({
+					icon: 'error',
+					title: '입력 오류',
+					text: '거래처명을 입력해주세요'
+				})
+    	} else if($('#cntCate').val() == ""){
+    		Swal.fire({
+					icon: 'error',
+					title: '입력 오류',
+					text: '업종을 입력해주세요'
+				})
+    	} else if($('#cntRegNo').val() == ""){
+    		Swal.fire({
+					icon: 'error',
+					title: '입력 오류',
+					text: '사업자등록번호를 입력해주세요'
+				})
+    	} else if($('#cntType').val() == ""){
+    		Swal.fire({
+					icon: 'error',
+					title: '입력 오류',
+					text: '업태를 입력해주세요'
+				})
+    	} else if($('#corpRegNo').val() == ""){
+    		Swal.fire({
+					icon: 'error',
+					title: '입력 오류',
+					text: '법인등록번호를 입력해주세요.'
+				})
+    	} else if($('#cntRepName').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '대표자명을 입력해주세요'
+			})
+		} else if($('#cntAddress').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '소재지를 입력해주세요.'
+			})
+		} else if($('#cntPhone').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '연락처를 입력해주세요.'
+			})
+		} else if($('#cntManaName').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '담당자명을 입력해주세요.'
+			})
+		} else if($('#cntEmail').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '이메일을 입력해주세요.'
+			})
+		} else if($('#cntManaPhone').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '담당자 연락처를 입력해주세요.'
+			})
+		} else if($('#cntFax').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '팩스를 입력해주세요.'
+			})
+		} else if($('#cntManaEmail').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '담당자 이메일을 입력해주세요.'
+			})
+		} else if(pattern_spc.test($('#cntName').val()) || pattern_spc.test($('#cntCate').val()) || 
+				pattern_spc.test($('#cntType').val()) || pattern_spc.test($('#cntRepName').val()) ||
+				pattern_spc.test($('#cntAddress').val()) || pattern_spc.test($('#cntManaName').val())){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '특수문자 및 태그 문자가 포함되어 있습니다.'
+			})
+		} else{
+    		Swal.fire({
         		icon: 'warning',
         		title: '등록 확인',
-        		text: '거래처 수정을 진행하시겠습니까?',
+        		text: '거래처 등록을 진행하시겠습니까?',
         		showCancelButton: true,
         		confirmButtonText: '확인',
         		cancelButtonText: '취소'
@@ -92,6 +281,7 @@
         			$("#registForm").submit();
         		}
         	});
+    	}
       }
       
       function checkCancel(){

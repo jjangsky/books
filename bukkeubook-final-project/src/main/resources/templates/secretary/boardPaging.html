@@ -1,21 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymleaf.org">
+<html xmlns:th="http://www.thymleaf.org"><!-- 타임리프 활용하기(네임스키마 문법 추가) -->
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
-
+<title>Insert title here</title>
 </head>
 <body>
 	<div class="pagingArea" align="center">
-	<!-- 맨 앞으로 이동 버튼 -->
+		<!-- 맨 앞으로 이동 버튼 -->
 	    <button id="startPage"><<</button>
-
+		
 		<!-- 이전 페이지 버튼 -->
 		<th:block th:if="${ selectCriteria.pageNo <= 1 }">
 			<button disabled><</button>
@@ -29,7 +23,7 @@
                     last = ${selectCriteria.endPage}">
 			<th:block th:each="p : ${#numbers.sequence(start,last)}">
 				<th:block th:if="${ selectCriteria.pageNo eq p }">
-					<button th:text="${p}" disabled></button>
+					<button th:text="${p}" disabled style="border: 2px solid; border-color: black;"></button>
 				</th:block>
 				<th:block th:if="${ selectCriteria.pageNo ne p }">
 					<button th:text="${p}" onclick="pageButtonAction(this.innerText);"></button>
@@ -50,20 +44,24 @@
 	</div>
 
 	<script>
-		const link = "/mypage/myAnnual";
-		let searchText = "";
-		let startExist = "[[${ selectCriteria.startDate }]]";
-		let endExist = "[[${ selectCriteria.endDate }]]";
 		
-		/* 시작 날짜 값의 유무에 따른 경로 처리 */
-		if(startExist) {
-			searchText += "&attStart=" + startExist;
+		/* 여기 경로 빼고 건들인게 없음 복붙만 하자 */
+		const link = "/secretary/board";
+		
+		let searchText = "";
+		let searchConditionExist = "[[${ selectCriteria.searchCondition }]]";
+		let searchValueExist = "[[${ selectCriteria.searchValue }]]";
+		
+		/* 검색 조건 유무에 따른 경로 처리 */
+		if(searchConditionExist) {
+			searchText += "&searchCondition=" + searchConditionExist;
 		}
 
-		/* 종료 날짜 값에 따른 경로 처리 */
-		if(endExist) {
-			searchText += "&attEnd=" + endExist;
+		/* 검색 내용 유무에 따른 경로 처리 */
+		if(searchValueExist) {
+			searchText += "&searchValue=" + searchValueExist;
 		}
+		
 		/* 첫 페이지 버튼 click 이벤트 처리 */
 		if(document.getElementById("startPage")) {
 			const $startPage = document.getElementById("startPage");
@@ -102,5 +100,4 @@
 		}
 	</script>
 </body>
-
 </html>

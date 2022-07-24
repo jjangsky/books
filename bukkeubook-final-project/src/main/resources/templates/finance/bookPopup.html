@@ -9,50 +9,92 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
-	<link rel="stylesheet"  th:href="@{/css/books/order/orderDetail.css}">
+	<link rel="stylesheet"  th:href="@{/css/finance/bookPopup.css}">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
 
-        <div class="aboveTable">
+        <div class="search-area">
             <div>
                 <h1 align="center">도서 검색</h1>
             </div>
-            <div class="searchBar">
-                <form action="GET">
-                    <input type="search">
-                    <button type="submit">검색</button>
-                </form>
-            </div>
+            <div class="search-area" align="center">
+				<form id="loginForm" name="searchForm" action="/trade/bookPopup" method="get" style="display: inline-block">
+					<select id="searchCondition" name="searchCondition">
+						<option value="select">--분류--</option>
+						<option value="no">도서코드</option>
+						<option value="name">도서명</option>
+						<option value="author">저자</option>
+					</select>
+					<input type="text" style="display:none;"> <!-- 엔터키 새로고침 방지용 -->
+					<input type="search" id="inputFind" name="searchValue" value="">
+					<button type="button" class="findBtn" id="findBtn">검색하기</button>
+				</form>
+			</div>
         </div>
 
         <br>
-        <table id="searchTable">
-            <tr>
-                <th class="th1">도서 번호</th>
-                <th class="th1">도서명</th>
-                <th class="th1">저자</th>
-                <th class="th1">출판사</th>
-                <th class="th1">가격</th>
-                <th class="th1">발행일</th>
-                <th class="th1"></th>
-            </tr>
-            <tr class="tr1" th:each="book : ${ bookList }">
-	               <td th:text="${ book.no }"></td>
-	               <td th:text="${ book.name }"></td>
-	               <td th:text="${ book.author }"></td>
-	               <td th:text="${ book.pub }"></td>
-	               <td th:text="${ book.price }"></td>
-	               <td th:text="${ book.pubDate }"></td>
-	               <td><button class="btn" type="button">선택</button></td>
-               </tr>
-        </table>
+        <div id="textTable" style="text-align:-webkit-center">
+	        <table id="sampleTable">
+	            <tr>
+	                <th class="th1">도서 번호</th>
+	                <th class="th1">도서명</th>
+	                <th class="th1">저자</th>
+	                <th class="th1">출판사</th>
+	                <th class="th1">가격</th>
+	                <th class="th1">발행일</th>
+	                <th class="th1"></th>
+	            </tr>
+	            <tr class="tr1" th:each="book : ${ bookList }">
+		               <td th:text="${ book.no }"></td>
+		               <td th:text="${ book.name }"></td>
+		               <td th:text="${ book.author }"></td>
+		               <td th:text="${ book.pub }"></td>
+		               <td th:text="${ book.price }"></td>
+		               <td th:text="${ book.pubDate }"></td>
+		               <td><button class="btn" type="button">선택</button></td>
+	               </tr>
+	        </table>
+        </div>
 		<div th:replace="/finance/bookPopupPaging.html"></div>
   <script src="../js/jquery.min.js"></script>
   <script src="../js/popper.js"></script>
   <script src="../js/bootstrap.min.js"></script>
   <script src="../js/main.js"></script>
   <script th:inline="javascript">
+  
+	  $('#findBtn').click(function(){
+		  	var pattern_spc = /[~!@#$%^&*()+|<>?:{}]/;
+			if(inputFind.value == "" && searchCondition.value == 'select'){
+				Swal.fire({
+	              icon: 'question',
+	              title: '',
+	              text: '분류와 검색어를 입력 해 주세요.',
+	          })} else if(inputFind.value == ""){
+	    	Swal.fire({
+	              icon: 'question',
+	              title: '',
+	              text: '검색어를 입력 해 주세요.',
+	              
+	    	})} else if(searchCondition.value == 'select'){
+	   		Swal.fire({
+	               icon: 'question',
+	               title: '',
+	               text: '분류를 선택 해 주세요.',
+	    	})} else{
+	    			const pattern_spc = /[~!@#$%^&*()+|<>?:{}]/;
+	    			if(pattern_spc.test(inputFind.value)){
+	    				Swal.fire({
+	    					icon: 'error',
+	    					title: '',
+	    					text: '특수문자 및 태그를 입력하지 마세요'
+	    				})
+	    			} else{
+	    				$("#loginForm").submit();
+	    			}
+	 			};
+		});
+  
         $(".btn").click(function(){ 
 
 			var bookInfo = new Array();

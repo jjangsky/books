@@ -60,7 +60,6 @@
     text-align: center;
     margin-right: 10px;
     margin-bottom: 5px;
-    margin-top: 8px;
 }
 .btn:hover {
     background-color: #FEFCC6 !important;
@@ -71,14 +70,14 @@
 }
 
 #orderTable{
-	border: 1px solid black !important;
+	border: 1px solid #444444;
 }
 
 td{
-	font-size: 13pt;
+	font-size: 11pt;
 	width: 60px;
 	height: 10px;
-	border: 1px solid black !important;
+	border-bottom: 1px solid #444444;
 	text-align: center;
 }
 
@@ -109,20 +108,16 @@ td{
 #searchValue{
 	height: 28px;
     width: 100px;
-    font-size: 13px;
+    font-size: 12px;
     vertical-align: middle;
     text-align: center;
 }
 
-#btns{
-	display: inline-block;
-    text-align: center;
+#textTable{
 	margin-bottom: 15px;
 }
 
-.f1{
-	float: left;
+.btnArea{
+	margin-right : 110px !important;
 }
-
-
 

@@ -34,14 +34,21 @@ public class MemberController {
 		return mv;
 	}
 	
+	@GetMapping("/common/leaveMember")
+	public ModelAndView leaveMember(ModelAndView mv, RedirectAttributes rttr) {
+		
+		rttr.addFlashAttribute("LeaveMemberMessage", "성공");
+		mv.setViewName("/common/leaveMember");
+		return mv;
+	}
+	
 	@GetMapping("/member/loginFail")
 	public void loginFail(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) throws UnsupportedEncodingException {
 		String message = request.getParameter("exception");
 		System.out.println(message);
-		System.out.println(message);
-		rttr.addAttribute("loginFailMessage", message);
+//		rttr.addFlashAttribute("loginFailMessage", message);
 //		mv.addObject("loginFailMessage", message);
-		mv.setViewName("redirect:/member/loginFail");
+//		mv.setViewName("redirect:/member/loginFail");
 //		return mv;
 	}
 	

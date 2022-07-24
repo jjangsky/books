@@ -1,27 +1,18 @@
 package com.bukkeubook.book.manage.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.bukkeubook.book.books.model.dto.BookDTO;
-import com.bukkeubook.book.common.paging.Pagenation;
-import com.bukkeubook.book.common.paging.SelectCriteria;
-import com.bukkeubook.book.finance.model.dto.TradeAndClientAndBookAndEmpDTO;
 import com.bukkeubook.book.manage.model.dto.DeptDTO;
-import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.DeptAndEmpDTO;
 import com.bukkeubook.book.manage.model.service.DeptService;
 
@@ -59,59 +50,59 @@ public class DeptController {
 		return mv;
 	}
 	
-	@GetMapping("/regist")
-	public ModelAndView registPage(ModelAndView mv) {
-		mv.setViewName("/manage/dept/departmentRegist");
-		
-		return mv;
-	}
-	
-	@PostMapping("/regist")
-	public ModelAndView registDept(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
-		
-		int rownum = Integer.valueOf(request.getParameter("rownum"));
-
-		List<Integer> empNo = new ArrayList<Integer>();
-		
-		for(int i = 2; i <= rownum; i++) {
-			System.out.println("i번째 : " + request.getParameter("empNo" + i));
-			
-			empNo.add(Integer.valueOf(request.getParameter("empNo" + i)));
-		}
-		
-		DeptDTO newDept = new DeptDTO();
-		
-		newDept.setDeptName(request.getParameter("deptName"));
-		newDept.setDeptRepPhone(request.getParameter("deptRepPhone"));
-		newDept.setDeptActive("Y");
-		
-		System.out.println("등록 위한 DTO 잘 들어왔나? : " + newDept);
-		
-		deptService.registDept(newDept, empNo);
-		
-		rttr.addFlashAttribute("registSuccessMessage", "부서 등록에 성공하셨습니다");
-		mv.setViewName("redirect:/dept/select");
-		
-		return mv;
-	}
-	
-	@GetMapping("/popup")
-	public ModelAndView popupPage(HttpServletRequest request, ModelAndView mv) {
-
-		String searchCondition = request.getParameter("searchCondition");
-		String searchValue = request.getParameter("searchValue");
-
-		List<EmpDTO> empList = deptService.searchEmpList(searchCondition, searchValue);
-
-		for(EmpDTO emp : empList) {
-			System.out.println(emp);
-		}
-
-		mv.addObject("empList", empList);
-		mv.setViewName("manage/dept/empPopup");
-
-		return mv;
-	}
+//	@GetMapping("/regist")
+//	public ModelAndView registPage(ModelAndView mv) {
+//		mv.setViewName("/manage/dept/departmentRegist");
+//		
+//		return mv;
+//	}
+//	
+//	@PostMapping("/regist")
+//	public ModelAndView registDept(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+//		
+//		int rownum = Integer.valueOf(request.getParameter("rownum"));
+//
+//		List<Integer> empNo = new ArrayList<Integer>();
+//		
+//		for(int i = 2; i <= rownum; i++) {
+//			System.out.println("i번째 : " + request.getParameter("empNo" + i));
+//			
+//			empNo.add(Integer.valueOf(request.getParameter("empNo" + i)));
+//		}
+//		
+//		DeptDTO newDept = new DeptDTO();
+//		
+//		newDept.setDeptName(request.getParameter("deptName"));
+//		newDept.setDeptRepPhone(request.getParameter("deptRepPhone"));
+//		newDept.setDeptActive("Y");
+//		
+//		System.out.println("등록 위한 DTO 잘 들어왔나? : " + newDept);
+//		
+//		deptService.registDept(newDept, empNo);
+//		
+//		rttr.addFlashAttribute("registSuccessMessage", "부서 등록에 성공하셨습니다");
+//		mv.setViewName("redirect:/dept/select");
+//		
+//		return mv;
+//	}
+//	
+//	@GetMapping("/popup")
+//	public ModelAndView popupPage(HttpServletRequest request, ModelAndView mv) {
+//
+//		String searchCondition = request.getParameter("searchCondition");
+//		String searchValue = request.getParameter("searchValue");
+//
+//		List<EmpDTO> empList = deptService.searchEmpList(searchCondition, searchValue);
+//
+//		for(EmpDTO emp : empList) {
+//			System.out.println(emp);
+//		}
+//
+//		mv.addObject("empList", empList);
+//		mv.setViewName("manage/dept/empPopup");
+//
+//		return mv;
+//	}
 	
 	@GetMapping("/modify")
 	public ModelAndView modifyPage(HttpServletRequest request, ModelAndView mv) {
@@ -129,30 +120,16 @@ public class DeptController {
 	@PostMapping("/modify")
 	public ModelAndView modifyDept(ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request) {
 		
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
 		System.out.println("Controller에서 확인");
 		System.out.println("deptCode : " + request.getParameter("deptCode"));
 		System.out.println("deptName : " + request.getParameter("deptName"));
 		System.out.println("deptRepPhone : " + request.getParameter("deptRepPhone"));
-		System.out.println("deptActive : " + request.getParameter("deptActive"));
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
 		
 		DeptDTO newDept = new DeptDTO();
 		
 		newDept.setDeptCode(Integer.valueOf(request.getParameter("deptCode")));
 		newDept.setDeptName(request.getParameter("deptName"));
 		newDept.setDeptRepPhone(request.getParameter("deptRepPhone"));
-		newDept.setDeptActive(request.getParameter("deptActive"));
 		
 		deptService.modifyDept(newDept);
 		
@@ -162,27 +139,27 @@ public class DeptController {
 		return mv;
 	}
 	
-	@GetMapping("/getSearchList")
-	@ResponseBody
-	private List<EmpDTO> getSearchList(@RequestParam("searchCondition") String searchCondition,
-			@RequestParam("searchValue") String searchValue, Model model) throws Exception{
-		
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println("ajax 동작함");
-		System.out.println("searchCondition : " + searchCondition);
-		System.out.println("searchValue : " + searchValue);
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		
-		return deptService.searchEmpList(searchCondition, searchValue);
-	}
+//	@GetMapping("/getSearchList")
+//	@ResponseBody
+//	private List<EmpDTO> getSearchList(@RequestParam("searchCondition") String searchCondition,
+//			@RequestParam("searchValue") String searchValue, Model model) throws Exception{
+//		
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println("ajax 동작함");
+//		System.out.println("searchCondition : " + searchCondition);
+//		System.out.println("searchValue : " + searchValue);
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		
+//		return deptService.searchEmpList(searchCondition, searchValue);
+//	}
 }

@@ -49,8 +49,20 @@
 		const link = "/check/findCheck";
 		
 		let searchText = "";
+		let startExist = "[[${ selectCriteria.startDate }]]";
+		let endExist = "[[${ selectCriteria.endDate }]]";
 		let searchConditionExist = "[[${ selectCriteria.searchCondition }]]";
 		let searchValueExist = "[[${ selectCriteria.searchValue }]]";
+		
+		/* 시작 날짜 값의 유무에 따른 경로 처리 */
+		if(startExist) {
+			searchText += "&attStart=" + startExist;
+		}
+
+		/* 종료 날짜 값에 따른 경로 처리 */
+		if(endExist) {
+			searchText += "&attEnd=" + endExist;
+		}
 		
 		/* 검색 조건 유무에 따른 경로 처리 */
 		if(searchConditionExist) {
