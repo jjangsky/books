@@ -1,7 +1,9 @@
 package com.bukkeubook.book.manage.model.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -10,12 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.bukkeubook.book.manage.model.dto.AppVacationDTO;
 import com.bukkeubook.book.manage.model.dto.DayOffDTO;
-import com.bukkeubook.book.manage.model.dto.joinDTO.AppVacationAndEmpDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.DayOffAndEmpAndDeptDTO;
-import com.bukkeubook.book.manage.model.entity.AppVacation;
-import com.bukkeubook.book.manage.model.entity.AppVacationAndEmp;
 import com.bukkeubook.book.manage.model.entity.DayOff;
 import com.bukkeubook.book.manage.model.entity.DayOffAndEmpAndDept;
 import com.bukkeubook.book.manage.model.repository.AppVacRepository;
@@ -54,19 +52,9 @@ public class EmpDayOffService {
 		
 		System.out.println("레포지토리      " + emp);
 		
-		return modelMapper.map(emp, DayOffAndEmpAndDeptDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
+		return modelMapper.map(emp, DayOffAndEmpAndDeptDTO.class); // 엔티티를 넣어달라고 요청 -> modelMapper
 }
   
-	/****************************************************************/
-   /* 휴가 신청이랑 연결된 트랜잭션 */
-	@Transactional
-   public List<AppVacationAndEmpDTO> findAppVacByVacNo(int vacNo) {
-	   
-	   List<AppVacationAndEmp> appVacList = appVacRepository.findAppVacByVacNo(vacNo);
-	   return appVacList.stream().map(appVac -> modelMapper.map(appVacList, AppVacationAndEmpDTO.class)).collect(Collectors.toList());
-	   
-	   }
-
 	/****************************************************************/	
 	@Transactional
 	public DayOffAndEmpAndDeptDTO findByEmpNo(int empNo, int doffNo) {
@@ -85,17 +73,32 @@ public class EmpDayOffService {
 //  doffUse        사용연차횟수
 	
 	@Transactional
-	public void findDayOffEmpNo(int empNo, int doffAmount, int doffRemain, int doffUse) {
-		List<AppVacationAndEmp> appVac = appVacRepository.findAppVacByVacNo(empNo);
-		java.sql.Date vacStartDate = appVac.get(0).getVacStartDate();
-		java.sql.Date vacEndDate = appVac.get(0).getVacEndDate();
+	public void findDayOffEmpNo(int empNo, int vacNo, String vacStartDate, String vacEndDate) throws ParseException {
+		DayOff dayOff = appVacRepository.findByEmpNo(empNo);
+		DayOffDTO dayOffDTO = modelMapper.map(dayOff, DayOffDTO.class);
 		
-		long vacStartTime = vacStartDate.getTime();
-		long vacEndTime = vacEndDate.getTime();
-		long test = (vacEndTime - vacStartTime);
-		long day = test * 3600 * 24 * 1000;
+		String vacStartTime = vacStartDate;
+		String vacEndTime = vacEndDate;
 		
-		System.out.println("nsdjkfhwsafbjks;hi;jsdfnlsk'" + day);
+		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(vacStartTime);
+		Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(vacEndTime);
+		
+		long vacStartTime2 = date1.getTime();
+		long vacEndTime2 = date2.getTime();
+		long test = vacEndTime2 - vacStartTime2;
+		int day = (int)(test / 86400000);
+		
+//		int dayOffUseAmount = dayOff.getDoffAmount() - day;
+//		dayOff.setDoffAmount(dayOffUseAmount);
+		
+		int dayOffUseRemain = dayOff.getDoffRemain() - day;
+		dayOff.setDoffRemain(dayOffUseRemain);
+		
+		int UseDoffUse = dayOff.getDoffUse() + day;
+		dayOff.setDoffUse(UseDoffUse);
+		
+//		appVacRepository.save(modelMapper.map(dayOffDTO, DayOff.class));
+		
 	}
 	
 }

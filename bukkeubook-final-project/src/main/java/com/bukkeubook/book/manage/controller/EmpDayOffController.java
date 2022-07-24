@@ -37,7 +37,7 @@ public class EmpDayOffController {
    }
    
    /* 사원 연차 상세조회 */
-	@GetMapping("empDayOff/empDayOffDetail/{empNo}")
+	@GetMapping("/empDayOffDetail/{empNo}")
 	public ModelAndView empDayOffDetail(ModelAndView mv, @PathVariable String empNo){
 		
 		int number = Integer.valueOf(empNo);

@@ -29,7 +29,7 @@
             <tbody>
               <tr>
                 <td class="deemp3">휴가번호</td>
-                <td th:text="${ appvacAndEmp.vacNo }"></td>
+                <td><input name ="vacNo" th:value="${ appvacAndEmp.vacNo }"></td>
               </tr>
               <tr>
                 <td class="deemp3">사원번호</td>
@@ -37,24 +37,24 @@
               </tr>
               <tr>
                 <td class="deemp3">직책</td>
-                <td th:text="${ appvacAndEmp.empAndDept.getEmpJobCode() }"></td>
+                <td><input name="empJobCode" th:value="${ appvacAndEmp.empAndDept.getEmpJobCode() }"></td>
               </tr>
               <tr>
                 <td class="deemp3">사원명</td>
-                <td th:text="${ appvacAndEmp.empAndDept.getEmpName() }"></td> 
+                <td><input name="empName" th:value="${ appvacAndEmp.empAndDept.getEmpName() }"></td> 
               </tr>
               <tr>
                 <td class="deemp3">시작일</td>
-                <td th:text="${ appvacAndEmp.vacStartDate  }"></td>
+                <td><input name="vacStartDate" th:value="${ appvacAndEmp.vacStartDate  }"></td>
               </tr>
               <tr>
               	<td class="deemp3">종료일</td>
-                <td th:text="${ appvacAndEmp.vacEndDate }"></td>
+                <td><input name="vacEndDate" th:value="${ appvacAndEmp.vacEndDate  }"></td>
               </tr>
               <tr>
               <tr>
                 <td class="deemp3">사유</td>
-                <td id="reason" th:text="${ appvacAndEmp.getVacCompanion() }"></td>
+                <td><input id="reason" name="vacCompanion" th:text="${ appvacAndEmp.getVacCompanion() }"></td>
               </tr>
             </tbody>
             </table>
