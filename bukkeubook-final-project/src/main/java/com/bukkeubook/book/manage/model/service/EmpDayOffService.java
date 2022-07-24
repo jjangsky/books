@@ -86,7 +86,7 @@ public class EmpDayOffService {
 		long vacStartTime2 = date1.getTime();
 		long vacEndTime2 = date2.getTime();
 		long test = vacEndTime2 - vacStartTime2;
-		int day = (int)(test / 86400000);
+		int day = (int)(test / 86400000 +1);
 		
 //		int dayOffUseAmount = dayOff.getDoffAmount() - day;
 //		dayOff.setDoffAmount(dayOffUseAmount);
