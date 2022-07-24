@@ -45,7 +45,9 @@ public class BookController extends HttpServlet{
 	
 	@GetMapping("/lookupList")
 	public ModelAndView searchPage(HttpServletRequest request, ModelAndView mv) {
-
+//		500 테스트용
+//		String test = "";
+//		String test2 = test/3;
 		String currentPage = request.getParameter("currentPage");
 		int pageNo = 1;
 
