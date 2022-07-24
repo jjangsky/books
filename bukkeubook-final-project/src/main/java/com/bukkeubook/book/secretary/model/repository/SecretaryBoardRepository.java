@@ -1,6 +1,8 @@
 package com.bukkeubook.book.secretary.model.repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -36,5 +38,19 @@ public interface SecretaryBoardRepository extends JpaRepository<BoardAndEmpAndBo
 
 	List<BoardAndEmpAndBoardCate> findByBoardYnAndCate_CateNameContaining(String string, String searchValue,
 			Pageable paging);
+
+
+
+	int countByBoardYn(String string);
+
+
+
+	List<BoardAndEmpAndBoardCate> findByBoardYn(String string, Pageable paging);
+
+
+
+
+
+
 
 }

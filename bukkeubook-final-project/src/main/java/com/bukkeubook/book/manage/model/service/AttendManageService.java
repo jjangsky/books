@@ -78,16 +78,16 @@ public class AttendManageService {
 		
 		List<AttendAndEmp> attend = new ArrayList<AttendAndEmp>();
 		if(startDate!=null && endDate!=null) {
-			if(!"".equals(searchValue)) {
+			if(searchValue != null) {
 				if("empNo".equals(attendSelectCriteria.getSearchCondition())) {
 					int search = Integer.parseInt(searchValue);
 					attend = attendAndEmpRepository.findByEmp_EmpNoAndAttDateBetween(search, startDate, endDate, paging);
 				}
 				if("empName".equals(attendSelectCriteria.getSearchCondition())) {
 					attend = attendAndEmpRepository.findByEmp_EmpNameContainingAndAttDateBetween(searchValue, startDate, endDate, paging);
-				}else {
-					attend = attendAndEmpRepository.findByAttDateBetween(startDate, endDate, paging);
 				}
+			}else {
+				attend = attendAndEmpRepository.findByAttDateBetween(startDate, endDate, paging);
 			} 
 		}else {
 			attend = attendAndEmpRepository.findAll(paging).toList();
