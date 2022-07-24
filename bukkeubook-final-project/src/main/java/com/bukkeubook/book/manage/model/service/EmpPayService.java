@@ -14,18 +14,21 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.bukkeubook.book.common.paging.SelectCriteria;
-import com.bukkeubook.book.document.model.entity.Emp;
 import com.bukkeubook.book.manage.model.dto.DeptDTO;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.SalaryDTO;
+import com.bukkeubook.book.manage.model.dto.SalaryEmpDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.PayAndEmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.Dept;
+import com.bukkeubook.book.manage.model.entity.Emp;
 import com.bukkeubook.book.manage.model.entity.EmpAndDept;
 import com.bukkeubook.book.manage.model.entity.PayAndEmpAndDept;
 import com.bukkeubook.book.manage.model.entity.Salary;
 import com.bukkeubook.book.manage.model.repository.EmpPayRepository;
 import com.bukkeubook.book.manage.model.repository.EmpRepository;
+import com.bukkeubook.book.manage.model.repository.OriginalEmpRepository;
+import com.bukkeubook.book.manage.model.repository.SalaryRepository;
 import com.bukkeubook.book.manage.model.repository.SimpleDeptRepository;
 
 
@@ -36,13 +39,21 @@ public class EmpPayService {
    private final EmpPayRepository empPayRepository;
    private final EmpRepository empRepository;
    private final SimpleDeptRepository simpleDeptRepository;
+   private final SalaryRepository salaryRepository;
+   private final OriginalEmpRepository originEmpRepository;
    
    @Autowired
-   public EmpPayService(EmpPayRepository empPayRepository, EmpRepository empRepository, 
-		   				SimpleDeptRepository simpleDeptRepository,ModelMapper modelMapper) {
+   public EmpPayService(EmpPayRepository empPayRepository
+		   			  , EmpRepository empRepository
+		   			  , SimpleDeptRepository simpleDeptRepository
+		   			  , SalaryRepository salaryRepository
+		   			  , OriginalEmpRepository originEmpRepository
+		   			  , ModelMapper modelMapper) {
       this.empPayRepository = empPayRepository;
       this.empRepository = empRepository;
       this.simpleDeptRepository = simpleDeptRepository;
+      this.salaryRepository = salaryRepository;
+      this.originEmpRepository = originEmpRepository;
       this.modelMapper = modelMapper;
    }
    
@@ -74,7 +85,7 @@ public class EmpPayService {
 		int count = selectCriteria.getLimit();
 		String searchValue = selectCriteria.getSearchValue();
 
-		Pageable paging = PageRequest.of(index, count, Sort.by("salNo"));
+		Pageable paging = PageRequest.of(index, count, Sort.by("salMonth").descending());
 
 		List<PayAndEmpAndDept> payList = new ArrayList<PayAndEmpAndDept>();
 		if(searchValue != null) {
@@ -121,15 +132,29 @@ public class EmpPayService {
 	}
 
 
-	public List<EmpDTO> findEmp(int dept) {
+	/* 전월 급여 내역 조회 */
+	public SalaryEmpDTO findByEmpNoSalary(int empNo) {
+
+		List<Salary> salary = salaryRepository.findByEmpNo(empNo, Sort.by("salMonth").descending());
 		
-		List<Emp> empList = simpleDeptRepository.findByDeptCode(dept,Sort.by("empNo").descending());
+		List<SalaryDTO> salList = salary.stream().map(sal -> modelMapper.map(sal, SalaryDTO.class)).toList();
 		
-		return empList.stream().map(emp -> modelMapper.map(emp, EmpDTO.class)).toList();
-				
+		SalaryDTO currentSal = salList.get(0);
+		
+		Emp empInfo = originEmpRepository.findById(empNo).get();
+		
+		int totalSal = empInfo.getEmpTotalSal();
+		
+		SalaryEmpDTO emp = new SalaryEmpDTO();
+		
+		emp.setSalary(currentSal);
+		emp.setEmpTotalSal(totalSal);
+		
+		return emp;
 	}
 
 
+	
   
 	
 

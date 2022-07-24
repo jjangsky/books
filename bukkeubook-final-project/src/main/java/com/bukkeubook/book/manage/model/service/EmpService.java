@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bukkeubook.book.books.model.entity.Book;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.ProfPhotoDTO;
@@ -31,7 +33,6 @@ public class EmpService {
 	private final OriginalEmpRepository originEmpRepository;
 	private final ProfilePhotoRepository profilePhotoRepository;
 	private final ModelMapper modelMapper;		//앤티티를 디티오로 변환 or 디티오를 엔티티로 변환
-
 	@Autowired
 	public EmpService(EmpRepository empRepository, ModelMapper modelMapper,OriginalEmpRepository originEmpRepository, ProfilePhotoRepository profilePhotoRepository) {
 		this.empRepository = empRepository;
@@ -199,6 +200,15 @@ public class EmpService {
 		
 		profilePhotoRepository.save(modelMapper.map(profile, ProfPhoto.class));
 
+	}
+	
+	/* 큰담 비밀번호 수정 */
+	public EmpDTO findEmpByEmpNo2(int no, String password1, String password2, String password3) {
+		BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+		Emp emp = originEmpRepository.findById(no).get();
+		emp.setEmpPwd(bc.encode(password2));
+		originEmpRepository.save(emp);
+		return modelMapper.map(emp, EmpDTO.class);
 	}
 
 

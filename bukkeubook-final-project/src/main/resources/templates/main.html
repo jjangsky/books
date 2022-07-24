@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -24,8 +25,8 @@
 	
        
             <div  style="width: 80%; height: 300px; float:left; margin-top: 50px; margin-left: 100px;">
-              <div>
-                <h4 style="text-align: left; font-family: Bold;">EnterPrise Board List</h4>
+              <div id="textTable" style="text-align:-webkit-center">
+                <h4 style="text-align: left; font-family: Bold;">전사 게시판</h4>
                 <table id="sampleTable" style="width: 100%;">
                   <tr>
                     <th class="th1">번호</th>
@@ -33,25 +34,25 @@
                     <th class="th1">제목</th>
                     <th class="th1">작성일</th>
                 </tr>
-                <tr>
+                <tr th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[0].no})} + '\''">
                   <td th:text="${boardList[0].no}"></td>
                   <td th:text="${boardList[0].cate.cateName}"></td>
                   <td th:text="${boardList[0].title}"></td>
                   <td th:text="${boardList[0].date}"></td>
                 </tr>
-                <tr>
+                <tr th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[1].no})} + '\''">
                   <td th:text="${boardList[1].no}"></td>
                   <td th:text="${boardList[1].cate.cateName}"></td>
                   <td th:text="${boardList[1].title}"></td>
                   <td th:text="${boardList[1].date}"></td>
                 </tr>
-                <tr>
+                <tr th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[2].no})} + '\''">
                   <td th:text="${boardList[2].no}"></td>
                   <td th:text="${boardList[2].cate.cateName}"></td>
                   <td th:text="${boardList[2].title}"></td>
                   <td th:text="${boardList[2].date}"></td>
                 </tr>
-                <tr>
+                <tr th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[3].no})} + '\''">
                   <td th:text="${boardList[3].no}"></td>
                   <td th:text="${boardList[3].cate.cateName}"></td>
                   <td th:text="${boardList[3].title}"></td>
@@ -88,7 +89,7 @@
           },
     
           initialView: 'listWeek',
-          initialDate: '2022-07-18',
+          initialDate: '2022-07-13',
           navLinks: true, // can click day/week names to navigate views
           editable: true,
           dayMaxEvents: true, // allow "more" link when too many events

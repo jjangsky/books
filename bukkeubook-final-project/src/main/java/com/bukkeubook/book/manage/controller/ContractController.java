@@ -2,7 +2,6 @@ package com.bukkeubook.book.manage.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
@@ -14,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +33,7 @@ import com.bukkeubook.book.manage.model.dto.EmpContDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpContAndEmpDTO;
 import com.bukkeubook.book.manage.model.service.ContractService;
+import com.bukkeubook.book.member.model.dto.UserImpl;
 
 @Controller
 @RequestMapping("/cont")
@@ -130,17 +130,20 @@ public class ContractController {
 	
 	/* 근로계약서 등록 하기 */
 	@PostMapping("/registCont")
-	public ModelAndView registContractEmp(HttpServletRequest request, 
+	public ModelAndView registContractEmp(@AuthenticationPrincipal UserImpl customUser, HttpServletRequest request, 
 											@RequestParam("singleFile") MultipartFile singleFile, 
 											RedirectAttributes rttr, ModelAndView mv, EmpContDTO empCont) {
 		
 		/* 1. 근로 계약서 테이블에 전달 받은 정보 Insert */
-		String memberName = "김유찬";
+		String memberName =  customUser.getEmpName();
 		
 		/* 현재 시각 sql형으로 구하기 */
 		Date today = new Date();
 		long time = today.getTime();
 		java.sql.Date current = new java.sql.Date(time);
+		
+		
+		
 		
 		empCont.setContWriter(memberName);
 		empCont.setContDate(current);
@@ -227,15 +230,19 @@ public class ContractController {
 		
 		ContFileDTO file = contractService.findPkFileCont(id);
 		
-		UrlResource resource = new UrlResource("file:" + file.getCfilePath());
+		System.out.println("여기"+file.getCfilePath() + file.getCfileSavedName());
+		
+		UrlResource resource = new UrlResource("file:" + file.getCfilePath() + "/" + file.getCfileSavedName());
 		
 		String encodedFileName = UriUtils.encode(file.getCfileOrigName(), StandardCharsets.UTF_8);
 		
 		String contentDisposition = "attachment; filename=\"" + encodedFileName + "\"";
 		
 		
-		 return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,contentDisposition).body(resource);
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,contentDisposition).body(resource);
 	}
+	
+	
 	
 	
 

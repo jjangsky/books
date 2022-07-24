@@ -837,13 +837,13 @@ public class DocServiceImpl implements DocService{
 			if(step == 1) {
 				document.setDocStatus1(statusApp);
 				for(int i=0; i<approverList.size(); i++) {
-					approverList.get(i).setAppStatus("전단계 반려");
+					approverList.get(i).setAppStatus("타전결자 반려");
 				}
 				
 			} else if(step == 2) {
 				document.setDocStatus1(statusApp);
 				for(int i=0; i<approverList.size(); i++) {
-					approverList.get(i).setAppStatus("전단계 반려");
+					approverList.get(i).setAppStatus("타전결자 반려");
 				}
 				
 			} else if (step == 3) {

@@ -41,24 +41,25 @@ public class AttendManageController {
 		if(currentPage != null && !"".equals(currentPage)) {
 			pageNo = Integer.parseInt(currentPage);
 		}
-
 		
-		
-		
-		if(attStart == null && attEnd ==null) {
+		/* 날짜 연산처리 */
+		java.sql.Date attEndDay = attEnd;
+		if(!(attEnd == null)) {
+			long endTime = attEnd.getTime() + 86399999;
+			attEndDay = new java.sql.Date(endTime);
 		}
 		
-		int totalCount = attendManageService.selectTotalCount(searchCondition, searchValue, attStart, attEnd);
+		int totalCount = attendManageService.selectTotalCount(searchCondition, searchValue, attStart, attEndDay);
 		
-		int limit = 5;
+		int limit = 10;
 		int buttonAmount = 5;
 		
 		AttendSelectCriteria attendSelectCriteria = null;
 		if(attStart != null && attEnd != null) {
 			if(!"".equals(searchValue)) {
-				attendSelectCriteria = AttendPagenation.getAttendSelectCriteria(pageNo, totalCount, limit, buttonAmount, attStart, attEnd, searchCondition, searchValue);
+				attendSelectCriteria = AttendPagenation.getAttendSelectCriteria(pageNo, totalCount, limit, buttonAmount, attStart, attEndDay, searchCondition, searchValue);
 			}else {
-				attendSelectCriteria = AttendPagenation.getAttendSelectCriteria(pageNo, totalCount, limit, buttonAmount, attStart, attEnd, null, null);
+				attendSelectCriteria = AttendPagenation.getAttendSelectCriteria(pageNo, totalCount, limit, buttonAmount, attStart, attEndDay, null, null);
 			}
 		} else {
 			attendSelectCriteria = AttendPagenation.getAttendSelectCriteria(pageNo, totalCount, limit, buttonAmount);
@@ -69,6 +70,7 @@ public class AttendManageController {
 		List<AttendAndEmpDTO> attendList = attendManageService.searchAttendList(attendSelectCriteria);
 		
 		
+		System.out.println(attendSelectCriteria);
 		System.out.println(attendList);
 
 		System.out.println(totalCount);

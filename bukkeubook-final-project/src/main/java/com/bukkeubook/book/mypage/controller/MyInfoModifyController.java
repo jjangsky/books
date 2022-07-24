@@ -1,6 +1,7 @@
 package com.bukkeubook.book.mypage.controller;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -9,6 +10,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
+import com.bukkeubook.book.member.model.dto.UserImpl;
 import com.bukkeubook.book.mypage.model.dto.ProfPhotoDTO;
 import com.bukkeubook.book.mypage.model.dto.SignDTO;
 import com.bukkeubook.book.mypage.model.service.MyInfoModifyService;
@@ -39,10 +42,10 @@ public class MyInfoModifyController {
 	
 	/* 마이페이지 개인 정보 수정 화면이동 */
 	@GetMapping("/updatePage")
-	public ModelAndView findMyInfo(ModelAndView mv) {
+	public ModelAndView findMyInfo(@AuthenticationPrincipal UserImpl customUser, ModelAndView mv) {
 		
 		/* 개인정보 조회 */
-		int memberCode = 5;
+		int memberCode = customUser.getEmpNo();
 		EmpAndDeptDTO myInfo = myInfoModifyService.findMyInfo(memberCode);
 		System.out.println(myInfo);
 		
@@ -64,23 +67,23 @@ public class MyInfoModifyController {
 	
 	/* 마이페이지 개인 정보 수정하기 */
 	@PostMapping("/modifyInfo")
-	public ModelAndView modifyMyInfo(ModelAndView mv, EmpDTO emp, RedirectAttributes rttr, Locale locale) {
+	public ModelAndView modifyMyInfo(@AuthenticationPrincipal UserImpl customUser, ModelAndView mv, EmpDTO emp, RedirectAttributes rttr, Locale locale) {
 		
-		int memberCode = 5;
+		int memberCode = customUser.getEmpNo();
 		System.out.println(emp);
 		myInfoModifyService.modifyInfoEmp(memberCode, emp);
 
 		rttr.addFlashAttribute("memberInfoUpdate", "회원정보를 정상적으로 수정하였습니다.");
-		mv.setViewName("redirect:/");
+		mv.setViewName("redirect:/main");
 		
 		return mv;
 	}
 	
 	/* 마이페이지 프로필 사진 등록 */
 	@PostMapping("/profileRegist")
-	public ModelAndView registMyProfile(ModelAndView mv, HttpServletRequest request, @RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
+	public ModelAndView registMyProfile(@AuthenticationPrincipal UserImpl customUser, ModelAndView mv, HttpServletRequest request, @RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
 		
-		int memberCode = 5;
+		int memberCode = customUser.getEmpNo();
 		
 		String root = System.getProperty("user.dir");
 		System.out.println("root까지의 경로 : " + root);
@@ -110,7 +113,7 @@ public class MyInfoModifyController {
 			myInfoModifyService.registProfile(profile);
 			
 			rttr.addFlashAttribute("successMessage", "프로필 사진 변경을 성공하셨습니다.");
-			mv.setViewName("redirect:/");
+			mv.setViewName("redirect:/main");
 			
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
@@ -128,9 +131,9 @@ public class MyInfoModifyController {
 	
 	/* 마이페이지 서명 변경 */
 	@PostMapping("signModify")
-	public ModelAndView modifySign(ModelAndView mv, HttpServletRequest request, @RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
+	public ModelAndView modifySign(@AuthenticationPrincipal UserImpl customUser, ModelAndView mv, HttpServletRequest request, @RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
 		
-		int memberCode = 5;
+		int memberCode = customUser.getEmpNo();
 		
 		String root = System.getProperty("user.dir");
 		System.out.println("root까지의 경로 : " + root);
@@ -155,7 +158,7 @@ public class MyInfoModifyController {
 			myInfoModifyService.modifySign(sign);
 			
 			rttr.addFlashAttribute("successMessage", "서명 변경을 성공하셨습니다.");
-			mv.setViewName("redirect:/");
+			mv.setViewName("redirect:/main");
 			
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();

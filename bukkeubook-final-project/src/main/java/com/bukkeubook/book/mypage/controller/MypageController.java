@@ -8,6 +8,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import com.bukkeubook.book.common.paging.DateSelectCriteria;
 import com.bukkeubook.book.manage.model.dto.AppVacationDTO;
 import com.bukkeubook.book.manage.model.dto.AttendDTO;
 import com.bukkeubook.book.manage.model.dto.DayOffDTO;
+import com.bukkeubook.book.member.model.dto.UserImpl;
 import com.bukkeubook.book.mypage.model.dto.CalendarDTO;
 import com.bukkeubook.book.mypage.model.service.MypageService;
 
@@ -39,9 +41,9 @@ public class MypageController {
 	
 	/* 캘린더 전체 조회 */
 	@GetMapping("/calendar")
-	public ModelAndView findMyCalendar(ModelAndView mv) {
+	public ModelAndView findMyCalendar(@AuthenticationPrincipal UserImpl customUser, ModelAndView mv) {
 		
-		int memberCode = 5;
+		int memberCode = customUser.getEmpNo();
 		List<CalendarDTO> calendar = mypageService.findMyCalendar(memberCode);
 		System.out.println(calendar);
 		
@@ -57,9 +59,9 @@ public class MypageController {
 	
 	/* 캘린더 일정 등록 */
 	@PostMapping("/insertCal")
-	public ModelAndView insertMyCalendar(ModelAndView mv, CalendarDTO newCalendar, RedirectAttributes rttr, Locale locale) {
+	public ModelAndView insertMyCalendar(@AuthenticationPrincipal UserImpl customUser, ModelAndView mv, CalendarDTO newCalendar, RedirectAttributes rttr, Locale locale) {
 		
-		int memberInfo = 5;
+		int memberInfo = customUser.getEmpNo();
 		newCalendar.setEmpNo(memberInfo);
 		System.out.println(newCalendar);
 		
@@ -127,33 +129,35 @@ public class MypageController {
 
 	/* 마이페이지 연차 조회 */
 	@GetMapping("/myAnnual")
-	public ModelAndView findMyAnnualList(ModelAndView mv, HttpServletRequest request, Date attStart, Date attEnd) {
+	public ModelAndView findMyAnnualList(@AuthenticationPrincipal UserImpl customUser, ModelAndView mv, HttpServletRequest request, Date attStart, Date attEnd) {
 
 		String currentPage = request.getParameter("currentPage");
 		int pageNo = 1;
-		int memberCode = 5;
+		int memberCode = customUser.getEmpNo();
 		String approve = "승인";
-		System.out.println("mmmmmmmmmmmmmmmmmmmmmmmm" + attStart);
-		System.out.println("mmmmmmmmmmmmmmmmmmmmmmmm" + attEnd);
 		
 		if(currentPage != null && !"".equals(currentPage)) {
 			pageNo = Integer.parseInt(currentPage);
-			
-			System.err.println("pageNo ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ " + pageNo);
 		}
 		
-		int totalCount = mypageService.selectTotalCount(memberCode, approve, attStart, attEnd);
-		System.out.println("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm" + totalCount);
+		/* 날짜 연산처리 */
+		
+		java.sql.Date attEndDay = attEnd;
+		if(!(attEnd == null)) {
+			long endTime = attEnd.getTime() + 86399999;
+			attEndDay = new java.sql.Date(endTime);
+		}
+		
+		int totalCount = mypageService.selectTotalCount(memberCode, approve, attStart, attEndDay);
 		
 		int limit = 3;
 		int buttonAmount = 5;
 		
 		java.sql.Date startDate = attStart;
-		java.sql.Date endDate = attEnd;
 		
 		DateSelectCriteria dateSelectCriteria = null;
 		if(startDate != null) {
-			dateSelectCriteria = DatePagenation.getDateSelectCriteria(pageNo, totalCount, limit, buttonAmount, startDate, endDate);
+			dateSelectCriteria = DatePagenation.getDateSelectCriteria(pageNo, totalCount, limit, buttonAmount, startDate, attEndDay);
 		} else {
 			dateSelectCriteria = DatePagenation.getDateSelectCriteria(pageNo, totalCount, limit, buttonAmount);
 		}
@@ -161,9 +165,6 @@ public class MypageController {
 		
 		List<AppVacationDTO> vacation = mypageService.findMyVacation1(memberCode, dateSelectCriteria, approve);
 		System.out.println(vacation);
-		
-//		List<AppVacationDTO> vacationList =  mypageService.findMyAnnualList(memberCode, approve);
-//		System.out.println(vacationList);
 		
 		List<DayOffDTO> dayoffList = mypageService.findMyDayOffList(memberCode);
 		System.out.println(dayoffList);
