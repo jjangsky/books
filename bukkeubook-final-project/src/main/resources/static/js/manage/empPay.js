@@ -60,20 +60,6 @@ window.onload = function() {
 		});
 	});
 
-	/*$("#clear").click(function(){
-		$("#account1").val("");
-		$("#acco1").val("");
-		$("#deptName1").val("");
-		$("#account2").val("");
-		$("#acco2").val("");
-		$("#deptName2").val("");
-		$("#account3").val("");
-		$("#acco3").val("");
-		$("#deptName3").val("");
-		$("#stepNo").val("");
-		$("#step").text("");
-	})*/
-
 	$("#empList").change(function(){
 		let empNo = $(this).val();
 		let empName = $("#empList option:selected").text();
@@ -167,13 +153,96 @@ window.onload = function() {
 					Swal.fire({
 						icon: 'warning',
 						title: '직원 선택',
-						text: '문서의 제목을 입력해주세요.'
+						text: '직원을 선택해주세요.'
+					})
+				} else {
+					check++;
+				}
+				if(date.length < 1 || date == "" || date == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '지급일 선택',
+						text: '지급일을 선택해주세요.'
+					})
+				} else {
+					check++;
+				}
+				if(salBase.length < 1 || salBase == "" || salBase == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '기본급 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salPension.length < 1 || salPension == "" || salPension == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '국민연금 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salHealth.length < 1 || salHealth == "" || salHealth == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '건강보험 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salCare.length < 1 || salCare == "" || salCare == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '요양보험 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salHire.length < 1 || salHire == "" || salHire == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '고용보험 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salIncTax.length < 1 || salIncTax == "" || salIncTax == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '근로소득세 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salLocalTax.length < 1 || salLocalTax == "" || salLocalTax == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '지방소득세 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salTotalMinus.length < 1 || salTotalMinus == "" || salTotalMinus == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '공제액 합계 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salRealAmount.length < 1 || salRealAmount == "" || salRealAmount == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '차인지급액 확인 요망',
 					})
 				} else {
 					check++;
 				}
 				
-				$("#insertForm").submit();
+				if(check ==11){
+					$("#insertForm").submit();
+				}
 			}
 		})
 	});

@@ -90,13 +90,16 @@ public class EmpPayService {
 		List<PayAndEmpAndDept> payList = new ArrayList<PayAndEmpAndDept>();
 		if(searchValue != null) {
 
-//			if("empName".equals(selectCriteria.getSearchCondition())) {
-//				payList = empPayRepository.findByEmpNameContaining(selectCriteria.getSearchValue(), paging);
-//			}
-			
-			if("salMonth".equals(selectCriteria.getSearchCondition())) {
-				payList = empPayRepository.findBySalMonthContaining(selectCriteria.getSearchValue(), paging);
+			if("deptName".equals(selectCriteria.getSearchCondition())) {
+				
+				payList = empPayRepository.findAllByEmpInfo_Dept_DeptNameContaining(selectCriteria.getSearchValue(), paging);
 			}
+			
+			if("empName".equals(selectCriteria.getSearchCondition())) {
+				
+				payList = empPayRepository.findAllByEmpInfo_EmpNameContaining(selectCriteria.getSearchValue(), paging);
+			}
+			
 		} else {
 			payList = empPayRepository.findAll(paging).toList();
 		}
@@ -154,9 +157,18 @@ public class EmpPayService {
 	}
 
 	/* 급여 등록 */
+	@Transactional
 	public void insertNewSalary(SalaryDTO salary) {
 
 		salaryRepository.save(modelMapper.map(salary, Salary.class));
+		
+	}
+
+	/* 급여내역 삭제 */
+	@Transactional
+	public void deleteSalary(int salNo) {
+
+		salaryRepository.deleteById(salNo);
 		
 	}
 

@@ -153,5 +153,21 @@ public class EmpPayController {
 		return salaryInfo;
 		
 	}
+	
+	/* 급여내역 삭제 */
+	@GetMapping("paydelete/{num}")
+	public ModelAndView deleteSalary(ModelAndView mv, @PathVariable String num, RedirectAttributes rttr) {
+		
+		int salNo = Integer.valueOf(num);
+
+		empPayService.deleteSalary(salNo);
+		
+		rttr.addFlashAttribute("message", "성공");
+		
+		mv.setViewName("redirect:/empPay/empPayList");
+		
+		return mv;
+		
+	}
 		
 }
