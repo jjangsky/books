@@ -30,7 +30,6 @@ import com.bukkeubook.book.manage.model.service.EmpService;
 import com.bukkeubook.book.manage.model.service.SignService;
 import com.bukkeubook.book.mypage.model.service.MyInfoModifyService;
 
-
 @Controller
 @RequestMapping("/manage") 
 public class EmployeeController {
@@ -55,8 +54,8 @@ private final MyInfoModifyService myInfoModifyService;
 
 	/* 사원조회 , 페이징, 검색기능 */
 	@GetMapping("/empList")
-	public ModelAndView searchPage(HttpServletRequest request, ModelAndView mv) {  //ModelAndView 뷰 리졸버의 역할 _리턴할 페이지 설정 , 보내는객체
-		System.out.println("ddddddddddddddddddddddddddddddddddddd");
+	public ModelAndView searchPage(HttpServletRequest request, ModelAndView mv) {  // ModelAndView 뷰 리졸버의 역할 _리턴할 페이지 설정 , 보내는객체
+//		System.out.println("ddddddddddddddddddddddddddddddddddddd");
 		String currentPage = request.getParameter("currentPage");
 		int pageNo = 1;
 
@@ -142,12 +141,12 @@ private final MyInfoModifyService myInfoModifyService;
 		
 		int number = Integer.valueOf(empNo);
 		
-		System.out.println("컨트롤러에서       " + empNo);
-		System.out.println("컨트롤러에서       " + number);
+//		System.out.println("컨트롤러에서       " + empNo);
+//		System.out.println("컨트롤러에서       " + number);
 		
 		EmpAndDeptDTO emp  = empService.searchEmpDetail(number);
 		
-		System.out.println("컨트롤러에서       " + emp);
+//		System.out.println("컨트롤러에서       " + emp);
 		
 		mv.addObject("emp", emp);
 		mv.setViewName("/manage/employee/leaveEmpDetail");
@@ -171,11 +170,11 @@ private final MyInfoModifyService myInfoModifyService;
 										RedirectAttributes rttr) 
 	{
 		
-		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
+//		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
 		/* 여기는 왜 그럴까요? */
 		String empAddress = "주소";
 		empDTO.setEmpAddress(empAddress);	
-		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
+//		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
 		
 		/* 프로필 사진, 도장 사진을 제외한 나머지 회원 정보 insert */
 		empService.insertNewEmp(empDTO);
@@ -239,7 +238,6 @@ private final MyInfoModifyService myInfoModifyService;
 			/* 실패 시 파일 삭제 */
 			new File(filePath + "/" + saveName).delete();
 		}
-		
 		
 		/* 서명 사진 저장 처리 */
 		try {
@@ -323,7 +321,7 @@ private final MyInfoModifyService myInfoModifyService;
 		public ModelAndView modifySign(ModelAndView mv, HttpServletRequest request,
 				@RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
 			
-			int empNo = 5;
+			int empNo = Integer.valueOf(request.getParameter("empNo"));
 			
 //			System.out.println("야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야");
 			
@@ -372,7 +370,7 @@ private final MyInfoModifyService myInfoModifyService;
 		public ModelAndView modifyProfile(ModelAndView mv, HttpServletRequest request, 
 				@RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
 			
-			int memberCode = 5;
+			int empNo = Integer.valueOf(request.getParameter("empNo"));
 			
 			String root = System.getProperty("user.dir");
 			System.out.println("root까지의 경로 : " + root);
@@ -389,7 +387,7 @@ private final MyInfoModifyService myInfoModifyService;
 				singleFile.transferTo(new File(filePath + "/" + saveName));
 				
 				ProfPhotoDTO profile = new ProfPhotoDTO();
-				profile.setEmpNo(memberCode);
+				profile.setEmpNo(empNo);
 				profile.setPhotoOrigName(originFileName);
 				profile.setPhotoSavedName(saveName);
 				profile.setPhotoSavedPath(filePath);

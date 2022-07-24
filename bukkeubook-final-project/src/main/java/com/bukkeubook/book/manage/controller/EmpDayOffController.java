@@ -37,7 +37,7 @@ public class EmpDayOffController {
    }
    
    /* 사원 연차 상세조회 */
-	@GetMapping("/empDayOffDetail/{empNo}")
+	@GetMapping("empDayOff/empDayOffDetail/{empNo}")
 	public ModelAndView empDayOffDetail(ModelAndView mv, @PathVariable String empNo){
 		
 		int number = Integer.valueOf(empNo);
@@ -54,35 +54,4 @@ public class EmpDayOffController {
 		return mv;
 	}
    
-//	@GetMapping("/empDayOffList")
-//	public ModelAndView updateDayOffInfo(DayOffDTO dayOffDTO, int empNo, ModelAndView mv) {
-//		
-//		List<DayOffDTO> dayOffList = empDayOffService.findDayOffByNo(empNo);
-//		
-//		mv.addObject("dayOffList", dayOffList);
-//		mv.setViewName("/empAnnual/empDayOffDetail");
-//		
-//		System.out.println("나오니?" + dayOffList);
-//		System.out.println("나오니?" + dayOffList);
-//		System.out.println("나오니?" + dayOffList);
-//		System.out.println("나오니?" + dayOffList);
-//		System.out.println("나오니?" + dayOffList);
-//		System.out.println("나오니?" + dayOffList);
-//		System.out.println("나오니?" + dayOffList);
-//		System.out.println("나오니?" + dayOffList);
-//		System.out.println("나오니?" + dayOffList);
-//		
-//		return mv;
-//	}
-	
-//	@Transactional
-//	@PostMapping("/empDayOffList")
-//	public ModelAndView modifyDayOffInfo(RedirectAttributes rttr, DayOffDTO dayOffDTO, ModelAndView mv, @ModelAttribute AppVacationDTO appVacationDTO) {
-//		
-//		empDayOffService.modifyDayOffInfo(dayOffDTO, appVacationDTO);
-//		
-//		mv.setViewName("redirect:/empAnnual/empDayOffList");
-//		return mv;
-//		
-//	};
 }

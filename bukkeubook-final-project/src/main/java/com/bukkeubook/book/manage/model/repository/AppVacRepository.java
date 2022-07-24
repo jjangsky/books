@@ -6,13 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.bukkeubook.book.manage.model.entity.AppVacation;
+import com.bukkeubook.book.manage.model.entity.AppVacationAndEmp;
 
 @Repository
+// Repository랑 Service는 이름 맞출 것
 public interface AppVacRepository extends JpaRepository<AppVacation, Integer> {
 
-//	List<AppVacation> findAppVacByNo(int vacNo);
-
-	AppVacation findByVacNo(int vacNo);
-
+	List<AppVacationAndEmp> findAppVacByVacNo(int vacNo);
 
 }

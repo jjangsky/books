@@ -10,8 +10,9 @@ public class DamBookDTO implements Serializable{
 //	BK_NO	VARCHAR2(100 BYTE)	도서코드
 //	DAM_AMOUNT	NUMBER	훼손수량
 	private String bkNo;		// 도서코드
-	private int damAmount;	// 훼손수량
+	private int damAmount;		// 훼손수량
 	private BookDTO book;
+	
 	public DamBookDTO() {
 	}
 	public DamBookDTO(String bkNo, int damAmount, BookDTO book) {

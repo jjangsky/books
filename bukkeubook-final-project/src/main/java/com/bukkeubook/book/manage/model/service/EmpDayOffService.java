@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.bukkeubook.book.manage.model.dto.AppVacationDTO;
 import com.bukkeubook.book.manage.model.dto.DayOffDTO;
+import com.bukkeubook.book.manage.model.dto.joinDTO.AppVacationAndEmpDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.DayOffAndEmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.AppVacation;
+import com.bukkeubook.book.manage.model.entity.AppVacationAndEmp;
 import com.bukkeubook.book.manage.model.entity.DayOff;
 import com.bukkeubook.book.manage.model.entity.DayOffAndEmpAndDept;
 import com.bukkeubook.book.manage.model.repository.AppVacRepository;
@@ -57,36 +59,45 @@ public class EmpDayOffService {
   
 	/****************************************************************/
    /* 휴가 신청이랑 연결된 트랜잭션 */
-//	@Transactional
-//	public List<AppVacationDTO> findAppVacByEmpNo (int vacNo) {
-//		List<AppVacation> appVacList = appVacRepository.findAppVacByNo(vacNo);
-//		return appVacList.stream().map(appVac -> modelMapper.map(appVac, AppVacationDTO.class)).collect(Collectors.toList());
-//	}
-//	
-//   @Transactional
-//   public void updateAppVac(AppVacationDTO appVacationDTO) {
-//		
-//	   AppVacation appVac = appVacRepository.findByVacNo(appVacationDTO.getVacNo());
-//	   appVac.setVacStatus(appVacationDTO.getVacStatus());
-//	   appVac.setVacStartDate(appVacationDTO.getVacStartDate());
-//	   appVac.setVacEndDate(appVacationDTO.getVacEndDate());
-//	   
-//	   System.out.println("^____________________^" + appVac);
-//		
-//	}
+	@Transactional
+   public List<AppVacationAndEmpDTO> findAppVacByVacNo(int vacNo) {
+	   
+	   List<AppVacationAndEmp> appVacList = appVacRepository.findAppVacByVacNo(vacNo);
+	   return appVacList.stream().map(appVac -> modelMapper.map(appVacList, AppVacationAndEmpDTO.class)).collect(Collectors.toList());
+	   
+	   }
 
-//   @Transactional
-//	public void modifyDayOffInfo(DayOffDTO dayOffDTO) {
-//		
-//	   DayOff dayOff = dayOffRepository2.findByEmpNo(dayOffDTO.getEmpNo());
-//	   dayOff.setDoffAmount(dayOffDTO.getDoffAmount());		// 총 연차 횟수	
-//	   dayOff.setDoffRemain(dayOff.getDoffRemain());		// 잔여 연차 횟수
-//	   dayOff.setDoffUse(dayOffDTO.getDoffUse());			// 사용 연차 횟수
-//	   
-//	   System.out.println("^____________________^" + dayOff);
-//	}
-	/****************************************************************/
+	/****************************************************************/	
+	@Transactional
+	public DayOffAndEmpAndDeptDTO findByEmpNo(int empNo, int doffNo) {
+		DayOffAndEmpAndDept dayOffList = dayOffRepository2.findByEmpNo(empNo);
+		int nowDayOffAmount = dayOffList.getDoffAmount();
+		int nowDayOffRemain = dayOffList.getDoffRemain();
+		int nowDayOffUse = dayOffList.getDoffUse();
+		dayOffList.setDoffRemain(nowDayOffAmount - nowDayOffUse);
+		
+		return modelMapper.map(dayOffList, DayOffAndEmpAndDeptDTO.class);
+	}
 
+//  empNo          사원번호
+//  doffAmount     연차횟수
+//  doffRemain     잔여연차횟수
+//  doffUse        사용연차횟수
+	
+	@Transactional
+	public void findDayOffEmpNo(int empNo, int doffAmount, int doffRemain, int doffUse) {
+		List<AppVacationAndEmp> appVac = appVacRepository.findAppVacByVacNo(empNo);
+		java.sql.Date vacStartDate = appVac.get(0).getVacStartDate();
+		java.sql.Date vacEndDate = appVac.get(0).getVacEndDate();
+		
+		long vacStartTime = vacStartDate.getTime();
+		long vacEndTime = vacEndDate.getTime();
+		long test = (vacEndTime - vacStartTime);
+		long day = test * 3600 * 24 * 1000;
+		
+		System.out.println("nsdjkfhwsafbjks;hi;jsdfnlsk'" + day);
+	}
+	
 }
 
 

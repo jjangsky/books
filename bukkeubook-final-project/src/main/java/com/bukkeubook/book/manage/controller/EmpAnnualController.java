@@ -100,42 +100,58 @@ public class EmpAnnualController {
 	}
 
 	/****************************************************************/
-	
 	/* 승인 클릭시 연차 횟수 차감 트랜잭션 */
 	// 이 경우 연결되는 Service는 DayOffService에서 처리...
 	// 휴가 -> 연차 요청
-//	@GetMapping("/empDayOffUpdate")
-//	public ModelAndView updateAppVacInfo(AppVacationDTO appVacationDTO, int vacNo, ModelAndView mv) {
-//
-//		List<AppVacationDTO> appVacList = empDayOffService.findAppVacByEmpNo(vacNo);
+	
+//	@GetMapping("/appVacAmount")
+//	public ModelAndView updateAppVacInfo(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
 //		
-//		mv.addObject("appVacList", appVacList);		// 보내는 객체 설정
-//		mv.setViewName("/empDayOffDetail/{vacNo}");	// 리턴할 페이지 설정
+//		int vacNo = Integer.valueOf(request.getParameter("vacNo"));
 //		
-//		System.out.println("나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?" + vacNo);
+//		AppVacationAndEmpDTO appVacList = empDayOffService.findAppVacByVacNo(vacNo);
+//		
+//		System.out.println(appVacList + "휴가보내줘휴가보내줘휴가보내줘휴가보내줘휴가보내줘휴가보내줘휴가보내줘휴가보내줘휴가보내줘휴가보내줘휴가보내줘");
+//		
+//		mv.addObject("appVacList", appVacList);					// 보내는 객체 설정
+//		mv.setViewName("manage/empAnnual/restDetailSelect");	// 리턴할 페이지 설정
+//		
+////		System.out.println("나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?나오니?" + vacNo);
 //		
 //		return mv;
 //	}
-//	
-//	@PostMapping("/empDayOffUpdate")
-//	public ModelAndView updateAppVac(AppVacationDTO appVacationDTO, int vacNo, ModelAndView mv, RedirectAttributes rttr) {
-//		
-//		empDayOffService.updateAppVac(appVacationDTO);
-//		rttr.addFlashAttribute("updateSuccessMessage", "성공");
-//		mv.setViewName("redirect:/empAnnual/restDetailSelect/?vacNo=" + appVacationDTO.getVacNo());
-//		return mv;
-//		
-//	}
-//	
-//	@PostMapping("/empDayOffUpdate2")
-//	public ModelAndView modifyDayOffInfo(DayOffDTO dayOffDTO, ModelAndView mv, RedirectAttributes rttr) {
-//		
-//		empDayOffService.modifyDayOffInfo(dayOffDTO);
-//		rttr.addFlashAttribute("updateSuccessMessage", "성공");
-//		mv.setViewName("redirect:/empDayOffDetail/{empNo}/");
-//		return mv;
-//	}
-
+	
+	
+	@GetMapping("/dayOffUpdate")
+	public ModelAndView dayOffUpdate(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+		
+		int empNo = Integer.valueOf(request.getParameter("empNo"));				// 사원 번호
+//		int doffNo = Integer.valueOf(request.getParameter("doffNo")); 			// 연차 관리 번호
+//		int doffAmount = Integer.valueOf(request.getParameter("doffAmount"));	// 연차횟수
+//		int doffRemain = Integer.valueOf(request.getParameter("doffRemain"));	// 잔여 연차 횟수
+//		int doffUse = Integer.valueOf(request.getParameter("doffUse")); 		// 사용 연차 횟수
+		
+		System.out.println(empNo + "휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가");
+		System.out.println(empNo + "휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가");
+		System.out.println(empNo + "휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가");
+		System.out.println(empNo + "휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가");
+		System.out.println(empNo + "휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가");
+		System.out.println(empNo + "휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가");
+		System.out.println(empNo + "휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가");
+		System.out.println(empNo + "휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가");
+		System.out.println(empNo + "휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가휴가");
+		
+		
+		
+//		DayOffAndEmpAndDeptDTO dayOffList = empDayOffService.findByEmpNo(empNo, doffNo);
+//		empDayOffService.findDayOffEmpNo(empNo, doffAmount, doffRemain, doffUse);
+		
+		
+		rttr.addFlashAttribute("updateSuccessMessage", "성공");
+		mv.setViewName("redirect:/manage/empDayOff/empDayOffDetail");
+		return mv;
+		
+	}
 
 	/****************************************************************/
 	

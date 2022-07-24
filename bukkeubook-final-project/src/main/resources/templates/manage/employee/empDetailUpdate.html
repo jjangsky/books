@@ -48,10 +48,10 @@
                 변경 : 
                  <select class="sel3" name="deptCode2" >
                   <option value="">None</option>
-                  <option value="2">2.재무부</option>
-                  <option value="3">3.인사부</option>
-                  <option value="4">4.총무부</option>
-                  <option value="5">5.도서물류부</option>
+                  <option value="1">① 재무부</option>
+                  <option value="2">② 인사부</option>
+                  <option value="3">③ 총무부</option>
+                  <option value="4">④ 도서물류부</option>
                 </select> 
                 </td>
               </tr>
@@ -132,6 +132,7 @@
               <div class="card-body">
                 <h4 class="card-title" style="text-align: center;">Profile</h4>
                 <form action="/manage/detailUpdate2" method="post" encType="multipart/form-data" id="proform">
+                <input id="test2" type="hidden" name="empNo" value="">
                 <input type="file" name="singleFile" style="margin-left: 25%;" id="proInput" required>
                 <input type="button" id="probtn" class="btn btn-primary" value="수정하기" style="margin-left: 25%; margin-top:10px;">
                 </form>
@@ -147,10 +148,11 @@
                   <img class="card-img-top" th:src="@{/images/sign/{signFile}(signFile=${mySign.signSavedName})}" alt="Card image" style="width:50%; height: 250px; margin-left: 25%;">
                   <div class="card-body">
                     <h4 class="card-title" style="text-align: center;">Sign</h4>
-	                    <form action="/manage/detailUpdate23" method="post" id="nameform" encType="multipart/form-data">
-			                <input type="file" name="singleFile" style="margin-left: 25%;" id="nameInput" required>
-			                <input type="button" id="namebtn" class="btn btn-primary" value="수정하기" style="margin-left: 25%; margin-top:10px;">
-		                </form>
+                       <form action="/manage/detailUpdate23" method="post" id="nameform" encType="multipart/form-data">
+                         <input id="test1" type="hidden" name="empNo" value="">
+                         <input type="file" name="singleFile" style="margin-left: 25%;" id="nameInput" required>
+                         <input type="button" id="namebtn" class="btn btn-primary" value="수정하기" style="margin-left: 25%; margin-top:10px;">
+                      </form>
                   </div>
                 </div>
             </div>
@@ -279,6 +281,22 @@
              })
          });
      });
+        
+        /* 사번으로 이미지 불러오기 */
+        var empNo = "[[${emp.empNo}]]";
+        console.log(empNo);
+        $('#test1').val(empNo);
+        /* var a = $('#test1').val();
+        console.log(a); */
+        
+        var empNo = "[[${emp.empNo}]]";
+        console.log(empNo);
+        $('#test2').val(empNo);
+        /* var a = $('#test2').val();
+        console.log(a); */
+        
+        
       </script> 
+      
 </body>
 </html>

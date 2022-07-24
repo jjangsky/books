@@ -23,6 +23,7 @@
         <br>
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <form action="/empAnnual/dayOffUpdate" id ="appVactoDayOff">
         <div class="emp rest detail">
           <table border="1px">
             <tbody>
@@ -32,7 +33,7 @@
               </tr>
               <tr>
                 <td class="deemp3">사원번호</td>
-                <td th:text="${ appvacAndEmp.empAndDept.getEmpNo() }"></td>
+                <td><input name="empNo" th:value="${ appvacAndEmp.empAndDept.getEmpNo() }"></td>
               </tr>
               <tr>
                 <td class="deemp3">직책</td>
@@ -58,14 +59,14 @@
             </tbody>
             </table>
           </div>
-	          <button type="button" class="access btn" onclick="accessClick()">승인</button>
+	          <button type="button" class="access btn updateBtn">승인</button>
 	          <button type="button" class="cancle btn" th:onclick="location.href='/empAnnual/restSelect'">목록으로</button>
 	          <button type="button" class="cancle btn" onclick="delayClick()">반려</button>
+	     </form>
           
     <script th:inline="javascript"> 
-   
-     $().ready(function accessClick() {
-		    $(".access.btn").click(function () {
+
+		    $(".updateBtn").click(function(){
 		        Swal.fire({
 		            title: '승인 하시겠습니까?',
 		            text: "승인 버튼을 누르면 승인이 됩니다.",
@@ -76,13 +77,11 @@
 		            confirmButtonText: '승인',
 		            cancelButtonText: '취소'
 		        }).then((result) => {
-		            if (result.isConfirmed) {
-		            	location = "/empAnnual/empDayOffList";
-		            }
-		        })
-		    });
-		});
+		        	$("#appVactoDayOff").submit();
+		        } );
+		      } );
 
+		    
      function delayClick() {
 
          let text;
@@ -101,38 +100,6 @@
        }
        
      </script>
-     
-<!--      
-              	 const delay = ""
-              $(".cancle.btn").click(function () {
-                 	Swal.fire({
-         	        title: '반려하시겠습니까?',
-         	        text: '반려 사유를 입력해주세요',
-         	        input: 'text',
-         	        inputPlaceholder: '사유 입력란'
-         	        
-         	    }).then((value) => {
-                     delay = swal("You typed : " + value);
-         	    	$('#reason').text(delay);
-                     console.log(delay);
-                 });
-         	})
 
-      	(async () => {
-    	    const { value: getName } = await
-    	    Swal.fire({
-    	        title: '당신의 이름을 입력하세요.',
-    	        text: '그냥 예시일 뿐이니 정보유출 같은건 없습니다.',
-    	        input: 'text',
-    	        inputPlaceholder: '이름을 입력..'
-    	    })
-
-    	    // 이후 처리되는 내용.
-    	    if (getName) {
-    	        Swal.fire(`: ${getName}`)
-    	    }
-    	})() -->
-
-        </script>
 </body>
 </html>
