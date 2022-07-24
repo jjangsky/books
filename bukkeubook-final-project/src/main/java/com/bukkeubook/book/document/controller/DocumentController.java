@@ -534,6 +534,8 @@ public class DocumentController {		// 전자결재 컨트롤러
 		
 		System.out.println("Controller         " + vacation);
 		
+		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		
 		mv.setViewName("redirect:/document/allVacationList");
 		
 		return mv;
@@ -574,7 +576,9 @@ public class DocumentController {		// 전자결재 컨트롤러
 		
 		docService.insertNewCancelVacation(cancVaca);
 		
-		mv.setViewName("redirect:/document/allVacationList");
+		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		
+		mv.setViewName("redirect:/document/allCancelVacationList");
 		
 		return mv;
 		

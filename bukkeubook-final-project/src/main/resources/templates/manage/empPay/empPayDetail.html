@@ -4,23 +4,25 @@
   <head>
      <title>상세 급여 계산내역 조회</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link rel="stylesheet" href="../css/style.css">
       <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
       <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
       <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
-	
+	<script> 
+     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
+    </script> 
+	<script src="/js/manage/empPayDetail.js"></script>
 	 <h2 class="mb-4" id="main-text">급여관리</h2>
         <hr><br><br>
-        <h5 class="mb-4" id="sub-text">상세 급여 계산내역 조회</h5>
+        <h5 class="mb-4" id="sub-text">상세 급여</h5>
         <br>
-	<div class="emp detail list2"> 
-          <table border="2">
+	<div class="emp detail list2">
+		<input type="hidden" id="salNo" th:value="${pay.salNo}"> 
+          <table border="1">
           <thead>
             <tr class="detailtitle3">
               <td colspan="2" th:text="${ pay.empAndDept.dept.deptName }"></td>
@@ -82,28 +84,10 @@
            </table>
            <br> <br>
            <div id="newBookDiv">
-      	  <button type="button" id="updatePay" class="modify btn" th:onclick="'location.href = \'' +  @{/empPay/payUpdate/{salNo}(salNo=${pay.salNo})} + '\''">수정하기</button>
-          <button type="button" class="list btn backBtn">목록으로</button> 
+      	  <button type="button" id="delete" class="modify btn">삭제</button>
+          <button type="button" id="backBtn" class="list btn backBtn">목록으로</button> 
     	</div>
        </div>  
-        <script th:inline="javascript">
-        $('.backBtn').click(function(){
-             window.history.back(); 
-           }); 
-       
-          $('.updateBtn').click(function(){
-           }); 
-        const updateSuccessmessage = "[[${updateSuccessMessage}]]"
-                   
-        if(updateSuccessmessage){
-             Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: '정보수정이 성공적으로 완료되었습니다!',
-             })
-        } 
-
-      </script>
 
 	</body>
 </html>

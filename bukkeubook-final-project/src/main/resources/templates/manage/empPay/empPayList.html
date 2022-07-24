@@ -7,40 +7,40 @@
       <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
       <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
       <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
+	<script> 
+     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
+    </script> 
+	<script>
+		const successMessage = "[[${ message }]]";
+		if(successMessage){
+			 Swal.fire({
+	                icon: 'success',
+	                title: '성공!',
+	                text: '성공적으로 완료되었습니다!',
+	            })
+		}
+	</script>
 	 <h2 class="mb-4" id="main-text">급여관리</h2>
         <hr><br><br>
-        <h5 class="mb-4" id="sub-text">급여 계산내역 조회</h5>
+        <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/empPay/empPayList">급여 계산내역 조회</a></h5>
         <br>
         <div class="search">
           <form action="/empPay/empPayList" method="get">
             <button class="search btn" type="submit">검색</button>
             <input type="hidden" name="currentPage" value="1">
-            <input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}" class="search in">
-            <select class="search select" th:with="searchCondition = ${selectCriteria.searchCondition}"  id="searchCondition" name="searchCondition">
-            <option value="select">분류</option>
-              <option value="salMonth" th:selected="${ searchCondition } == 'salMonth'">지급월</option>
-<!--           <option value="empName" th:selected="${ searchCondition } == 'empName'">사원이름</option>  -->
+            <input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}" class="search in" required>
+            <select class="search select" th:with="searchCondition = ${selectCriteria.searchCondition}"  id="searchCondition" name="searchCondition" style="width:80px; height:42px;" required>
+              <option value="">분류</option>
+              <option value="deptName" th:selected="${ searchCondition } == 'deptName'">부서</option>
+	          <option value="empName" th:selected="${ searchCondition } == 'empName'">사원이름</option>
            </select>
          </form>
        </div>
-<!--        <select class="search select" required>
-              <option value="month">월</option>
-              <option value="jan">1월</option>
-              <option value="feb">2월</option>
-              <option value="mar">3월</option>
-              <option value="apr">4월</option>
-              <option value="may">5월</option>
-              <option value="jun">6월</option>
-              <option value="jul">7월</option>
-              <option value="aug">8월</option>
-              <option value="sep">9월</option>
-              <option value="oct">10월</option>
-              <option value="nov">11월</option>
-              <option value="dec">12월</option>
-            </select> -->
 
         <div id="textTable" style="text-align:-webkit-center">
           <table id="sampleTable">
@@ -58,8 +58,8 @@
             <tbody>
               <tr th:each="pay : ${ payList }" class="hover">
               	<td th:text="${ pay.salMonth }"></td>
-             	<td th:text="${ pay.empAndDept.dept.deptName }"> 
-                <td th:text="${ pay.empAndDept.empName  }"></td>
+             	<td th:text="${ pay.empInfo.dept.deptName }"> 
+                <td th:text="${ pay.empInfo.empName  }"></td>
                 <td th:text="${ pay.salBase }"></td>
                 <td th:text="${ pay.salTotalMinus }"></td>
                 <td th:text="${ pay.salRealAmount }"></td>
@@ -69,24 +69,15 @@
             </table>
             <br><br>
             <div id="newEmpDiv">
-         	 <button type="button" class="insert btn newbtn">등록</button>
+         	 <button type="button" id="newbtn" class="insert btn newbtn">등록</button>
           </div> 
           <div th:replace="/manage/empPay/empPaypaging.html"></div>
         </div>
+        <br><br><br><br><br><br>
         <script>
-
- 	$('.newbtn').click(function(){
-		location.href='/empPay/empPayInsert';
-	}); 
-	const insertSuccessmessage = "[[${insertSuccessMessage}]]" 
-	
-	if(insertSuccessmessage){
-		Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: '등록이 성공적으로 완료되었습니다!',
-        })
-	}
-	</script> 
+        	$("#newbtn").click(function(){
+        		location.href = "/empPay/empPayInsert"
+        	})
+        </script>
 	</body>
 </html>

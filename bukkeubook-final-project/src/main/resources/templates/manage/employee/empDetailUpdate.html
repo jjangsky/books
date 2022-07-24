@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <head>
      <title>사원 정보 수정</title>
     <meta charset="utf-8">
@@ -15,8 +15,8 @@
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   </head>
 <body>
-	<div th:replace="/common/topSideBar.html"></div>
-	<h2 class="mb-4" id="main-text">사원관리</h2>
+   <div th:replace="/common/topSideBar.html"></div>
+   <h2 class="mb-4" id="main-text">사원관리</h2>
         <hr><br><br>
         <h5 class="mb-4" id="sub-text">사원 정보 수정</h5>
         <br>
@@ -38,7 +38,7 @@
               <tr class="deemp2">
                 <td>사원명</td>
                 <td colspan="3">
-                	<input type="text" th:value="${ emp.empName }" name="empName">
+                   <input type="text" th:value="${ emp.empName }" name="empName">
                 </td>
               </tr>
                <tr class="deemp2">
@@ -58,9 +58,9 @@
               <tr class="deemp2">
                 <td>직급</td>
                 <td colspan="3">
-                	본 직급 : <input type="text" name="empJobCode1" th:value="${ emp.empJobCode }" readonly style="width:70px;">
-                	변경 : 
-                	<select class="sel3" name="empJobCode2">
+                   본 직급 : <input type="text" name="empJobCode1" th:value="${ emp.empJobCode }" readonly style="width:70px;">
+                   변경 : 
+                   <select class="sel3" name="empJobCode2">
                     <option value="">None</option>
                     <option value="부장">부장</option>
                     <option value="팀장">팀장</option>
@@ -83,16 +83,16 @@
               <tr class="deemp" >
                 <td>성별</td>
                 <td colspan="3">
-                	<input type="text" th:value="${ emp.empGender }" name="empGender" readonly style="border:none;">
+                   <input type="text" th:value="${ emp.empGender }" name="empGender" readonly style="border:none;">
                 </td>
               </tr>
               <tr class="deemp" >
                 <td>생년월일</td>
-				 <td colspan="3"><input type="text" th:value="${ emp.empBirth }" readonly style="border:none;">
+             <td colspan="3"><input type="text" th:value="${ emp.empBirth }" readonly style="border:none;">
               </tr>
               <tr class="deemp" >
                 <td>연락처</td>
-				<td><input type="text" th:value="${ emp.empPhone1 }" name="empPhone1"></td>
+            <td><input type="text" th:value="${ emp.empPhone1 }" name="empPhone1"></td>
                 <td><input type="text" th:value="${ emp.empPhone2 }" name="empPhone2"></td>
                 <td><input type="text" th:value="${ emp.empPhone3 }" name="empPhone3"></td>
               </tr>
@@ -110,7 +110,11 @@
               </tr>
               <tr class="deemp" >
                 <td>상세주소</td>
-                <td colspan="3"><input type="text" th:value="${ emp.empDAddress }" name="empDAddress"></td>
+                <td colspan="3"><input type="text" th:value="${ emp.empDAddress }" name="empDAddress" id="address1"></td>
+              </tr>
+             <tr class="deemp" >
+                <td>연봉</td>
+                <td colspan="3"><input type="number" th:value="${ emp.empTotalSal }" name="empTotalSal"></td>
               </tr>
             </tbody>
           </table><br>

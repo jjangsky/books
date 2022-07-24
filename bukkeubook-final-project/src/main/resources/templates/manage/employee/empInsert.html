@@ -30,14 +30,14 @@
             </thead>
             <tbody>
               <tr class="deemp2">
-                <td>사원번호</td>
-                <td></td>
+                <td>사원명</td>
+                <td><input type="text" name="empName" id="name" maxlength="4"></td>
                 <td>프로필사진</td>
-                <td>도장사진</td>
+                <td>서명사진</td>
               </tr>
               <tr class="deemp2">
-                <td>사원명</td>
-                <td><input type="text" name="empName"></td>
+                <td>연봉</td>
+                <td><input type="number" name="empTotalSal" id="tatalsal" required></td>
                 <td rowspan="4"></td>
                 <td rowspan="4"></td>
               </tr>
@@ -56,8 +56,8 @@
               <tr class="deemp2">
                 <td>직급</td>
                 <td>
-                  <select class="sel3" name="empJobCode">
-                    <option value="">None</option>
+                  <select class="sel3" name="empJobCode" id="empJobCode">
+                    <option value="">--</option>
                     <option value="부장">부장</option>
                     <option value="팀장">팀장</option>
                     <option value="대리">대리</option>
@@ -67,7 +67,7 @@
               </tr>
               <tr class="deemp2">
                 <td>입사일자</td>
-                <td><input type="date" name="empEntDate"></td>
+                <td><input type="date" name="empEntDate" id="empEntDate"></td>
               </tr>
               <tr class="deemp2">
                 <td>퇴사여부</td>
@@ -87,7 +87,8 @@
               <tr class="deemp2">
                 <td>성별</td>
                 <td colspan="3">
-                  <select class="sel3" name="empGender">
+                  <select class="sel3" name="empGender" id="empGender">
+                     <option value="">--</option>
                     <option value="남">남</option>
                     <option value="여">여</option>
                   </select> 
@@ -95,19 +96,19 @@
               </tr>
               <tr class="deemp2">
                 <td>생년월일</td>
-                <td colspan="3"><input type="date" class="input1" name="empBirth"></td>
+                <td colspan="3"><input type="date" class="input1" name="empBirth" id="empBirth"></td>
               </tr>
               <tr class="deemp2">
                 <td>연락처</td>
                 <td colspan="3">
-                  <input type="tel" class="sel1" maxlength="3" name="empPhone1">
-                  <input type="tel" class="sel1" maxlength="4" name="empPhone2">
-                  <input type="tel" class="sel1" maxlength="4" name="empPhone3">
+                  <input type="tel" class="sel1" maxlength="3" name="empPhone1" id="phone1">
+                  <input type="tel" class="sel1" maxlength="4" name="empPhone2" id="phone2">
+                  <input type="tel" class="sel1" maxlength="4" name="empPhone3" id="phone3">
                 </td>
               </tr>
               <tr class="deemp2">
                 <td>이메일</td>
-                <td colspan="3"><input type="email" class="input1" name="empEmail"></td>
+                <td colspan="3"><input type="email" class="input1" name="empEmail" id="empEmail1"></td>
               </tr>
               <tr class="deemp2">
                 <td>우편번호</td>
@@ -124,18 +125,18 @@
               </tr>
               <tr class="deemp2">
                 <td>초기비밀번호</td>
-                <td colspan="3"><input type="text" class="input1" name="empPwd"></td>
+                <td colspan="3"><input type="text" class="input1" name="empPwd" id="empPwd"></td>
               </tr>
             </tbody>
           </table><br>
           <div id="newBookDiv">
-             <button id="insert" type="button" class="modify btn updateBtn">등록하기</button>
+             <button id="save" type="button" class="modify btn updateBtn">등록하기</button>
              <button type="button" class="list btn backBtn">목록으로</button>
           </div>
           </div>
          </form> 
      <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-   <script>
+     <script>
       const searchZipCode = document.getElementById("searchZipCode");
          
          searchZipCode.onclick = function() {

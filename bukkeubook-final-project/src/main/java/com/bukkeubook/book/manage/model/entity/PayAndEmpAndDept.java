@@ -4,12 +4,9 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity(name="PayAndEmpAndDept")
@@ -68,7 +65,7 @@ public class PayAndEmpAndDept {
 
 	@ManyToOne
 	@JoinColumn(name="EMP_NO" , insertable=false, updatable=false)
-	private EmpAndDept EmpAndDept;
+	private EmpAndDept empInfo;
 
 	public PayAndEmpAndDept() {
 		super();
@@ -76,8 +73,7 @@ public class PayAndEmpAndDept {
 
 	public PayAndEmpAndDept(int salNo, Date salMonth, int salBase, int salPension, int salHealth, int salCare,
 			int salHire, int salIncTax, int salLocalTax, int salRealAmount, int salTotalMinus, int empNo,
-			com.bukkeubook.book.manage.model.entity.EmpAndDept empAndDept) {
-		super();
+			EmpAndDept empInfo) {
 		this.salNo = salNo;
 		this.salMonth = salMonth;
 		this.salBase = salBase;
@@ -90,7 +86,7 @@ public class PayAndEmpAndDept {
 		this.salRealAmount = salRealAmount;
 		this.salTotalMinus = salTotalMinus;
 		this.empNo = empNo;
-		EmpAndDept = empAndDept;
+		this.empInfo = empInfo;
 	}
 
 	public int getSalNo() {
@@ -189,12 +185,12 @@ public class PayAndEmpAndDept {
 		this.empNo = empNo;
 	}
 
-	public EmpAndDept getEmpAndDept() {
-		return EmpAndDept;
+	public EmpAndDept getEmpInfo() {
+		return empInfo;
 	}
 
-	public void setEmpAndDept(EmpAndDept empAndDept) {
-		EmpAndDept = empAndDept;
+	public void setEmpInfo(EmpAndDept empInfo) {
+		this.empInfo = empInfo;
 	}
 
 	@Override
@@ -202,9 +198,11 @@ public class PayAndEmpAndDept {
 		return "PayAndEmpAndDept [salNo=" + salNo + ", salMonth=" + salMonth + ", salBase=" + salBase + ", salPension="
 				+ salPension + ", salHealth=" + salHealth + ", salCare=" + salCare + ", salHire=" + salHire
 				+ ", salIncTax=" + salIncTax + ", salLocalTax=" + salLocalTax + ", salRealAmount=" + salRealAmount
-				+ ", salTotalMinus=" + salTotalMinus + ", empNo=" + empNo + ", EmpAndDept=" + EmpAndDept + "]";
+				+ ", salTotalMinus=" + salTotalMinus + ", empNo=" + empNo + ", empInfo=" + empInfo + "]";
 	}
 
+	
+	
 	
 }
 

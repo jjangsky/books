@@ -32,14 +32,13 @@ public class PayAndEmpAndDeptDTO implements Serializable{
 	private int salRealAmount;
 	private int salTotalMinus; 
 	private int empNo;
-	private EmpAndDeptDTO empAndDept;
+	private EmpAndDeptDTO empInfo;
 	public PayAndEmpAndDeptDTO() {
 		super();
 	}
 	public PayAndEmpAndDeptDTO(int salNo, Date salMonth, int salBase, int salPension, int salHealth, int salCare,
 			int salHire, int salIncTax, int salLocalTax, int salRealAmount, int salTotalMinus, int empNo,
-			EmpAndDeptDTO empAndDept) {
-		super();
+			EmpAndDeptDTO empInfo) {
 		this.salNo = salNo;
 		this.salMonth = salMonth;
 		this.salBase = salBase;
@@ -52,7 +51,7 @@ public class PayAndEmpAndDeptDTO implements Serializable{
 		this.salRealAmount = salRealAmount;
 		this.salTotalMinus = salTotalMinus;
 		this.empNo = empNo;
-		this.empAndDept = empAndDept;
+		this.empInfo = empInfo;
 	}
 	public int getSalNo() {
 		return salNo;
@@ -126,11 +125,11 @@ public class PayAndEmpAndDeptDTO implements Serializable{
 	public void setEmpNo(int empNo) {
 		this.empNo = empNo;
 	}
-	public EmpAndDeptDTO getEmpAndDept() {
-		return empAndDept;
+	public EmpAndDeptDTO getEmpInfo() {
+		return empInfo;
 	}
-	public void setEmpAndDept(EmpAndDeptDTO empAndDept) {
-		this.empAndDept = empAndDept;
+	public void setEmpInfo(EmpAndDeptDTO empInfo) {
+		this.empInfo = empInfo;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -140,9 +139,11 @@ public class PayAndEmpAndDeptDTO implements Serializable{
 		return "PayAndEmpAndDeptDTO [salNo=" + salNo + ", salMonth=" + salMonth + ", salBase=" + salBase
 				+ ", salPension=" + salPension + ", salHealth=" + salHealth + ", salCare=" + salCare + ", salHire="
 				+ salHire + ", salIncTax=" + salIncTax + ", salLocalTax=" + salLocalTax + ", salRealAmount="
-				+ salRealAmount + ", salTotalMinus=" + salTotalMinus + ", empNo=" + empNo + ", empAndDept=" + empAndDept
+				+ salRealAmount + ", salTotalMinus=" + salTotalMinus + ", empNo=" + empNo + ", empInfo=" + empInfo
 				+ "]";
 	}
-	 
+	
+	
+	
 	
 }
