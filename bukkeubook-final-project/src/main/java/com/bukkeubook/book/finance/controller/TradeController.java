@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +23,7 @@ import com.bukkeubook.book.finance.model.dto.TradeAndClientAndBookAndEmpDTO;
 import com.bukkeubook.book.finance.model.dto.TradeListDTO;
 import com.bukkeubook.book.finance.model.service.ClientService;
 import com.bukkeubook.book.finance.model.service.TradeService;
+import com.bukkeubook.book.member.model.dto.UserImpl;
 
 @Controller
 @RequestMapping("/trade")
@@ -102,11 +104,12 @@ public class TradeController {
 	}
 	
 	@PostMapping("/regist")
-	public ModelAndView registTrade(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+	public ModelAndView registTrade(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr, @AuthenticationPrincipal UserImpl customUser) {
 		
 		TradeListDTO newTrade = new TradeListDTO();
+		int empNo = customUser.getEmpNo();
 		
-		newTrade.setEmpNo(3);
+		newTrade.setEmpNo(empNo);
 		newTrade.setBkNo(request.getParameter("bkNo"));
 		newTrade.setCntNo(Integer.valueOf(request.getParameter("cntNo")));
 		newTrade.setTlDate(java.sql.Date.valueOf(request.getParameter("tlDate")));
