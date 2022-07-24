@@ -27,12 +27,18 @@
 	<div style="text-align: center">
 		<input type="button" class="errorBtn" value="메인으로"
 			style="width:150px; height:30px; color:black; font-weight: bold; border-radius: 20px; border-style: none; cursor: pointer">
+		<input type="button" class="errorBtn2" value="이전 페이지로"
+			style="width:150px; height:30px; color:black; font-weight: bold; border-radius: 20px; border-style: none; cursor: pointer">
 	</div>
 	
 	<script>
 		$('.errorBtn').click(function(){
 			location.href="/main"
 		})
+		$('.errorBtn2').click(function(){
+			window.history.back();
+		})
+		
 	</script>
 </body>
 </html>
