@@ -395,7 +395,7 @@ private final MyInfoModifyService myInfoModifyService;
 			}
 			
 			rttr.addFlashAttribute("insertSuccessMessage", "성공"); //addFlashAttribute 한번만 보여주고 감
-			mv.setViewName("redirect:/manage/test");
+			mv.setViewName("redirect:/manage/empList");
 			return mv;
 		};			
 	}
