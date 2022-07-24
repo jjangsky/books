@@ -60,20 +60,6 @@ window.onload = function() {
 		});
 	});
 
-	/*$("#clear").click(function(){
-		$("#account1").val("");
-		$("#acco1").val("");
-		$("#deptName1").val("");
-		$("#account2").val("");
-		$("#acco2").val("");
-		$("#deptName2").val("");
-		$("#account3").val("");
-		$("#acco3").val("");
-		$("#deptName3").val("");
-		$("#stepNo").val("");
-		$("#step").text("");
-	})*/
-
 	$("#empList").change(function(){
 		let empNo = $(this).val();
 		let empName = $("#empList option:selected").text();
@@ -110,6 +96,7 @@ window.onload = function() {
 				
 				$("#salBase").val(salary);
 				$("#salBase2").text(salary);
+				printName();
 			},
 			error: function(error) {
 				console.log(error);
@@ -119,7 +106,7 @@ window.onload = function() {
 
 
 
-	$(".backBtn").click(function() {
+	$("#backBtn").click(function() {
 		Swal.fire({
 			title: '작성내용이 모두 사라집니다.',
 			text: "진행 하시겠습니까?",
@@ -138,7 +125,126 @@ window.onload = function() {
 
 
 	$("#insert").click(function() {
-		//$("#insertForm").submit();
+		Swal.fire({
+			title: '급여 등록',
+			text: "등록하시겠습니까?",
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#c5bfbf',
+			cancelButtonColor: '#c5bfbf',
+			confirmButtonText: '확인',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				let empNo = $("#empNo").val();
+				let date = $("#date").val();
+				let salBase = $("#salBase").val();
+				let salPension = $("#salPension").val();
+				let salHealth = $("#salHealth").val();
+				let salCare = $("#salCare").val();
+				let salHire = $("#salHire").val();
+				let salIncTax = $("#salIncTax").val();
+				let salLocalTax = $("#salLocalTax").val();
+				let salTotalMinus = $("#salTotalMinus").val();
+				let salRealAmount = $("#salRealAmount").val();
+				
+				let check = 0;
+				if(empNo.length < 1 || empNo == "" || empNo == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '직원 선택',
+						text: '직원을 선택해주세요.'
+					})
+				} else {
+					check++;
+				}
+				if(date.length < 1 || date == "" || date == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '지급일 선택',
+						text: '지급일을 선택해주세요.'
+					})
+				} else {
+					check++;
+				}
+				if(salBase.length < 1 || salBase == "" || salBase == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '기본급 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salPension.length < 1 || salPension == "" || salPension == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '국민연금 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salHealth.length < 1 || salHealth == "" || salHealth == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '건강보험 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salCare.length < 1 || salCare == "" || salCare == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '요양보험 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salHire.length < 1 || salHire == "" || salHire == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '고용보험 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salIncTax.length < 1 || salIncTax == "" || salIncTax == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '근로소득세 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salLocalTax.length < 1 || salLocalTax == "" || salLocalTax == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '지방소득세 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salTotalMinus.length < 1 || salTotalMinus == "" || salTotalMinus == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '공제액 합계 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				if(salRealAmount.length < 1 || salRealAmount == "" || salRealAmount == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '차인지급액 확인 요망',
+					})
+				} else {
+					check++;
+				}
+				
+				if(check ==11){
+					$("#insertForm").submit();
+				}
+			}
+		})
 	});
 }
 
@@ -154,7 +260,7 @@ function printName() {
 	salLocalTax = Math.round(salIncTax * 0.1);
 	salTotalMinus = salPension + salHealth + salCare + salHire + salIncTax + salLocalTax
 	salRealAmount = salBase - salPension - salHealth - salCare - salHire - salIncTax - salLocalTax;
-	document.getElementById("input").value = salBase;
+	document.getElementById("salBase").value = salBase;
 	document.getElementById("salPension").value = salPension;
 	document.getElementById("salHealth").value = salHealth;
 	document.getElementById("salCare").value = salCare;

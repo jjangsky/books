@@ -47,12 +47,12 @@
               </tr>
               <tr class="deemp2">
                 <td id="selectDept">부서명</td>
-              <td>
-              	<select name="deptCode" id="deptCode">
+             	<td>
+              	  <select name="deptCode" id="deptCode">
                  	<option value=""></option>
-				<!-- ajax -->
-               	</select>
-              </td>
+				  <!-- ajax -->
+               	  </select>
+                </td>
               </tr>
               <tr class="deemp2">
                 <td>직급</td>
@@ -267,5 +267,29 @@
          })
      </script>
      
-</body>
+   <script th:inline="javascript">
+          $(".backBtn").click(function () {
+              Swal.fire({
+                  title: '작성내용이 모두 사라집니다.',
+                  text: "진행 하시겠습니까?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#c5bfbf',
+                  cancelButtonColor: '#c5bfbf',
+                  confirmButtonText: '확인',
+                  cancelButtonText: '취소'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      window.history.back();
+                  }
+              })
+      });
+      
+        $("#insert").click(function () {
+           let nameFile = $("#nameFile").val();          
+           console.log(nameFile);
+           $("#insertForm").submit();
+        });
+      </script> 
+	</body>
 </html>

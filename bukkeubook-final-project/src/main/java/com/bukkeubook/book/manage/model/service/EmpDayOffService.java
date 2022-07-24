@@ -1,7 +1,9 @@
 package com.bukkeubook.book.manage.model.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -10,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.bukkeubook.book.manage.model.dto.AppVacationDTO;
 import com.bukkeubook.book.manage.model.dto.DayOffDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.DayOffAndEmpAndDeptDTO;
-import com.bukkeubook.book.manage.model.entity.AppVacation;
 import com.bukkeubook.book.manage.model.entity.DayOff;
 import com.bukkeubook.book.manage.model.entity.DayOffAndEmpAndDept;
 import com.bukkeubook.book.manage.model.repository.AppVacRepository;
@@ -52,41 +52,55 @@ public class EmpDayOffService {
 		
 		System.out.println("레포지토리      " + emp);
 		
-		return modelMapper.map(emp, DayOffAndEmpAndDeptDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
+		return modelMapper.map(emp, DayOffAndEmpAndDeptDTO.class); // 엔티티를 넣어달라고 요청 -> modelMapper
 }
   
-	/****************************************************************/
-   /* 휴가 신청이랑 연결된 트랜잭션 */
-//	@Transactional
-//	public List<AppVacationDTO> findAppVacByEmpNo (int vacNo) {
-//		List<AppVacation> appVacList = appVacRepository.findAppVacByNo(vacNo);
-//		return appVacList.stream().map(appVac -> modelMapper.map(appVac, AppVacationDTO.class)).collect(Collectors.toList());
-//	}
-//	
-//   @Transactional
-//   public void updateAppVac(AppVacationDTO appVacationDTO) {
-//		
-//	   AppVacation appVac = appVacRepository.findByVacNo(appVacationDTO.getVacNo());
-//	   appVac.setVacStatus(appVacationDTO.getVacStatus());
-//	   appVac.setVacStartDate(appVacationDTO.getVacStartDate());
-//	   appVac.setVacEndDate(appVacationDTO.getVacEndDate());
-//	   
-//	   System.out.println("^____________________^" + appVac);
-//		
-//	}
+	/****************************************************************/	
+	@Transactional
+	public DayOffAndEmpAndDeptDTO findByEmpNo(int empNo, int doffNo) {
+		DayOffAndEmpAndDept dayOffList = dayOffRepository2.findByEmpNo(empNo);
+		int nowDayOffAmount = dayOffList.getDoffAmount();
+		int nowDayOffRemain = dayOffList.getDoffRemain();
+		int nowDayOffUse = dayOffList.getDoffUse();
+		dayOffList.setDoffRemain(nowDayOffAmount - nowDayOffUse);
+		
+		return modelMapper.map(dayOffList, DayOffAndEmpAndDeptDTO.class);
+	}
 
-//   @Transactional
-//	public void modifyDayOffInfo(DayOffDTO dayOffDTO) {
-//		
-//	   DayOff dayOff = dayOffRepository2.findByEmpNo(dayOffDTO.getEmpNo());
-//	   dayOff.setDoffAmount(dayOffDTO.getDoffAmount());		// 총 연차 횟수	
-//	   dayOff.setDoffRemain(dayOff.getDoffRemain());		// 잔여 연차 횟수
-//	   dayOff.setDoffUse(dayOffDTO.getDoffUse());			// 사용 연차 횟수
-//	   
-//	   System.out.println("^____________________^" + dayOff);
-//	}
-	/****************************************************************/
-
+//  empNo          사원번호
+//  doffAmount     연차횟수
+//  doffRemain     잔여연차횟수
+//  doffUse        사용연차횟수
+	
+	@Transactional
+	public void findDayOffEmpNo(int empNo, int vacNo, String vacStartDate, String vacEndDate) throws ParseException {
+		DayOff dayOff = appVacRepository.findByEmpNo(empNo);
+		DayOffDTO dayOffDTO = modelMapper.map(dayOff, DayOffDTO.class);
+		
+		String vacStartTime = vacStartDate;
+		String vacEndTime = vacEndDate;
+		
+		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(vacStartTime);
+		Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(vacEndTime);
+		
+		long vacStartTime2 = date1.getTime();
+		long vacEndTime2 = date2.getTime();
+		long test = vacEndTime2 - vacStartTime2;
+		int day = (int)(test / 86400000 +1);
+		
+//		int dayOffUseAmount = dayOff.getDoffAmount() - day;
+//		dayOff.setDoffAmount(dayOffUseAmount);
+		
+		int dayOffUseRemain = dayOff.getDoffRemain() - day;
+		dayOff.setDoffRemain(dayOffUseRemain);
+		
+		int UseDoffUse = dayOff.getDoffUse() + day;
+		dayOff.setDoffUse(UseDoffUse);
+		
+//		appVacRepository.save(modelMapper.map(dayOffDTO, DayOff.class));
+		
+	}
+	
 }
 
 

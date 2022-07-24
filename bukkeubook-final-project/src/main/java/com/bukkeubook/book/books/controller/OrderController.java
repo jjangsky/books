@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ import com.bukkeubook.book.books.model.service.BookService;
 import com.bukkeubook.book.books.model.service.OrderService;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
+import com.bukkeubook.book.member.model.dto.UserImpl;
 
 @Controller
 @RequestMapping("/order")
@@ -112,9 +114,10 @@ public class OrderController {
 	}
 	
 	@PostMapping("/regist")
-	public ModelAndView registOrder(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
+	public ModelAndView registOrder(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr, @AuthenticationPrincipal UserImpl customUser) {
 		
 		int rownum = Integer.valueOf(request.getParameter("rownum"));
+		int empNo = customUser.getEmpNo();
 		
 		System.out.println();
 		System.out.println();
@@ -135,7 +138,7 @@ public class OrderController {
 			order.setOrderAmount(amount);
 			order.setCntNo(3);
 			order.setBkNo(no);
-			order.setEmpNo(4);
+			order.setEmpNo(empNo);
 			
 			System.out.println(i + "번째 : " + order);
 			

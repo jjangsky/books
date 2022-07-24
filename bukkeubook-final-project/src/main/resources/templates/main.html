@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
+<link rel="stylesheet"  th:href="@{/css/mypage/mainStyle.css}">
 <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
@@ -22,39 +23,31 @@
 <body>
 <div th:replace="/common/topSideBar.html"></div>
 	
-	
+	 <div id='calendar' style="width: 90%; float:left; margin-left: 50px; ">
+
+        </div>
        
-            <div  style="width: 80%; height: 300px; float:left; margin-top: 50px; margin-left: 100px;">
+            <div  style="width: 80%; height: 300px; width: 40%; float:left; margin-top: 50px; margin-left: 50px; ">
               <div id="textTable" style="text-align:-webkit-center">
-                <h4 style="text-align: left; font-family: Bold;">전사 게시판</h4>
+                <h4 style="text-align: center; font-family: Bold;">전사 게시판</h4>
                 <table id="sampleTable" style="width: 100%;">
                   <tr>
-                    <th class="th1">번호</th>
-                    <th class="th1">카테고리</th>
-                    <th class="th1">제목</th>
-                    <th class="th1">작성일</th>
+                    <th class="th1" style="width:30%;">제목</th>
+                    <th class="th1" style="width:10%;">작성일</th>
                 </tr>
-                <tr th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[0].no})} + '\''">
-                  <td th:text="${boardList[0].no}"></td>
-                  <td th:text="${boardList[0].cate.cateName}"></td>
+                <tr class="tr1" th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[0].no})} + '\''">
                   <td th:text="${boardList[0].title}"></td>
                   <td th:text="${boardList[0].date}"></td>
                 </tr>
-                <tr th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[1].no})} + '\''">
-                  <td th:text="${boardList[1].no}"></td>
-                  <td th:text="${boardList[1].cate.cateName}"></td>
+                <tr class="tr1" th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[1].no})} + '\''">
                   <td th:text="${boardList[1].title}"></td>
                   <td th:text="${boardList[1].date}"></td>
                 </tr>
-                <tr th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[2].no})} + '\''">
-                  <td th:text="${boardList[2].no}"></td>
-                  <td th:text="${boardList[2].cate.cateName}"></td>
+                <tr class="tr1" th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[2].no})} + '\''">
                   <td th:text="${boardList[2].title}"></td>
                   <td th:text="${boardList[2].date}"></td>
                 </tr>
-                <tr th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[3].no})} + '\''">
-                  <td th:text="${boardList[3].no}"></td>
-                  <td th:text="${boardList[3].cate.cateName}"></td>
+                <tr class="tr1" th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[3].no})} + '\''">
                   <td th:text="${boardList[3].title}"></td>
                   <td th:text="${boardList[3].date}"></td>
                 </tr>
@@ -63,10 +56,32 @@
             </div>
             
           </div>
+          <div style=" width:40%; height: 300px; float:left; margin-top: 50px; margin-left:10%;">
+          	<div id="textTable" style="text-align:-webkit-center; ">
+                <div>
+                  <h4 style="text-align: center;">전자결재 수신함</h4>
+               		<table  id="sampleTable">
+                      <tr>
+                        <th class="th1" style="width:50%;">제목</th>
+                        <th class="th1">결재여부</th>
+                        <th class="th1">문서상태</th>
+                        <th class="th1">문서종류</th>
+                      </tr>
+                      <tr th:if="${#lists.isEmpty(all)}">
+               		    <th class="th1" colspan="4">신청하신 서류가 존재하지 않습니다.</th>
+          		      </tr>
+                      <tr class="tr1" th:each="all : ${ all }" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all.document.docNo1 }|} + '\''">
+                        <td th:text="${all.document.docTitle1}"></td>
+                        <td th:text="${all.appStatus}"></td>
+                        <td th:text="${all.document.docStatus1}" id="status"></td>
+                        <td th:text="${all.formName}"></td>
+                      </tr>
+                    </table>
+                </div>
+              </div> 
+          </div>
          
-         <div id='calendar' style="width: 80%; float:left; margin-left: 100px; margin-top: 10%;">
-
-        </div>  
+        
        
     <script th:inline="javascript">
 
@@ -87,9 +102,10 @@
             listDay: { buttonText: 'list day' },
             listWeek: { buttonText: 'list week' }
           },
-    
+          locale : "ko",
+    	  height: '500px',
           initialView: 'listWeek',
-          initialDate: '2022-07-13',
+          initialDate: '2022-07-27',
           navLinks: true, // can click day/week names to navigate views
           editable: true,
           dayMaxEvents: true, // allow "more" link when too many events
@@ -127,6 +143,27 @@
 	                title: 'Success!',
 	                text: '해당 회원의 개인정보를 수정하였습니다.',
 	            })
+			}
+			
+			/* 전자결재 관련 Js */
+			const status = document.querySelectorAll('table tr td#status');
+        	console.log("status"+status);
+        	for (let i = 0; i < status.length; i++) {
+				if (status[i].innerText=="승인") {
+					let font = status[i];
+					console.log(font);
+					font.style.cssText = 'color:blue;';
+				}
+				if (status[i].innerText=="반려") {
+					let font = status[i];
+					console.log(font);
+					font.style.cssText = 'color:red;';
+				}
+				if (status[i].innerText=="진행중") {
+					let font = status[i];
+					console.log(font);
+					font.style.cssText = 'color:green;';
+				}
 			}
 			
 	</script>

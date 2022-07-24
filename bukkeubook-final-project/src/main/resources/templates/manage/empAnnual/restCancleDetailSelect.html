@@ -23,39 +23,43 @@
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
         <div class="emp detail list">
-        <table border="1px">
+         <table border="1px">
           <tbody>
             <tr>
               <td class="deemp3">휴가 취소 번호</td>
-              <td th:text="{ cancelVac.vacCancNo }"></td>
+              <td th:text="${ cancelVacDetail.vacCancNo }"></td>
             </tr>
             <tr>
               <td class="deemp3">휴가 번호</td>
-              <td th:text="${ cancelVac.appvacEMP.vacNo }"></td>
+              <td th:text="${ cancelVacDetail.vacNo }"></td>
             </tr>
             <tr>
               <td class="deemp3">부서</td>
-              <td th:text="${ cancelVac.appvacEMP.empAndDept.dept.deptName }"></td>
+              <td th:text="${ cancelVacDetail.appvacEMP.empAndDept.dept.deptName }"></td>
             </tr>
             <tr>
               <td class="deemp3">사원번호</td>
-              <td th:text="${ cancelVac.empNo }"></td>
+              <td th:text="${ cancelVacDetail.empNo }"></td>
             </tr>
             <tr>
               <td class="deemp3">사원명</td>
-              <td th:text="${ cancelVac.appvacEMP.empAndDept.empName }"></td>
+              <td th:text="${ cancelVacDetail.appvacEMP.empAndDept.empName }"></td>
             </tr>
             <tr>
-              <td class="deemp3">휴가 신청 기간</td>
-              <td th:text="${ cancelVac.appvacEMP.vacAppNo }"></td>
+              <td class="deemp3">휴가 신청 시작일</td>
+              <td th:text="${ cancelVacDetail.appvacEMP.vacStartDate }"></td>
+            </tr>
+            <tr>
+              <td class="deemp3">휴가 신청 종료일</td>
+              <td th:text="${ cancelVacDetail.appvacEMP.vacEndDate }"></td>
             </tr>
             <tr>
               <td class="deemp3">휴가 취소 신청 기간</td>
-              <td th:text="${ cancelVac.vacCancDate }"></td>
+              <td th:text="${ cancelVacDetail.vacCancDate }"></td>
             </tr>
             <tr>
               <td class="deemp3">반려 사유</td>
-              <td id="cancleReason"></td>
+              <td id="cancleReason" th:text="${ cancelVacDetail.vacCancReason }"></td>
             </tr>
           </tbody>
           </table>

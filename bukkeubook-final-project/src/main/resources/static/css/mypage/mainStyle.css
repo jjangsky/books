@@ -4,9 +4,6 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-body {
-   background: white !important;
-}
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -140,7 +137,7 @@ a {
   text-decoration: none;
   background-color: transparent; }
   a:hover {
-    color: #0056b3;
+    color: rgb(0, 0, 0);
     text-decoration: underline; }
 
 a:not([href]):not([tabindex]) {
@@ -2075,12 +2072,12 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #515151 !important;
-  border-color: #515151 !important; }
+  background-color: #007bff;
+  border-color: #007bff; }
   .btn-primary:hover {
     color: #fff;
-    background-color: #515151;
-    border-color: #515151; }
+    background-color: #0069d9;
+    border-color: #0062cc; }
   .btn-primary:focus, .btn-primary.focus {
     -webkit-box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
     box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5); }
@@ -8308,26 +8305,25 @@ a[data-toggle="collapse"] {
   text-align: center;
 }
 #sampleTable td{
-  border-top: 1px solid gray;
-  border-bottom: 1px solid gray;
-  width: 200px;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  width: 340px;
   height: 50px;
 }
 .th1 {
   border-top: 2px solid;
-  width: 200px;
+  width: 340px;
   height: 50px;
 }
 .td2 {
   border-bottom: 2px solid !important;
-  width: 200px;
+  width: 340px;
   height: 50px;
 }
+
 /* book 헤더 메뉴 */
 .nav-link {
   color: white !important;
 }
-
-
 
 

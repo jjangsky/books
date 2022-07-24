@@ -73,9 +73,9 @@ public class AttendManageController {
 		System.out.println(attendSelectCriteria);
 		System.out.println(attendList);
 
-		System.out.println(totalCount);
-		System.out.println("검색 조건" + searchCondition);
-		System.out.println("검색 값" + searchValue);
+		System.out.println("검색 값의 갯수 :" +totalCount);
+		System.out.println("검색 조건 : " + searchCondition);
+		System.out.println("검색 값 : " + searchValue);
 
 
 		

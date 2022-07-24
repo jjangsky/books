@@ -45,7 +45,9 @@ public class BookController extends HttpServlet{
 	
 	@GetMapping("/lookupList")
 	public ModelAndView searchPage(HttpServletRequest request, ModelAndView mv) {
-
+//		500 테스트용
+//		String test = "";
+//		String test2 = test/3;
 		String currentPage = request.getParameter("currentPage");
 		int pageNo = 1;
 
@@ -428,6 +430,7 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
+	/***********************************************************************************************************/
 	@GetMapping("/damageAmount")
 	public ModelAndView damBookInfo(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
 		String no = request.getParameter("bkNo");
@@ -450,6 +453,7 @@ public class BookController extends HttpServlet{
 		mv.setViewName("redirect:/book/damageList");
 		return mv;
 	}
+	/***********************************************************************************************************/
 	
 	@GetMapping("/getSearchList")
 	@ResponseBody

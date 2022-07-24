@@ -32,7 +32,6 @@ import com.bukkeubook.book.manage.model.service.EmpService;
 import com.bukkeubook.book.manage.model.service.SignService;
 import com.bukkeubook.book.mypage.model.service.MyInfoModifyService;
 
-
 @Controller
 @RequestMapping("/manage") 
 public class EmployeeController {
@@ -218,7 +217,7 @@ private final MyInfoModifyService myInfoModifyService;
 		public ModelAndView modifySign(ModelAndView mv, HttpServletRequest request,
 				@RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
 			
-			int empNo = 5;
+			int empNo = Integer.valueOf(request.getParameter("empNo"));
 			
 //			System.out.println("야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야");
 			
@@ -266,7 +265,7 @@ private final MyInfoModifyService myInfoModifyService;
 		public ModelAndView modifyProfile(ModelAndView mv, HttpServletRequest request, 
 				@RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
 			
-			int memberCode = 5;
+			int empNo = Integer.valueOf(request.getParameter("empNo"));
 			
 			String root = System.getProperty("user.dir");
 			System.out.println("root까지의 경로 : " + root);
@@ -283,7 +282,7 @@ private final MyInfoModifyService myInfoModifyService;
 				singleFile.transferTo(new File(filePath + "/" + saveName));
 				
 				ProfPhotoDTO profile = new ProfPhotoDTO();
-				profile.setEmpNo(memberCode);
+				profile.setEmpNo(empNo);
 				profile.setPhotoOrigName(originFileName);
 				profile.setPhotoSavedName(saveName);
 				profile.setPhotoSavedPath(filePath);
