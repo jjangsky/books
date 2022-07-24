@@ -50,9 +50,8 @@
                 <td th:text="${ cancelVac.appvacEMP.empAndDept.dept.deptName }"></td>
                 <td th:text="${ cancelVac.empNo }"></td>
                 <td th:text="${ cancelVac.appvacEMP.empAndDept.empName }"></td>
-                <td th:text="${ cancelVac.vacCancDate }"></td>
-                <td><button type="button" class="detail contents" th:onclick="'location.href = \'' + @{/empAnnual/restCancleDetailSelect/(vacCancNo=${cancelVac.vacCancNo})} + '\''">상세보기</button></td>
-              </tr>
+                <td th:text="${ cancelVac.vacCancDate }"></td>													
+                <td><button type="button" class="detail contents" th:onclick="'location.href = \'' + @{/empAnnual/restCancleDetailSelect/{vacCancNo}(vacCancNo=${cancelVac.vacCancNo})} + '\''">상세보기</button></td>
           </table><br><br>
         <div th:replace="manage/empAnnual/restCancelSelectPaging.html"></div>
         
