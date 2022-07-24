@@ -29,9 +29,9 @@
 <body>
 <div th:replace="/common/topSideBar.html"></div>
 
-	<h2 class="mb-4" id="main-text">마이페이지</h2>
+	<h2 class="mb-4" id="main-text">휴가자 현황</h2>
 	       <hr><br><br>
-	       <h5 class="mb-4" id="sub-text">일정관리</h5>
+	       <h5 class="mb-4" id="sub-text">휴가 현황 조회</h5>
 	       <br>
 	
 	       <div id='calendar'>
@@ -53,34 +53,18 @@
 	          navLinks: true, // can click day/week names to navigate views
 	          selectable: true,
 	          selectMirror: true,
-	          select: function(arg) { 		// 빈 셀 선택시
-	        	  Swal.fire({
-	                  title: '새로운 일정을 추가 하시겠습니까?',
-	                  text: "일정 등록 페이지로 이동합니다.",
-	                  icon: 'question',
-	                  showCancelButton: true,
-	                  confirmButtonColor: '#3085d6',
-	                  cancelButtonColor: '#d33',
-	                  confirmButtonText: '승인',
-	                  cancelButtonText: '취소'
-	              }).then((result) => {
-	                  if (result.isConfirmed) {
-			              location.href="/mypage/registCalendar"
-	                  }
-	              })
-	            calendar.unselect()
-	          },
+	          
+	          
 	          editable: false,        // 툴바 이동 금지
 	          dayMaxEvents: true, // allow "more" link when too many events
 	          
 	          events: [
 	        	  
-	          /*[# th:each="cal : ${ calendar }"]*/
+	          /*[# th:each="vacs : ${ vacList }"]*/
 	            {
-	              title: /*[[${cal.title}]]*/,
-	              start: /*[[${cal.start}]]*/,
-	              url: '/mypage/detailCal/'+/*[[${cal.code}]]*/,
-	              end: /*[[${cal.end}]]*/
+	              title: /*[[${vacs.emp.empName}]]*/,
+	              start: /*[[${vacs.vacStartDate}]]*/,
+	              end: /*[[${vacs.vacEndDate}]]*/
 	            },
 	          /*[/]*/
 	          
@@ -91,33 +75,7 @@
 	      });
 	    
 	    </script>
-	    <script>
-			const successMessage = "[[${ registSuccessMessage }]]";
-			const updateMessage = "[[${ updateSuccessMessage }]]";
-			const deleteMessage = "[[${ deleteSuccessMessage }]]"
-			
-			if(successMessage){
-				Swal.fire({
-	                icon: 'success',
-	                title: 'Success!',
-	                text: '일정을 성공적으로 등록하셨습니다.',
-	            })
-			}else if(updateMessage){
-				Swal.fire({
-	                icon: 'success',
-	                title: 'Success!',
-	                text: '일정을 성공적으로 수정하셨습니다.',
-	            })
-			}else if(deleteMessage){
-				Swal.fire({
-	                icon: 'success',
-	                title: 'Success!',
-	                text: '일정을 성공적으로 삭제하셨습니다.',
-	            })
-			}
-			
-			
-		</script>
+	    
 	
 </body>
 </html>

@@ -68,7 +68,7 @@
                         <th class="th1">문서종류</th>
                       </tr>
                       <tr th:if="${#lists.isEmpty(all)}">
-               		    <th class="th1" colspan="4">신청하신 서류가 존재하지 않습니다.</th>
+               		    <th class="th1" colspan="4">결재할 서류가 존재하지 않습니다.</th>
           		      </tr>
                       <tr class="tr1" th:each="all : ${ all }" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all.document.docNo1 }|} + '\''">
                         <td th:text="${all.document.docTitle1}"></td>
