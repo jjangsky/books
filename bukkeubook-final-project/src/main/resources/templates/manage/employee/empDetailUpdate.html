@@ -105,12 +105,15 @@
                 <td colspan="3">
                   <input type="text" id="zipCode" th:value="${ emp.empAddress }" name="empAddress">
                   <input type="button" value="검색" class="input2" id="searchZipCode">
-
                 </td>  
               </tr>
               <tr class="deemp" >
                 <td>상세주소</td>
-                <td colspan="3"><input type="text" th:value="${ emp.empDAddress }" name="empDAddress"></td>
+                <td colspan="3"><input type="text" th:value="${ emp.empDAddress }" name="empDAddress" id="address1"></td>
+              </tr>
+             <tr class="deemp" >
+                <td>연봉</td>
+                <td colspan="3"><input type="number" th:value="${ emp.empTotalSal }" name="empTotalSal"></td>
               </tr>
             </tbody>
           </table><br>
@@ -154,7 +157,7 @@
                   </div>
                 </div>
             </div>
-            </div>
+         </div>
        </div>       
      <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
       <script>
@@ -170,39 +173,7 @@
                }
             }).open();
          }
-
-         $("#save").click(function(){
-            
-            if(!(Number($("#phone1").val())&&Number($("#phone2").val())&&Number($("#phone3").val()))){
-               Swal.fire({
-                     icon: 'error',                        
-                     title: '잘못된 값이 입력되었습니다.',         
-                     text: '전화번호 입력칸을 확인해 주십시오.',  
-                 });
-            } else if($('#empEmail1').val() == ""){
-               Swal.fire({
-                     icon: 'error',                        
-                     title: '잘못된 값이 입력되었습니다.',         
-                     text: '이메일 입력칸을 확인해 주십시오.',  
-                 });
-            }else{
-               Swal.fire({
-                     title: '개인 정보를 수정하시겠습니까?',
-                     text: "입력한 정보로 해당 회원의 정보를 수정합니다.",
-                     icon: 'question',
-                     showCancelButton: true,
-                     confirmButtonColor: '#3085d6',
-                     cancelButtonColor: '#d33',
-                     confirmButtonText: '승인',
-                     cancelButtonText: '취소'
-                 }).then((result) => {
-                     if (result.isConfirmed) {
-                        $("#updateEmp").submit();
-                     }
-                 })
-            }
-         })
-         
+       
           $("#probtn").click(function(){
             Swal.fire({
                   title: '프로필 사진을 변경 하시겠습니까?',
@@ -251,7 +222,7 @@
                   }
               })
       });
-      </script>
+   </script>
       
       
    <script th:inline="javascript">      
@@ -279,6 +250,6 @@
              })
          });
      });
-      </script> 
-</body>
+   </script> 
+  </body>
 </html>

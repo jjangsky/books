@@ -33,7 +33,7 @@
                 <td>사원명</td>
                 <td><input type="text" name="empName" id="name" maxlength="4"></td>
                 <td>프로필사진</td>
-                <td>도장사진</td>
+                <td>서명사진</td>
               </tr>
               <tr class="deemp2">
                 <td>연봉</td>
@@ -136,7 +136,7 @@
           </div>
          </form> 
      <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-       <script>
+     <script>
       const searchZipCode = document.getElementById("searchZipCode");
          
          searchZipCode.onclick = function() {
@@ -149,7 +149,24 @@
                }
             }).open();
          }
-         
+         $().ready(function () {
+             $(".backBtn").click(function () {
+                 Swal.fire({
+                     title: '작성내용이 모두 사라집니다.',
+                     text: "진행 하시겠습니까?",
+                     icon: 'warning',
+                     showCancelButton: true,
+                     confirmButtonColor: '#c5bfbf',
+                     cancelButtonColor: '#c5bfbf',
+                     confirmButtonText: '확인',
+                     cancelButtonText: '취소'
+                 }).then((result) => {
+                     if (result.isConfirmed) {
+                         window.history.back();
+                     }
+                 })
+             });
+         });
          $("#save").click(function(){
             if($('#name').val() == ""){
                Swal.fire({
@@ -236,6 +253,6 @@
             }
          })
      </script>
-
+     
 </body>
 </html>
