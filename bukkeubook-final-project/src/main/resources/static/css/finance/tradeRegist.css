@@ -15,7 +15,7 @@
     border-width: 1px 1px 1px 1px;
     background: #fafafa;
     width: 20em;
-    margin-left: 230px !important;
+    margin-left: 60px !important;
     text-align: center;
 }
 #inputFind:focus {
@@ -76,7 +76,7 @@
 
 td{
 	font-size: 13pt;
-	width: 60px;
+	width: 200px !important;
 	height: 10px;
 	border-bottom: 1px solid #444444;
 	text-align: center;
@@ -118,6 +118,7 @@ td{
 	margin-bottom: 15px;
 }
 
-
-
+#tlDetail{
+	height: 100px;
+}
 

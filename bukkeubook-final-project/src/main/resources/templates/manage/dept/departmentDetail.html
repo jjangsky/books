@@ -55,28 +55,15 @@
        		</table>
 		  </div>
 
-          <div class="btnMenu">
-          	<form action="/dept/modify" method="get">
+          <div class="btnMenu" style="text-align:-webkit-center">
+          	<form class="btnForm" action="/dept/modify" method="get">
           		<input type="hidden" name="deptCode1" th:value="${ dept.deptCode }">
 	            <button class="btn" type="submit">수정</button>
+	            <button class="btn" type="button" onclick="location.href='/dept/select'">목록으로</button>
           	</form>
-            <button class="btn" type="button" onclick="checkInactive()">비활성화</button>
-            <button class="btn" type="button" onclick="location.href='/dept/select'">목록으로</button>
           </div>
 
         <script>
-          function checkInactive(){
-            var result = confirm("선택하신 부서들을 정말로 비활성화 하시겠습니까?");
-
-            if(result == true){
-              alert("부서가 비활성화 되었습니다.");
-              location = "department_select.html";
-            }
-          }
         </script>
-	<script src="../js/jquery.min.js"></script>
-    <script src="../js/popper.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/main.js"></script>
   </body>
 </html>
