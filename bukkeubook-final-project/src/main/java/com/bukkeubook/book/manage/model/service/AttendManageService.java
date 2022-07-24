@@ -42,24 +42,6 @@ public class AttendManageService {
 		
 		
 		int count = 0;
-//			if(searchValue != null && startDate != null) {
-//				if(startDate != null) {
-//					if("empNo".equals(searchCondition)) {
-//						count = attendAndEmpRepository.countByEmp_EmpNoAndAttDateBetween(searchValue, startDate, endDate);
-//						}
-//					if("empName".equals(searchCondition)) {
-//						count = attendAndEmpRepository.countByEmp_EmpNameAndAttDateBetween(searchValue, startDate, endDate);
-//						}
-//				}if("empNo".equals(searchCondition)) {
-//					count = attendAndEmpRepository.countByEmp_EmpNoContaining(searchValue);
-//					}
-//				 if("empName".equals(searchCondition)) {
-//					count = attendAndEmpRepository.countByEmp_EmpNameContaining(searchValue);
-//					}
-//			}else {
-//				count = (int)attendAndEmpRepository.count();
-//			}
-			
 			
 			if(startDate!=null && endDate!=null) {
 				if(!"".equals(searchValue)) {
@@ -72,7 +54,6 @@ public class AttendManageService {
 						}
 				}else{
 					count = attendAndEmpRepository.countByAttDateBetween(startDate, endDate);
-				
 				}
 			}else {
 				count = (int)attendAndEmpRepository.count();
@@ -89,7 +70,7 @@ public class AttendManageService {
 		
 		int index = attendSelectCriteria.getPageNo() - 1;
 		int count = attendSelectCriteria.getLimit();
-		Pageable paging = PageRequest.of(index, count, Sort.by("attNo").descending());
+		Pageable paging = PageRequest.of(index, count, Sort.by("attDate").descending());
 		
 		java.sql.Date startDate = attendSelectCriteria.getStartDate();
 		java.sql.Date endDate = attendSelectCriteria.getEndDate();
@@ -104,9 +85,10 @@ public class AttendManageService {
 				}
 				if("empName".equals(attendSelectCriteria.getSearchCondition())) {
 					attend = attendAndEmpRepository.findByEmp_EmpNameContainingAndAttDateBetween(searchValue, startDate, endDate, paging);
+				}else {
+					attend = attendAndEmpRepository.findByAttDateBetween(startDate, endDate, paging);
 				}
-			}
-				attend = attendAndEmpRepository.findByAttDateBetween(startDate, endDate, paging);
+			} 
 		}else {
 			attend = attendAndEmpRepository.findAll(paging).toList();
 		}

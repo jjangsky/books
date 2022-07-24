@@ -34,11 +34,11 @@
 	             </div>
              	 <div>
 		             <button class="search btn" type="button" id="submitButton">검색</button> 
-		            <input class="search in" type="text" placeholder="검색어 입력" name="searchValue">
-		            <select class="search select" name="searchCondition" required>
-		              <option value="null">--</option>
-		              <option value="empNo">사원번호</option>
-             		  <option value="empName">이름</option>
+		            <input class="search in" type="text" placeholder="검색어 입력" name="searchValue" th:value="${selectCriteria.searchValue}">
+		            <select class="search select" name="searchCondition" th:with="searchCondition = ${selectCriteria.searchCondition}"  required>
+		              <option value="select">분류</option>
+		              <option value="empNo" th:selected="${ searchCondition } == 'empNo'">사원번호</option>
+             		  <option value="empName" th:selected="${ searchCondition } == 'empName'">이름</option>
 		            </select>
             	</div>
          	 </form>
