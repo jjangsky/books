@@ -121,7 +121,7 @@ function sendData() {
 			let endArr = end.split('-');
 
 
-			let startDateCompare = new Date(startArr[0], parseInt(startArr[1]) - 1, startArr[2]);
+			let startDateCompare = new Date(startArr[0], parseInt(startArr[1]) - 1, parseInt(startArr[2]) +1);
 			let endDateCompare = new Date(endArr[0], parseInt(endArr[1]) - 1, endArr[2]);
 
 			let getDateDiff = (d1, d2) => {
