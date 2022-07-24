@@ -46,7 +46,7 @@
                 <th class="th1">작성자</th>
                 <th class="th1">조회수</th>
               </tr>
-              <tr class="tr1" th:each="board : ${ boardList }" th:onclick="'location.href = \'' + @{/secretary/boardDetail/(no=${board.no})} + '\''">
+              <tr class="tr1" th:each="board : ${ boardList }" th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${board.no})} + '\''">
                 <td th:text="${ board.no }"></td>
                 <td th:text="${ board.cate.cateName }"></td>
                 <td th:text="${ board.title }"></td>
@@ -56,25 +56,12 @@
               </tr>
           </table>
           <br>
-          <div>
-          	<div th:replace="/secretary/boardPaging.html"></div>
-					<button class="btn btn-info" type="submit" onclick="location.href='/secretary/boardRegist'" style="margin-left:70%;">게시글 등록</button>
-			</div>
           <br>    
+          
+          <div th:replace="/secretary/commonBoardPaging.html"></div>
         </div> <!------------------------ 본문 종료---------------------------->
 	<br><br>
 	
-	
-		<script>
-				const successMessage = "[[${ successMessage }]]";
-					if(successMessage){
-						Swal.fire({
-			                icon: 'success',
-			                title: 'Success!',
-			                text: '성공적으로 완료되었습니다!',
-	         	  		 })
-	       		    }
-		</script>
 	
 	
 	

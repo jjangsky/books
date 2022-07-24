@@ -31,6 +31,8 @@ public interface AttendRepository extends JpaRepository<Attend, Integer>{
 
 	List<Attend> findByEmpNoAndAttDateBetween(int memberCode, Date startDate, Date endDate, Pageable paging);
 
+	Attend findByEmpNoAndAttDateLike(int memberInfo, Date attDate);
+
 
 
 

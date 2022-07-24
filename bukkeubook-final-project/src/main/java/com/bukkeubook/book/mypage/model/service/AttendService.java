@@ -76,9 +76,9 @@ public class AttendService {
 	
 	/* 마이페이지에서 퇴근 등록하기 */
 	@Transactional
-	public void modifyCheckOut(AttendDTO attend) {
+	public void modifyCheckOut(AttendDTO attend, int memberInfo) {
 		
-		Attend modifyCheckOut = attendRepository.findByAttDateLike(attend.getAttDate());
+		Attend modifyCheckOut = attendRepository.findByEmpNoAndAttDateLike(memberInfo, attend.getAttDate());
 		
 		modifyCheckOut.setAttEnd(attend.getAttDate());
 		
