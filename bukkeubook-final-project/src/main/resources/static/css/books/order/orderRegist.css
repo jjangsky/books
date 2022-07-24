@@ -111,6 +111,25 @@ td{
 }
 
 .searchTable1{
-	display: inline-block !important;
-    text-align: center !important;
+	margin: 0 auto;
+}
+
+.newBookBtn {
+    border-radius: 10px;
+    background: #c5bfbf;
+    border: none;
+    height: 37px;
+    width: 100px !important;
+    font-size: 11px;
+}
+.newBookBtn:hover {
+    background-color: #FEFCC6;
+}
+
+.bt{
+	text-align: right !important;
+}
+
+#deleteBtn{
+	margin-right: 140px !important;
 }

@@ -117,6 +117,9 @@ td{
 	margin-bottom: 15px;
 }
 
-
+.btn-primary {
+  color: #fff;
+  background-color: #515151 !important;
+  border-color: #515151 !important; }
 
 
