@@ -110,6 +110,7 @@ window.onload = function() {
 				
 				$("#salBase").val(salary);
 				$("#salBase2").text(salary);
+				printName();
 			},
 			error: function(error) {
 				console.log(error);
@@ -119,7 +120,7 @@ window.onload = function() {
 
 
 
-	$(".backBtn").click(function() {
+	$("#backBtn").click(function() {
 		Swal.fire({
 			title: '작성내용이 모두 사라집니다.',
 			text: "진행 하시겠습니까?",
@@ -138,7 +139,43 @@ window.onload = function() {
 
 
 	$("#insert").click(function() {
-		//$("#insertForm").submit();
+		Swal.fire({
+			title: '급여 등록',
+			text: "등록하시겠습니까?",
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#c5bfbf',
+			cancelButtonColor: '#c5bfbf',
+			confirmButtonText: '확인',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				let empNo = $("#empNo").val();
+				let date = $("#date").val();
+				let salBase = $("#salBase").val();
+				let salPension = $("#salPension").val();
+				let salHealth = $("#salHealth").val();
+				let salCare = $("#salCare").val();
+				let salHire = $("#salHire").val();
+				let salIncTax = $("#salIncTax").val();
+				let salLocalTax = $("#salLocalTax").val();
+				let salTotalMinus = $("#salTotalMinus").val();
+				let salRealAmount = $("#salRealAmount").val();
+				
+				let check = 0;
+				if(empNo.length < 1 || empNo == "" || empNo == "  " ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '직원 선택',
+						text: '문서의 제목을 입력해주세요.'
+					})
+				} else {
+					check++;
+				}
+				
+				$("#insertForm").submit();
+			}
+		})
 	});
 }
 
@@ -154,7 +191,7 @@ function printName() {
 	salLocalTax = Math.round(salIncTax * 0.1);
 	salTotalMinus = salPension + salHealth + salCare + salHire + salIncTax + salLocalTax
 	salRealAmount = salBase - salPension - salHealth - salCare - salHire - salIncTax - salLocalTax;
-	document.getElementById("input").value = salBase;
+	document.getElementById("salBase").value = salBase;
 	document.getElementById("salPension").value = salPension;
 	document.getElementById("salHealth").value = salHealth;
 	document.getElementById("salCare").value = salCare;

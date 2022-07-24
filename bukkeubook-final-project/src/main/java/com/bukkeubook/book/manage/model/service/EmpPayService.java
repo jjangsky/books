@@ -153,6 +153,13 @@ public class EmpPayService {
 		return emp;
 	}
 
+	/* 급여 등록 */
+	public void insertNewSalary(SalaryDTO salary) {
+
+		salaryRepository.save(modelMapper.map(salary, Salary.class));
+		
+	}
+
 
 	
   

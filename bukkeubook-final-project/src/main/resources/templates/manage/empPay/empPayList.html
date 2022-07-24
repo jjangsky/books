@@ -10,6 +10,16 @@
   </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
+	<script>
+		const successMessage = "[[${ message }]]";
+		if(successMessage){
+			 Swal.fire({
+	                icon: 'success',
+	                title: '성공!',
+	                text: '성공적으로 완료되었습니다!',
+	            })
+		}
+	</script>
 	 <h2 class="mb-4" id="main-text">급여관리</h2>
         <hr><br><br>
         <h5 class="mb-4" id="sub-text">급여 계산내역 조회</h5>
