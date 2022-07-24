@@ -85,3 +85,6 @@ color: white !important;
    color: #808080 !important;
    background-color: white !important;
 }
+#inputNum {
+	width: 70px;
+}
