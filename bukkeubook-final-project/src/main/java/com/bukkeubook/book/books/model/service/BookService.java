@@ -137,12 +137,14 @@ public class BookService {
 		/* 자바의 Stream API와 ModelMapper를 이용하여 entity를 DTO로 변환 후 List<MenuDTO>로 반환 */
 		return bookList.stream().map(book -> modelMapper.map(book, BookDTO.class)).collect(Collectors.toList());
 	}
-
+	
+	/***********************************************************************************************************/
 	@Transactional
 	public List<BookDTO> findBookByNo(String no) {
 		List<Book> bookList = bookRepository.findBookByNo(no);
 		return bookList.stream().map(book -> modelMapper.map(book, BookDTO.class)).collect(Collectors.toList());
 	}
+	/***********************************************************************************************************/
 	
 	@Transactional	
 	public void modifyBookInfo(BookDTO bookDTO) {
@@ -155,7 +157,7 @@ public class BookService {
 		book.setSellYn(bookDTO.getSellYn());
 
 	}
-
+	
 	public String newBookCode() {
 		String bookCode = nativeRepository.newBookCode();
 		return bookCode;
@@ -369,7 +371,7 @@ public class BookService {
 		return bookList.stream().map(book -> modelMapper.map(book, BookDTO.class)).collect(Collectors.toList());
 	}
 
-	
+	/****************************************************************/
 	@Transactional
 	public DamBookDTO findByNo(String no, int updateAmount) {
 		DamBook damBookList = damBookRepository.findBybkNo(no);
@@ -388,7 +390,7 @@ public class BookService {
 		int whst = book.getWhSt();		
 		book.setWhSt(whst - updateAmount);
 	}
-
+	/****************************************************************/
 	public List<BookDTO> searchBookList(String searchCondition, String searchValue) {
 		List<Book> bookList = new ArrayList<Book>();
 		if(searchValue != null) {

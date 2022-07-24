@@ -23,12 +23,12 @@ public class SalaryDTO implements Serializable{
 	private int salNo;
 	private java.sql.Date salMonth;
 	private int salBase;
-	private int salPension;
-	private int salHealth;
-	private int salCare;
-	private int salHire;
-	private int salIncTax;
-	private int salLocalTax;
+	private int salPension;				//국민연금
+	private int salHealth;				//건강보험
+	private int salCare;				//요양보험
+	private int salHire;				//고용보험
+	private int salIncTax;				//근로소득세
+	private int salLocalTax;			//지방소득세
 	private int salRealAmount;
 	private int salTotalMinus; 
 	private int empNo;

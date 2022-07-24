@@ -44,8 +44,8 @@
               <tr class="deemp2">
                 <td>부서명</td>
                 <td>
-                  <select class="sel3" name="deptCode" id="deptCode">
-                  <option value="">--</option>
+                  <select class="sel3" name="deptCode">
+                  <option value="">None</option>
                   <option value="2">재무부</option>
                   <option value="3">인사부</option>
                   <option value="4">총무부</option>
@@ -149,110 +149,30 @@
                }
             }).open();
          }
-         $().ready(function () {
-             $(".backBtn").click(function () {
-                 Swal.fire({
-                     title: '작성내용이 모두 사라집니다.',
-                     text: "진행 하시겠습니까?",
-                     icon: 'warning',
-                     showCancelButton: true,
-                     confirmButtonColor: '#c5bfbf',
-                     cancelButtonColor: '#c5bfbf',
-                     confirmButtonText: '확인',
-                     cancelButtonText: '취소'
-                 }).then((result) => {
-                     if (result.isConfirmed) {
-                         window.history.back();
-                     }
-                 })
-             });
-         });
-         $("#save").click(function(){
-            if($('#name').val() == ""){
-               Swal.fire({
-                     icon: 'error',                        
-                     title: '입력이 되지 않았습니다.',         
-                     text: '이름 입력칸을 확인해 주십시오.',  
-                 });
-               
-            } else if($('#tatalsal').val() == ""){
-               Swal.fire({
-                     icon: 'error',                        
-                     title: '입력이 되지 않았습니다.',          
-                     text: '연봉 입력칸을 확인해 주십시오.',  
-                 });
-            } else if($('#deptCode').val() == ""){
-               Swal.fire({
-                     icon: 'error',                        
-                     title: '입력이 되지 않았습니다.',          
-                     text: '부서 입력칸을 확인해 주십시오.',  
-                 });      
-            } else if($('#empJobCode').val() == ""){
-               Swal.fire({
-                     icon: 'error',                        
-                     title: '입력이 되지 않았습니다.',          
-                     text: '직급 입력칸을 확인해 주십시오.',  
-                 });      
-            } else if($('#empEntDate').val() == ""){
-               Swal.fire({
-                     icon: 'error',                        
-                     title: '입력이 되지 않았습니다.',          
-                     text: '입사일자 입력칸을 확인해 주십시오.',  
-                 });
-            } else if($('#empGender').val() == ""){
-               Swal.fire({
-                     icon: 'error',                        
-                     title: '입력이 되지 않았습니다.',          
-                     text: '성별 입력칸을 확인해 주십시오.',  
-                 });   
-            } else if($('#empBirth').val() == ""){
-               Swal.fire({
-                     icon: 'error',                        
-                     title: '입력이 되지 않았습니다.',          
-                     text: '생년월일 입력칸을 확인해 주십시오.',  
-                 });         
-            } else if(!(Number($("#phone1").val())&&Number($("#phone2").val())&&Number($("#phone3").val()))){
-               Swal.fire({
-                     icon: 'error',                        
-                     title: '입력이 되지 않았습니다.',          
-                     text: '전화번호 입력칸을 확인해 주십시오.',  
-                 });
-            } else if($('#empEmail1').val() == ""){
-               Swal.fire({
-                     icon: 'error',                        
-                     title: '입력이 되지 않았습니다.',          
-                     text: '이메일 입력칸을 확인해 주십시오.',  
-                 });
-            } else if($('#zipCode').val() == ""){
-                Swal.fire({
-                      icon: 'error',                        
-                      title: '입력이 되지 않았습니다.',          
-                      text: '주소 입력칸을 확인해 주십시오.',  
-                  });   
-            } else if($('#zipCode').val() == ""){
-                Swal.fire({
-                      icon: 'error',                        
-                      title: '입력이 되지 않았습니다.',          
-                      text: '초기비밀번호 입력칸을 확인해 주십시오.',  
-                  });     
-            }else{
-               Swal.fire({
-                     title: '직원정보를 등록 하시겠습니까?',
-                     text: "입력한 정보로 해당 직원의 정보를 등록합니다.",
-                     icon: 'question',
-                     showCancelButton: true,
-                     confirmButtonColor: '#3085d6',
-                     cancelButtonColor: '#d33',
-                     confirmButtonText: '승인',
-                     cancelButtonText: '취소'
-                 }).then((result) => {
-                     if (result.isConfirmed) {
-                        $("#insertForm").submit();
-                     }
-                 })
-            }
-         })
-     </script>
-     
+   </script>
+   <script th:inline="javascript">
+          $(".backBtn").click(function () {
+              Swal.fire({
+                  title: '작성내용이 모두 사라집니다.',
+                  text: "진행 하시겠습니까?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#c5bfbf',
+                  cancelButtonColor: '#c5bfbf',
+                  confirmButtonText: '확인',
+                  cancelButtonText: '취소'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      window.history.back();
+                  }
+              })
+      });
+      
+        $("#insert").click(function () {
+           let nameFile = $("#nameFile").val();          
+           console.log(nameFile);
+           $("#insertForm").submit();
+        });
+      </script> 
 </body>
 </html>

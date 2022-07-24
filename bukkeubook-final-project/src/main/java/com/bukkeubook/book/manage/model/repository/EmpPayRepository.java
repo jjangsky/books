@@ -18,7 +18,10 @@ public interface EmpPayRepository extends JpaRepository<PayAndEmpAndDept, Intege
 
 	int countBySalMonthContaining(String searchValue);
 
-	List<PayAndEmpAndDept> findBySalMonthContaining(String searchValue, Pageable paging);
+	List<PayAndEmpAndDept> findAllByEmpInfo_EmpNameContaining(String searchValue, Pageable paging);
+
+	List<PayAndEmpAndDept> findAllByEmpInfo_Dept_DeptNameContaining(String searchValue, Pageable paging);
+
 
 
 

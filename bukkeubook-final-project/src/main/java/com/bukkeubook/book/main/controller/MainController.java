@@ -6,7 +6,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationTrustResolver;
+import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,7 +69,12 @@ public class MainController {
 	
 	@GetMapping("/")
 	public String login() {
-		return "/member/login";
+		AuthenticationTrustResolver trustResolver = new AuthenticationTrustResolverImpl();
+		if (trustResolver.isAnonymous(SecurityContextHolder.getContext().getAuthentication())) {
+			return "/member/login";		// 권한 없을 때
+		} else {
+			return "redirect:/main";	// 권한 있을 때
+		}
 	};
 	
 	@GetMapping("/main")

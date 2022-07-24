@@ -94,7 +94,7 @@
 		
 	</script>
 	<script th:inline="javascript">
-	
+		var existData = [];
 		$('#inputFind').blur(function(){
 			const tagExp = /(<([^>]+)>)/gi;
 			if(tagExp.test($('#inputFind').val())){
@@ -184,9 +184,28 @@
 		   	        var tr = checkBtn.parent().parent();
 		   	        var td = tr.children();
 		   	        
+		   	    	var success = 1;
+		   	        
+		   	    	for(var i = 0; i < existData.length; i++){
+		            	if(td.eq(0).text() === existData[i]){
+		            		success = 0;
+		            	}
+		            }
+		   	    	
+		   	    	
 		   	        var whSt = td.eq(4).text();
 		   	        var bookNo = td.eq(0).text();
-		   	        
+		   	     if(success == 0){
+						console.log("추가안해");
+						Swal.fire({
+		            		icon: 'error',
+		            		title: '잘못된 요청',
+		            		text: '이미 선택된 도서입니다. 다시 한번 확인해주세요.',
+		            	})
+		            } else if(success == 1){
+		            	console.log("추가함"); 
+			            existData.push(td.eq(0).text());
+		            
 		   	        if(whSt.substr(0 , 1) > 0){
 		   	            
 		   	            
@@ -250,33 +269,30 @@
 		   	    			
 		   	    		});
 		   	            
-		   	            $(document).ready(function(){
-		   		        	$('.outputValue').change( function(){
-		   						var apap = $(this);
-		   						var tr2 = apap.parent().parent();
-		   		       			var td2 = tr2.children();
-		   				        /* var a = Number(td2.eq(4).text().substr(0, 2)); */
-		   				        var a = Number(td2.eq(4).text().replace('ea',""));
-		   				        var c = Number(td2.eq(5).text().substr(0, 2));
-		   				        var b = $('.outputValue').val();
-		   				        const afaf = '';
-		   				        console.log('a' + a);
-		   				        console.log('b' + b);
-		   				        console.log('c' + c);
-		   				        
-		   			            if(a < b){
+		   	         var $outputValue = $('.outputValue');
+				        $outputValue.change(function () {
+				        	
+				        	for (var i = 1; i <= $outputValue.length; i++) {
+				        		var test = document.getElementById("bottomTable").getElementsByTagName("tr")[i].getElementsByTagName("td")[4].innerHTML;
+				        		var store = Number(test.replace('ea',""))
+				        		var input = $outputValue.eq(i-1).val()
+				        		var d =  Number(($('#bottomTable tr:eq(' + i + ')>td:eq(5)').html()).replace('ea', ""));
+				        		
+				        		console.log((i) + ' 행 ' + ' 매장재고 - ' + store);
+				        		console.log((i) + ' 행 ' + ' 입고수량 - ' + input);
+				        		if(input > store){
 		   							Swal.fire({
 		   			                    icon: 'warning',
 		   			                    title: '재고수량을 확인 해 주세요!',
 		   			                    text: '창고보유재고 이상으로 출고할 수 없습니다.',
 		   		              		 }).then(function(){
 		   									$(document).ready(function() {
-		   								        $('.outputValue').val(a);
+		   								        $('.outputValue').val(0);
 		   								   	});
 		   								});
 		   						}
-		   			        });
-		   	            });
+			        		}
+			        	});
 		   	            
 		   	        } else {
 		   	        	Swal.fire({
@@ -284,7 +300,8 @@
 		   	                title: '재고수량을 확인 해 주세요!',
 		   	                text: '수량이 1ea 이상인 도서만 출고 가능합니다.',
 		   	           		 });
-		   	   		   }	
+		   	   		   }
+		            }
 		   		});	
 		   				}
 		   			})

@@ -39,6 +39,9 @@
                 <th class="th1">문서상태</th>
                 <th class="th1">문서종류</th>
               </tr>
+              <tr th:if="${#lists.isEmpty(all)}">
+              	<th class="th1" colspan="6">결재하실 서류가 존재하지 않습니다.</th>
+              </tr>
               <tr class="hover" th:each="all : ${ all }" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all.document.docNo1 }|} + '\''">
                 <td class="td1" th:text="${allStat.count}"></td>
                 <td class="td1" th:text="${all.document.docNo1}"></td>

@@ -34,6 +34,9 @@
                 <th class="th1">작성자</th>
                 <th class="th1">문서종류</th>
               </tr>
+              <tr th:if="${#lists.isEmpty(tempDocList)}">
+              	<th class="th1" colspan="6">임시저장된 서류가 존재하지 않습니다.</th>
+              </tr>
               <tr class="hover" th:each="temp : ${ tempDocList }" th:onclick="'location.href = \'' + @{|/document/tempInfo/${temp.docNo}|} + '\''">
                 <td class="td1" th:text="${tempStat.count}"></th>
                 <td class="td1" th:text="${temp.docNo}"></th>
