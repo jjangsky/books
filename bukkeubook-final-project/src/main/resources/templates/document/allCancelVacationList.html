@@ -35,6 +35,9 @@
                 <th class="th1">취소 서류 번호</th>
                 <th class="th1">문서상태</th>
               </tr>
+              <tr th:if="${#lists.isEmpty(cancelList)}">
+              	<th class="th1" colspan="6">신청하신 서류가 존재하지 않습니다.</th>
+              </tr>
               <tr class="hover" th:each="canc : ${ cancelList }" th:onclick="'location.href = \'' + @{|/document/cancelVacationDetail/${ canc.vacCancNo }|} + '\''">
                 <td class="td1" th:text="${cancStat.count}"></td>
                 <td class="td1" th:text="${canc.vacCancNo}"></td>

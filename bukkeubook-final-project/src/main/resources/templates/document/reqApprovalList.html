@@ -35,6 +35,9 @@
                 <th class="th1">작성자</th>
                 <th class="th1">문서종류</th>
               </tr>
+              <tr th:if="${#lists.isEmpty(docList)}">
+              	<th class="th1" colspan="6">결재 요청하신 서류가 존재하지 않습니다.</th>
+              </tr>
               <tr class="hover" th:each="doc : ${ docList }" th:onclick="'location.href = \'' + @{|/document/reqApprovalDetail/${doc.docNo}|} + '\''">
                 <td class="td1" th:text="${docStat.count}"></td>
                 <td class="td1" th:text="${doc.docNo}"></td>

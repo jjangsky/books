@@ -42,7 +42,7 @@
          </form>
        </div>
 
-        <div id="textTable" style="text-align:-webkit-center">
+        <div id="textTable" style="text-align:-webkit-center; width:95%;">
           <table id="sampleTable">
             <thead>
               <tr class="th1">
@@ -56,6 +56,9 @@
               </tr>
             </thead>
             <tbody>
+              <tr th:if="${#lists.isEmpty(payList)}">
+              	<th class="th1" colspan="7">검색결과가 존재하지 않습니다.</th>
+              </tr>
               <tr th:each="pay : ${ payList }" class="hover">
               	<td th:text="${ pay.salMonth }"></td>
              	<td th:text="${ pay.empInfo.dept.deptName }"> 
