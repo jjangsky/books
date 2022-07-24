@@ -3,7 +3,8 @@ package com.bukkeubook.book.manage.model.dto.joinDTO;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bukkeubook.book.manage.model.dto.EmpDTO;
+import com.bukkeubook.book.document.model.dto.EmpDTO;
+
 
 public class DeptAndEmpDTO {
    
