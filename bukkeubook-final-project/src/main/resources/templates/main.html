@@ -24,37 +24,27 @@
 	
 	
        
-            <div  style="width: 80%; height: 300px; float:left; margin-top: 50px; margin-left: 100px;">
+            <div  style="width: 80%; height: 300px; width: 40%; float:left; margin-top: 50px; margin-left: 50px; ">
               <div id="textTable" style="text-align:-webkit-center">
-                <h4 style="text-align: left; font-family: Bold;">전사 게시판</h4>
+                <h4 style="text-align: center; font-family: Bold;">전사 게시판</h4>
                 <table id="sampleTable" style="width: 100%;">
                   <tr>
-                    <th class="th1">번호</th>
-                    <th class="th1">카테고리</th>
-                    <th class="th1">제목</th>
-                    <th class="th1">작성일</th>
+                    <th class="th1" style="width:30%;">제목</th>
+                    <th class="th1" style="width:10%;">작성일</th>
                 </tr>
                 <tr th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[0].no})} + '\''">
-                  <td th:text="${boardList[0].no}"></td>
-                  <td th:text="${boardList[0].cate.cateName}"></td>
                   <td th:text="${boardList[0].title}"></td>
                   <td th:text="${boardList[0].date}"></td>
                 </tr>
                 <tr th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[1].no})} + '\''">
-                  <td th:text="${boardList[1].no}"></td>
-                  <td th:text="${boardList[1].cate.cateName}"></td>
                   <td th:text="${boardList[1].title}"></td>
                   <td th:text="${boardList[1].date}"></td>
                 </tr>
                 <tr th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[2].no})} + '\''">
-                  <td th:text="${boardList[2].no}"></td>
-                  <td th:text="${boardList[2].cate.cateName}"></td>
                   <td th:text="${boardList[2].title}"></td>
                   <td th:text="${boardList[2].date}"></td>
                 </tr>
                 <tr th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[3].no})} + '\''">
-                  <td th:text="${boardList[3].no}"></td>
-                  <td th:text="${boardList[3].cate.cateName}"></td>
                   <td th:text="${boardList[3].title}"></td>
                   <td th:text="${boardList[3].date}"></td>
                 </tr>
@@ -63,8 +53,35 @@
             </div>
             
           </div>
+          <div style=" width:40%; height: 300px; float:left; margin-top: 50px; margin-left:10%;">
+          	<div id="textTable" style="text-align:-webkit-center; ">
+                <div>
+                  <h4 style="text-align: center;">전자결재 수신함</h4>
+               		<table  id="sampleTable">
+                    <thead>
+                      <tr>
+                        <th class="th1" style="width:50%;">제목</th>
+                        <th class="th1">결재여부</th>
+                        <th class="th1">문서상태</th>
+                        <th class="th1">문서종류</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="hover" th:each="all : ${ all }" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all.document.docNo1 }|} + '\''">
+                        <td class="td1" th:text="${all.document.docTitle1}"></td>
+                        <td class="td1" th:text="${all.appStatus}"></td>
+                        <td class="td1" th:text="${all.document.docStatus1}" id="status"></td>
+                        <td class="td1" th:text="${all.formName}"></td>
+                      </tr>
+                      
+                      
+                    </tbody>
+                    </table>
+                </div>
+              </div> 
+          </div>
          
-         <div id='calendar' style="width: 80%; float:left; margin-left: 100px; margin-top: 10%;">
+         <div id='calendar' style="width: 90%; float:left; margin-left: 50px; margin-top: 10%;">
 
         </div>  
        
@@ -127,6 +144,27 @@
 	                title: 'Success!',
 	                text: '해당 회원의 개인정보를 수정하였습니다.',
 	            })
+			}
+			
+			/* 전자결재 관련 Js */
+			const status = document.querySelectorAll('table tr td#status');
+        	console.log("status"+status);
+        	for (let i = 0; i < status.length; i++) {
+				if (status[i].innerText=="승인") {
+					let font = status[i];
+					console.log(font);
+					font.style.cssText = 'color:blue;';
+				}
+				if (status[i].innerText=="반려") {
+					let font = status[i];
+					console.log(font);
+					font.style.cssText = 'color:red;';
+				}
+				if (status[i].innerText=="진행중") {
+					let font = status[i];
+					console.log(font);
+					font.style.cssText = 'color:green;';
+				}
 			}
 			
 	</script>

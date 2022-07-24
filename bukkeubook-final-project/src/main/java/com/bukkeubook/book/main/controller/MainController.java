@@ -1,5 +1,6 @@
 package com.bukkeubook.book.main.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bukkeubook.book.document.compare.InboxListComparator;
+import com.bukkeubook.book.document.model.dto.InboxListDTO;
+import com.bukkeubook.book.document.model.service.DocService;
 import com.bukkeubook.book.main.model.service.MainService;
 import com.bukkeubook.book.member.model.dto.UserImpl;
 import com.bukkeubook.book.mypage.model.dto.CalendarDTO;
@@ -25,18 +29,20 @@ public class MainController {
 	private final MainService mainService;
 	private final MypageService mypageService;
 	private final BoardService boardService;
+	private DocService docService;
 	
 	@Autowired
-	public MainController(MainService mainService, MypageService mypageService, BoardService boardService) {
+	public MainController(MainService mainService, MypageService mypageService, BoardService boardService, DocService docService) {
 		this.mainService = mainService;
 		this.boardService = boardService;
 		this.mypageService = mypageService;
+		this.docService = docService;
 	}
 	
 
 	@PostMapping("/main")
-	public ModelAndView main(ModelAndView mv) {
-		int memberCode = 5;
+	public ModelAndView main(@AuthenticationPrincipal UserImpl customUser, ModelAndView mv) {
+		int memberCode = customUser.getEmpNo();
 		
 		/* 최근 전사게시판 우선순위 5개 조회 */
 		List<BoardAndCateDTO> boardList = mainService.findBoardList();
@@ -46,7 +52,12 @@ public class MainController {
 		List<CalendarDTO> calendar = mypageService.findMyCalendar(memberCode);
 		System.out.println(calendar);
 		
+		/* 전자결재 수신함 간편 조회 */
+		List<InboxListDTO> all = docService.findInboxAllList(memberCode);
 		
+		Collections.sort(all, new InboxListComparator().reversed());
+		
+		mv.addObject("all", all);
 		mv.addObject("boardList", boardList);
 		mv.addObject("calendar", calendar);
 		mv.setViewName("redirect:/main");
@@ -70,7 +81,12 @@ public class MainController {
 		List<CalendarDTO> calendar = mypageService.findMyCalendar(memberCode);
 		System.out.println(calendar);
 		
+		/* 전자결재 수신함 간편 조회 */
+		List<InboxListDTO> all = docService.findInboxAllList(memberCode);
 		
+		Collections.sort(all, new InboxListComparator().reversed());
+		
+		mv.addObject("all", all);
 		mv.addObject("boardList", boardList);
 		mv.addObject("calendar", calendar);
 		mv.setViewName("/main");
