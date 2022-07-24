@@ -66,9 +66,10 @@
 	        </div>
 		
 	       <br><br>
-	
+			<div class="bt">
+		       <button class="btn" id="deleteBtn" type="button">삭제</button>
+			</div>
 	       <div id="textTable" style="text-align:-webkit-center">
-	       <button class="btn" id="deleteBtn" type="button">삭제</button>
 	       	<form action="/order/regist" id="registInfo" method="post">
 				<table id="sampleTable">
 					<tr>
@@ -110,7 +111,7 @@
 	    						str+="<td>"+item.pub+"</td>";
 	    						str+="<td>"+pr+"원</td>";
 	    						str+="<td>"+st+"ea</td>";
-	    						str+="<td><button class='addBtn' type='button'>목록에 추가</button></td>";
+	    						str+="<td><button class='productBtn newBookBtn addBtn' type='button'>목록에 추가</button></td>";
 	    						str+="</tr>";
 	    						$("#searchTable").append(str);
 	    					})
@@ -323,9 +324,18 @@
     		
     		for(var i = 1; i < table.rows.length; i++){
                 var chkbox = table.rows[i].cells[0].childNodes[0].checked;
+                var checkedData = table.rows[i].cells[1].childNodes[0].data;
+                
+                console.log(checkedData);
                 
                 if(chkbox){
                 	n += 1;
+                	for(var i = 0; i < existData.length; i++){
+		            	if(checkedData === existData[i]){
+		            		removed = existData.splice(i, 1);
+		            		console.log(removed);
+		            	}
+		            }
                 }
     		}
     		
