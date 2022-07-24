@@ -15,7 +15,11 @@
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
 </head>
 <body>
-<div th:replace="/common/topSideBar.html"></div>
+	<div th:replace="/common/topSideBar.html"></div>
+	<script> 
+     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
+    </script> 
+	<script src="/js/manage/empPay.js"></script>
    <h2 class="mb-4" id="main-text">사원관리</h2>
         <hr><br><br>
         <h5 class="mb-4" id="sub-text">사원 정보등록</h5>
@@ -42,15 +46,12 @@
                 <td rowspan="4"></td>
               </tr>
               <tr class="deemp2">
-                <td>부서명</td>
-                <td>
-                  <select class="sel3" name="deptCode" id="deptCode">
-                  <option value="">--</option>
-                  <option value="2">재무부</option>
-                  <option value="3">인사부</option>
-                  <option value="4">총무부</option>
-                  <option value="5">도서물류부</option>
-                </select> 
+                <td id="selectDept">부서명</td>
+              <td>
+              	<select name="deptCode" id="deptCode">
+                 	<option value=""></option>
+				<!-- ajax -->
+               	</select>
               </td>
               </tr>
               <tr class="deemp2">
@@ -108,7 +109,7 @@
               </tr>
               <tr class="deemp2">
                 <td>이메일</td>
-                <td colspan="3"><input type="email" class="input1" name="empEmail" id="empEmail1"></td>
+                <td colspan="3"><input type="email" class="input1" name="empEmail" id="empEmail1" maxlength="30"></td>
               </tr>
               <tr class="deemp2">
                 <td>우편번호</td>
@@ -125,7 +126,7 @@
               </tr>
               <tr class="deemp2">
                 <td>초기비밀번호</td>
-                <td colspan="3"><input type="text" class="input1" name="empPwd" id="empPwd"></td>
+                <td colspan="3"><input type="text" class="input1" name="empPwd" id="empPwd" maxlength="20"></td>
               </tr>
             </tbody>
           </table><br>
@@ -229,15 +230,27 @@
                       title: '입력이 되지 않았습니다.',          
                       text: '주소 입력칸을 확인해 주십시오.',  
                   });   
-            } else if($('#zipCode').val() == ""){
+            } else if($('#empPwd').val() == ""){
                 Swal.fire({
                       icon: 'error',                        
                       title: '입력이 되지 않았습니다.',          
                       text: '초기비밀번호 입력칸을 확인해 주십시오.',  
-                  });     
+                  });  
+            } else if($('#proFile').val() == ""){
+                Swal.fire({
+                      icon: 'error',                        
+                      title: '입력이 되지 않았습니다.',          
+                      text: '프로필사진 입력칸을 확인해 주십시오.',  
+                  });
+            } else if($('#nameFile').val() == ""){
+                Swal.fire({
+                      icon: 'error',                        
+                      title: '입력이 되지 않았습니다.',          
+                      text: '서명사진 입력칸을 확인해 주십시오.',  
+                  });      
             }else{
                Swal.fire({
-                     title: '직원정보를 등록 하시겠습니까?',
+                     title: '등록 하시겠습니까?',
                      text: "입력한 정보로 해당 직원의 정보를 등록합니다.",
                      icon: 'question',
                      showCancelButton: true,

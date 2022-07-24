@@ -69,7 +69,6 @@
                   </select> 
                 </td>
               </tr>
-          </div>
               <tr class="deemp2" >
                 <td>입사일자</td>
                 <td colspan="3">
@@ -119,7 +118,7 @@
           </table><br>
           <input type="hidden" name="empNo" th:value="${emp.empNo}">
           <div id="space">
-             <button id="leaveUpdateEmp" class="modify btn">퇴사처리</button>
+<!--              <button id="leaveUpdateEmp" class="modify btn" >퇴사처리</button> -->
              <button id="update" class="modify btn updateBtn">등록하기</button>
              <button type="button" class="list btn backBtn" >목록으로</button>
           </div>
@@ -158,7 +157,16 @@
                 </div>
             </div>
          </div>
-       </div>       
+       </div> 
+       <!-- 직원 퇴사처리 --> 
+<!--        <form action="/manage/empLeave" method="post">
+          <button id="leaveEmp" class="modify btn leaveBtn">퇴사처리</button>
+       </form> -->
+       <form action="/manage/empLeave" method="post" id="leaveform">
+          <input type="hidden" th:value="${ emp.empNo }" name="empNo" readonly style="border:none;">
+          <input type="button" id="leavebtn" class="modify btn" value="퇴사처리">
+       </form>
+       
      <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
       <script>
          const searchZipCode = document.getElementById("searchZipCode");
@@ -221,8 +229,9 @@
                      }
                   }
               })
-      });
-   </script>
+        });
+
+   	</script>
       
       
    <script th:inline="javascript">      
@@ -250,6 +259,38 @@
              })
          });
      });
-   </script> 
+
+        
+        $("#leavebtn").click(function(){
+            Swal.fire({
+                  title: '퇴사를 진행 하시겠습니까?',
+                  text: "현재 사원을 퇴사 사원으로 변경 합니다.",
+                  icon: 'question',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: '승인',
+                  cancelButtonText: '취소'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      $('#leaveform').submit();
+                  }
+              })
+        });
+        
+        
+   </script>
+   <script th:inline="javascript">
+        const updateSuccessMessage = "[[${updateSuccessMessage}]]";
+ 		console.log(updateSuccessMessage + "dd");
+        if(updateSuccessMessage == '퇴사처리 성공'){
+        	Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '퇴사처리가 성공적으로 완료되었습니다!',
+            })
+        }
+        
+   </script>
   </body>
 </html>
