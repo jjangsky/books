@@ -121,20 +121,27 @@ function sendData() {
 			let endArr = end.split('-');
 
 
-			let startDateCompare = new Date(startArr[0], parseInt(startArr[1]) - 1, parseInt(startArr[2]) +1);
-			let endDateCompare = new Date(endArr[0], parseInt(endArr[1]) - 1, endArr[2]);
+			let startDateCompare = new Date(startArr[0], parseInt(startArr[1]) - 1, parseInt(startArr[2]));
+			let endDateCompare = new Date(endArr[0], parseInt(endArr[1]) - 1, parseInt(endArr[2]));
 
 			let getDateDiff = (d1, d2) => {
-				const date1 = new Date(d1);
-				const date2 = new Date(d2);
+				let date1 = new Date(d1);
+				let date2 = new Date(d2);
+				let date3 = new Date(date2);
+				
+				date3.setDate(date2.getDate() + 1);
 
-				const diffDate = date1.getTime() - date2.getTime();
+				let diffDate = date1.getTime() - date3.getTime();
+				
+				console.log(diffDate);
 
 				return Math.abs(diffDate / (1000 * 60 * 60 * 24)); // 밀리세컨 * 초 * 분 * 시 = 일
 			}
 
 			let startDate = $("#startDate").val();
 			let endDate = $("#endDate").val();
+
+			console.log(getDateDiff(startDate,endDate));
 
 			if(getDateDiff(startDate,endDate) > $("#dayoffRemain").val()){
 				console.log("nooooooooo");
