@@ -100,6 +100,7 @@
 	<br><br>
 	
 	<script>	
+		var existData = [];
 		$('#findBtn').click(function(){
 		
 			if(inputFind.value == "" && searchCondition.value == 'select'){
@@ -137,7 +138,7 @@
 		   							str+="<td>"+item.author+"</td>";
 		   							str+="<td>"+pr+"원</td>";
 		   							str+="<td>"+item.whSt+"ea</td>";
-		   							str+="<td>"+item.storeSt+"</td>";
+		   							str+="<td>"+item.storeSt+"ea</td>";
 		   							/* str+="<td><button class='btn' type='button'>목록에 추가</button></td>"; */
 		   							str+="<td><button class='productBtn newBookBtn addBtn'>추가</button></td>";
 		   							str+="</tr>";
@@ -154,10 +155,27 @@
 		   	        var checkBtn = $(this);
 		   	        var tr = checkBtn.parent().parent();
 		   	        var td = tr.children();
-		   	        
 		   	        var whSt = td.eq(4).text();
 		   	        var bookNo = td.eq(0).text();
 		   	        
+		            var success = 1;
+		            
+		            for(var i = 0; i < existData.length; i++){
+		            	if(td.eq(0).text() === existData[i]){
+		            		success = 0;
+		            	}
+		            }
+		   	        
+		            if(success == 0){
+						console.log("추가안해");
+						Swal.fire({
+		            		icon: 'error',
+		            		title: '잘못된 요청',
+		            		text: '이미 선택된 도서입니다. 다시 한번 확인해주세요.',
+		            	})
+		            } else if(success == 1){
+		            	console.log("추가함"); 
+			            existData.push(td.eq(0).text());
 		   	        if(whSt.substr(0 , 1) > 0){
 		   	            
 		   	            
@@ -262,6 +280,17 @@
 											});
 					        		}
 				        		}
+					        	if($('#inputSearch').val()=='select'){
+				        			Swal.fire({
+					                    icon: 'warning',
+					                    title: '입고분류를 선택 해 주세요!',
+					                    text: '',
+				              		 }).then(function(){
+											$(document).ready(function() {
+												$outputValue.val(0);
+										   	});
+										});
+					        	}
 				        	});
 					        $('#inputSearch').change( function(){
 				        		$('.outputValue').val(0);
@@ -275,7 +304,7 @@
 		   	                text: '수량이 1ea 이상인 도서만 출고 가능합니다.',
 		   	           		 });
 		   	   		   }	
-		   	        
+		            }
 		   		});	
 		   				}
 		   			})
