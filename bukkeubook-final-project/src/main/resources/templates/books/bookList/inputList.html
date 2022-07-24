@@ -46,6 +46,9 @@
                 <th class="th1">직급</th>
                 <th class="th1">구분</th>
               </tr>
+              <tr th:if="${#lists.isEmpty(inputList)}">
+                 <td colspan="6">검색 결과가 없습니다.</td>
+              </tr>
               <tr class="tr1" th:each="inputList : ${ inputList }" th:onclick="'location.href = \'' + @{/book/inputDetail/(no=${inputList.stCode})} + '\''">
                 <td th:text="${ inputList.stCode }"></td>
                 <td th:text="${ inputList.stDate }"></td>

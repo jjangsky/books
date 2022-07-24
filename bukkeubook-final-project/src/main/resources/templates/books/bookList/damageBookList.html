@@ -45,6 +45,9 @@
                 <th class="th1">가격</th>
                 <th class="th1">훼손수량</th>
               </tr>
+              <tr th:if="${#lists.isEmpty(damageList)}">
+                 <td colspan="7">검색 결과가 없습니다.</td>
+              </tr>
               <tr class="tr1" th:each="damageList : ${ damageList }">
                 <td th:text="${ damageList.no }"></td>
                 <td th:text="${ damageList.name }"></td>
