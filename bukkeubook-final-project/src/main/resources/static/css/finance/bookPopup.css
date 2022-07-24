@@ -15,7 +15,8 @@
     border-width: 1px 1px 1px 1px;
     background: #fafafa;
     width: 20em;
-    margin-left: 230px !important;
+    height: 20px;
+    margin-left: 120px !important;
     text-align: center;
 }
 #inputFind:focus {
@@ -60,7 +61,6 @@
     text-align: center;
     margin-right: 10px;
     margin-bottom: 5px;
-    margin-top: 8px;
 }
 .btn:hover {
     background-color: #FEFCC6 !important;
@@ -71,15 +71,19 @@
 }
 
 #orderTable{
-	border: 1px solid black !important;
+	border: 1px solid #444444;
 }
 
 td{
-	font-size: 13pt;
-	width: 60px;
+	font-size: 11pt;
+	width: 100px;
 	height: 10px;
-	border: 1px solid black !important;
+	border-bottom: 1px solid #444444;
 	text-align: center;
+}
+
+.td2{
+	width: 150px;
 }
 
 .cate{
@@ -114,15 +118,10 @@ td{
     text-align: center;
 }
 
-#btns{
-	display: inline-block;
-    text-align: center;
+#textTable{
 	margin-bottom: 15px;
 }
 
-.f1{
-	float: left;
-}
 
 
 

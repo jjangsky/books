@@ -73,19 +73,23 @@
                         <td th:text="${ client.cntManaEmail }"></td>
                     </tr>
                 </table>
-                <form id="modifyForm" action="/client/modify/" method="get">
-                	<input type="hidden" name="cntNo" th:value="${ client.cntNo }">
-	                <button class="btn" type="submit" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''">수정</button>
-	            </form>
-	            <form id="stopForm" action="/client/stop/" method="get">
-	            	<input type="hidden" name="cntNo" th:value="${ client.cntNo }">	
-	                <button class="btn" type="button" onclick="checkStop()" th:if="${client.cntTradeYn.toString().equals('Y')}">거래중지</button>
-				</form>
-	            <form id="startForm" action="/client/start/" method="get">
-	            	<input type="hidden" name="cntNo" th:value="${ client.cntNo }">	
-	                <button class="btn" type="button" onclick="checkStart()" th:if="${client.cntTradeYn.toString().equals('N')}">거래재개</button>
-				</form>
-	                <button class="btn" type="button" onclick="location.href='/client/select'">목록</button>
+                <div id="btns"> 
+	                <form class="f1" action="/client/modify/" method="get">
+	                	<input type="hidden" name="cntNo" th:value="${ client.cntNo }">
+		                <button class="btn" type="submit" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''">수정</button>
+		            </form>
+		            <form id="stopForm" class="f1" action="/client/stop/" method="get">
+		            	<input type="hidden" name="cntNo" th:value="${ client.cntNo }">	
+		                <button class="btn" type="button" onclick="checkStop()" th:if="${client.cntTradeYn.toString().equals('Y')}">거래중지</button>
+					</form>
+					<form id="startForm" class="f1" action="/client/start/" method="get">
+		            	<input type="hidden" name="cntNo" th:value="${ client.cntNo }">	
+		                <button class="btn" type="button" onclick="checkStart()" th:if="${client.cntTradeYn.toString().equals('N')}">거래재개</button>
+					</form>
+					<form class="f1">
+			            <button class="btn" type="button" onclick="location.href='/client/select'">목록</button>
+					</form>
+                </div>
         </div>
 
     <script>

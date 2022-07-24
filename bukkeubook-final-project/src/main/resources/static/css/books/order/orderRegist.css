@@ -109,3 +109,8 @@ td{
 .pagingArea button:hover {
 	background-color: #FEFCC6;
 }
+
+.searchTable1{
+	display: inline-block !important;
+    text-align: center !important;
+}
