@@ -16,14 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
-import com.bukkeubook.book.document.model.entity.Emp;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.ProfPhotoDTO;
 import com.bukkeubook.book.manage.model.dto.SignDTO;
@@ -156,127 +154,6 @@ private final MyInfoModifyService myInfoModifyService;
 		return mv;
 	}
 	
-	/* 신규사원등록 기능(insert) */
-	@GetMapping("empInsert")
-	public ModelAndView empInsertPage(ModelAndView mv) {
-		
-		mv.setViewName("/manage/employee/empInsert");
-		
-		return mv;
-	}
-	
-//	/* 신규 직원 등록  insert */
-//	@PostMapping("insert")
-//	public ModelAndView insertEmp(EmpDTO empDTO, ModelAndView mv, HttpServletRequest request, 
-//										@RequestParam("proFile") MultipartFile proFile,  
-//										@RequestParam("nameFile") MultipartFile nameFile,  
-//										RedirectAttributes rttr) 
-//	{
-//		
-//		String empAddress = "주소";
-//		empDTO.setEmpAddress(empAddress);	
-//		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
-//		
-//		/* 프로필 사진, 도장 사진을 제외한 나머지 회원 정보 insert */
-//		empService.insertNewEmp(empDTO);
-//		
-//		/* 방금 등록한 회원에 대해 기본키 가져오기 */
-//		List<EmpAndDeptDTO> lastEmp = empService.selectLastEmp();
-//		
-//		System.out.println(lastEmp.get(0).getEmpNo());  // 방금 등록한 회원의 번호 추출
-//		
-//		int registEmp = lastEmp.get(0).getEmpNo();
-//		
-//		/* 민님 이틀 갈아넣어서 만든 프로젝트 내부 저장 방식 소스 */
-//		String root = System.getProperty("user.dir");
-//		System.out.println("root까지의 경로 : " + root);
-//		
-//		String filePath = root + "/src/main/resources/static/images/mypage";  // 프사 저장 루트
-//		String signPath = root + "/src/main/resources/static/images/sign"; 	  // 서명 저장 루트
-//		
-//		/* 파일 없으면 만들어줌 */
-//		File mkdir = new File(filePath);	
-//		if(!mkdir.exists()) {
-//			mkdir.mkdirs();
-//		}
-//		File mkdir1 = new File(signPath);	
-//		if(!mkdir1.exists()) {
-//			mkdir1.mkdirs();
-//		}
-//		
-//		/* 원본이랑 저장되는 값 이름이 같으면 안됨 -> 그래서 변경된 값으로 새로 프로젝트에 저장*/
-//		String originFileName = proFile.getOriginalFilename();
-//		String originFileName1 = nameFile.getOriginalFilename();
-//		System.out.println("프로필 사진 원본 이름 : " + originFileName);
-//		System.out.println("서명 사진 원본 이름 : " + originFileName1);
-//		
-//		String ext = originFileName.substring(originFileName.lastIndexOf("."));
-//		String ext1 = originFileName1.substring(originFileName1.lastIndexOf("."));
-//		
-//		String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
-//		String saveName1 = UUID.randomUUID().toString().replace("-", "") + ext1;
-//		
-//		System.out.println("변경한 이름 : " + saveName);
-//		System.out.println("변경한 이름 : " + saveName1);
-//		
-//		/* 프로필 사진 저장 처리 */
-//		try {
-//			proFile.transferTo(new File(filePath + "/" + saveName));
-//			
-//			/* DB에 저장할 파일 정보를 DTO에 담기 */
-//			ProfPhotoDTO profile = new ProfPhotoDTO();
-//			profile.setEmpNo(registEmp);
-//			profile.setPhotoOrigName(originFileName);
-//			profile.setPhotoSavedName(saveName);
-//			profile.setPhotoSavedPath(filePath);
-//			
-//			/* 서비스로 보내서 DB로 전송 */
-//			empService.registEmpProFile(profile);
-//			
-//		} catch (IllegalStateException | IOException e) {
-//			e.printStackTrace();
-//			
-//			/* 실패 시 파일 삭제 */
-//			new File(filePath + "/" + saveName).delete();
-//		}
-//		
-//		
-//		/* 서명 사진 저장 처리 */
-//		try {
-//			nameFile.transferTo(new File(signPath + "/" + saveName1));
-//			/* DB에 저장할 파일 정보를 DTO에 담기 */
-//			SignDTO signFile = new SignDTO();
-//			signFile.setEmpNo(registEmp);
-//			signFile.setSignName(originFileName1);
-//			signFile.setSignSavedName(saveName1);
-//			signFile.setSignPath(signPath);
-//			
-//			/* 서비스로 보내서 DB로 전송(signService) */
-//			signService.registEmpNameFile(signFile);
-//			
-//		} catch (IllegalStateException | IOException e) {
-//			e.printStackTrace();
-//			
-//			/* 실패 시 파일 삭제 */
-//			new File(signPath + "/" + saveName1).delete();
-//		}
-//				
-//		rttr.addFlashAttribute("insertSuccessMessage", "성공"); //addFlashAttribute 한번만 보여주고 감
-//		mv.setViewName("redirect:/manage/empList");
-//		return mv;
-//	};	
-
-//	   /* 사원 등록시 사원번호 조회 */
-//	   @GetMapping(value = {"empInfo"}, produces="application/json;charset=UTF-8")
-//	   @ResponseBody
-//	   public List<Integer> findEmpNo(){
-//		   
-//		   List<Integer> emp = empService.findEmpNo(0);
-//		   
-//		   return emp;
-//	   }
-
-	/***********************************************************************************************/	
 	/* 사원정보 수정 */
 	@GetMapping("detailUpdate/{empNo}")
 	public ModelAndView empUpdatePage(ModelAndView mv, @PathVariable String empNo) {
@@ -302,7 +179,7 @@ private final MyInfoModifyService myInfoModifyService;
 		return mv; 
 
 	}
-	/***********************************************************************************************/	
+	
 		/* 사원 정보를 가져오는 곳 */
 	   @PostMapping("/empDetailUpdate")
 	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, EmpDTO emp
@@ -316,7 +193,6 @@ private final MyInfoModifyService myInfoModifyService;
 	      return mv;
 	   }
 
-	/***********************************************************************************************/	
 		/* 도장 사진 수정 */
 		@PostMapping("detailUpdate23")
 		public ModelAndView modifySign(ModelAndView mv, HttpServletRequest request,
@@ -365,7 +241,6 @@ private final MyInfoModifyService myInfoModifyService;
 			return mv;
 		}
 		
-		/***********************************************************************************************/	
 		/* 프로필 사진 수정 */
 		@PostMapping("detailUpdate2")
 		public ModelAndView modifyProfile(ModelAndView mv, HttpServletRequest request, 
@@ -409,6 +284,15 @@ private final MyInfoModifyService myInfoModifyService;
 			
 			return mv;
 		}
+		
+		/* 신규사원등록 기능 페이지 연결(insert) */
+		@GetMapping("empInsert")
+		public ModelAndView empInsertPage(ModelAndView mv) {
+			
+			mv.setViewName("/manage/employee/empInsert");
+			
+			return mv;
+		}
 
 		/* 신규 직원 등록  insert (개인정보,서명,프로필,비밀번호 비크립트) */
 		@PostMapping("insert")
@@ -423,16 +307,11 @@ private final MyInfoModifyService myInfoModifyService;
 			System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + empDTO);
 			
 			/* 입력받은 사원 초기비밀번호 비크립트화 */
-			String empPwd = request.getParameter("empPwd");
-			if(!(empPwd == null) || !("".equals(empPwd))) {
-				BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
-				bc.encode(empPwd);
-				empDTO.setEmpPwd(empPwd);
-			}	
+			
 			
 			/* 프로필 사진, 도장 사진을 제외한 나머지 회원 정보 insert */
+//			empService.insertNewEmp(empDTO);
 			empService.insertNewEmp(empDTO);
-			
 			
 			/* 방금 등록한 회원에 대해 기본키 가져오기 */
 			List<EmpAndDeptDTO> lastEmp = empService.selectLastEmp();
@@ -516,7 +395,7 @@ private final MyInfoModifyService myInfoModifyService;
 			}
 			
 			rttr.addFlashAttribute("insertSuccessMessage", "성공"); //addFlashAttribute 한번만 보여주고 감
-			mv.setViewName("redirect:/manage/empList");
+			mv.setViewName("redirect:/manage/test");
 			return mv;
 		};			
 	}
