@@ -3,7 +3,8 @@ package com.bukkeubook.book.books.model.dto;
 import java.io.Serializable;
 import java.sql.Date;
 
-import com.bukkeubook.book.manage.model.dto.EmpDTO;
+import com.bukkeubook.book.document.model.dto.EmpDTO;
+
 
 public class OrderAndEmpAndBookDTO implements Serializable{
 

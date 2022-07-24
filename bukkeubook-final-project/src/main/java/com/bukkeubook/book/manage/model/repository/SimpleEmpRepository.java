@@ -7,7 +7,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.bukkeubook.book.manage.model.entity.Emp;
+import com.bukkeubook.book.document.model.entity.Emp;
+
 
 @Repository
 public interface SimpleEmpRepository extends JpaRepository<Emp, Integer>{

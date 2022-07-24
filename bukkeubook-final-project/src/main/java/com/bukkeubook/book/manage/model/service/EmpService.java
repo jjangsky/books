@@ -121,10 +121,11 @@ public class EmpService {
 	@Transactional
 	public void insertNewEmp(EmpDTO emp) {
 		
+		BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+		bc.encode(emp.getEmpPwd());
 		System.out.println("Service                      sssssssssssss" + emp);
-		
 		originEmpRepository.save(modelMapper.map(emp, Emp.class));
-	}
+	}	
 	
 	/* 사원정보 수정 */
 	public EmpDTO findEmpByEmpNo(int empNo) {
@@ -154,6 +155,7 @@ public class EmpService {
 		foundemp.setEmpAddress(emp.getEmpAddress());
 		foundemp.setEmpDAddress(emp.getEmpDAddress());
 		foundemp.setEmpPwd(emp.getEmpPwd());
+		foundemp.setEmpTotalSal(emp.getEmpTotalSal());
 		
 	}
 	

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 
 import com.bukkeubook.book.books.model.dto.BookDTO;
-import com.bukkeubook.book.manage.model.dto.EmpDTO;
+import com.bukkeubook.book.document.model.dto.EmpDTO;
 
 public class TradeAndClientAndBookAndEmpDTO implements Serializable{
 
