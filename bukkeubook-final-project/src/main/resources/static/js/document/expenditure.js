@@ -304,6 +304,7 @@ window.onload = function() {
 		}).then((result) => {
 			if (result.isConfirmed) {
 				let countCheck = 0;
+				let countCheck2 = 0;
 				if ($("#title").text().length < 1 || $("#title").text() == "" || $("#title").text() == "  ") {
 					Swal.fire({
 						icon: 'warning',
@@ -322,9 +323,9 @@ window.onload = function() {
 					const resultamts = document.querySelectorAll('table#inserttbl tbody tr #amt');
 					const resultmemos = document.querySelectorAll('table#inserttbl tbody tr #memo');
 				
-					console.log(cnts);
-					console.log(amts);
-					console.log(memos);
+					//console.log(cnts);
+					//console.log(amts);
+					//console.log(memos);
 				
 				
 					
@@ -348,9 +349,10 @@ window.onload = function() {
 							break;
 						} else {
 							totalamt += Number(amts[i].innerText);
+							countCheck2 +=1;
 						}
 					}
-				
+					console.log(countCheck2);
 					for (let i = 0; i < cnts.length; i++) {
 						if (cnts[0].innerText.length < 1) {
 							//console.log(cnts[0].innerText);
@@ -369,13 +371,13 @@ window.onload = function() {
 							// console.log(totalamt);
 				
 							document.getElementById("sumamt").innerText = totalamt;
-							
+							countCheck2 +=1;
 						}
 					}
-				} countCheck +=1;
-				
+					console.log(countCheck2);
+				} 
+				if(countCheck2 ==20){countCheck += 1;} 
 				console.log(countCheck);
-				
 				if(countCheck == 2) {
 					
 				$("#docStatus1").val("임시저장");
@@ -465,9 +467,9 @@ function sendData() {
 						break;
 					} else {
 						totalamt += Number(amts[i].innerText);
+						countCheck2 +=1;
 					}
 				}
-				countCheck2 +=1;
 				for (let i = 0; i < cnts.length; i++) {
 					if (cnts[0].innerText.length < 1) {
 						//console.log(cnts[0].innerText);
@@ -486,12 +488,12 @@ function sendData() {
 						// console.log(totalamt);
 			
 						document.getElementById("sumamt").innerText = totalamt;
+						countCheck2 +=1;
 						
 					}
 				}
-				countCheck2 +=1;
 			}
-			if(countCheck2 ==2){countCheck += 1;}
+			if(countCheck2 ==20){countCheck += 1;}
 			console.log(countCheck);
 			if(countCheck == 3){
 				

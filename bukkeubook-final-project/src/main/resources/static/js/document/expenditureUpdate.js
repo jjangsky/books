@@ -287,11 +287,11 @@ window.onload = function() {
 		}).then((result) => {
 			if (result.isConfirmed) {
 				let countCheck = 0;
-				if ($("#title").text().length < 1 || $("#title").text() == "" || $("#title").text() == "  ") {
+				if ($("#docTitle1").val().length < 1 || $("#docTitle1").val() == "" || $("#docTitle1").val() == "  ") {
 					Swal.fire({
 						icon: 'warning',
-						title: '제목이 없습니다',
-						text: '문서의 제목을 입력해주세요.'
+						title: '제목 확인',
+						text: '제목 수정사항이 없습니다.'
 					})
 				} else{countCheck++;}
 				console.log(countCheck);
