@@ -137,7 +137,7 @@
 		   							str+="<td>"+item.author+"</td>";
 		   							str+="<td>"+pr+"원</td>";
 		   							str+="<td>"+item.whSt+"ea</td>";
-		   							str+="<td>"+item.storeSt+"ea</td>";
+		   							str+="<td>"+item.storeSt+"</td>";
 		   							/* str+="<td><button class='btn' type='button'>목록에 추가</button></td>"; */
 		   							str+="<td><button class='productBtn newBookBtn addBtn'>추가</button></td>";
 		   							str+="</tr>";
@@ -247,43 +247,25 @@
 					        		var store = Number(test.replace('ea',""))
 					        		var input = $outputValue.eq(i-1).val()
 					        		var d =  Number(($('#bottomTable tr:eq(' + i + ')>td:eq(5)').html()).replace('ea', ""));
+					        		
 					        		console.log((i) + ' 행 ' + ' 매장재고 - ' + store);
 					        		console.log((i) + ' 행 ' + ' 입고수량 - ' + input);
-					        		if(input > store){
+					        		if(input > store && $('#inputSearch').val()=='일반입고'){
 					        			Swal.fire({
 						                    icon: 'warning',
 						                    title: '재고수량을 확인 해 주세요!',
 						                    text: '일반입고는 매장 보유재고를 초과하여 입고할 수 없습니다.',
 					              		 }).then(function(){
 												$(document).ready(function() {
-													var f = $(this).find('td:eq(6)').find('input').innerHTML(d);
-													console.log(f)
+													$outputValue.val(0);
 											   	});
 											});
 					        		}
 				        		}
 				        	});
-				        	$('.outputValue').change( function(){
-								
-						        
-						        
-					            if(a < b && $('#inputSearch').val()=='일반입고'){
-									Swal.fire({
-					                    icon: 'warning',
-					                    title: '재고수량을 확인 해 주세요!',
-					                    text: '일반입고는 매장 보유재고를 초과하여 입고할 수 없습니다.',
-				              		 }).then(function(){
-											$(document).ready(function() {
-										        /* $('.outputValue').val(td2.eq(6).html("<input class=outputValue type=text value="+ 0 + ">")); */
-										        $("#out").val(a);
-										   	});
-										});
-								}
-						        
-					        	$('#inputSearch').change( function(){
-					        		$('.outputValue').val(0);
-					        	});
-					        });
+					        $('#inputSearch').change( function(){
+				        		$('.outputValue').val(0);
+				        	});
 			            });
 			            
 		   	        } else {
@@ -301,11 +283,6 @@
 			});
 			
 		</script>
-
-	
-		   			
-		   			
-		   			
 		<script>   			
             $('.outputValue').blur(function(){
     			const test1 = $('.outputValue').val();
