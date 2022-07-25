@@ -25,16 +25,17 @@
 	       <br>
 	
 	    <div class="search-area" align="center">
-			<form id="loginForm" name="searchForm" action="/order/regist" method="get" style="display: inline-block">
-				<select id="searchCondition" name="searchCondition">
-					<option value="select">--분류--</option>
-					<option value="no">도서코드</option>
-					<option value="name">도서명</option>
-					<option value="author">저자</option>
-				</select>
+			<form id="loginForm" action="/book/lookupList" method="get" style="display: inline-block">
+					<select id="searchCondition" name="searchCondition">
+						<option value="select">--분류--</option>
+						<option value="name">도서명</option>
+						<option value="author">작가</option>
+						<option value="no">도서번호</option>
+					</select>
 				<input type="text" style="display:none;"> <!-- 엔터키 새로고침 방지용 -->
-				<input type="search" id="inputFind" name="searchValue" value="">
-				<button type="button" class="findBtn" id="findBtn">검색하기</button>
+				<input type="hidden" name="currentPage" value="1">
+				<input type="search" id="inputFind" name="searchValue" value="" maxlength="50">
+				<button class="productBtn findBtn" id="findBtn" type="button">검색하기</button>
 			</form>
 		</div>
 	       <br>
@@ -69,6 +70,7 @@
 			<div class="bt">
 		       <button class="btn" id="deleteBtn" type="button">삭제</button>
 			</div>
+			<br>
 	       <div id="textTable" style="text-align:-webkit-center">
 	       	<form action="/order/regist" id="registInfo" method="post">
 				<table id="sampleTable">
@@ -82,6 +84,7 @@
 		                <th class="th1">발주수량</th>
 					</tr>
 				</table>
+				<br>
 				<input type="hidden" id="rownum" name="rownum" value="0">
 			    <button class="btn" type="button" onclick="checkComplete()">등록</button>
 			    <button class="btn" type="button" onclick="checkCancel()">취소</button>
@@ -161,6 +164,7 @@
 	    			            console.log("index : " + index);
 	    			            var no = "no" + index;
 	    			            var amount = "amount" + index;
+	    			            var orderAmount = "orderAmount" + index;
 	    			            
 	    			            newCell1.innerHTML = '<input type="checkbox" name="del">';
 	    			            newCell2.innerHTML = td.eq(0).text() + '<input type="hidden" name="' + no + '" value="' + td.eq(0).text() + '">';
@@ -168,44 +172,44 @@
 	    			            newCell4.innerHTML = td.eq(2).text();
 	    			            newCell5.innerHTML = td.eq(4).text();
 	    			            newCell6.innerHTML = td.eq(5).text();
-	    			            newCell7.innerHTML = '<input class="orderAmount" type="number" name="' + amount + '" value="1" min="1">';
+	    			            newCell7.innerHTML = '<input id="' + orderAmount + '" type="number" name="' + amount + '" value="1" min="1">';
 	    			            
 	    			            rownum = document.getElementById("rownum");
 	    		   	            rownum.value = index;
 	    			            
-	    			            $('.orderAmount').blur(function(){
-	    							if( $('.orderAmount').val() < 0){
+	    			            $('#' + orderAmount).blur(function(){
+	    							if( $('#' + orderAmount).val() < 0){
 	    								console.log("음수네?");
 	    					  			Swal.fire({
 	    					                  icon: 'question',
 	    					                  title: '입력한 수량을 확인해 주세요!',
 	    					                  text: '음수는 불가능 합니다.',
 	    					              }).then(function(){
-	    						    			$('.orderAmount').val(1);
-	    						    			$('.orderAmount').focus();
+	    						    			$('#' + orderAmount).val(1);
+	    						    			$('#' + orderAmount).focus();
 	    					              })
 	    					 			  return false;
 	    					  		}
-	    							if($('.orderAmount').val() > 999){
+	    							if($('#' + orderAmount).val() > 999){
 	    								Swal.fire({
 	    					                  icon: 'question',
 	    					                  title: '입력한 수량을 확인해 주세요!',
 	    					                  text: '999보다 큰 수는 입력이 불가능 합니다.',
 	    					              }).then(function(){
-	    						    			$('.orderAmount').val(1);
-	    						    			$('.orderAmount').focus();
+	    						    			$('#' + orderAmount).val(1);
+	    						    			$('#' + orderAmount).focus();
 	    					              })
 	    					 			  return false;
 	    							}
 	    							const prodExp = /^[0-9]{1,3}$/;
-	    							if(!prodExp.test($('.orderAmount').val())){
+	    							if(!prodExp.test($('#' + orderAmount).val())){
 	    					  			Swal.fire({
 	    					                  icon: 'question',
 	    					                  title: '입력한 수량을 확인해 주세요!',
 	    					                  text: '숫자만 입력 가능 합니다.',
 	    					              }).then(function(){
-	    						    			$('.orderAmount').val(1);
-	    						    			$('.orderAmount').focus();
+	    						    			$('#' + orderAmount).val(1);
+	    						    			$('#' + orderAmount).focus();
 	    					              })
 	    					 			  return false;
 	    					  		}
@@ -444,6 +448,7 @@
           			}
 	   			};
 			});
+      
     </script>
   </body>
 </html>
