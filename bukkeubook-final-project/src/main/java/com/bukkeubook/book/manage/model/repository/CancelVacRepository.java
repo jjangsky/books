@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.bukkeubook.book.manage.model.entity.CancelVacationAndAppVacation;
+import com.bukkeubook.book.manage.model.entity.DayOff;
 
 @Repository
 public interface CancelVacRepository extends JpaRepository<CancelVacationAndAppVacation, Integer> {
@@ -19,5 +20,7 @@ public interface CancelVacRepository extends JpaRepository<CancelVacationAndAppV
 
 	List<CancelVacationAndAppVacation> findByappvacEmp_emp_empNameContaining(String searchValue, Pageable paging);
 
+	/* 휴가 취소 승인시 일어나는 트랜잭션 */
+	DayOff findByEmpNo(int empNo);
 
 }
