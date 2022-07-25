@@ -10,7 +10,6 @@
       <link rel="stylesheet" href="/css/common/style.css">
       <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
       <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
-      <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
 </head>
@@ -36,8 +35,8 @@
               <tr class="deemp2">
                 <td>사원명</td>
                 <td><input type="text" name="empName" id="name" maxlength="4"></td>
-                <td>프로필사진</td>
-                <td>서명사진</td>
+                <td>프로필 사진</td>
+                <td>서명 사진</td>
               </tr>
               <tr class="deemp2">
                 <td>연봉</td>
@@ -78,18 +77,19 @@
                   <option value="Y">Y</option>
                 </select> 
               </td>
-              <!-- 도장 사진과 프로필 사진 위치 -->
+              <!-- 프로필 사진과 도장 사진 위치 -->
                 <td>
                   <input type="file" id="proFile" name="proFile" style="margin-left: 25%;">
                 </td>
-                <td><input type="file" id="nameFile" name="nameFile" style="margin-left: 25%;">
+                <td>
+                  <input type="file" id="nameFile" name="nameFile" style="margin-left: 25%;">
                 </td>
               </tr>
               <tr class="deemp2">
                 <td>성별</td>
                 <td colspan="3">
                   <select class="sel3" name="empGender" id="empGender">
-                     <option value="">--</option>
+                    <option value="">--</option>
                     <option value="남">남</option>
                     <option value="여">여</option>
                   </select> 
@@ -117,7 +117,7 @@
                 <div>
                   <input type="text" id="zipCode" name="empAddress">
                   <input type="button" value="검색" class="input2" id="searchZipCode">
-                  </div>
+                </div>
                 </td>
               </tr>
               <tr class="deemp2">
@@ -134,8 +134,9 @@
              <button id="save" type="button" class="modify btn updateBtn">등록하기</button>
              <button type="button" class="list btn backBtn">목록으로</button>
           </div>
-          </div>
-         </form> 
+        </div>
+       </form> 
+       <!--  주소 검색 -->
      <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
      <script>
       const searchZipCode = document.getElementById("searchZipCode");
@@ -146,10 +147,10 @@
                oncomplete: function(data){
                   document.getElementById("zipCode").value = data.zonecode;
                   document.getElementById("address1").value = data.address;
-   
                }
             }).open();
          }
+         
          $().ready(function () {
              $(".backBtn").click(function () {
                  Swal.fire({
@@ -169,6 +170,9 @@
              });
          });
          $("#save").click(function(){
+        	 
+        	let check = 0;
+        	 
             if($('#name').val() == ""){
                Swal.fire({
                      icon: 'error',                        
@@ -176,79 +180,113 @@
                      text: '이름 입력칸을 확인해 주십시오.',  
                  });
                
-            } else if($('#tatalsal').val() == ""){
+            } else{check++;}
+            
+            if($('#tatalsal').val() == ""){
                Swal.fire({
                      icon: 'error',                        
                      title: '입력이 되지 않았습니다.',          
                      text: '연봉 입력칸을 확인해 주십시오.',  
                  });
-            } else if($('#deptCode').val() == ""){
+            } else{check++;}
+            
+            if($('#deptCode').val() == ""){
                Swal.fire({
                      icon: 'error',                        
                      title: '입력이 되지 않았습니다.',          
                      text: '부서 입력칸을 확인해 주십시오.',  
                  });      
-            } else if($('#empJobCode').val() == ""){
+            } else{check++;}
+            
+            if($('#empJobCode').val() == ""){
                Swal.fire({
                      icon: 'error',                        
                      title: '입력이 되지 않았습니다.',          
                      text: '직급 입력칸을 확인해 주십시오.',  
                  });      
-            } else if($('#empEntDate').val() == ""){
+            } else{check++;}
+            
+            if($('#empEntDate').val() == ""){
                Swal.fire({
                      icon: 'error',                        
                      title: '입력이 되지 않았습니다.',          
                      text: '입사일자 입력칸을 확인해 주십시오.',  
                  });
-            } else if($('#empGender').val() == ""){
+            } else{check++;}
+            
+            if($('#empGender').val() == ""){
                Swal.fire({
                      icon: 'error',                        
                      title: '입력이 되지 않았습니다.',          
                      text: '성별 입력칸을 확인해 주십시오.',  
                  });   
-            } else if($('#empBirth').val() == ""){
+            } else{check++;}
+            
+            if($('#empBirth').val() == ""){
                Swal.fire({
                      icon: 'error',                        
                      title: '입력이 되지 않았습니다.',          
                      text: '생년월일 입력칸을 확인해 주십시오.',  
                  });         
-            } else if(!(Number($("#phone1").val())&&Number($("#phone2").val())&&Number($("#phone3").val()))){
+            } else{check++;}
+            
+            if(!(Number($("#phone1").val())&&Number($("#phone2").val())&&Number($("#phone3").val()))){
                Swal.fire({
                      icon: 'error',                        
                      title: '입력이 되지 않았습니다.',          
                      text: '전화번호 입력칸을 확인해 주십시오.',  
                  });
-            } else if($('#empEmail1').val() == ""){
+            } else{check++;}
+            
+            if($('#empEmail1').val() == ""){
                Swal.fire({
                      icon: 'error',                        
                      title: '입력이 되지 않았습니다.',          
                      text: '이메일 입력칸을 확인해 주십시오.',  
                  });
-            } else if($('#zipCode').val() == ""){
+            } else{check++;}
+            
+            if($('#zipCode').val() == ""){
                 Swal.fire({
                       icon: 'error',                        
                       title: '입력이 되지 않았습니다.',          
                       text: '주소 입력칸을 확인해 주십시오.',  
                   });   
-            } else if($('#empPwd').val() == ""){
+            } else{check++;}
+            
+            if($('#empPwd').val() == ""){
                 Swal.fire({
                       icon: 'error',                        
                       title: '입력이 되지 않았습니다.',          
                       text: '초기비밀번호 입력칸을 확인해 주십시오.',  
                   });  
-            } else if($('#proFile').val() == ""){
+            } else{check++;}
+            
+            if($('#proFile').val() == ""){
                 Swal.fire({
                       icon: 'error',                        
                       title: '입력이 되지 않았습니다.',          
                       text: '프로필사진 입력칸을 확인해 주십시오.',  
                   });
-            } else if($('#nameFile').val() == ""){
+            }  else{check++;}
+            
+            if($('#nameFile').val() == ""){
                 Swal.fire({
                       icon: 'error',                        
                       title: '입력이 되지 않았습니다.',          
                       text: '서명사진 입력칸을 확인해 주십시오.',  
                   });      
-            }else{
+            } else{check++;}
+            
+            if($("#tatalsal").val() < 0 ){
+            	Swal.fire({
+	                  icon: 'error',
+	                  title: '연봉을 올바르게 등록 해주세요.',
+	                  text: '음수는 불가능 합니다.',
+	              })
+            } else{check++;}
+            
+            if(check == 14){
                Swal.fire({
                      title: '등록 하시겠습니까?',
                      text: "입력한 정보로 해당 직원의 정보를 등록합니다.",
@@ -263,11 +301,11 @@
                         $("#insertForm").submit();
                      }
                  })
-            }
+             }
          })
      </script>
      
-   <script th:inline="javascript">
+     <script th:inline="javascript">
           $(".backBtn").click(function () {
               Swal.fire({
                   title: '작성내용이 모두 사라집니다.',
@@ -281,15 +319,10 @@
               }).then((result) => {
                   if (result.isConfirmed) {
                       window.history.back();
-                  }
-              })
+              }
+          })
       });
-      
-        $("#insert").click(function () {
-           let nameFile = $("#nameFile").val();          
-           console.log(nameFile);
-           $("#insertForm").submit();
-        });
+
       </script> 
 	</body>
 </html>

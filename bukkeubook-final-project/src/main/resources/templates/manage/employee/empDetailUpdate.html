@@ -231,62 +231,12 @@
          });
 
    	</script>
-      
-	  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-		<script>
-			const searchZipCode = document.getElementById("searchZipCode");
-			
-			searchZipCode.onclick = function() {
-			
-				new daum.Postcode({
-					oncomplete: function(data){
-						document.getElementById("zipCode").value = data.zonecode;
-						document.getElementById("address1").value = data.address;
-	
-					}
-				}).open();
-			}
-
-			$("#save").click(function(){
-				
-				if(!(Number($("#phone1").val())&&Number($("#phone2").val())&&Number($("#phone3").val()))){
-					Swal.fire({
-			            icon: 'error',                        
-			            title: '잘못된 값이 입력되었습니다.',         
-			            text: '전화번호 입력칸을 확인해 주십시오.',  
-			        });
-				} else if($('#empEmail1').val() == ""){
-					Swal.fire({
-			            icon: 'error',                        
-			            title: '잘못된 값이 입력되었습니다.',         
-			            text: '이메일 입력칸을 확인해 주십시오.',  
-			        });
-				}else{
-					Swal.fire({
-			            title: '개인 정보를 수정하시겠습니까?',
-			            text: "입력한 정보로 해당 회원의 정보를 수정합니다.",
-			            icon: 'question',
-			            showCancelButton: true,
-			            confirmButtonColor: '#3085d6',
-			            cancelButtonColor: '#d33',
-			            confirmButtonText: '승인',
-			            cancelButtonText: '취소'
-			        }).then((result) => {
-			            if (result.isConfirmed) {
-			            	$("#updateEmp").submit();
-			            }
-			        })
-				}
-			})
-			
-
-		</script>
 		
    <script th:inline="javascript">      
-        $("#insert").click(function () {
+        $("#update").click(function () {
         	let nameFile = $("#nameFile").val();       	
         	console.log(nameFile);
-        	$("#insertForm").submit();
+        	$("#updateForm").submit();
         });
         
         $().ready(function () {
@@ -327,7 +277,7 @@
         $("#updateBtn").click(function(){
             Swal.fire({
                   title: '정보수정을 진행 하시겠습니까?',
-                  text: "현재 사원을 정보를 변경 합니다.",
+                  text: "현재 사원의 정보를 변경 합니다.",
                   icon: 'question',
                   showCancelButton: true,
                   confirmButtonColor: '#3085d6',
@@ -342,18 +292,7 @@
         });
         
    </script>
-   <script th:inline="javascript">
-        const updateSuccessMessage = "[[${leaveUpdateSuccessMessage}]]";
- 		console.log(updateSuccessMessage + "dd");
-        if(updateSuccessMessage == '퇴사처리 성공'){
-        	Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: '퇴사처리가 성공적으로 완료되었습니다!',
-            })
-        }
-        
-   </script>
+
     <script>    
         /* 사번으로 이미지 불러오기 */
         var empNo = "[[${emp.empNo}]]";
