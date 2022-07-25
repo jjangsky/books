@@ -115,12 +115,13 @@ td{
 }
 
 .newBookBtn {
-    border-radius: 10px;
-    background: #c5bfbf;
-    border: none;
-    height: 37px;
+    border-radius: 10px !important;
+    background: #c5bfbf !important;
+    border: none !important;
     width: 100px !important;
-    font-size: 11px;
+    font-size: 13px !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
 }
 .newBookBtn:hover {
     background-color: #FEFCC6;

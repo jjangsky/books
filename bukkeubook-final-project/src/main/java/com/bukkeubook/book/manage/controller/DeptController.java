@@ -173,4 +173,16 @@ public class DeptController {
 			
 			return mv;
 	}
+	
+	@GetMapping("/chartDetail")
+	public ModelAndView detailChart(HttpServletRequest request, ModelAndView mv) {
+		int deptCode = Integer.valueOf(request.getParameter("deptCode"));
+		
+		DeptAndEmpDTO dept = deptService.searchDeptDetail(deptCode);
+		
+		mv.addObject("dept", dept);
+		mv.setViewName("/manage/dept/orgChartDetail");
+		
+		return mv;
+	}
 }
