@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.bukkeubook.book.books.model.entity.Book;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.finance.model.dto.TradeAndClientAndBookAndEmpDTO;
 import com.bukkeubook.book.finance.model.dto.TradeListDTO;
@@ -40,9 +41,19 @@ public class TradeService {
 	public int selectTotalCount(String searchCondition, String searchValue) {
 		int count = 0;
 		if(searchValue != null) {
-			count = tradeRepository.countByTlDateContaining(searchValue);
+			if("client".equals(searchCondition)) {
+				count = tradeJoinRepository.countByClient_CntNameContaining(searchValue);
+			}
+
+			if("book".equals(searchCondition)) {
+				count = tradeJoinRepository.countByBook_NameContaining(searchValue);
+			}
+			
+			if("emp".equals(searchCondition)) {
+				count = tradeJoinRepository.countByEmp_EmpNameContaining(searchValue);
+			}
 		} else {
-			count = (int)tradeRepository.count();
+			count = (int)tradeJoinRepository.count();
 		}
 
 		return count;
@@ -59,7 +70,18 @@ public class TradeService {
 
 		List<TradeAndClientAndBookAndEmp> tradeList = new ArrayList<TradeAndClientAndBookAndEmp>();
 		if(searchValue != null) {
-			tradeList = tradeJoinRepository.findByTlDateContaining(java.sql.Date.valueOf(searchValue), paging);
+
+			if("client".equals(selectCriteria.getSearchCondition())) {
+				tradeList = tradeJoinRepository.findAllByClient_CntNameContaining(selectCriteria.getSearchValue(), paging);
+			}
+
+			if("book".equals(selectCriteria.getSearchCondition())) {
+				tradeList = tradeJoinRepository.findAllByBook_NameContaining(selectCriteria.getSearchValue(), paging);
+			}
+			
+			if("emp".equals(selectCriteria.getSearchCondition())) {
+				tradeList = tradeJoinRepository.findAllByEmp_EmpNameContaining(selectCriteria.getSearchValue(), paging);
+			}
 		} else {
 			tradeList = tradeJoinRepository.findAll(paging).toList();
 		}

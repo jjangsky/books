@@ -25,12 +25,12 @@
 				<input type="hidden" name="searchCondition" value=1>
 				<input type="text" style="display:none;"> <!-- 엔터키 새로고침 방지용 -->
 				<input type="hidden" name="currentPage" value="1">
-				<input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}">
+				<input type="search" id="inputFind" name="searchValue" maxlength="30" th:value="${selectCriteria.searchValue}">
 				<button class="findBtn" id="findBtn" type="button">검색하기</button>
 			</form>
             <button class="btn" type="button" onclick="location.href='/client/regist'">신규 등록</button>
 		</div>
-
+		<br>
         <div id="textTable" style="text-align:-webkit-center">
           <table id="sampleTable">
               <tr>
@@ -43,7 +43,10 @@
                 <th class="th1">담당자 연락처</th>
                 <th class="th1">거래여부</th>
               </tr>
-              <tr class="tr1" th:each="client : ${ clientList }">
+              <tr th:if="${#lists.isEmpty(clientList)}">
+              		<th colspan="4">조회된 거래처가 없습니다.</th>
+              </tr>
+              <tr class="tr1 trs" th:each="client : ${ clientList }">
 	           	   <td><input type="checkbox" name="inactive"></td>
 	               <td th:text="${ client.cntNo }" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
 	               <td th:text="${ client.cntName }" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
@@ -55,8 +58,17 @@
                </tr>
           </table>
         </div>
+        <br>
 	<div th:replace="/finance/clientSelectPaging.html"></div>
     <script th:inline="javascript">
+    
+	    $(".trs").on( "mouseover", function() {
+			$(this).css( "background-color", "#FEFCC6" );
+			$(this).children("td").css( "cursor", "pointer" );
+		});
+		$(".trs").on( "mouseleave", function() {
+			$(this).css( "background-color", "white" );
+		});
       
       $('#findBtn').click(function(){
    			const pattern_spc = /[~!@#$%^&*()_+|<>?:{}]/;

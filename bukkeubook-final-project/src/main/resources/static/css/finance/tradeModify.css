@@ -66,6 +66,10 @@
     background-color: #FEFCC6 !important;
 }
 
+.bb{
+	margin-top: 28px !important;
+}
+
 .findBtn:hover{
 	background-color: #FEFCC6 !important;
 }
@@ -118,6 +122,10 @@ td{
 	margin-bottom: 15px;
 }
 
+#tlDetail{
+	height:200px !important;
+}
 
-
-
+input{
+	text-align: center;
+}

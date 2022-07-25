@@ -1,6 +1,5 @@
 package com.bukkeubook.book.finance.model.repository;
 
-import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -12,5 +11,17 @@ import com.bukkeubook.book.finance.model.entity.TradeAndClientAndBookAndEmp;
 @Repository
 public interface TradeJoinRepository extends JpaRepository<TradeAndClientAndBookAndEmp, Integer>{
 
-	List<TradeAndClientAndBookAndEmp> findByTlDateContaining(Date date, Pageable paging);
+	List<TradeAndClientAndBookAndEmp> findAllByClient_CntNameContaining(String searchValue, Pageable paging);
+
+	List<TradeAndClientAndBookAndEmp> findAllByBook_NameContaining(String searchValue, Pageable paging);
+
+	List<TradeAndClientAndBookAndEmp> findAllByEmp_EmpNameContaining(String searchValue, Pageable paging);
+
+	int countByClient_CntNameContaining(String searchValue);
+
+	int countByBook_NameContaining(String searchValue);
+
+	int countByEmp_EmpNameContaining(String searchValue);
+	
+	
 }

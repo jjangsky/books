@@ -47,17 +47,20 @@
 	                    <button class="btn" onclick="popupForClient()" type="button">검색</button></td>
 	                </tr>
 	                <tr>
-	                    <td>상세내용</td>
+	                    <td>
+	                    	상세내용<br>
+	                    	(100자 제한)
+	                    </td>
 	                    <td colspan="2">
-	                    	<input id="tlDetail" type="text" name="tlDetail" th:value="${ trade.tlDetail }">
+	                    	<input id="tlDetail" type="text" name="tlDetail" maxlength="100" th:value="${ trade.tlDetail }">
 	                    </td>
 	                </tr>
 	            </table>
 	            <input type="hidden" name="tlNo1" th:value="${ trade.tlNo }">
                	<input type="hidden" id="bkNo1" name="bkNo1" th:value="${ trade.book.getNo() }">
                	<input type="hidden" id="cntNo1" name="cntNo1" th:value="${ trade.client.getCntNo() }">
-                <button class="btn" type="button" onclick="checkComplete()">완료</button>
-	            <button class="btn" type="button" onclick="checkCancel()">취소</button>
+                <button class="btn bb" type="button" onclick="checkComplete()">완료</button>
+	            <button class="btn bb" type="button" onclick="checkCancel()">취소</button>
         	</form>
     </div> <!------------------------ 본문 종료---------------------------->
 

@@ -11,11 +11,16 @@
     font-size: 0.8vw;
     text-align: center;
 }
+
+#searchCondition{
+	margin-left: 250px;
+}
+
 #inputFind {
     border-width: 1px 1px 1px 1px;
     background: #fafafa;
     width: 20em;
-    margin-left: 230px !important;
+    margin-left: 10px !important;
     text-align: center;
 }
 #inputFind:focus {
@@ -121,5 +126,7 @@ td{
   color: #fff;
   background-color: #515151 !important;
   border-color: #515151 !important; }
-
-
+  
+ #rb{
+ 	margin-right: 100px;
+ }

@@ -23,7 +23,7 @@
 					<input type="hidden" name="searchCondition" value=1>
 					<input type="text" style="display:none;"> <!-- 엔터키 새로고침 방지용 -->
 					<input type="hidden" name="currentPage" value="1">
-					<input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}">
+					<input type="search" id="inputFind" name="searchValue" maxlength="30" th:value="${selectCriteria.searchValue}">
 					<button class="findBtn" id="findBtn" type="button">검색하기</button>
 				</form>
 			</div>
@@ -41,6 +41,9 @@
 	                <th class="th1">담당자 연락처</th>
 	                <th class="th1"></th>
 	            </tr>
+	            <tr th:if="${#lists.isEmpty(clientList)}">
+              		<th colspan="4">조회된 거래처가 없습니다.</th>
+              </tr>
 	            <tr class="tr1" th:each="client : ${ clientList }">
 	               <td th:text="${ client.cntNo }"></td>
 	               <td th:text="${ client.cntName }"></td>
@@ -52,11 +55,8 @@
 	            </tr>
 	        </table>
         </div>
+        <br>
 		<div th:replace="/finance/clientPopupPaging.html"></div>
-  <script src="../js/jquery.min.js"></script>
-  <script src="../js/popper.js"></script>
-  <script src="../js/bootstrap.min.js"></script>
-  <script src="../js/main.js"></script>
   <script th:inline="javascript">
   
 	  $('#findBtn').click(function(){
