@@ -1,5 +1,7 @@
 package com.bukkeubook.book.manage.model.service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,11 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bukkeubook.book.books.model.entity.Book;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
 import com.bukkeubook.book.manage.model.dto.ProfPhotoDTO;
-import com.bukkeubook.book.manage.model.dto.SignDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.Emp;
 import com.bukkeubook.book.manage.model.entity.EmpAndDept;
@@ -122,7 +122,8 @@ public class EmpService {
 	public void insertNewEmp(EmpDTO emp) {
 		
 		BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
-		bc.encode(emp.getEmpPwd());
+		emp.setEmpPwd(bc.encode(emp.getEmpPwd()));
+//		bc.encode(emp.getEmpPwd());
 		System.out.println("Service                      sssssssssssss" + emp);
 		originEmpRepository.save(modelMapper.map(emp, Emp.class));
 	}	
@@ -141,21 +142,21 @@ public class EmpService {
 	}
 	
 	@Transactional
-	public void modifyEmp(EmpDTO emp) {
+	public void modifyEmp(EmpDTO newEmp) {
 		
-		Emp foundemp = originEmpRepository.findById(emp.getEmpNo()).get();
+		Emp foundemp = originEmpRepository.findById(newEmp.getEmpNo()).get();
 		
-		foundemp.setEmpName(emp.getEmpName());
-		foundemp.setDeptCode(emp.getDeptCode());
-		foundemp.setEmpJobCode(emp.getEmpJobCode());
-		foundemp.setEmpPhone1(emp.getEmpPhone1());
-		foundemp.setEmpPhone2(emp.getEmpPhone2());
-		foundemp.setEmpPhone3(emp.getEmpPhone3());
-		foundemp.setEmpEmail(emp.getEmpEmail());
-		foundemp.setEmpAddress(emp.getEmpAddress());
-		foundemp.setEmpDAddress(emp.getEmpDAddress());
-		foundemp.setEmpPwd(emp.getEmpPwd());
-		foundemp.setEmpTotalSal(emp.getEmpTotalSal());
+		foundemp.setEmpName(newEmp.getEmpName());
+		foundemp.setDeptCode(newEmp.getDeptCode());
+		foundemp.setEmpJobCode(newEmp.getEmpJobCode());
+		foundemp.setEmpPhone1(newEmp.getEmpPhone1());
+		foundemp.setEmpPhone2(newEmp.getEmpPhone2());
+		foundemp.setEmpPhone3(newEmp.getEmpPhone3());
+		foundemp.setEmpEmail(newEmp.getEmpEmail());
+		foundemp.setEmpAddress(newEmp.getEmpAddress());
+		foundemp.setEmpDAddress(newEmp.getEmpDAddress());
+//		foundemp.setEmpPwd(newEmp.getEmpPwd());
+		foundemp.setEmpTotalSal(newEmp.getEmpTotalSal());
 		
 	}
 	
@@ -213,5 +214,44 @@ public class EmpService {
 		return modelMapper.map(emp, EmpDTO.class);
 	}
 
+	
+//	/* 직원 퇴사처리 */
+//	@Transactional
+//	public void modifyEmpLeave(EmpDTO leaveEmp) {
+//		
+//		Emp foundEmp = originEmpRepository.findById(leaveEmp.getEmpNo()).get();
+//		foundEmp.setEmpEndYn(leaveEmp.getEmpEndYn());
+//	}
+	
+//	 @Transactional
+//	public void modifyEmpEndY(int empNo) {
+//		 Integer empNo1 = originEmpRepository.findByEmpEndYN(empNo1);
+//		
+//	}
+//	 @Transactional 
+//	public void modifyEmpEndDate(int empNo) {
+//		 Integer empNo2 = originEmpRepository.findByEmpEndDate(empNo2);		
+//	}
+//
+//	public void modifyEmpLeave(EmpDTO leaveEmp) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+	
+	 @Transactional 
+	public void modifyEmpEndYn(EmpDTO emp, int empNo) {
+		 Emp emp2 = originEmpRepository.findByEmpNo(empNo);
+		 LocalDate now = LocalDate.now();
+		 Date day = java.sql.Date.valueOf(now);
+		 emp2.setEmpEndYn("Y");
+		 emp2.setEmpEndDate(day);
+		 originEmpRepository.save(emp2);
+	}
+	 
+	 @Transactional 
+	public void modifyEmpEndDate(EmpDTO emp) {
+		 emp = originEmpRepository.findByEmpEndDate(emp);
+		
+	}
 
 }

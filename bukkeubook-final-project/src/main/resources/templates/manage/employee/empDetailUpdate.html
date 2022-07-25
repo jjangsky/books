@@ -69,7 +69,6 @@
                   </select> 
                 </td>
               </tr>
-          </div>
               <tr class="deemp2" >
                 <td>입사일자</td>
                 <td colspan="3">
@@ -105,7 +104,6 @@
                 <td colspan="3">
                   <input type="text" id="zipCode" th:value="${ emp.empAddress }" name="empAddress">
                   <input type="button" value="검색" class="input2" id="searchZipCode">
-
                 </td>  
               </tr>
               <tr class="deemp" >
@@ -120,14 +118,12 @@
           </table><br>
           <input type="hidden" name="empNo" th:value="${emp.empNo}">
           <div id="space">
-          	<button id="leaveUpdateEmp" class="modify btn">퇴사처리</button>
           	<button id="update" class="modify btn updateBtn">등록하기</button>
           	<button type="button" class="list btn backBtn" >목록으로</button>
           </div>
          </div>
         </form>
         
-  		<!--  프로필 사진 수정 부분 -->
   		<div>
         <div class="inline">
         <div class="container mt-3 leftMar20" style="margin-left:15%;">
@@ -160,8 +156,81 @@
                   </div>
                 </div>
             </div>
-            </div>
-       </div>       
+         </div>
+       </div> 
+       <!-- 직원 퇴사처리 --> 
+       <form action="/manage/empLeave" method="post" id="leaveform">
+          <input type="hidden" th:value="${ emp.empNo }" name="empNo" readonly style="border:none;">
+          <input type="button" id="leavebtn" class="modify btn" value="퇴사처리">
+       </form>
+       
+     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+      <script>
+         const searchZipCode = document.getElementById("searchZipCode");
+         
+         searchZipCode.onclick = function() {
+         
+            new daum.Postcode({
+               oncomplete: function(data){
+                  document.getElementById("zipCode").value = data.zonecode;
+                  document.getElementById("address1").value = data.address;
+   
+               }
+            }).open();
+         }
+       
+        $("#probtn").click(function(){
+            Swal.fire({
+                  title: '프로필 사진을 변경 하시겠습니까?',
+                  text: "변경한 프로필 사진으로 회원 정보에 등록됩니다.",
+                  icon: 'question',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: '승인',
+                  cancelButtonText: '취소'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                     if($('#proInput').val() !== ""){
+                        $("#proform").submit();
+                     }else{
+                        Swal.fire({
+                            icon: 'error',                        
+                            title: '잘못된 값이 입력되었습니다.',         
+                            text: '파일이 정상적으로 들어있는지 확인해주세요',  
+                        });
+                     }
+                  }
+              })
+        });
+        
+          $("#namebtn").click(function(){
+            Swal.fire({
+                  title: '도장(서명)을 변경 하시겠습니까?',
+                  text: "변경한 도장(서명)으로 회원 정보에 등록됩니다.",
+                  icon: 'question',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: '승인',
+                  cancelButtonText: '취소'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                     if($('#nameInput').val() !== ""){
+                        $("#nameform").submit();
+                     }else{
+                        Swal.fire({
+                            icon: 'error',                        
+                            title: '잘못된 값이 입력되었습니다.',         
+                            text: '파일이 정상적으로 들어있는지 확인해주세요',  
+                        });
+                     }
+                  }
+              })
+         });
+
+   	</script>
+      
 	  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script>
 			const searchZipCode = document.getElementById("searchZipCode");
@@ -259,7 +328,6 @@
 		});
 		</script>
 		
-		
    <script th:inline="javascript">      
         $("#insert").click(function () {
         	let nameFile = $("#nameFile").val();       	
@@ -285,7 +353,38 @@
              })
          });
      });
+
+        $("#leavebtn").click(function(){
+            Swal.fire({
+                  title: '퇴사를 진행 하시겠습니까?',
+                  text: "현재 사원을 퇴사 사원으로 변경 합니다.",
+                  icon: 'question',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: '승인',
+                  cancelButtonText: '취소'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      $('#leaveform').submit();
+                  }
+              })
+        });
         
+   </script>
+   <script th:inline="javascript">
+        const updateSuccessMessage = "[[${updateSuccessMessage}]]";
+ 		console.log(updateSuccessMessage + "dd");
+        if(updateSuccessMessage == '퇴사처리 성공'){
+        	Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '퇴사처리가 성공적으로 완료되었습니다!',
+            })
+        }
+        
+   </script>
+    <script>    
         /* 사번으로 이미지 불러오기 */
         var empNo = "[[${emp.empNo}]]";
         console.log(empNo);
@@ -299,8 +398,6 @@
         /* var a = $('#test2').val();
         console.log(a); */
         
-        
       </script> 
-      
-</body>
+   </body>
 </html>

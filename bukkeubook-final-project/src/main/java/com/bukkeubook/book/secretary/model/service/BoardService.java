@@ -13,24 +13,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bukkeubook.book.common.paging.SelectCriteria;
+import com.bukkeubook.book.secretary.model.dto.AppVacationAndEmpDTO;
 import com.bukkeubook.book.secretary.model.dto.BoardDTO;
 import com.bukkeubook.book.secretary.model.dto.join.BoardAndEmpAndBoardCateDTO;
+import com.bukkeubook.book.secretary.model.entity.AppVacationAndEmpCal;
 import com.bukkeubook.book.secretary.model.entity.Board;
 import com.bukkeubook.book.secretary.model.entity.BoardAndEmpAndBoardCate;
 import com.bukkeubook.book.secretary.model.repository.BasicBoardRepository;
 import com.bukkeubook.book.secretary.model.repository.SecretaryBoardRepository;
+import com.bukkeubook.book.secretary.model.repository.VacListRepository;
 
 @Service
 public class BoardService {
 	
 	private final SecretaryBoardRepository secretaryBoardRepository;
 	private final BasicBoardRepository basicBoardRepository;
+	private final VacListRepository vacListRepository;
 	private final ModelMapper modelMapper;
 	
 	@Autowired
-	public BoardService(SecretaryBoardRepository secretaryBoardRepository, ModelMapper modelMapper, BasicBoardRepository basicBoardRepository) {
+	public BoardService(SecretaryBoardRepository secretaryBoardRepository, ModelMapper modelMapper, BasicBoardRepository basicBoardRepository, VacListRepository vacListRepository) {
 		this.secretaryBoardRepository = secretaryBoardRepository;
 		this.basicBoardRepository = basicBoardRepository;
+		this.vacListRepository = vacListRepository;
 		this.modelMapper = modelMapper;
 	}
 
@@ -87,7 +92,7 @@ public class BoardService {
 			}
 			
 		} else {
-			count = (int) secretaryBoardRepository.count();
+			count = (int) secretaryBoardRepository.countByBoardYn("N");
 		}
 		
 		return count;
@@ -115,7 +120,7 @@ public class BoardService {
 				boardList = secretaryBoardRepository.findByBoardYnAndCate_CateNameContaining("N", searchValue, paging);
 			}
 		}else {
-			boardList = secretaryBoardRepository.findAll(paging).toList();
+			boardList = secretaryBoardRepository.findByBoardYn("N", paging);
 		}
 		
 		return boardList.stream().map(list -> modelMapper.map(list, BoardAndEmpAndBoardCateDTO.class)).collect(Collectors.toList());
@@ -128,6 +133,14 @@ public class BoardService {
 		List<BoardAndEmpAndBoardCate> boardList = secretaryBoardRepository.findByBoardYn("N");
 		
 		return boardList.stream().map(board -> modelMapper.map(board, BoardAndEmpAndBoardCateDTO.class)).collect(Collectors.toList());
+	}
+
+
+	public List<AppVacationAndEmpDTO> findVacList() {
+		
+		List<AppVacationAndEmpCal> vacList = vacListRepository.findByVacStatus("승인");
+		
+		return vacList.stream().map(list -> modelMapper.map(list, AppVacationAndEmpDTO.class)).collect(Collectors.toList());
 	}
 
 

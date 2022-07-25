@@ -25,7 +25,7 @@
            <input type="hidden" name="currentPage" value="1">
 		   <input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}" class="search in">
            <select class="search select" th:with="searchCondition = ${selectCriteria.searchCondition}" 
-            id="searchCondition" name="searchCondition">
+            id="searchCondition" name="searchCondition" style="width:80px; height:42px;">
               <option value="select">분류</option>
               <option value="empName" th:selected="${ searchCondition } == 'empName'">사원명</option>
               <option value="empJobCode" th:selected="${ searchCondition } == 'empJobCode'">직급명</option>

@@ -25,8 +25,8 @@
           <table border="1">
           <thead>
             <tr class="detailtitle3">
-              <td colspan="2" th:text="${ pay.empAndDept.dept.deptName }"></td>
-              <td colspan="2" th:text="${ pay.empAndDept.empName }"></td>
+              <td colspan="2" th:text="${ pay.empInfo.dept.deptName }"></td>
+              <td colspan="2" th:text="${ pay.empInfo.empName }"></td>
             </tr>
             <tr class="detailpay">
               <th colspan="2">지급내역</th>
@@ -35,50 +35,80 @@
           </thead>
           <tbody>
             <tr>
-              <td class="payft">기본급</td>
-              <td th:text="${ pay.salBase }"></td>
-              <td class="payft">국민연금</td>
-              <td th:text="${ pay.salPension }"></td>
+              <td class="payft">기본급
+              	<input th:value="${ pay.salBase }" id="salBase" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="base">
+              </td>
+              <td class="payft">국민연금
+              	<input th:value="${pay.salPension}" id="salPension" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="pension">
+              </td>
             </tr>
             <tr>
               <td></td>
               <td></td>
-              <td class="payft">건강보험</td>
-              <td th:text="${ pay.salHealth }"></td>
+              <td class="payft">건강보험
+              	<input th:value="${pay.salHealth}" id="salHealth" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="health">
+              </td>
             </tr>
             <tr>
               <td></td>
               <td></td>
-              <td class="payft">요양보험</td>
-              <td th:text="${ pay.salCare }"></td>
+              <td class="payft">요양보험
+              	<input th:value="${pay.salCare}" id="salCare" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="care">
+              </td>
             </tr>
             <tr>
               <td></td>
               <td></td>
-              <td class="payft">고용보험</td>
-              <td th:text="${ pay.salHire }"></td>
+              <td class="payft">고용보험
+              	<input th:value="${pay.salHire}" id="salHire" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="hire">
+              </td>
             </tr>
             <tr>
               <td></td>
               <td></td>
-              <td class="payft">소득세</td>
-              <td th:text="${ pay.salIncTax }"></td>
+              <td class="payft">소득세
+              	<input th:value="${pay.salIncTax}" id="salIncTax" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="incTax">
+              </td>
             </tr>
             <tr>
               <td></td>
               <td></td>
-              <td class="payft">지방소득세</td>
-              <td th:text="${ pay.salLocalTax }"></td>
+              <td class="payft">지방소득세
+              	<input th:value="${pay.salLocalTax}" id="salLocalTax" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="localTax">
+              </td>
             </tr>
             <tr>
-              <td class="payft">기본급</td>
-              <td th:text="${ pay.salBase }"></td>
-              <td class="payft">공제액 계</td>
-              <td th:text="${ pay.salTotalMinus }"></td>
+              <td class="payft">기본급
+              	<input th:value="${pay.salBase}" id="salBase" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="base2">
+              </td>
+              <td class="payft">공제액 계
+              	<input th:value="${pay.salTotalMinus}" id="salTotalMinus" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="totalMinus">
+              </td>
             </tr>
             <tr>
-              <td class="payft">차인 지급액</td>
-              <td colspan="3" th:text="${ pay.salRealAmount }"></td>
+              <td class="payft">차인 지급액
+              	<input th:value="${pay.salRealAmount}" id="salRealAmount" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" colspan="3" id="realAmount">
+              </td>
             </tr>
            </tbody>
            </table>

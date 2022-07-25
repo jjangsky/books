@@ -105,3 +105,9 @@ img {
 h4 {
     color: white;
 }
+.errorBtn:hover {
+	background: #FEFCC6; 
+}
+.errorBtn2:hover {
+	background: #FEFCC6; 
+}

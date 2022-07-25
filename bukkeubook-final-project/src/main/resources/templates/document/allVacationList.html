@@ -37,9 +37,9 @@
                 <th class="th1">작성일자</th>
               </tr>
               <tr th:if="${#lists.isEmpty(vacaList)}">
-              	<th class="th1" colspan="6">신청하신 서류가 존재하지 않습니다.</th>
+              	<td class="td1" colspan="6">신청하신 서류가 존재하지 않습니다.</td>
               </tr>
-              <tr class="hover" th:each="vaca : ${ vacaList }" th:onclick="'location.href = \'' + @{|/document/vacationDetail/${ vaca.vacNo }|} + '\''">
+              <tr class="hover" th:each="vaca : ${ vacaList }" th:onclick="'location.href = \'' + @{|/document/vacationDetail/${ vaca.vacNo }|} + '\''" style="cursor: pointer;">
                 <td class="td1" th:text="${vacaStat.count}"></td>
                 <td class="td1" th:text="${vaca.vacNo}"></td>
                 <td class="td1" th:text="${vaca.vacStartDate}"></td>
