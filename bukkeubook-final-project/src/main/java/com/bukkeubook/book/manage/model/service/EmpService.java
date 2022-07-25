@@ -21,8 +21,10 @@ import com.bukkeubook.book.manage.model.dto.ProfPhotoDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.Emp;
 import com.bukkeubook.book.manage.model.entity.EmpAndDept;
+import com.bukkeubook.book.manage.model.entity.MemberRole;
 import com.bukkeubook.book.manage.model.entity.ProfPhoto;
 import com.bukkeubook.book.manage.model.repository.EmpRepository;
+import com.bukkeubook.book.manage.model.repository.MemberRoleRepository;
 import com.bukkeubook.book.manage.model.repository.OriginalEmpRepository;
 import com.bukkeubook.book.manage.model.repository.ProfilePhotoRepository;
 
@@ -32,13 +34,17 @@ public class EmpService {
 	private final EmpRepository empRepository;
 	private final OriginalEmpRepository originEmpRepository;
 	private final ProfilePhotoRepository profilePhotoRepository;
+	private final MemberRoleRepository roleRepository;
 	private final ModelMapper modelMapper;		//앤티티를 디티오로 변환 or 디티오를 엔티티로 변환
 	@Autowired
-	public EmpService(EmpRepository empRepository, ModelMapper modelMapper,OriginalEmpRepository originEmpRepository, ProfilePhotoRepository profilePhotoRepository) {
+	public EmpService(EmpRepository empRepository, ModelMapper modelMapper
+					 ,OriginalEmpRepository originEmpRepository, ProfilePhotoRepository profilePhotoRepository
+					 ,MemberRoleRepository roleRepository) {
 		this.empRepository = empRepository;
 		this.modelMapper = modelMapper;
 		this.originEmpRepository = originEmpRepository;
 		this.profilePhotoRepository = profilePhotoRepository;
+		this.roleRepository = roleRepository;
 	}
 
 	/* 사원조회 & 검색기능 & 페이징 */
@@ -125,7 +131,20 @@ public class EmpService {
 		emp.setEmpPwd(bc.encode(emp.getEmpPwd()));
 //		bc.encode(emp.getEmpPwd());
 		System.out.println("Service                      sssssssssssss" + emp);
+		
 		originEmpRepository.save(modelMapper.map(emp, Emp.class));
+		
+		/* 신규사원 권한 등록 */
+		int roleCode = emp.getDeptCode();
+		int empNo = originEmpRepository.findCurrentSeqempNo();
+		
+		MemberRole role = new MemberRole();
+		
+		role.setEmpNo(empNo);
+		role.setRoleCode(roleCode);
+		
+		roleRepository.save(modelMapper.map(role, MemberRole.class));
+		
 	}	
 	
 	/* 사원정보 수정 */
