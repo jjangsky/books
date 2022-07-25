@@ -175,41 +175,43 @@ private final MyInfoModifyService myInfoModifyService;
 
 	}
 	
-//		/* 사원 정보를 가져오는 곳 */
+		/* 사원 정보 수정 */
 //	   @PostMapping("/empDetailUpdate")
-//	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, EmpDTO emp
-//	                        , String deptCode1, String deptCode2
-//	                        , String empJobCode1, String empJobCode2) {
-//	      
-//	      empService.modifyEmp(emp); 
+//	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request) {
+//		   
+//		   int empNo = Integer.valueOf(request.getParameter("empNo"));
+//		   
+//		   EmpDTO newEmp = new EmpDTO();
+//		   newEmp.setEmpNo(Integer.valueOf(request.getParameter("empNo")));
+//		   newEmp.setEmpName(request.getParameter("empName"));
+//		   newEmp.setDeptCode(Integer.valueOf(request.getParameter("deptCode")));
+//		   newEmp.setEmpJobCode(request.getParameter("empJobCode"));
+//		   newEmp.setEmpPhone1(request.getParameter("empPhone1"));
+//		   newEmp.setEmpPhone2(request.getParameter("empPhone2"));
+//		   newEmp.setEmpPhone3(request.getParameter("empPhone3"));
+//		   newEmp.setEmpEmail(request.getParameter("empEmail"));
+//		   newEmp.setEmpAddress(request.getParameter("empAddress"));
+//		   newEmp.setEmpDAddress(request.getParameter("empDAddress"));
+//		   newEmp.setEmpTotalSal(Integer.valueOf(request.getParameter("empTotalSal")));
+//		   
+//	      empService.modifyEmp(newEmp); 
 //	      
 //	      rttr.addFlashAttribute("updateSuccessMessage", "성공");
 //	      mv.setViewName("redirect:/manage/empList");
 //	      return mv;
 //	   }
-	   
-		/* 사원 정보 수정 */
+	
 	   @PostMapping("/empDetailUpdate")
-	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request) {
+	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request, EmpDTO emp) {
 		   
-		   EmpDTO newEmp = new EmpDTO();
-		   newEmp.setEmpNo(Integer.valueOf(request.getParameter("empNo")));
-		   newEmp.setEmpName(request.getParameter("empName"));
-		   newEmp.setDeptCode(Integer.valueOf(request.getParameter("deptCode")));
-		   newEmp.setEmpJobCode(request.getParameter("empJobCode"));
-		   newEmp.setEmpPhone1(request.getParameter("empPhone1"));
-		   newEmp.setEmpPhone2(request.getParameter("empPhone2"));
-		   newEmp.setEmpPhone3(request.getParameter("empPhone3"));
-		   newEmp.setEmpEmail(request.getParameter("empEmail"));
-		   newEmp.setEmpAddress(request.getParameter("empAddress"));
-		   newEmp.setEmpDAddress(request.getParameter("empDAddress"));
-		   newEmp.setEmpTotalSal(Integer.valueOf(request.getParameter("empTotalSal")));
+		   int empNo = Integer.valueOf(request.getParameter("empNo"));
 		   
-	      empService.modifyEmp(newEmp); 
+	      empService.modifyEmp(emp); 
 	      
 	      rttr.addFlashAttribute("updateSuccessMessage", "성공");
 	      mv.setViewName("redirect:/manage/empList");
 	      return mv;
+	      
 	   }
 
 		/* 도장 사진 수정 */
@@ -218,8 +220,6 @@ private final MyInfoModifyService myInfoModifyService;
 				@RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
 			
 			int empNo = Integer.valueOf(request.getParameter("empNo"));
-			
-//			System.out.println("야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야");
 			
 			String root = System.getProperty("user.dir");
 			System.out.println("root까지의 경로 : " + root);
@@ -232,7 +232,6 @@ private final MyInfoModifyService myInfoModifyService;
 			String ext = originFileName.substring(originFileName.lastIndexOf("."));
 			String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
 			System.out.println("변경한 이름 : " + saveName);
-//			System.out.println("나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와");
 
 			try {
 				singleFile.transferTo(new File(filePath + "/" + saveName));
@@ -418,21 +417,6 @@ private final MyInfoModifyService myInfoModifyService;
 			return mv;
 		}
 		
-//		/* 사원 퇴사처리 */
-//		@PostMapping("empLeave")
-//		public ModelAndView modifyEmpLeave(ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request) {
-//			
-//			EmpDTO leaveEmp = new EmpDTO();
-//			
-//			leaveEmp.setEmpEndYn(request.getParameter("empEndYn"));
-//			
-//			empService.modifyEmpLeave(leaveEmp);
-//			
-//			rttr.addFlashAttribute("updateSuccessMessage", "성공");
-//			mv.setViewName("redirect:/manage/leaveEmpList");
-//			return mv;
-//		}
-		
 		/* 사원 퇴사처리 */
 		@PostMapping("/empLeave")
 		public ModelAndView modifyEmpLeave(ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request, EmpDTO emp, 
@@ -444,7 +428,7 @@ private final MyInfoModifyService myInfoModifyService;
 			/* 퇴사 여부 수정 */
 			empService.modifyEmpEndYn(emp, empNo);
 
-			rttr.addFlashAttribute("updateSuccessMessage", "퇴사처리 성공");
+			rttr.addFlashAttribute("leaveUpdateSuccessMessage", "퇴사처리 성공");
 			mv.setViewName("redirect:/manage/leaveEmpList");
 			return mv;
 		}
