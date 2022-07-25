@@ -118,10 +118,16 @@ public class AttendController {
 		attend.setEmpNo(memberInfo);
 		
 
-		 attendService.registCheckIn(attend);
+		boolean att = attendService.registCheckIn(attend);
+		
+		if(att){
+			rttr.addFlashAttribute("successMessage", "출근 등록이 정상적으로 처리 되었습니다.");
+			mv.setViewName("redirect:/main");
+		}else {
+			rttr.addFlashAttribute("failMessage", "작업 실패");
+			mv.setViewName("redirect:/main");
+		}
 		 
-		 rttr.addFlashAttribute("successMessage", "출근 등록이 정상적으로 처리 되었습니다.");
-		 mv.setViewName("redirect:/main");
 		
 		return mv;
 	}
@@ -142,10 +148,16 @@ public class AttendController {
 		
 		System.out.println(attend);
 		
-		attendService.modifyCheckOut(attend, memberInfo);
+		boolean att = attendService.modifyCheckOut(attend, memberInfo);
 		
-		rttr.addFlashAttribute("successMessage", "퇴근 등록이 정상적으로 처리 되었습니다.");
-		mv.setViewName("redirect:/main");
+		if(att) {
+			rttr.addFlashAttribute("successMessage", "퇴근 등록이 정상적으로 처리 되었습니다.");
+			mv.setViewName("redirect:/main");
+		}else {
+			rttr.addFlashAttribute("failMessage", "작업 실패");
+			mv.setViewName("redirect:/main");
+		}
+		
 		
 		return mv;
 		

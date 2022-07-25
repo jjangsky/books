@@ -12,9 +12,9 @@
       <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
       
   </head>
-<body>
+	<body>
 	<div th:replace="/common/topSideBar.html"></div>
-	        <h2 class="mb-4" id="main-text">사원관리</h2>
+	    <h2 class="mb-4" id="main-text">사원관리</h2>
         <hr><br><br>
         <h5 class="mb-4" id="sub-text">퇴사사원 상세조회</h5>
         <br>
@@ -83,12 +83,11 @@
             <button type="button" class="list btn backBtn">목록으로</button>
             </div>
          </div>
-       </div>
+         
        <script th:inline="javascript">
     	 $('.backBtn').click(function(){
     		window.history.back(); 
     	 });
-
       </script>
-</body>
+    </body>
 </html>

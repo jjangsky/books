@@ -60,10 +60,15 @@ public class MypageService {
 
 	/* 일정 등록 */
 	@Transactional
-	public void registNewCalendar(CalendarDTO newCalendar) {
-
-		calendarRepository.save(modelMapper.map(newCalendar, Calendar.class));
-
+	public boolean registNewCalendar(CalendarDTO newCalendar) {
+		
+		try {
+			calendarRepository.save(modelMapper.map(newCalendar, Calendar.class));
+		}catch(IllegalArgumentException exception) {
+            return false;
+		}
+		
+		return true;
 	}
 
 	/* 일정 상세 조회 */
@@ -76,19 +81,32 @@ public class MypageService {
 
 	/* 일정 수정 */
 	@Transactional
-	public void modifyMyCalendar(CalendarDTO newCalendar) {
+	public boolean modifyMyCalendar(CalendarDTO newCalendar) {
 
-		Calendar updateCal = calendarRepository.findById(newCalendar.getCode()).get();
-		updateCal.setTitle(newCalendar.getTitle());
-		updateCal.setStart(newCalendar.getStart());
-		updateCal.setEnd(newCalendar.getEnd());
-		updateCal.setContent(newCalendar.getContent());
+		try {
+			Calendar updateCal = calendarRepository.findById(newCalendar.getCode()).get();
+			updateCal.setTitle(newCalendar.getTitle());
+			updateCal.setStart(newCalendar.getStart());
+			updateCal.setEnd(newCalendar.getEnd());
+			updateCal.setContent(newCalendar.getContent());
+		}catch(IllegalArgumentException exception) {
+            return false;
+		}
+		
+		return true;
 	}
 
 	/* 일정 삭제 */
-	public void deleteCalendar(int calCode) {
-
-		calendarRepository.deleteById(calCode);
+	public boolean deleteCalendar(int calCode) {
+		
+		try {
+			calendarRepository.deleteById(calCode);
+			
+		}catch(IllegalArgumentException exception) {
+            return false;
+		}
+		
+		return true;
 
 	}
 

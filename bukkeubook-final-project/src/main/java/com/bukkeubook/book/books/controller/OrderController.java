@@ -157,28 +157,29 @@ public class OrderController {
 		return mv;
 	}
 	
-	@GetMapping("/getSearchList")
-	@ResponseBody
-	private List<BookDTO> getSearchList(@RequestParam("searchCondition") String searchCondition,
-			@RequestParam("searchValue") String searchValue, Model model) throws Exception{
-		
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println("ajax 동작함");
-		System.out.println("searchCondition : " + searchCondition);
-		System.out.println("searchValue : " + searchValue);
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		
-		return orderService.searchOrderList(searchCondition, searchValue);
-	}
+   @GetMapping("/getSearchList")
+   @ResponseBody
+   private List<BookDTO> getSearchList(@RequestParam("searchCondition") String searchCondition,
+         @RequestParam("searchValue") String searchValue, Model model) throws Exception{
+      
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println("ajax 동작함");
+      System.out.println("searchCondition : " + searchCondition);
+      System.out.println("searchValue : " + searchValue);
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      
+      return orderService.searchOrderList(searchCondition, searchValue);
+   }
+
 	
 }
