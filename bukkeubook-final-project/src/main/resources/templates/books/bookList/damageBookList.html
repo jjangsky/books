@@ -123,12 +123,20 @@
 	</script>
 	<script>
 		const updateSuccessMessage = "[[${updateSuccessMessage}]]"
+		const updateFailMessage = "[[${updateFailMessage}]]"
 		
-		if(updateSuccessMessage){
+		if(updateSuccessMessage == '성공'){
 			Swal.fire({
                 icon: 'success',
                 title: 'Success!',
                 text: '훼손도서 수정이 성공적으로 완료되었습니다!',
+            })
+		}
+		if(updateFailMessage == '실패'){
+			Swal.fire({
+                icon: 'warning',
+                title: 'Warning!',
+                text: '훼손도서 수정에 실패했습니다. 다시 시도 해 주세요.',
             })
 		}
 	 </script>
