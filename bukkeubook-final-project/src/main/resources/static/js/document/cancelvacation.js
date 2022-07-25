@@ -1,5 +1,19 @@
 window.onload = function() {
 	
+	$("#reasonWrite").keyup(function(){
+		let checklength = $("#reasonWrite").text();
+		$("#reason").val(checklength);
+		
+		console.log($("#reason").val().length);
+		if($("#reason").val().length > 30){
+			Swal.fire({
+					icon: 'warning',
+					title: '글자수 초과',
+					text: '30자 내로 작성해주세요.'
+				})
+		}
+	})
+	
 	$(function() {
 		$.ajax({
 			url: "/document/vacationList",
@@ -159,7 +173,15 @@ function sendData() {
 					})
 				} else{countCheck++;}
 				
-				if(countCheck == 2) {
+				if ($("#reason").val().length > 30 ) {
+					Swal.fire({
+						icon: 'warning',
+						title: '글자수 초과',
+						text: '30자 내로 작성해주세요.'
+					})
+				} else{countCheck++;}
+				
+				if(countCheck == 3) {
 					$("#submitReport").submit();
 				}
 				

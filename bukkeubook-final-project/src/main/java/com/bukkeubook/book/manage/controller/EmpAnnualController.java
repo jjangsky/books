@@ -1,5 +1,6 @@
 package com.bukkeubook.book.manage.controller;
 
+import java.net.http.HttpRequest;
 import java.text.ParseException;
 import java.util.List;
 
@@ -102,8 +103,8 @@ public class EmpAnnualController {
 		return mv;
 	}
 
-	/****************/
-
+	/*****************************************************************************************/
+	/* 휴가 신청 승인시 연차 횟수 감소하는 트랜잭션 */
 	@GetMapping("/dayOffUpdate")
 	public ModelAndView dayOffUpdate(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr)
 			throws ParseException {
@@ -121,8 +122,7 @@ public class EmpAnnualController {
 
 	}
 
-	/****************************************************************/
-
+	/*****************************************************************************************/
 	/* 휴가 취소 신청 조회 */
 	@GetMapping("/restCancelSelect")
 	public ModelAndView findCancelVacList(HttpServletRequest request, ModelAndView mv) {
@@ -169,23 +169,6 @@ public class EmpAnnualController {
 
 		return mv;
 	}
-
-	/*
-	 * 휴가 취소 신청 상세 내역 조회
-	 * 
-	 * @GetMapping("/restCancleDetailSelect/{vacCancNo}") public ModelAndView
-	 * restCancleDetail (HttpServletRequest request, ModelAndView mv) {
-	 * 
-	 * int vacCancNo = Integer.valueOf(request.getParameter("vacCancNo"));
-	 * 
-	 * CancelVacationAndAppVacationDTO cancelVacDetail =
-	 * empAnnualService.restCancelDetailSelect(vacCancNo);
-	 * 
-	 * mv.addObject("cancelVacDetail", cancelVacDetail);
-	 * mv.setViewName("manage/empAnnual/restCancleDetailSelect");
-	 * 
-	 * return mv; }
-	 */
 	
 	/* 휴가 취소 신청 상세 내역 조회 */
 	@GetMapping("/restCancleDetailSelect/{vacCancNo}")
@@ -197,6 +180,26 @@ public class EmpAnnualController {
 		
 		mv.addObject("cancelVacDetail", cancelVacDetail);
 		mv.setViewName("manage/empAnnual/restCancleDetailSelect");
+		
+		return mv;
+	}
+	
+	/*****************************************************************************************/
+	/* 휴가 취소 신청 승인시 연차 횟수 증가하는 트랜잭션 */
+	@GetMapping("/cancDayOffUpdate")
+	public ModelAndView dayOffUpdate2(HttpServletRequest request, 
+			ModelAndView mv, RedirectAttributes rttr) throws ParseException {
+		
+		int vacCancNo = Integer.valueOf(request.getParameter("vacCancNo")); // 휴가 취소 번호
+		int vacNo = Integer.valueOf(request.getParameter("vacNo"));
+		int empNo = Integer.valueOf(request.getParameter("empNo")); // 사원 번호
+		String vacStartDate = request.getParameter("vacStartDate");
+		String vacEndDate = request.getParameter("vacEndDate");
+		
+		empDayOffService.findDayOffEmpNo(vacCancNo, vacNo, empNo, vacStartDate, vacEndDate);
+		
+		rttr.addFlashAttribute("updateSuccessMessage", "성공");
+		mv.setViewName("redirect:/manage/empDayOff/empDayOffDetail");
 		
 		return mv;
 	}

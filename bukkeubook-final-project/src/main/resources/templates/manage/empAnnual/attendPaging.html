@@ -62,6 +62,8 @@
 		/* 종료 날짜 값에 따른 경로 처리 */
 		if(endExist) {
 			searchText += "&attEnd=" + endExist;
+			searchText += "&searchCondition=" + searchConditionExist;
+			searchText += "&searchValue=" + searchValueExist;
 		}
 		
 		/* 검색 조건 유무에 따른 경로 처리 */

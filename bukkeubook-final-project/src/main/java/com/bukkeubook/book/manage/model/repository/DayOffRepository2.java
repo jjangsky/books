@@ -11,5 +11,4 @@ public interface DayOffRepository2 extends JpaRepository <DayOff, Integer> {
 
 	DayOffAndEmpAndDept findByEmpNo(int empNo);
 
-
 }

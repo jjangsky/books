@@ -36,6 +36,7 @@
             <button class="btn" type="button" onclick="location.href='/book/input'">입고등록</button>
 			</form>
 		</div>
+		<br>
         <div id="textTable" style="text-align:-webkit-center">
           <table id="sampleTable">
               <tr>
@@ -44,7 +45,10 @@
                 <th class="th1">신청자</th>
                 <th class="th1">상태</th>
               </tr>
-              <tr th:each="order : ${ orderList }" th:onclick="'location.href = \'' + @{/order/detail/(orderNo=${order.orderNo})} + '\''">
+              <tr th:if="${#lists.isEmpty(orderList)}">
+              	<th colspan="4">해당하는 날짜의 발주 내역이 없습니다.</th>
+              </tr>
+              <tr class="trs" th:each="order : ${ orderList }" th:onclick="'location.href = \'' + @{/order/detail/(orderNo=${order.orderNo})} + '\''">
                 <td th:text="${ order.orderNo }"></td>
                 <td th:text="${ order.orderDate }"></td>
                 <td th:text="${ order.emp.getEmpName() }"></td>
@@ -52,7 +56,17 @@
               </tr>
           </table>
         </div>
+        <br>
         <div th:replace="books/order/OrderHistorypaging.html"></div>
         
+        <script th:inline="javascript">
+        	$(".trs").on( "mouseover", function() {
+        		$(this).css( "background-color", "#FEFCC6" );
+        		$(this).children("td").css( "cursor", "pointer" );
+        	});
+        	$(".trs").on( "mouseleave", function() {
+        		$(this).css( "background-color", "white" );
+        	});
+        </script>
   </body>
 </html>
