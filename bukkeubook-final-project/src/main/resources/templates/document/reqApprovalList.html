@@ -21,6 +21,15 @@
 	                text: '성공적으로 완료되었습니다!',
 	            })
 		}
+		
+		const failMessage = "[[${ insertFail }]]";
+		if(failMessage){
+			 Swal.fire({
+	                icon: 'warning',
+	                title: '실패',
+	                text: '다시 시도해주세요!',
+	            })
+		}
 	</script>
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->

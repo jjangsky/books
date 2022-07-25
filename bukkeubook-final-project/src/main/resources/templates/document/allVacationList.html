@@ -20,6 +20,15 @@
 	                text: '성공적으로 완료되었습니다!',
 	            })
 		}
+		
+		const failMessage = "[[${ insertFail }]]";
+		if(failMessage){
+			 Swal.fire({
+	                icon: 'warning',
+	                title: '실패',
+	                text: '다시 시도해주세요!',
+	            })
+		}
 	</script>
 	<h2 class="mb-4" id="main-text">휴가서류</h2>
         <hr><br><br>
