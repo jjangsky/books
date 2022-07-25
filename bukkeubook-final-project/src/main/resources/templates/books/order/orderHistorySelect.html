@@ -60,6 +60,25 @@
         <div th:replace="books/order/OrderHistorypaging.html"></div>
         
         <script th:inline="javascript">
+	        
+	        const successMessage = "[[${ successMessage }]]";
+	        if(successMessage){
+	            Swal.fire({
+	                     icon: 'success',
+	                     title: '성공!',
+	                     text: '성공적으로 완료되었습니다!',
+	                 })
+	        }
+	        
+	        const failMessage = "[[${ failMessage }]]";
+	        if(failMessage){
+	            Swal.fire({
+	                     icon: 'warning',
+	                     title: '실패',
+	                     text: '다시 시도해주세요!',
+	                 })
+	        }
+        
         	$(".trs").on( "mouseover", function() {
         		$(this).css( "background-color", "#FEFCC6" );
         		$(this).children("td").css( "cursor", "pointer" );
