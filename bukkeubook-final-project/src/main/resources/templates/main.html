@@ -130,6 +130,8 @@
     <script>
 			const successMessage = "[[${ successMessage }]]";
 			const memberInfoUpdate = "[[${ memberInfoUpdate }]]";
+			const failMessage = "[[${ failMessage }]]";
+			
 
 			if(successMessage){
 				Swal.fire({
@@ -142,6 +144,12 @@
 	                icon: 'success',
 	                title: 'Success!',
 	                text: '해당 회원의 개인정보를 수정하였습니다.',
+	            })
+			}else if(failMessage){
+				Swal.fire({
+	                icon: 'error',
+	                title: 'Error!',
+	                text: '작업 실패 하셨습니다.',
 	            })
 			}
 			

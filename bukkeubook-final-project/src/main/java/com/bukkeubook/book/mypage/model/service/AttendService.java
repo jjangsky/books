@@ -68,20 +68,30 @@ public class AttendService {
 	
 	/* 마이페이지에서 출근 등록하기 */
 	@Transactional
-	public void registCheckIn(AttendDTO attend) {
+	public boolean registCheckIn(AttendDTO attend) {
 		
-		attendRepository.save(modelMapper.map(attend, Attend.class));
+		try {
+			attendRepository.save(modelMapper.map(attend, Attend.class));
+		}catch(IllegalArgumentException exception) {
+            return false;
+		}
 		
+		return true;
 	}
 	
 	/* 마이페이지에서 퇴근 등록하기 */
 	@Transactional
-	public void modifyCheckOut(AttendDTO attend, int memberInfo) {
+	public boolean modifyCheckOut(AttendDTO attend, int memberInfo) {
 		
 		Attend modifyCheckOut = attendRepository.findByEmpNoAndAttDateLike(memberInfo, attend.getAttDate());
 		
-		modifyCheckOut.setAttEnd(attend.getAttDate());
+		try {
+			modifyCheckOut.setAttEnd(attend.getAttDate());
+		}catch(IllegalArgumentException exception) {
+            return false;
+		}
 		
+		return true;
 	}
 
 	

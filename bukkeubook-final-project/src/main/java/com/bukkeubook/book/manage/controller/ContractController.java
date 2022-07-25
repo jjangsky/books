@@ -151,7 +151,7 @@ public class ContractController {
 		System.out.println(empCont);
 		
 		/* 근로 계약서 내역 테이블에 등록(파일 등록X) */
-		contractService.registNewContract(empCont);
+		boolean fileList = contractService.registNewContract(empCont);
 		
 		/* 2. 방금 등록한 내역 테이블의 근로계약서 번호 가져오기 */
 		
@@ -180,20 +180,26 @@ public class ContractController {
 		try {
 			singleFile.transferTo(new File(filePath + "/" + saveName));
 			
-			ContFileDTO contFile = new ContFileDTO();
-			contFile.setCfileOrigName(originFileName);
-			contFile.setCfilePath(filePath);
-			contFile.setCfileSavedName(saveName);
-			contFile.setContNo(contractNum);
-			
-			contractService.registNewFile(contFile);
-			
-			rttr.addFlashAttribute("successMessage", "성공");
-			mv.setViewName("redirect:/cont/findCont");
+			if(fileList) {
+				ContFileDTO contFile = new ContFileDTO();
+				contFile.setCfileOrigName(originFileName);
+				contFile.setCfilePath(filePath);
+				contFile.setCfileSavedName(saveName);
+				contFile.setContNo(contractNum);
+				
+				contractService.registNewFile(contFile);
+				
+				rttr.addFlashAttribute("successMessage", "성공");
+				mv.setViewName("redirect:/cont/findCont");
+			}else {
+				rttr.addFlashAttribute("failMessage", "실패");
+				mv.setViewName("redirect:/cont/findCont");
+			}
 			
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 			new File(filePath + "/" + saveName).delete();
+			rttr.addFlashAttribute("failMessage", "실패");
 			mv.setViewName("redirect:/cont/findCont");
 			
 		}
@@ -214,13 +220,18 @@ public class ContractController {
 		int fileCode = contFile.getCfileNo();
 		
 		/* 근로계약서 파일 삭제 */
-		contractService.deleteContFile(fileCode);
+		boolean file = contractService.deleteContFile(fileCode);
 		
 		/* 내역 테이블 삭제 */ 
-		contractService.deleteCont(code);
+		boolean fileTable = contractService.deleteCont(code);
 		
-		rttr.addFlashAttribute("successMessage", "삭제 성공");
-		mv.setViewName("redirect:/cont/findCont");
+		if(file == true && fileTable == true) {
+			rttr.addFlashAttribute("successMessage", "삭제 성공");
+			mv.setViewName("redirect:/cont/findCont");
+		}else {
+			rttr.addFlashAttribute("failMessage", "실패");
+			mv.setViewName("redirect:/cont/findCont");
+		}
 		
 		return mv;
 	}
