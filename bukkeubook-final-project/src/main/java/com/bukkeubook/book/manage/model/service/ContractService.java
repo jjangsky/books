@@ -64,10 +64,15 @@ public class ContractService {
 	
 	/* 근로계약서 테이블 insert */
 	@Transactional
-	public void registNewContract(EmpContDTO empCont) {
+	public boolean registNewContract(EmpContDTO empCont) {
 		
-		empContRepository.save(modelMapper.map(empCont, EmpCont.class));
+		try {
+			empContRepository.save(modelMapper.map(empCont, EmpCont.class));
+		}catch(IllegalArgumentException exception) {
+            return false;
+		}
 		
+		return true;
 	}
 	
 	/* 근로계약서 파일 업로드 */
@@ -80,10 +85,15 @@ public class ContractService {
 	
 	/* 근로계약서 내역 삭제 */
 	@Transactional
-	public void deleteCont(int No) {
+	public boolean deleteCont(int No) {
 		
-		empContRepository.deleteByContNo(No);
+		try {
+			empContRepository.deleteByContNo(No);
+		}catch(IllegalArgumentException exception) {
+            return false;
+		}
 		
+		return true;
 	}
 	
 	/* 근로계약서 파일 조회 */
@@ -95,10 +105,15 @@ public class ContractService {
 	}
 	
 	/* 근로계약서 파일 삭제 */
-	public void deleteContFile(int fileCode) {
+	public boolean deleteContFile(int fileCode) {
 		
-		laborContFileRepository.deleteById(fileCode);
+		try {
+			laborContFileRepository.deleteById(fileCode);
+		}catch(IllegalArgumentException exception) {
+            return false;
+		}
 		
+		return true;
 	}
 	
 	/* 검색 시 출력 갯수 구하기 */

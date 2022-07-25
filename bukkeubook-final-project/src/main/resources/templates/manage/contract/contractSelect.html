@@ -63,8 +63,9 @@
 </body>
 
 	<script>
-			const successMessage = "[[${ successMessage }]]";
 
+			const successMessage = "[[${ successMessage }]]";
+			const failMessage = "[[${ failMessage }]]";
 
 			if(successMessage){
 				Swal.fire({
@@ -72,6 +73,13 @@
 	                title: 'Success!',
 	                text: '정상적으로 처리되었습니다!',
 	            })
+			}else if(failMessage){
+				Swal.fire({
+	                icon: 'error',
+	                title: 'Error!',
+	                text: '작업 진행을 실패하셨습니다.',
+	            })
+				
 			}
 			
 	</script>

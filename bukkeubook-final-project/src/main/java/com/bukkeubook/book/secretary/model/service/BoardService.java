@@ -50,30 +50,46 @@ public class BoardService {
 
 	/* 총무부 전사게시판 수정하기 */
 	@Transactional
-	public void modifyBoardContent(BoardAndEmpAndBoardCateDTO board) {
+	public boolean modifyBoardContent(BoardAndEmpAndBoardCateDTO board) {
 		
-		Board boardUpdate = basicBoardRepository.findById(board.getNo()).get();
-		boardUpdate.setCateNo(board.getCateNo());
-		boardUpdate.setTitle(board.getTitle());
-		boardUpdate.setContent(board.getContent());
+		try {
+			Board boardUpdate = basicBoardRepository.findById(board.getNo()).get();
+			boardUpdate.setCateNo(board.getCateNo());
+			boardUpdate.setTitle(board.getTitle());
+			boardUpdate.setContent(board.getContent());
+		}catch(IllegalArgumentException exception) {
+            return false;
+		}
 		
+		return true;
 	}
 	
 	/* 전사게시판 등록하기 */
 	@Transactional
-	public void registBoardContent(BoardDTO board) {
+	public boolean registBoardContent(BoardDTO board) {
 		
-		basicBoardRepository.save(modelMapper.map(board, Board.class));
+		try {
+			basicBoardRepository.save(modelMapper.map(board, Board.class));
+		}catch(IllegalArgumentException exception) {
+            return false;
+		}
 		
+		return true;
 	}
 	
 	/* 전사게시판 삭제하기 */
 	@Transactional
-	public void deleteBoardContent(int boardNo, String boardYn) {
+	public boolean deleteBoardContent(int boardNo, String boardYn) {
 		
 		Board deleteBoard = basicBoardRepository.findById(boardNo).get();
-		deleteBoard.setBoardYn(boardYn);
 		
+		try {
+			deleteBoard.setBoardYn(boardYn);
+		}catch(IllegalArgumentException exception) {
+            return false;
+		}
+		
+		return true;
 	}
 
 	/* 총무부 전사게시판 검색 값 갯수 구하기 */
