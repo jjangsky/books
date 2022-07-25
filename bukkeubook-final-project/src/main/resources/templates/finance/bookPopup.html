@@ -27,7 +27,7 @@
 						<option value="author">저자</option>
 					</select>
 					<input type="text" style="display:none;"> <!-- 엔터키 새로고침 방지용 -->
-					<input type="search" id="inputFind" name="searchValue" value="">
+					<input type="search" id="inputFind" name="searchValue" value="" maxlength="30">
 					<button type="button" class="findBtn" id="findBtn">검색하기</button>
 				</form>
 			</div>
@@ -45,6 +45,9 @@
 	                <th class="th1">발행일</th>
 	                <th class="th1"></th>
 	            </tr>
+            <tr th:if="${#lists.isEmpty(bookList)}">
+              	<th colspan="4">조회된 도서가 없습니다.</th>
+              </tr>
 	            <tr class="tr1" th:each="book : ${ bookList }">
 		               <td th:text="${ book.no }"></td>
 		               <td th:text="${ book.name }"></td>
@@ -56,11 +59,8 @@
 	               </tr>
 	        </table>
         </div>
+        <br>
 		<div th:replace="/finance/bookPopupPaging.html"></div>
-  <script src="../js/jquery.min.js"></script>
-  <script src="../js/popper.js"></script>
-  <script src="../js/bootstrap.min.js"></script>
-  <script src="../js/main.js"></script>
   <script th:inline="javascript">
   
 	  $('#findBtn').click(function(){
