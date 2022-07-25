@@ -17,6 +17,7 @@ import com.bukkeubook.book.manage.model.dto.joinDTO.DayOffAndEmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.DayOff;
 import com.bukkeubook.book.manage.model.entity.DayOffAndEmpAndDept;
 import com.bukkeubook.book.manage.model.repository.AppVacRepository;
+import com.bukkeubook.book.manage.model.repository.CancelVacRepository;
 import com.bukkeubook.book.manage.model.repository.DayOffRepository2;
 import com.bukkeubook.book.manage.model.repository.EmpDayOffRepository;
 
@@ -26,13 +27,16 @@ public class EmpDayOffService {
    private final EmpDayOffRepository empDayOffRepository;
    private final DayOffRepository2 dayOffRepository2;
    private final AppVacRepository appVacRepository;
+   private final CancelVacRepository cancelVacRepository;
    private final ModelMapper modelMapper;
    
    @Autowired
-   public EmpDayOffService(EmpDayOffRepository empDayOffRepository, DayOffRepository2 dayOffRepository2, AppVacRepository appVacRepository, ModelMapper modelMapper) {
+   public EmpDayOffService(EmpDayOffRepository empDayOffRepository, DayOffRepository2 dayOffRepository2, AppVacRepository appVacRepository, 
+		   CancelVacRepository cancelVacRepository, ModelMapper modelMapper) {
       this.empDayOffRepository = empDayOffRepository;
       this.dayOffRepository2 = dayOffRepository2;
       this.appVacRepository = appVacRepository;
+      this.cancelVacRepository = cancelVacRepository;
       this.modelMapper = modelMapper;
    }
    
@@ -55,7 +59,7 @@ public class EmpDayOffService {
 		return modelMapper.map(emp, DayOffAndEmpAndDeptDTO.class); // 엔티티를 넣어달라고 요청 -> modelMapper
 }
   
-	/****************************************************************/	
+	/*****************************************************************************************/
 	@Transactional
 	public DayOffAndEmpAndDeptDTO findByEmpNo(int empNo, int doffNo) {
 		DayOffAndEmpAndDept dayOffList = dayOffRepository2.findByEmpNo(empNo);
@@ -86,10 +90,7 @@ public class EmpDayOffService {
 		long vacStartTime2 = date1.getTime();
 		long vacEndTime2 = date2.getTime();
 		long test = vacEndTime2 - vacStartTime2;
-		int day = (int)(test / 86400000 +1);
-		
-//		int dayOffUseAmount = dayOff.getDoffAmount() - day;
-//		dayOff.setDoffAmount(dayOffUseAmount);
+		int day = (int)(test / 86400000 + 1);
 		
 		int dayOffUseRemain = dayOff.getDoffRemain() - day;
 		dayOff.setDoffRemain(dayOffUseRemain);
@@ -98,6 +99,31 @@ public class EmpDayOffService {
 		dayOff.setDoffUse(UseDoffUse);
 		
 //		appVacRepository.save(modelMapper.map(dayOffDTO, DayOff.class));
+		
+	}
+
+	/*****************************************************************************************/
+	@Transactional
+	public void findDayOffEmpNo(int vacCancNo, int vacNo, int empNo, String vacStartDate, String vacEndDate) throws ParseException {
+		DayOff dayOff = cancelVacRepository.findByEmpNo(empNo);
+		DayOffDTO dayOffDTO = modelMapper.map(dayOff, DayOffDTO.class);
+		
+		String vacStartTime = vacStartDate;
+		String vacEndTime = vacEndDate;
+		
+		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(vacStartTime);
+		Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(vacEndTime);
+		
+		long vacStartTime2 = date1.getTime();
+		long vacEndTime2 = date2.getTime();
+		long test2 =  vacEndTime2 - vacStartTime2;
+		int day2 = (int)(test2 / 86400000 + 1);
+		
+		int dayOffUseRemain = dayOff.getDoffRemain() + day2;
+		dayOff.setDoffRemain(dayOffUseRemain);
+		
+		int UseDoffUse = dayOff.getDoffUse() - day2;
+		dayOff.setDoffUse(UseDoffUse);
 		
 	}
 	

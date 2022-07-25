@@ -28,7 +28,7 @@
             </tr>
               <tr>
               <td class="deemp3">부서</td>
-              <td th:text="${ emp.empAndDept.dept.deptName }"> </td>
+              <td th:text="${ emp.empAndDept.dept.deptName }"></td>
             </tr> 
             <tr>
               <td class="deemp3">사원명</td>
@@ -56,15 +56,17 @@
           <div id="newBookDiv">
           <button type="button" class="list btn backBtn">목록으로</button>
           </div>
-       </div> <!------------------------ 본문 종료---------------------------->
+        </div> 
+        <!------------------------ 본문 종료---------------------------->
       <script th:inline="javascript">
-    	 $('.backBtn').click(function(){
-    		window.history.back(); 
-    	 });
     	 
     	 $('.updateBtn').click(function(){
     		 location.href='/book/bookInfoUpdate?no=' + bb;
      	 });
+    	 
+    	 $('.backBtn').click(function(){
+    		window.history.back(); 
+    	 });
       </script>
 </body>
 </html>
