@@ -1,6 +1,18 @@
 window.onload = function() {
 
-
+	$("#reasonWrite").keyup(function(){
+		let checklength = $("#reasonWrite").text();
+		$("#reason").val(checklength);
+		
+		console.log($("#reason").val().length);
+		if($("#reason").val().length > 30){
+			Swal.fire({
+					icon: 'warning',
+					title: '글자수 초과',
+					text: '30자 내로 작성해주세요.'
+				})
+		}
+	})
 
 	$(function() {
 		//let empNo = $("#empNo1").val();
@@ -186,6 +198,14 @@ function sendData() {
 				})
 			} else { countCheck++; }
 
+			if($("#reason").val().length > 30){
+				Swal.fire({
+						icon: 'warning',
+						title: '글자수 초과',
+						text: '30자 내로 작성해주세요.'
+					})
+			} else { countCheck++; }
+
 			if ($("#num2").val() == "" && $("#num2").val().length < 1 && $("#num3").val() == "" && $("#num3").val().length < 1) {
 				Swal.fire({
 					icon: 'warning',
@@ -202,7 +222,7 @@ function sendData() {
 				})
 			} else { countCheck++; }
 
-			if (countCheck == 7) {
+			if (countCheck == 8) {
 				$("#submitReport").submit();
 			}
 

@@ -345,13 +345,13 @@ window.onload = function() {
 							})
 							break;
 						} else {
-							resultamts[i].innerText = amts[i].innerText
-							resultcnts[i].innerText = cnts[i].innerText
-							resultmemos[i].innerText = memos[i].innerText
+							resultamts[i].innerText = Intl.NumberFormat().format(amts[i].innerText);
+							resultcnts[i].innerText = cnts[i].innerText;
+							resultmemos[i].innerText = memos[i].innerText;
 				
 							// console.log(totalamt);
 				
-							document.getElementById("sumamt").innerText = totalamt;
+							document.getElementById("sumamt").innerText = Intl.NumberFormat().format(totalamt);
 							
 						}
 					}
@@ -462,13 +462,13 @@ function sendData() {
 						})
 						break;
 					} else {
-						resultamts[i].innerText = amts[i].innerText
-						resultcnts[i].innerText = cnts[i].innerText
-						resultmemos[i].innerText = memos[i].innerText
+						resultamts[i].innerText = Intl.NumberFormat().format(amts[i].innerText);
+						resultcnts[i].innerText = cnts[i].innerText;
+						resultmemos[i].innerText = memos[i].innerText;
 			
 						// console.log(totalamt);
 			
-						document.getElementById("sumamt").innerText = totalamt;
+						document.getElementById("sumamt").innerText = Intl.NumberFormat().format(totalamt);
 						
 					}
 				}
@@ -616,13 +616,13 @@ function takeout() {
 				})
 				break;
 			} else {
-				resultamts[i].innerText = amts[i].innerText
-				resultcnts[i].innerText = cnts[i].innerText
-				resultmemos[i].innerText = memos[i].innerText
+				resultamts[i].innerText = Intl.NumberFormat().format(amts[i].innerText);
+				resultcnts[i].innerText = cnts[i].innerText;
+				resultmemos[i].innerText = memos[i].innerText;
 	
 				// console.log(totalamt);
 	
-				document.getElementById("sumamt").innerText = totalamt;
+				document.getElementById("sumamt").innerText = Intl.NumberFormat().format(totalamt);
 	
 			}
 		}
