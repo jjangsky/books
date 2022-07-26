@@ -254,7 +254,7 @@ window.onload = function() {
 	});
 
 	$("#deleteTemp").click(function() {
-	let docNo = $("#docNo1").val();
+		let docNo = $("#docNo1").val();
 		Swal.fire({
 			title: '해당 임시저장 문서를\n삭제합니다.',
 			text: "진행 하시겠습니까?",
