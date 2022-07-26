@@ -70,12 +70,34 @@
                       <tr th:if="${#lists.isEmpty(all)}">
                		    <td class="td1" colspan="4">결재할 서류가 존재하지 않습니다.</td>
           		      </tr>
+          		      
+          		      <!-- <tr  th:unless="${#lists.isEmpty(all[0])}" class="tr1" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all[0].document.docNo1 }|} + '\''">
+	                  	<td th:text="${all[0].document.docTitle1}"></td>
+                        <td th:text="${all[0].appStatus}"></td>
+                        <td th:text="${all[0].document.docStatus1}" id="status"></td>
+                        <td th:text="${all[0].formName}"></td>
+	               	  </tr> 
+	               	  <tr  th:if="${#lists.size(all[1])}" class="tr1" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all[1].document.docNo1 }|} + '\''">
+	                  	<td th:text="${all[1].document.docTitle1}"></td>
+                        <td th:text="${all[1].appStatus}"></td>
+                        <td th:text="${all[1].document.docStatus1}" id="status"></td>
+                        <td th:text="${all[1].formName}"></td>
+	               	  </tr>
+	        		  <tr th:if="${#lists.isEmpty(all)}" class="tr1" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all[2].document.docNo1 }|} + '\''">
+	                  	<td th:text="${all[2].document.docTitle1}"></td>
+                        <td th:text="${all[2].appStatus}"></td>
+                        <td th:text="${all[2].document.docStatus1}" id="status"></td>
+                        <td th:text="${all[2].formName}"></td>
+	               	  </tr>  -->
+	               	   
+	               	  
+                      
                       <tr class="tr1" th:each="all : ${ all }" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all.document.docNo1 }|} + '\''">
                         <td th:text="${all.document.docTitle1}"></td>
                         <td th:text="${all.appStatus}"></td>
                         <td th:text="${all.document.docStatus1}" id="status"></td>
                         <td th:text="${all.formName}"></td>
-                      </tr>
+                      </tr>  
                     </table>
                 </div>
               </div> 
