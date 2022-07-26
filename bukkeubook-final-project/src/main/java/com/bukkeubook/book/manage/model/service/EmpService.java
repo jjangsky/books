@@ -28,6 +28,7 @@ import com.bukkeubook.book.manage.model.repository.EmpRepository;
 import com.bukkeubook.book.manage.model.repository.MemberRoleRepository;
 import com.bukkeubook.book.manage.model.repository.OriginalEmpRepository;
 import com.bukkeubook.book.manage.model.repository.ProfilePhotoRepository;
+import com.bukkeubook.book.mypage.model.repository.EmployeeRepository;
 
 @Service
 public class EmpService {
@@ -161,6 +162,17 @@ public class EmpService {
 		System.out.println("레포지토리      " + emp);
 		
 		return modelMapper.map(emp, EmpAndDeptDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
+	}
+	public EmpDTO findEmpByEmpNo2(int empNo) {
+		System.out.println("확인1111111111111");
+
+		Emp emp = originEmpRepository.findById(empNo).get();
+		System.out.println("확인222222222222222");
+
+		
+		System.out.println("레포지토리      " + emp);
+		
+		return modelMapper.map(emp, EmpDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
 	}
 	
 	@Transactional

@@ -74,7 +74,7 @@ public class MemberController {
 		String password2 = request.getParameter("password2");
 		String password3 = request.getParameter("password3");
 		BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
-		EmpDTO emp = empService.findEmpByEmpNo(no);
+		EmpDTO emp = empService.findEmpByEmpNo2(no);
 		System.out.println(emp.getEmpPwd());
 		System.out.println(bc.matches(password1, emp.getEmpPwd()));
 		if(!bc.matches(password1, emp.getEmpPwd())) {

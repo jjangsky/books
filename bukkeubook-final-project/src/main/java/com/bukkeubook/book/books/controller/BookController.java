@@ -119,7 +119,7 @@ public class BookController extends HttpServlet{
 		
 		boolean access = bookService.modifyBookInfo(bookDTO);
 		
-		if(access == false) {
+		if(access == true) {
 			rttr.addFlashAttribute("updateSuccessMessage", "성공");
 		} else {
 			rttr.addFlashAttribute("updateFailMessage", "실패");
