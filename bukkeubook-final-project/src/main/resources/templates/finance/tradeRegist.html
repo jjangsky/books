@@ -49,14 +49,17 @@
 	                    </td>
 	                </tr>
 	                <tr>
-	                    <td>상세내용</td>
 	                    <td>
-	                    	<input id="tlDetail" type="text" name="tlDetail" placeholder="상세내용을 입력하세요.">
+	                    	상세내용<br>
+	                    	(100자 제한)
+	                    </td>
+	                    <td>
+	                    	<input id="tlDetail" type="text" name="tlDetail" maxlength="100" placeholder="상세내용을 입력하세요.">
 	                    </td>
 	                </tr>
 	            </table>
-                <button class="btn" type="button" onclick="checkComplete()">등록</button>
-	            <button class="btn" type="button" onclick="checkCancel()">취소</button>
+                <button class="btn bb" type="button" onclick="checkComplete()">등록</button>
+	            <button class="btn bb" type="button" onclick="checkCancel()">취소</button>
         	</form>
     </div> <!------------------------ 본문 종료---------------------------->
 

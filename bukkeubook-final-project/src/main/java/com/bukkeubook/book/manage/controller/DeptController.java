@@ -162,4 +162,27 @@ public class DeptController {
 //		
 //		return deptService.searchEmpList(searchCondition, searchValue);
 //	}
+	
+	@GetMapping("/chart")
+	public ModelAndView orgChartPage(HttpServletRequest request, ModelAndView mv) {
+			
+			List<DeptAndEmpDTO> deptList = deptService.selectDeptList();
+			
+			mv.addObject("deptList", deptList);
+			mv.setViewName("/manage/dept/orgChart");
+			
+			return mv;
+	}
+	
+	@GetMapping("/chartDetail")
+	public ModelAndView detailChart(HttpServletRequest request, ModelAndView mv) {
+		int deptCode = Integer.valueOf(request.getParameter("deptCode"));
+		
+		DeptAndEmpDTO dept = deptService.searchDeptDetail(deptCode);
+		
+		mv.addObject("dept", dept);
+		mv.setViewName("/manage/dept/orgChartDetail");
+		
+		return mv;
+	}
 }

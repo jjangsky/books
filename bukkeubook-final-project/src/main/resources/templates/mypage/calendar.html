@@ -95,6 +95,7 @@
 			const successMessage = "[[${ registSuccessMessage }]]";
 			const updateMessage = "[[${ updateSuccessMessage }]]";
 			const deleteMessage = "[[${ deleteSuccessMessage }]]"
+			const failMessage = "[[${ failMessage }]]"
 			
 			if(successMessage){
 				Swal.fire({
@@ -113,6 +114,12 @@
 	                icon: 'success',
 	                title: 'Success!',
 	                text: '일정을 성공적으로 삭제하셨습니다.',
+	            })
+			}else if(failMessage){
+				Swal.fire({
+	                icon: 'error',
+	                title: 'Error!',
+	                text: '작업이 정상적으로 진행되지 않았습니다.',
 	            })
 			}
 			

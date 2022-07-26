@@ -10,6 +10,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet"  th:href="@{/css/finance/tradeSelect.css}">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
   <body>
 		<div th:replace="/common/topSideBar.html"></div>
@@ -20,17 +21,23 @@
         <br>
 
         <div class="search-area" align="center">
-			<form id="loginForm" action="/trade/select" method="get" style="display: inline-block">
-				<input type="hidden" name="searchCondition" value=1>
+			<form id="loginForm" name="searchForm" action="/trade/select" method="get" style="display: inline-block">
+				<select id="searchCondition" name="searchCondition">
+					<option value="select">--분류--</option>
+					<option value="client">거래처명</option>
+					<option value="book">도서명</option>
+					<option value="emp">담당 사원</option>
+				</select>
 				<input type="text" style="display:none;"> <!-- 엔터키 새로고침 방지용 -->
-				<input type="hidden" name="currentPage" value="1">
-				<input type="date" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}">
-				<button class="findBtn btn-bs" type="submit">검색하기</button>
+				<input type="search" id="inputFind"  maxlength="50" name="searchValue" value="">
+				<button type="button" class="findBtn" id="findBtn">검색하기</button>
 			</form>
-	        <button class="btn regBtn" type="button" onclick="location.href='/trade/regist'">신규 등록</button>
+			<div id="rb" style="text-align:-webkit-right">
+		        <button class="btn regBtn" type="button" onclick="location.href='/trade/regist'">신규 등록</button>
+			</div>
 		</div>
 		
-
+		<br>
         <div id="textTable" style="text-align:-webkit-center">
           <table id="sampleTable">
               <tr>
@@ -40,15 +47,61 @@
                 <th class="th1">담당 사원</th>
                 <th class="th1">거래날짜</th>
               </tr>
-               <tr class="tr1" th:each="trade : ${ tradeList }" th:onclick="'location.href = \'' + @{/trade/detail/(tlNo=${trade.tlNo})} + '\''">
+              <tr th:if="${#lists.isEmpty(tradeList)}">
+              		<th colspan="4">조회된 거래내역이 없습니다.</th>
+              </tr>
+               <tr class="tr1 trs" th:each="trade : ${ tradeList }" th:onclick="'location.href = \'' + @{/trade/detail/(tlNo=${trade.tlNo})} + '\''">
 	               <td th:text="${ trade.tlNo }"></td>
 	               <td th:text="${ trade.client.cntName }"></td>
 	               <td th:text="${ trade.book.name }"></td>
-	               <td th:text="${ trade.emp.empNo }"></td>
+	               <td th:text="${ trade.emp.empName }"></td>
 	               <td th:text="${ trade.tlDate }"></td>
                </tr>
           </table>
+          <br>
           <div th:replace="/finance/tradeSelectPaging.html"></div>
         </div> <!------------------------ 본문 종료---------------------------->
+        
+        <script th:inline="javascript">
+	        $(".trs").on( "mouseover", function() {
+	    		$(this).css( "background-color", "#FEFCC6" );
+	    		$(this).children("td").css( "cursor", "pointer" );
+	    	});
+	    	$(".trs").on( "mouseleave", function() {
+	    		$(this).css( "background-color", "white" );
+	    	});
+	    	
+	    	$('#findBtn').click(function(){
+	    	  	var pattern_spc = /[~!@#$%^&*()+|<>?:{}]/;
+				if(inputFind.value == "" && searchCondition.value == 'select'){
+					Swal.fire({
+		                icon: 'question',
+		                title: '',
+		                text: '분류와 검색어를 입력 해 주세요.',
+		            })} else if(inputFind.value == ""){
+	          	Swal.fire({
+		                icon: 'question',
+		                title: '',
+		                text: '검색어를 입력 해 주세요.',
+		                
+	          	})} else if(searchCondition.value == 'select'){
+	         		Swal.fire({
+	 	                icon: 'question',
+	 	                title: '',
+	 	                text: '분류를 선택 해 주세요.',
+	          	})} else{
+	          			const pattern_spc = /[~!@#$%^&*()+|<>?:{}]/;
+	          			if(pattern_spc.test(inputFind.value)){
+	          				Swal.fire({
+	          					icon: 'error',
+	          					title: '',
+	          					text: '특수문자 및 태그를 입력하지 마세요'
+	          				})
+	          			} else{
+	          				$("#loginForm").submit();
+	          			}
+		   			};
+				});
+        </script>
   </body>
 </html>

@@ -71,10 +71,16 @@ public class MyInfoModifyController {
 		
 		int memberCode = customUser.getEmpNo();
 		System.out.println(emp);
-		myInfoModifyService.modifyInfoEmp(memberCode, emp);
-
-		rttr.addFlashAttribute("memberInfoUpdate", "회원정보를 정상적으로 수정하였습니다.");
-		mv.setViewName("redirect:/main");
+		
+		boolean myInfo = myInfoModifyService.modifyInfoEmp(memberCode, emp);
+		
+		if(myInfo) {
+			rttr.addFlashAttribute("memberInfoUpdate", "회원정보를 정상적으로 수정하였습니다.");
+			mv.setViewName("redirect:/main");
+		}else {
+			rttr.addFlashAttribute("failMessage", "실패");
+			mv.setViewName("redirect:/main");
+		}
 		
 		return mv;
 	}
@@ -120,7 +126,7 @@ public class MyInfoModifyController {
 			
 			/* 실패 시 파일 삭제 */
 			new File(filePath + "/" + saveName).delete();
-			rttr.addFlashAttribute("successMessage", "프로필 사진 변경을 실패하셨습니다.");
+			rttr.addFlashAttribute("failMessage", "프로필 사진 변경을 실패하셨습니다.");
 			mv.setViewName("redirect:/main");
 		}
 		
@@ -165,7 +171,7 @@ public class MyInfoModifyController {
 			
 			/* 실패 시 파일 삭제 */
 			new File(filePath + "/" + saveName).delete();
-			rttr.addFlashAttribute("successMessage", "서명 사진 변경을 실패하셨습니다.");
+			rttr.addFlashAttribute("failMessage", "서명 사진 변경을 실패하셨습니다.");
 			mv.setViewName("redirect:/main");
 		}
 		

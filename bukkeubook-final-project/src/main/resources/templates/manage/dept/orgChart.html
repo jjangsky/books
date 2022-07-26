@@ -14,9 +14,9 @@
 <body>
     <div th:replace="/common/topSideBar.html"></div>
 
-    <h2 class="mb-4" id="main-text">부서관리</h2>
+    <h2 class="mb-4" id="main-text">조직도</h2>
     <hr><br><br>
-    <h5 class="mb-4" id="sub-text">전체부서조회</h5>
+    <h5 class="mb-4" id="sub-text">부서 목록</h5>
     <br>
 
     <div id="textTable" style="text-align:-webkit-center">
@@ -26,7 +26,7 @@
             <th class="th1">부서명</th>
             <th class="th1">부서대표번호</th>
           </tr>
-          <tr class="trs" th:each="dept : ${ deptList }" th:onclick="'location.href = \'' + @{/dept/detail/(deptCode=${dept.deptCode})} + '\''">
+          <tr class="trs" th:each="dept : ${ deptList }" th:onclick="'location.href = \'' + @{/dept/chartDetail/(deptCode=${dept.deptCode})} + '\''">
             <td th:text="${ dept.deptCode }"></td>
             <td th:text="${ dept.deptName }"></td>
             <td th:text="${ dept.deptRepPhone }"></td>

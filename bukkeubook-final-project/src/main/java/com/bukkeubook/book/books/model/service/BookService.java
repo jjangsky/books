@@ -144,33 +144,48 @@ public class BookService {
 		List<Book> bookList = bookRepository.findBookByNo(no);
 		return bookList.stream().map(book -> modelMapper.map(book, BookDTO.class)).collect(Collectors.toList());
 	}
-	/***********************************************************************************************************/
+	/**
+	 * @return *********************************************************************************************************/
 	
 	@Transactional	
-	public void modifyBookInfo(BookDTO bookDTO) {
+	public boolean modifyBookInfo(BookDTO bookDTO) {
 		
 		Book book = bookRepository.findByNo(bookDTO.getNo());
+		
+		try {
+			
 		book.setNo(bookDTO.getNo());
 		book.setPrice(bookDTO.getPrice());
 		book.setStoreSt(bookDTO.getStoreSt());
 		book.setWhSt(bookDTO.getWhSt());
 		book.setSellYn(bookDTO.getSellYn());
-
+		
+		} catch (IllegalArgumentException exception) {
+			return false;
+		}
+		return true;
 	}
 	
+	/* 현재 도서코드 시퀀스 max값 +1 조회용 */
 	public String newBookCode() {
 		String bookCode = nativeRepository.newBookCode();
 		return bookCode;
 	}
 	
+	/* 신규 도서 추가 */
 	@Transactional
-	public void insertBook(BookDTO bookDTO) {
+	public boolean insertBook(BookDTO bookDTO) {
 		String bkNo = bookDTO.getNo();
 		DamBookDTO damBook = new DamBookDTO();
-		damBook.setBkNo(bkNo);
-		damBook.setDamAmount(0);
-		bookRepository.save(modelMapper.map(bookDTO, Book.class));
-		damBookRepository.save(modelMapper.map(damBook, DamBook.class));
+		try {
+			damBook.setBkNo(bkNo);
+			damBook.setDamAmount(0);
+			bookRepository.save(modelMapper.map(bookDTO, Book.class));
+			damBookRepository.save(modelMapper.map(damBook, DamBook.class));
+		} catch (IllegalArgumentException exception) {
+			return false;
+		}
+		return true;
 	}
 
 	public List<RelListAndEmpDTO> searchBookList2(SelectCriteria selectCriteria) {
@@ -301,17 +316,28 @@ public class BookService {
 	}
 	
 	@Transactional
-	public void outputReceipt2(RelBkListDTO relBkList) {
-		bookOutputRepository2.save(modelMapper.map(relBkList, RelBkList.class));
+	public boolean outputReceipt2(RelBkListDTO relBkList) {
+		try {
+			bookOutputRepository2.save(modelMapper.map(relBkList, RelBkList.class));
+			
+		} catch (IllegalArgumentException exception) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Transactional
-	public void outputReceipt3(BookDTO bookDTO, int amount) {
-		Book book = bookRepository.findByNo(bookDTO.getNo());
-		int nowAmount = book.getWhSt();
-		int nowStoreAmount = book.getStoreSt();
-		book.setWhSt(nowAmount - amount);
-		book.setStoreSt(nowStoreAmount + amount);
+	public boolean outputReceipt3(BookDTO bookDTO, int amount) {
+		try {
+			Book book = bookRepository.findByNo(bookDTO.getNo());
+			int nowAmount = book.getWhSt();
+			int nowStoreAmount = book.getStoreSt();
+			book.setWhSt(nowAmount - amount);
+			book.setStoreSt(nowStoreAmount + amount);
+		} catch (IllegalArgumentException exception) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Transactional
@@ -323,23 +349,32 @@ public class BookService {
 	}
 	
 	@Transactional
-	public void inputReceipt2(StockBookListDTO stockBookList) {
-		bookInputRepository2.save(modelMapper.map(stockBookList, StockBookList.class));
+	public boolean inputReceipt2(StockBookListDTO stockBookList) {
+		try {
+			bookInputRepository2.save(modelMapper.map(stockBookList, StockBookList.class));
+		} catch (IllegalArgumentException exception) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Transactional
-	public void inputReceipt3(BookDTO bookDTO, int amount, String selectInput) {
-		Book book = bookRepository.findByNo(bookDTO.getNo());
-		System.out.println("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd" + book);
-		int nowAmount = book.getWhSt();
-		int nowStAmount = book.getStoreSt();
-		
-		if(selectInput.equals("일반입고")) {
-			book.setWhSt(nowAmount + amount);
-			book.setStoreSt(nowStAmount - amount);
-		} else if(selectInput.equals("발주입고")) {
-			book.setWhSt(nowAmount + amount);
+	public boolean inputReceipt3(BookDTO bookDTO, int amount, String selectInput) {
+		try {
+			Book book = bookRepository.findByNo(bookDTO.getNo());
+			int nowAmount = book.getWhSt();
+			int nowStAmount = book.getStoreSt();
+			
+			if(selectInput.equals("일반입고")) {
+				book.setWhSt(nowAmount + amount);
+				book.setStoreSt(nowStAmount - amount);
+			} else if(selectInput.equals("발주입고")) {
+				book.setWhSt(nowAmount + amount);
+			}
+		} catch (IllegalArgumentException exception) {
+			return false;
 		}
+		return true;
 	}
 
 	
@@ -372,22 +407,31 @@ public class BookService {
 	}
 
 	@Transactional
-	public DamBookDTO findByNo(String no, int updateAmount) {
-		DamBook damBookList = damBookRepository.findBybkNo(no);
-		int nowAmount = damBookList.getDamAmount();
-		damBookList.setDamAmount(nowAmount + updateAmount);
-		
-		return modelMapper.map(damBookList, DamBookDTO.class);
+	public boolean findByNo(String no, int updateAmount) {
+		try {
+			DamBook damBookList = damBookRepository.findBybkNo(no);
+			int nowAmount = damBookList.getDamAmount();
+			damBookList.setDamAmount(nowAmount + updateAmount);
+			damBookRepository.save(damBookList);
+		} catch (IllegalArgumentException exception) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Transactional
-	public void findBookByNo(String no, int updateAmount, int amount) {
+	public boolean findBookByNo(String no, int updateAmount, int amount) {
 //		amount = 기존훼손 수량
 //		updateAmount = 추가훼손 수량
 //		whst = 기존 창고수량
-		Book book = bookRepository.findByNo(no);
-		int whst = book.getWhSt();		
-		book.setWhSt(whst - updateAmount);
+		try {
+			Book book = bookRepository.findByNo(no);
+			int whst = book.getWhSt();		
+			book.setWhSt(whst - updateAmount);
+		} catch (IllegalArgumentException exception) {
+			return false;
+		}
+		return true;
 	}
 	
 	public List<BookDTO> searchBookList(String searchCondition, String searchValue) {
@@ -409,7 +453,6 @@ public class BookService {
 			bookList = bookRepository.findAll(Sort.by("no"));
 		}
 
-		/* 자바의 Stream API와 ModelMapper를 이용하여 entity를 DTO로 변환 후 List<MenuDTO>로 반환 */
 		return bookList.stream().map(Book -> modelMapper.map(Book, BookDTO.class)).collect(Collectors.toList());
 	
 	}

@@ -158,11 +158,11 @@ private final MyInfoModifyService myInfoModifyService;
 
 		/* 프로필 사진 조회 */
 		List<ProfPhotoDTO> profile = empService.findEmpProfile(number);
-//		System.out.println("이제는 좀 나와주라 이눔아" + profile);
+//		System.out.println("111111111111111" + profile);
 		
 		/* 현재 서명 조회 */
 		SignDTO mySign = signService.findEmpSign(number);
-//		System.out.println("너도 나와 이눔아22" + empSign);
+//		System.out.println("2222222222222222" + empSign);
 		
 		mv.addObject("emp", emp);
 		mv.addObject("profile", profile);
@@ -173,41 +173,17 @@ private final MyInfoModifyService myInfoModifyService;
 
 	}
 	
-//		/* 사원 정보를 가져오는 곳 */
-//	   @PostMapping("/empDetailUpdate")
-//	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, EmpDTO emp
-//	                        , String deptCode1, String deptCode2
-//	                        , String empJobCode1, String empJobCode2) {
-//	      
-//	      empService.modifyEmp(emp); 
-//	      
-//	      rttr.addFlashAttribute("updateSuccessMessage", "성공");
-//	      mv.setViewName("redirect:/manage/empList");
-//	      return mv;
-//	   }
-	   
-		/* 사원 정보 수정 */
 	   @PostMapping("/empDetailUpdate")
-	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request) {
+	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request, EmpDTO emp) {
 		   
-		   EmpDTO newEmp = new EmpDTO();
-		   newEmp.setEmpNo(Integer.valueOf(request.getParameter("empNo")));
-		   newEmp.setEmpName(request.getParameter("empName"));
-		   newEmp.setDeptCode(Integer.valueOf(request.getParameter("deptCode")));
-		   newEmp.setEmpJobCode(request.getParameter("empJobCode"));
-		   newEmp.setEmpPhone1(request.getParameter("empPhone1"));
-		   newEmp.setEmpPhone2(request.getParameter("empPhone2"));
-		   newEmp.setEmpPhone3(request.getParameter("empPhone3"));
-		   newEmp.setEmpEmail(request.getParameter("empEmail"));
-		   newEmp.setEmpAddress(request.getParameter("empAddress"));
-		   newEmp.setEmpDAddress(request.getParameter("empDAddress"));
-		   newEmp.setEmpTotalSal(Integer.valueOf(request.getParameter("empTotalSal")));
+		   int empNo = Integer.valueOf(request.getParameter("empNo"));
 		   
-	      empService.modifyEmp(newEmp); 
+	      empService.modifyEmp(emp); 
 	      
-	      rttr.addFlashAttribute("updateSuccessMessage", "성공");
+	      rttr.addFlashAttribute("updateSuccessMessage", "직원정보 수정 성공");
 	      mv.setViewName("redirect:/manage/empList");
 	      return mv;
+	      
 	   }
 
 		/* 도장 사진 수정 */
@@ -216,8 +192,6 @@ private final MyInfoModifyService myInfoModifyService;
 				@RequestParam("singleFile") MultipartFile singleFile, RedirectAttributes rttr) {
 			
 			int empNo = Integer.valueOf(request.getParameter("empNo"));
-			
-//			System.out.println("야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야야");
 			
 			String root = System.getProperty("user.dir");
 			System.out.println("root까지의 경로 : " + root);
@@ -230,7 +204,6 @@ private final MyInfoModifyService myInfoModifyService;
 			String ext = originFileName.substring(originFileName.lastIndexOf("."));
 			String saveName = UUID.randomUUID().toString().replace("-", "") + ext;
 			System.out.println("변경한 이름 : " + saveName);
-//			System.out.println("나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와나와");
 
 			try {
 				singleFile.transferTo(new File(filePath + "/" + saveName));
@@ -243,7 +216,7 @@ private final MyInfoModifyService myInfoModifyService;
 				
 				signService.modifySign(sign);
 				
-				rttr.addFlashAttribute("successMessage", "서명 변경을 성공하셨습니다.");
+				rttr.addFlashAttribute("signsuccessMessage", "서명 변경을 성공하셨습니다.");
 				mv.setViewName("redirect:/manage/empList");
 				
 			} catch (IllegalStateException | IOException e) {
@@ -251,7 +224,7 @@ private final MyInfoModifyService myInfoModifyService;
 				
 				/* 실패 시 파일 삭제 */
 				new File(filePath + "/" + saveName).delete();
-				rttr.addFlashAttribute("successMessage", "서명 사진 변경을 실패하셨습니다.");
+				rttr.addFlashAttribute("signsuccessMessage", "서명 사진 변경을 실패하셨습니다.");
 				mv.setViewName("redirect:/main");
 			}
 			
@@ -287,7 +260,7 @@ private final MyInfoModifyService myInfoModifyService;
 
 				empService.modifyProfile(profile);
 				
-				rttr.addFlashAttribute("successMessage", "프로필 변경을 성공하셨습니다.");
+				rttr.addFlashAttribute("profilesuccessMessage", "프로필 변경을 성공하셨습니다.");
 				mv.setViewName("redirect:/manage/empList");
 				
 			} catch (IllegalStateException | IOException e) {
@@ -427,7 +400,7 @@ private final MyInfoModifyService myInfoModifyService;
 			/* 퇴사 여부 수정 */
 			empService.modifyEmpEndYn(emp, empNo);
 
-			rttr.addFlashAttribute("updateSuccessMessage", "퇴사처리 성공");
+			rttr.addFlashAttribute("leaveUpdateSuccessMessage", "퇴사처리 성공");
 			mv.setViewName("redirect:/manage/leaveEmpList");
 			return mv;
 		}

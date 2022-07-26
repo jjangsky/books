@@ -68,7 +68,7 @@
                         <th class="th1">문서종류</th>
                       </tr>
                       <tr th:if="${#lists.isEmpty(all)}">
-               		    <th class="th1" colspan="4">결재할 서류가 존재하지 않습니다.</th>
+               		    <td class="td1" colspan="4">결재할 서류가 존재하지 않습니다.</td>
           		      </tr>
                       <tr class="tr1" th:each="all : ${ all }" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all.document.docNo1 }|} + '\''">
                         <td th:text="${all.document.docTitle1}"></td>
@@ -130,6 +130,8 @@
     <script>
 			const successMessage = "[[${ successMessage }]]";
 			const memberInfoUpdate = "[[${ memberInfoUpdate }]]";
+			const failMessage = "[[${ failMessage }]]";
+			
 
 			if(successMessage){
 				Swal.fire({
@@ -142,6 +144,12 @@
 	                icon: 'success',
 	                title: 'Success!',
 	                text: '해당 회원의 개인정보를 수정하였습니다.',
+	            })
+			}else if(failMessage){
+				Swal.fire({
+	                icon: 'error',
+	                title: 'Error!',
+	                text: '작업 실패 하셨습니다.',
 	            })
 			}
 			

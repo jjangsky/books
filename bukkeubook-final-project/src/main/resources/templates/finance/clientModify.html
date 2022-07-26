@@ -28,23 +28,23 @@
                     </tr>
                     <tr>
                         <td>거래처명</td>
-                        <td colspan="3"><input id="cntName" type="text" name="cntName" th:value="${ client.cntName }"></td>
+                        <td colspan="3"><input id="cntName" type="text" name="cntName" th:value="${ client.cntName }" maxlength="30"></td>
                     </tr>
                     <tr>
                         <td>업종</td>
-                        <td><input id="cntCate" type="text" name="cntCate" th:value="${ client.cntCate }"></td>
+                        <td><input id="cntCate" type="text" name="cntCate" th:value="${ client.cntCate }" maxlength="30"></td>
                         <td>사업자등록번호</td>
                         <td><input id="cntRegNo" type="text" name="cntRegNo" th:value="${ client.cntRegNo}"></td>
                     </tr>
                     <tr>
                         <td>업태</td>
-                        <td><input id="cntType" type="text" name="cntType" th:value="${ client.cntType }"></td>
+                        <td><input id="cntType" type="text" name="cntType" th:value="${ client.cntType }" maxlength="30"></td>
                         <td>법인등록번호</td>
                         <td><input id="corpRegNo" type="text" name="corpRegNo" th:value="${ client.corpRegNo }"></td>
                     </tr>
                     <tr>
                         <td>대표자</td>
-                        <td colspan="3"><input id="cntRepName" type="text" name="cntRepName" th:value="${ client.cntRepName }"></td>
+                        <td colspan="3"><input id="cntRepName" type="text" name="cntRepName" th:value="${ client.cntRepName }" maxlength="10"></td>
                     </tr>
                     <tr>
                         <td>개업일</td>
@@ -52,13 +52,13 @@
                     </tr>
                     <tr>
                         <td>소재지</td>
-                        <td colspan="3"><input id="cntAddress" class="addr" type="text" name="cntAddress" th:value="${ client.cntAddress }"></td>
+                        <td colspan="3"><input id="cntAddress" class="addr" type="text" name="cntAddress" maxlength="100" th:value="${ client.cntAddress }"></td>
                     </tr>
                     <tr>
                         <td>연락처</td>
                         <td><input id="cntPhone" type="text" name="cntPhone" th:value="${ client.cntPhone }"></td>
-                        <td>담당자</td>
-                        <td><input id="cntManaName" type="text" name="cntManaName" th:value="${ client.cntManaName }"></td>
+                        <td>담당자명</td>
+                        <td><input id="cntManaName" type="text" name="cntManaName" th:value="${ client.cntManaName }" maxlength="10"></td>
                     </tr>
                     <tr>
                         <td>이메일</td>
@@ -73,6 +73,7 @@
                         <td><input id="cntManaEmail" type="email" name="cntManaEmail" th:value="${ client.cntManaEmail }"><input type="hidden" name="cntNo" th:value="${ client.cntNo }"></td>
                     </tr>
                 </table>
+                <br><br>
                 <button class="btn" type="button" onclick="checkComplete()">등록</button>
                 <button class="btn" type="button" onclick="checkCancel()">취소</button>
             </form>

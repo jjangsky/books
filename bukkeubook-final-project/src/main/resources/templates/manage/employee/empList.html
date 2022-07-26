@@ -29,7 +29,6 @@
               <option value="select">분류</option>
               <option value="empName" th:selected="${ searchCondition } == 'empName'">사원명</option>
               <option value="empJobCode" th:selected="${ searchCondition } == 'empJobCode'">직급명</option>
- <!--              <option value="Dept" th:selected="${ searchCondition } == 'Dept'">부서</option> -->
            </select>
          </form>
        </div>
@@ -59,10 +58,10 @@
         <br><br>
 	
   	<script>
-
  	$('.newbtn').click(function(){
 		location.href='/manage/empInsert';
 	}); 
+ 	
 	const insertSuccessmessage = "[[${insertSuccessMessage}]]" 
 	
 	if(insertSuccessmessage){
@@ -72,6 +71,36 @@
             text: '등록이 성공적으로 완료되었습니다!',
         })
 	}
+	
+	const updateSuccessmessage = "[[${updateSuccessMessage}]]" 
+		
+		if(updateSuccessmessage){
+			Swal.fire({
+	            icon: 'success',
+	            title: 'Success!',
+	            text: '정보 수정이 성공적으로 완료되었습니다!',
+	     })
+     }
+	const signsuccessMessage = "[[${signsuccessMessage}]]" 
+		
+		if(signsuccessMessage){
+			Swal.fire({
+	            icon: 'success',
+	            title: 'Success!',
+	            text: '서명 사진이 성공적으로 변경 되었습니다!',
+	     })
+     }
+	const profilesuccessMessage = "[[${profilesuccessMessage}]]" 
+		
+		if(profilesuccessMessage){
+			Swal.fire({
+	            icon: 'success',
+	            title: 'Success!',
+	            text: '프로필 사진이 성공적으로 변경 되었습니다!',
+	     })
+     }
+	
+
 	</script> 
 </body>
 </html>

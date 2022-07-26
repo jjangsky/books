@@ -66,6 +66,10 @@
     background-color: #FEFCC6 !important;
 }
 
+.bb{
+	margin-top: 28px !important;
+}
+
 .findBtn:hover{
 	background-color: #FEFCC6 !important;
 }
@@ -119,6 +123,9 @@ td{
 }
 
 #tlDetail{
-	height: 100px;
+	height: 200px;
 }
 
+input{
+	text-align: center;
+}

@@ -133,10 +133,15 @@ public class DocServiceImpl implements DocService{
 	/* 임시저장 */
 	@Override
 	@Transactional
-	public void insertNewtempDocument(TempStoreDocumentDTO newDoc) {
+	public boolean insertNewtempDocument(TempStoreDocumentDTO newDoc) {
 		
-		docRepository.save(modelMapper.map(newDoc, Document.class));
-		
+		try {
+			docRepository.save(modelMapper.map(newDoc, Document.class));
+        } catch (IllegalArgumentException exception) {
+            return false;
+        }
+
+        return true;
 	}
 
 	/* 임시저장 리스트 조회 */
@@ -164,120 +169,177 @@ public class DocServiceImpl implements DocService{
 	/* 임시저장 수정하기 */
 	@Override
 	@Transactional
-	public void updateTempDocument(TempStoreDocumentDTO updateDoc) {
+	public boolean updateTempDocument(TempStoreDocumentDTO updateDoc) {
 		
 		Document foundDoc = docRepository.findById(updateDoc.getDocNo1()).get();
 		
 		System.out.println("서비스에서 찾은 수정할 아이  " + foundDoc);
 		
-		foundDoc.setCnt1(updateDoc.getCnt1());
-		foundDoc.setTagCnt1(updateDoc.getTagCnt1());
-		foundDoc.setDocTitle1(updateDoc.getDocTitle1());
-		foundDoc.setWrDate1(updateDoc.getWrDate1());
+		try {
+			
+			foundDoc.setCnt1(updateDoc.getCnt1());
+			foundDoc.setTagCnt1(updateDoc.getTagCnt1());
+			foundDoc.setDocTitle1(updateDoc.getDocTitle1());
+			foundDoc.setWrDate1(updateDoc.getWrDate1());
+			
+        } catch (IllegalArgumentException exception) {
+            return false;
+        }
+
+        return true;
 		
 	}
 
 	/* 임시저장 삭제하기 */
 	@Override
 	@Transactional
-	public void deleteTempDoc(int docNo) {
+	public boolean deleteTempDoc(int docNo) {
 
-		docRepository.deleteById(docNo);
+		
+		try {
+			
+			docRepository.deleteById(docNo);
+			
+        } catch (IllegalArgumentException exception) {
+            return false;
+        }
+
+        return true;
 		
 	}
 
 	/* 새로작성한 기안서, 지결서 상신하기 - 결재자 1명일 때 */
 	@Override
 	@Transactional
-	public void insertNewDocOneAcc(SubmitDocumentDTO newDoc,AppRootDTO appRoot,ApproverDTO approver) {
-		
-		subDocRepository.save(modelMapper.map(newDoc, SubmitDocument.class));
-		
-		int currentDocNo = docRepository.findCurrentSeqDoc();
-		System.out.println("Service            ");
-		System.out.println(currentDocNo);
-		appRoot.setDocNo(currentDocNo);
-		appRootRepository.save(modelMapper.map(appRoot, AppRoot.class));
-		
-		int currentAccRootNo = appRootRepository.findCurrentSeqAccRoot();
-		System.out.println("Service            ");
-		System.out.println(currentAccRootNo);
-		
-		approver.setAppRootNo(currentAccRootNo);
-		approverRepository2.save(modelMapper.map(approver, Approver.class));
+	public boolean insertNewDocOneAcc(SubmitDocumentDTO newDoc,AppRootDTO appRoot,ApproverDTO approver) {
 		
 		
+		try {
+			
+			subDocRepository.save(modelMapper.map(newDoc, SubmitDocument.class));
+			
+			int currentDocNo = docRepository.findCurrentSeqDoc();
+			System.out.println("Service            ");
+			System.out.println(currentDocNo);
+			appRoot.setDocNo(currentDocNo);
+			appRootRepository.save(modelMapper.map(appRoot, AppRoot.class));
+			
+			int currentAccRootNo = appRootRepository.findCurrentSeqAccRoot();
+			System.out.println("Service            ");
+			System.out.println(currentAccRootNo);
+			
+			approver.setAppRootNo(currentAccRootNo);
+			approverRepository2.save(modelMapper.map(approver, Approver.class));
+			
+			
+        } catch (IllegalArgumentException exception) {
+            return false;
+        }
+
+        return true;
 	}
 
 	/* 새로작성한 기안서, 지결서 상신하기 - 결재자 2, 3명일 때 */
 	@Override
 	@Transactional
-	public void insertNewDocThreeAcc(SubmitDocumentDTO newDoc, AppRootDTO appRoot, List<SubmitApprover> approverList) {
+	public boolean insertNewDocThreeAcc(SubmitDocumentDTO newDoc, AppRootDTO appRoot, List<SubmitApprover> approverList) {
 
-		subDocRepository.save(modelMapper.map(newDoc, SubmitDocument.class));
 		
-		int currentDocNo = docRepository.findCurrentSeqDoc();
-		System.out.println("Service            ");
-		System.out.println(currentDocNo);
-		appRoot.setDocNo(currentDocNo);
-		appRootRepository.save(modelMapper.map(appRoot, AppRoot.class));
-		
-		int currentAccRootNo = appRootRepository.findCurrentSeqAccRoot();
-		System.out.println("Service            ");
-		System.out.println(currentAccRootNo);
-		
-		for(int i = 0; i < approverList.size(); i++) {
-			SubmitApprover app = approverList.get(i);
-			app.setAppRootNo2(currentAccRootNo);
-		}
-		
-		approverRepository.saveAll(approverList);
+		try {
+			
+			subDocRepository.save(modelMapper.map(newDoc, SubmitDocument.class));
+			
+			int currentDocNo = docRepository.findCurrentSeqDoc();
+			System.out.println("Service            ");
+			System.out.println(currentDocNo);
+			appRoot.setDocNo(currentDocNo);
+			appRootRepository.save(modelMapper.map(appRoot, AppRoot.class));
+			
+			int currentAccRootNo = appRootRepository.findCurrentSeqAccRoot();
+			System.out.println("Service            ");
+			System.out.println(currentAccRootNo);
+			
+			for(int i = 0; i < approverList.size(); i++) {
+				SubmitApprover app = approverList.get(i);
+				app.setAppRootNo2(currentAccRootNo);
+			}
+			
+			approverRepository.saveAll(approverList);
+			
+			
+        } catch (IllegalArgumentException exception) {
+            return false;
+        }
+
+        return true;
 		
 	}
 
 	/* 임시저장된 기안서, 지결서 상신하기 - 결재자 1명일 때 */
 	@Override
 	@Transactional
-	public void submitTempDocOneAcc(SubmitDocumentDTO tempDoc, AppRootDTO appRoot, ApproverDTO approver) {
+	public boolean submitTempDocOneAcc(SubmitDocumentDTO tempDoc, AppRootDTO appRoot, ApproverDTO approver) {
 
-		SubmitDocument foundDoc = subDocRepository.findById(tempDoc.getDocNo2()).get();
-		foundDoc.setCnt2(tempDoc.getCnt2());
-		foundDoc.setDocTitle2(tempDoc.getDocTitle2());
-		foundDoc.setTagCnt2(tempDoc.getTagCnt2());
-		foundDoc.setWrDate2(tempDoc.getWrDate2());
-		foundDoc.setDocStatus2(tempDoc.getDocStatus2());
-		System.out.println("Service           Document Update Success");
 		
-		appRoot.setDocNo(tempDoc.getDocNo2());
-		appRootRepository.save(modelMapper.map(appRoot, AppRoot.class));
+		try {
+			
+			SubmitDocument foundDoc = subDocRepository.findById(tempDoc.getDocNo2()).get();
+			foundDoc.setCnt2(tempDoc.getCnt2());
+			foundDoc.setDocTitle2(tempDoc.getDocTitle2());
+			foundDoc.setTagCnt2(tempDoc.getTagCnt2());
+			foundDoc.setWrDate2(tempDoc.getWrDate2());
+			foundDoc.setDocStatus2(tempDoc.getDocStatus2());
+			System.out.println("Service           Document Update Success");
+			
+			appRoot.setDocNo(tempDoc.getDocNo2());
+			appRootRepository.save(modelMapper.map(appRoot, AppRoot.class));
+			
+			int currentAccRootNo = appRootRepository.findCurrentSeqAccRoot();
+			approver.setAppRootNo(currentAccRootNo);
+			approverRepository2.save(modelMapper.map(approver, Approver.class));
+			
+			
+        } catch (IllegalArgumentException exception) {
+            return false;
+        }
+
+        return true;
 		
-		int currentAccRootNo = appRootRepository.findCurrentSeqAccRoot();
-		approver.setAppRootNo(currentAccRootNo);
-		approverRepository2.save(modelMapper.map(approver, Approver.class));
 	}
 
 	/* 임시저장된 기안서, 지결서 상신하기 - 결재자 2명,3명 일 때 */
 	@Override
 	@Transactional
-	public void submitTempDocTwoAcc(SubmitDocumentDTO tempDoc, AppRootDTO appRoot, List<SubmitApprover> approverList) {
+	public boolean submitTempDocTwoAcc(SubmitDocumentDTO tempDoc, AppRootDTO appRoot, List<SubmitApprover> approverList) {
 
-		SubmitDocument foundDoc = subDocRepository.findById(tempDoc.getDocNo2()).get();
-		foundDoc.setCnt2(tempDoc.getCnt2());
-		foundDoc.setDocTitle2(tempDoc.getDocTitle2());
-		foundDoc.setTagCnt2(tempDoc.getTagCnt2());
-		foundDoc.setWrDate2(tempDoc.getWrDate2());
-		foundDoc.setDocStatus2(tempDoc.getDocStatus2());
-		System.out.println("Service           Document Update Success");
 		
-		appRoot.setDocNo(tempDoc.getDocNo2());
-		appRootRepository.save(modelMapper.map(appRoot, AppRoot.class));
+		try {
+			
+			SubmitDocument foundDoc = subDocRepository.findById(tempDoc.getDocNo2()).get();
+			foundDoc.setCnt2(tempDoc.getCnt2());
+			foundDoc.setDocTitle2(tempDoc.getDocTitle2());
+			foundDoc.setTagCnt2(tempDoc.getTagCnt2());
+			foundDoc.setWrDate2(tempDoc.getWrDate2());
+			foundDoc.setDocStatus2(tempDoc.getDocStatus2());
+			System.out.println("Service           Document Update Success");
+			
+			appRoot.setDocNo(tempDoc.getDocNo2());
+			appRootRepository.save(modelMapper.map(appRoot, AppRoot.class));
+			
+			int currentAccRootNo = appRootRepository.findCurrentSeqAccRoot();
+			for(int i=0; i<approverList.size();i++) {
+				SubmitApprover app =  approverList.get(i);
+				app.setAppRootNo2(currentAccRootNo);
+			}
+			approverRepository.saveAll(approverList);
+			
+			
+        } catch (IllegalArgumentException exception) {
+            return false;
+        }
+
+        return true;
 		
-		int currentAccRootNo = appRootRepository.findCurrentSeqAccRoot();
-		for(int i=0; i<approverList.size();i++) {
-			SubmitApprover app =  approverList.get(i);
-			app.setAppRootNo2(currentAccRootNo);
-		}
-		approverRepository.saveAll(approverList);
 		
 	}
 
@@ -414,13 +476,23 @@ public class DocServiceImpl implements DocService{
 	/* 휴가신청서 상신하기 */
 	@Override
 	@Transactional
-	public void insertNewVacationApp(AppVacationDTO vacation) {
+	public boolean insertNewVacationApp(AppVacationDTO vacation) {
 
-//		int vacNo = vacationRepository.findCurrentSeq() + 10;
-//		vacation.setVacNo(vacNo);
-		System.out.println("Service       " +vacation);
 		
-		vacationRepository.save(modelMapper.map(vacation, DocAppVacation.class));
+		try {
+
+	//		int vacNo = vacationRepository.findCurrentSeq() + 10;
+	//		vacation.setVacNo(vacNo);
+				System.out.println("Service       " +vacation);
+				
+				vacationRepository.save(modelMapper.map(vacation, DocAppVacation.class));
+			
+		
+		} catch (IllegalArgumentException exception) {
+            return false;
+        }
+
+        return true;
 		
 	}
 
@@ -436,8 +508,17 @@ public class DocServiceImpl implements DocService{
 	/* 휴가 취소신청서 상신 */
 	@Override
 	@Transactional
-	public void insertNewCancelVacation(CancelVacationDTO cancVaca) {
-		cancelVacaRepository.save(modelMapper.map(cancVaca, DocCancelVacation.class));
+	public boolean insertNewCancelVacation(CancelVacationDTO cancVaca) {
+		
+		try {
+
+			cancelVacaRepository.save(modelMapper.map(cancVaca, DocCancelVacation.class));
+			
+				} catch (IllegalArgumentException exception) {
+		            return false;
+		        }
+
+		 return true;
 	}
 
 	/* 휴가서류 문서번호 조회 */
@@ -498,137 +579,146 @@ public class DocServiceImpl implements DocService{
 	/* 결재 승인 */
 	@Override
 	@Transactional
-	public void updateDocStatusApprove(int empNo, TempStoreDocumentDTO doc, String statusApp) {
-
-		/* 결재자의 결재상태 업데이트 */
-		/* 해당문서 정보 조회 */
-		Document document = docRepository.findById(doc.getDocNo1()).get();
-		document.setTagCnt1(doc.getTagCnt1());
+	public boolean updateDocStatusApprove(int empNo, TempStoreDocumentDTO doc, String statusApp) {
 		
-		/* 결재자가 몇단계인지 확인, 결재자 정확한 튜플 가져오기 위한 결재경로 번호 가져오기 */
-		AppRoot appRoot =  appRootRepository.findByDocNo(doc.getDocNo1());
-		
-		AppRootDTO realAppRoot = modelMapper.map(appRoot, AppRootDTO.class);
-		
-		int stepNo = realAppRoot.getStepNo();
-		int appRootNo = realAppRoot.getAppRootNo();
-		
-		if(stepNo ==1) {	// 1단계일 경우 - 1단계는 그 단계로 종료
-			/* 결재자 상태 수정 */
-//			System.out.println("여기여기");
-//			System.out.println("여기여기");
-//			System.out.println("여기여기");
-//			System.out.println("여기여기");
-//			System.out.println("여기여기");
-//			System.out.println("여기여기");
-//			System.out.println("여기여기");
-//			System.out.println("1단계1단계1단계1단계1단계1단계");
-			
-			Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
-			approver.setAppStatus(statusApp);
-			
-			/* 문서상태 수정 */
-			document.setDocStatus1(statusApp);
-		} else if(stepNo == 2 || stepNo ==3) {		// 2단계일 경우  현재 로그인한 사람이 몇번째인지 알아야 함 
-			
-//			System.out.println("여기여기");
-//			System.out.println("여기여기");
-//			System.out.println("여기여기");
-//			System.out.println("여기여기");
-//			System.out.println("여기여기");
-//			System.out.println("여기여기");
-//			System.out.println("여기여기");
-			
-			/* 결재자 상태 수정 */
-			Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
-			approver.setAppStatus(statusApp);
-			int mine = approver.getAppNo();
-			
-			/* 로그인한 사람을 제외한 해당 문서를 결재하는 결재자 조회 */
-			List<Approver> approverList = approverRepository2.findByAppRootNoAndAppNoNot(appRootNo,mine);
-			System.out.println("여기여기" + approverList);
-			
-			List<Integer> appNos = new ArrayList<>();
-			for(int i=0; i<approverList.size(); i++) {
-				int no = approverList.get(i).getAppNo();
-				appNos.add(no);
-			}
-			
-			int step = 0;					// 단계 확인
-			int appNo1 = 0;					// 해당 문서의 다른 결재자의 결재자 번호1
-			int appNo2 = 0;					// 해당 문서의 다른 결재자의 결재자 번호2
-			
-			if(appNos.size() == 0) {		// 로그인한 사람이 1단계, 다른 결재자 없음
+		try {
 				
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("로그인한 사람이 1단계");
-//				System.out.println("로그인한 사람이 1단계     " + mine);
-//				System.out.println("로그인한 사람이 1단계     " + step);
-//				System.out.println("로그인한 사람이 1단계     " +appNos);
+			/* 결재자의 결재상태 업데이트 */
+			/* 해당문서 정보 조회 */
+			Document document = docRepository.findById(doc.getDocNo1()).get();
+			document.setTagCnt1(doc.getTagCnt1());
+			
+			/* 결재자가 몇단계인지 확인, 결재자 정확한 튜플 가져오기 위한 결재경로 번호 가져오기 */
+			AppRoot appRoot =  appRootRepository.findByDocNo(doc.getDocNo1());
+			
+			AppRootDTO realAppRoot = modelMapper.map(appRoot, AppRootDTO.class);
+			
+			int stepNo = realAppRoot.getStepNo();
+			int appRootNo = realAppRoot.getAppRootNo();
+			
+			if(stepNo ==1) {	// 1단계일 경우 - 1단계는 그 단계로 종료
+				/* 결재자 상태 수정 */
+	//			System.out.println("여기여기");
+	//			System.out.println("여기여기");
+	//			System.out.println("여기여기");
+	//			System.out.println("여기여기");
+	//			System.out.println("여기여기");
+	//			System.out.println("여기여기");
+	//			System.out.println("여기여기");
+	//			System.out.println("1단계1단계1단계1단계1단계1단계");
 				
-			} else if(appNos.size() == 1) {	// 다른 결재자가 1명있을 때
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기여기여기" + appNos);
-//				System.out.println(appNos);
-				appNo1 = appNos.get(0);
-				if(appNo1 > mine) {
-//					System.out.println("로그인한 사람이 1단계");
-					step = 1;
-				} else { 
-//					System.out.println("로그인한 사람이 2단계");
-					step = 2;
-				}
-			} else {							// 다른 결재자가 2명있을 때
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기");
-//				System.out.println("여기여기여기여기" + appNos);
-//				System.out.println(appNos);
-				appNo1 = appNos.get(0);
-	  			appNo2 = appNos.get(1);
-				if( mine < appNo1 && mine < appNo2 ) {
-//					System.out.println("로그인한 사람이 1단계");
-					step = 1;
-				} else if (( mine > appNo1 && mine < appNo2 ) || ( mine < appNo1 && mine > appNo2 )) {
-//					System.out.println("로그인한 사람이 2단계");
-					step = 2;
-				} else if ( mine > appNo1 && mine > appNo2 ) {
-//					System.out.println("로그인한 사람이 3단계");
-					step = 3;
-				}
-			}
-			if(step == 1) {
-				document.setDocStatus1("진행중");
-			} else if(step == 2) {
-				if(stepNo == 2) {
-					document.setDocStatus1(statusApp);
-				} else {
-					/* 문서상태 수정 */
-//					System.out.println("진행중진행중진행중진행중진행중진행중");
-					document.setDocStatus1("진행중");
-				}
-			} else if (step == 3) {
+				Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
+				approver.setAppStatus(statusApp);
+				
+				/* 문서상태 수정 */
 				document.setDocStatus1(statusApp);
-			}
-			
-		} 
+			} else if(stepNo == 2 || stepNo ==3) {		// 2단계일 경우  현재 로그인한 사람이 몇번째인지 알아야 함 
+				
+	//			System.out.println("여기여기");
+	//			System.out.println("여기여기");
+	//			System.out.println("여기여기");
+	//			System.out.println("여기여기");
+	//			System.out.println("여기여기");
+	//			System.out.println("여기여기");
+	//			System.out.println("여기여기");
+				
+				/* 결재자 상태 수정 */
+				Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
+				approver.setAppStatus(statusApp);
+				int mine = approver.getAppNo();
+				
+				/* 로그인한 사람을 제외한 해당 문서를 결재하는 결재자 조회 */
+				List<Approver> approverList = approverRepository2.findByAppRootNoAndAppNoNot(appRootNo,mine);
+				System.out.println("여기여기" + approverList);
+				
+				List<Integer> appNos = new ArrayList<>();
+				for(int i=0; i<approverList.size(); i++) {
+					int no = approverList.get(i).getAppNo();
+					appNos.add(no);
+				}
+				
+				int step = 0;					// 단계 확인
+				int appNo1 = 0;					// 해당 문서의 다른 결재자의 결재자 번호1
+				int appNo2 = 0;					// 해당 문서의 다른 결재자의 결재자 번호2
+				
+				if(appNos.size() == 0) {		// 로그인한 사람이 1단계, 다른 결재자 없음
+					
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("로그인한 사람이 1단계");
+	//				System.out.println("로그인한 사람이 1단계     " + mine);
+	//				System.out.println("로그인한 사람이 1단계     " + step);
+	//				System.out.println("로그인한 사람이 1단계     " +appNos);
+					
+				} else if(appNos.size() == 1) {	// 다른 결재자가 1명있을 때
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기여기여기" + appNos);
+	//				System.out.println(appNos);
+					appNo1 = appNos.get(0);
+					if(appNo1 > mine) {
+	//					System.out.println("로그인한 사람이 1단계");
+						step = 1;
+					} else { 
+	//					System.out.println("로그인한 사람이 2단계");
+						step = 2;
+					}
+				} else {							// 다른 결재자가 2명있을 때
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기");
+	//				System.out.println("여기여기여기여기" + appNos);
+	//				System.out.println(appNos);
+					appNo1 = appNos.get(0);
+		  			appNo2 = appNos.get(1);
+					if( mine < appNo1 && mine < appNo2 ) {
+	//					System.out.println("로그인한 사람이 1단계");
+						step = 1;
+					} else if (( mine > appNo1 && mine < appNo2 ) || ( mine < appNo1 && mine > appNo2 )) {
+	//					System.out.println("로그인한 사람이 2단계");
+						step = 2;
+					} else if ( mine > appNo1 && mine > appNo2 ) {
+	//					System.out.println("로그인한 사람이 3단계");
+						step = 3;
+					}
+				}
+				if(step == 1) {
+					document.setDocStatus1("진행중");
+				} else if(step == 2) {
+					if(stepNo == 2) {
+						document.setDocStatus1(statusApp);
+					} else {
+						/* 문서상태 수정 */
+	//					System.out.println("진행중진행중진행중진행중진행중진행중");
+						document.setDocStatus1("진행중");
+					}
+				} else if (step == 3) {
+					document.setDocStatus1(statusApp);
+				}
+				
+			} 
+		
+		} catch (IllegalArgumentException exception) {
+            return false;
+        }
+
+		return true;
+
 		
 	}
 
@@ -764,93 +854,101 @@ public class DocServiceImpl implements DocService{
 	/* 결재 반려 */
 	@Override
 	@Transactional
-	public void updateDocStatusRefuse(int empNo, TempStoreDocumentDTO doc, String statusApp) {
+	public boolean updateDocStatusRefuse(int empNo, TempStoreDocumentDTO doc, String statusApp) {
 
-		/* 결재자의 결재상태 업데이트 */
-		/* 해당문서 정보 조회 */
-		Document document = docRepository.findById(doc.getDocNo1()).get();
-		document.setTagCnt1(doc.getTagCnt1());
+		try {
+
 		
-		/* 결재자가 몇단계인지 확인, 결재자 정확한 튜플 가져오기 위한 결재경로 번호 가져오기 */
-		AppRoot appRoot =  appRootRepository.findByDocNo(doc.getDocNo1());
-		
-		AppRootDTO realAppRoot = modelMapper.map(appRoot, AppRootDTO.class);
-		
-		int stepNo = realAppRoot.getStepNo();
-		int appRootNo = realAppRoot.getAppRootNo();
-		
-		if(stepNo ==1) {	// 1단계일 경우 - 1단계는 그 단계로 종료
-			/* 결재자 상태 수정 */
-			Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
-			approver.setAppStatus(statusApp);
+			/* 결재자의 결재상태 업데이트 */
+			/* 해당문서 정보 조회 */
+			Document document = docRepository.findById(doc.getDocNo1()).get();
+			document.setTagCnt1(doc.getTagCnt1());
 			
-			/* 문서상태 수정 */
-			document.setDocStatus1(statusApp);
-		} else if(stepNo == 2 || stepNo ==3) {		// 2,3단계일 경우  현재 로그인한 사람이 몇번째인지 알아야 함 
+			/* 결재자가 몇단계인지 확인, 결재자 정확한 튜플 가져오기 위한 결재경로 번호 가져오기 */
+			AppRoot appRoot =  appRootRepository.findByDocNo(doc.getDocNo1());
 			
-			/* 결재자 상태 수정 */
-			Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
-			approver.setAppStatus(statusApp);
-			int mine = approver.getAppNo();
+			AppRootDTO realAppRoot = modelMapper.map(appRoot, AppRootDTO.class);
 			
-			/* 로그인한 사람을 제외한 해당 문서를 결재하는 결재자 조회 */
-			List<Approver> approverList = approverRepository2.findByAppRootNoAndAppNoNot(appRootNo,mine);
-			System.out.println("여기여기" + approverList);
+			int stepNo = realAppRoot.getStepNo();
+			int appRootNo = realAppRoot.getAppRootNo();
 			
-			List<Integer> appNos = new ArrayList<>();
-			for(int i=0; i<approverList.size(); i++) {
-				int no = approverList.get(i).getAppNo();
-				appNos.add(no);
-			}
-			
-			int step = 0;					// 단계 확인
-			int appNo1 = 0;					// 해당 문서의 다른 결재자의 결재자 번호1
-			int appNo2 = 0;					// 해당 문서의 다른 결재자의 결재자 번호2
-			
-			if(appNos.size() == 1) {	// 다른 결재자가 1명있을 때
-//				System.out.println("여기여기여기여기" + appNos);
-//				System.out.println(appNos);
-				appNo1 = appNos.get(0);
-				if(appNo1 > mine) {
-//					System.out.println("로그인한 사람이 1단계");
-					step = 1;
-				} else { 
-//					System.out.println("로그인한 사람이 2단계");
-					step = 2;
-				}
-			} else {							// 다른 결재자가 2명있을 때
-//				System.out.println("여기여기여기여기" + appNos);
-//				System.out.println(appNos);
-				appNo1 = appNos.get(0);
-	  			appNo2 = appNos.get(1);
-				if( mine < appNo1 && mine < appNo2 ) {
-//					System.out.println("로그인한 사람이 1단계");
-					step = 1;
-				} else if (( mine > appNo1 && mine < appNo2 ) || ( mine < appNo1 && mine > appNo2 )) {
-//					System.out.println("로그인한 사람이 2단계");
-					step = 2;
-				} else if ( mine > appNo1 && mine > appNo2 ) {
-//					System.out.println("로그인한 사람이 3단계");
-					step = 3;
-				}
-			}
-			if(step == 1) {
+			if(stepNo ==1) {	// 1단계일 경우 - 1단계는 그 단계로 종료
+				/* 결재자 상태 수정 */
+				Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
+				approver.setAppStatus(statusApp);
+				
+				/* 문서상태 수정 */
 				document.setDocStatus1(statusApp);
+			} else if(stepNo == 2 || stepNo ==3) {		// 2,3단계일 경우  현재 로그인한 사람이 몇번째인지 알아야 함 
+				
+				/* 결재자 상태 수정 */
+				Approver approver = approverRepository2.findByEmpNoAndAppRootNo(empNo,appRootNo);
+				approver.setAppStatus(statusApp);
+				int mine = approver.getAppNo();
+				
+				/* 로그인한 사람을 제외한 해당 문서를 결재하는 결재자 조회 */
+				List<Approver> approverList = approverRepository2.findByAppRootNoAndAppNoNot(appRootNo,mine);
+				System.out.println("여기여기" + approverList);
+				
+				List<Integer> appNos = new ArrayList<>();
 				for(int i=0; i<approverList.size(); i++) {
-					approverList.get(i).setAppStatus("타전결자 반려");
+					int no = approverList.get(i).getAppNo();
+					appNos.add(no);
 				}
 				
-			} else if(step == 2) {
-				document.setDocStatus1(statusApp);
-				for(int i=0; i<approverList.size(); i++) {
-					approverList.get(i).setAppStatus("타전결자 반려");
+				int step = 0;					// 단계 확인
+				int appNo1 = 0;					// 해당 문서의 다른 결재자의 결재자 번호1
+				int appNo2 = 0;					// 해당 문서의 다른 결재자의 결재자 번호2
+				
+				if(appNos.size() == 1) {	// 다른 결재자가 1명있을 때
+	//				System.out.println("여기여기여기여기" + appNos);
+	//				System.out.println(appNos);
+					appNo1 = appNos.get(0);
+					if(appNo1 > mine) {
+	//					System.out.println("로그인한 사람이 1단계");
+						step = 1;
+					} else { 
+	//					System.out.println("로그인한 사람이 2단계");
+						step = 2;
+					}
+				} else {							// 다른 결재자가 2명있을 때
+	//				System.out.println("여기여기여기여기" + appNos);
+	//				System.out.println(appNos);
+					appNo1 = appNos.get(0);
+		  			appNo2 = appNos.get(1);
+					if( mine < appNo1 && mine < appNo2 ) {
+	//					System.out.println("로그인한 사람이 1단계");
+						step = 1;
+					} else if (( mine > appNo1 && mine < appNo2 ) || ( mine < appNo1 && mine > appNo2 )) {
+	//					System.out.println("로그인한 사람이 2단계");
+						step = 2;
+					} else if ( mine > appNo1 && mine > appNo2 ) {
+	//					System.out.println("로그인한 사람이 3단계");
+						step = 3;
+					}
+				}
+				if(step == 1) {
+					document.setDocStatus1(statusApp);
+					for(int i=0; i<approverList.size(); i++) {
+						approverList.get(i).setAppStatus("타전결자 반려");
+					}
+					
+				} else if(step == 2) {
+					document.setDocStatus1(statusApp);
+					for(int i=0; i<approverList.size(); i++) {
+						approverList.get(i).setAppStatus("타전결자 반려");
+					}
+					
+				} else if (step == 3) {
+					document.setDocStatus1(statusApp);
 				}
 				
-			} else if (step == 3) {
-				document.setDocStatus1(statusApp);
-			}
-			
-		} 
+			} 
+		} catch (IllegalArgumentException exception) {
+            return false;
+        }
+
+		return true;
 		
 		
 	}

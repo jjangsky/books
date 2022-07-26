@@ -18,9 +18,8 @@ public interface OriginalEmpRepository extends JpaRepository<Emp, Integer>{
 	
 	List<Emp> findByEmpNameContaining(String searchValue);
 
-//	@Query(value = "SELECT SEQ_EMP_NO.NEXTVAL FROM DUAL", nativeQuery = true)
-//	int findCurrentSeqEmpNo();
-
+	@Query(value = "SELECT MAX(a.empNo) FROM Emp a")
+	int findCurrentSeqempNo();
 
 
 

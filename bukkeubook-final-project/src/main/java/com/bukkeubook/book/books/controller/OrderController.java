@@ -125,6 +125,8 @@ public class OrderController {
 		System.out.println();
 		System.out.println();
 		
+		int success = 1;
+		
 		for(int i = 1; i <= rownum; i++) {
 			OrderListDTO order = new OrderListDTO();
 			
@@ -142,43 +144,44 @@ public class OrderController {
 			
 			System.out.println(i + "번째 : " + order);
 			
-			orderService.registOrder(order);
+			Boolean reg =  orderService.registOrder(order);
+			
+			if(!reg) success = 0;
 		}
 		
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		
-		rttr.addFlashAttribute("registSuccessMessage", "발주 등록에 성공하셨습니다");
+		if(success == 0) {
+			rttr.addFlashAttribute("failMessage", "발주 등록에 실패했습니다");
+		} else if(success == 1) {
+			rttr.addFlashAttribute("successMessage", "발주 등록에 성공하셨습니다");
+		}
 		mv.setViewName("redirect:/order/selectHistory");
 		
 		return mv;
 	}
 	
-	@GetMapping("/getSearchList")
-	@ResponseBody
-	private List<BookDTO> getSearchList(@RequestParam("searchCondition") String searchCondition,
-			@RequestParam("searchValue") String searchValue, Model model) throws Exception{
-		
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println("ajax 동작함");
-		System.out.println("searchCondition : " + searchCondition);
-		System.out.println("searchValue : " + searchValue);
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		
-		return orderService.searchOrderList(searchCondition, searchValue);
-	}
+   @GetMapping("/getSearchList")
+   @ResponseBody
+   private List<BookDTO> getSearchList(@RequestParam("searchCondition") String searchCondition,
+         @RequestParam("searchValue") String searchValue, Model model) throws Exception{
+      
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println("ajax 동작함");
+      System.out.println("searchCondition : " + searchCondition);
+      System.out.println("searchValue : " + searchValue);
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      
+      return orderService.searchOrderList(searchCondition, searchValue);
+   }
+
 	
 }

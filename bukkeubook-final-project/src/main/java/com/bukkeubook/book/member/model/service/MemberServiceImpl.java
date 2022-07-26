@@ -34,7 +34,9 @@ public class MemberServiceImpl implements MemberService{
 	public UserDetails loadUserByUsername(String empNo) throws UsernameNotFoundException {
 		int empNo2 = Integer.valueOf(empNo);
 		EmpAndMemberRole emp = memberRepository.findByEmpNo(empNo2);
+		
 		if(emp == null) {
+			/* 여기서 퇴사사원 처리 */
 			emp = new EmpAndMemberRole();
 		}
 		 

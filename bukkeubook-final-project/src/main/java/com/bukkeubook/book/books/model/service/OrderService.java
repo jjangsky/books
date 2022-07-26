@@ -82,9 +82,15 @@ public class OrderService {
 	}
 
 	@Transactional
-	public void registOrder(OrderListDTO order) {
+	public Boolean registOrder(OrderListDTO order) {
 		
-		simpleOrderRepository.save(modelMapper.map(order, OrderList.class));
+		try{
+			simpleOrderRepository.save(modelMapper.map(order, OrderList.class));
+		} catch(IllegalArgumentException e){
+			return false;
+		}
+		
+		return true;
 	}
 
 	public List<BookDTO> searchOrderList(String searchCondition, String searchValue) {
@@ -106,7 +112,7 @@ public class OrderService {
 		} else {
 			bookList = bookRepository.findAll(Sort.by("no"));
 		}
-
+		
 		/* 자바의 Stream API와 ModelMapper를 이용하여 entity를 DTO로 변환 후 List<MenuDTO>로 반환 */
 		return bookList.stream().map(Book -> modelMapper.map(Book, BookDTO.class)).collect(Collectors.toList());
 	}

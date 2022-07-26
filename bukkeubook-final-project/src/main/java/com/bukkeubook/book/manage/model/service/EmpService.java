@@ -21,8 +21,10 @@ import com.bukkeubook.book.manage.model.dto.ProfPhotoDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.EmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.entity.Emp;
 import com.bukkeubook.book.manage.model.entity.EmpAndDept;
+import com.bukkeubook.book.manage.model.entity.MemberRole;
 import com.bukkeubook.book.manage.model.entity.ProfPhoto;
 import com.bukkeubook.book.manage.model.repository.EmpRepository;
+import com.bukkeubook.book.manage.model.repository.MemberRoleRepository;
 import com.bukkeubook.book.manage.model.repository.OriginalEmpRepository;
 import com.bukkeubook.book.manage.model.repository.ProfilePhotoRepository;
 
@@ -32,13 +34,17 @@ public class EmpService {
 	private final EmpRepository empRepository;
 	private final OriginalEmpRepository originEmpRepository;
 	private final ProfilePhotoRepository profilePhotoRepository;
+	private final MemberRoleRepository roleRepository;
 	private final ModelMapper modelMapper;		//앤티티를 디티오로 변환 or 디티오를 엔티티로 변환
 	@Autowired
-	public EmpService(EmpRepository empRepository, ModelMapper modelMapper,OriginalEmpRepository originEmpRepository, ProfilePhotoRepository profilePhotoRepository) {
+	public EmpService(EmpRepository empRepository, ModelMapper modelMapper
+					 ,OriginalEmpRepository originEmpRepository, ProfilePhotoRepository profilePhotoRepository
+					 ,MemberRoleRepository roleRepository) {
 		this.empRepository = empRepository;
 		this.modelMapper = modelMapper;
 		this.originEmpRepository = originEmpRepository;
 		this.profilePhotoRepository = profilePhotoRepository;
+		this.roleRepository = roleRepository;
 	}
 
 	/* 사원조회 & 검색기능 & 페이징 */
@@ -125,7 +131,20 @@ public class EmpService {
 		emp.setEmpPwd(bc.encode(emp.getEmpPwd()));
 //		bc.encode(emp.getEmpPwd());
 		System.out.println("Service                      sssssssssssss" + emp);
+		
 		originEmpRepository.save(modelMapper.map(emp, Emp.class));
+		
+		/* 신규사원 권한 등록 */
+		int roleCode = emp.getDeptCode();
+		int empNo = originEmpRepository.findCurrentSeqempNo();
+		
+		MemberRole role = new MemberRole();
+		
+		role.setEmpNo(empNo);
+		role.setRoleCode(roleCode);
+		
+		roleRepository.save(modelMapper.map(role, MemberRole.class));
+		
 	}	
 	
 	/* 사원정보 수정 */
@@ -155,10 +174,30 @@ public class EmpService {
 		foundemp.setEmpEmail(newEmp.getEmpEmail());
 		foundemp.setEmpAddress(newEmp.getEmpAddress());
 		foundemp.setEmpDAddress(newEmp.getEmpDAddress());
-//		foundemp.setEmpPwd(newEmp.getEmpPwd());
 		foundemp.setEmpTotalSal(newEmp.getEmpTotalSal());
 		
 	}
+//
+//	@Transactional
+//	public void modifyEmp(EmpDTO emp) {
+//		
+//		Emp emp1 = originEmpRepository.findById(emp.getEmpNo()).get();
+//		
+//		emp1.setEmpName(emp1.getEmpName());
+//		emp1.setDeptCode(emp1.getDeptCode());
+//		emp1.setEmpJobCode(emp1.getEmpJobCode());
+//		emp1.setEmpPhone1(emp1.getEmpPhone1());
+//		emp1.setEmpPhone2(emp1.getEmpPhone2());
+//		emp1.setEmpPhone3(emp1.getEmpPhone3());
+//		emp1.setEmpEmail(emp1.getEmpEmail());
+//		emp1.setEmpAddress(emp1.getEmpAddress());
+//		emp1.setEmpDAddress(emp1.getEmpDAddress());
+//		emp1.setEmpPwd(emp1.getEmpPwd());
+//		emp1.setEmpTotalSal(emp1.getEmpTotalSal());
+//		
+//		originEmpRepository.save(emp1);
+//		return;
+//	}
 	
 	/* 방금 가입한 사원 조회 */
 	public List<EmpAndDeptDTO> selectLastEmp() {
@@ -253,5 +292,6 @@ public class EmpService {
 		 emp = originEmpRepository.findByEmpEndDate(emp);
 		
 	}
+
 
 }

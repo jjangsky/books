@@ -15,9 +15,9 @@
 <body>
     <div th:replace="/common/topSideBar.html"></div>
     
-        <h2 class="mb-4" id="main-text">부서관리</h2>
+        <h2 class="mb-4" id="main-text">조직도</h2>
         <hr><br><br>
-        <h5 class="mb-4" id="sub-text">부서 상세 조회</h5>
+        <h5 class="mb-4" id="sub-text">상세 정보</h5>
         <br>
 
         <div id="textTable" style="text-align:-webkit-center">
@@ -56,11 +56,7 @@
 		  </div>
 
           <div class="btnMenu" style="text-align:-webkit-center">
-          	<form class="btnForm" action="/dept/modify" method="get">
-          		<input type="hidden" name="deptCode1" th:value="${ dept.deptCode }">
-	            <button class="btn" type="submit">수정</button>
-	            <button class="btn" type="button" onclick="location.href='/dept/select'">목록으로</button>
-          	</form>
+	          <button class="btn" type="button" onclick="location.href='/dept/select'">목록으로</button>
           </div>
 
   </body>
