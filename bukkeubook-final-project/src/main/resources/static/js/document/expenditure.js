@@ -262,6 +262,7 @@ window.onload = function() {
 	});
 
 	$("#deleteTemp").click(function() {
+		let docNo = $("#docNo1").val();
 		Swal.fire({
 			title: '해당 임시저장 문서를\n삭제합니다.',
 			text: "진행 하시겠습니까?",
@@ -312,6 +313,16 @@ window.onload = function() {
 						text: '문서의 제목을 입력해주세요.'
 					})
 				} else { countCheck++; }
+				
+				if ($("#title").text().length > 50) {
+					Swal.fire({
+						icon: 'warning',
+						title: '제목 글자수 초과',
+						text: '50자 이하로 입력해주세요.'
+					})
+				} else{countCheck++;}
+				
+				
 				console.log(countCheck);
 				if (check) {
 
@@ -383,7 +394,7 @@ window.onload = function() {
 				}
 				if (countCheck2 == 20) { countCheck += 1; }
 				console.log(countCheck);
-				if (countCheck == 2) {
+				if (countCheck == 3) {
 
 					$("#docStatus1").val("임시저장");
 					let sendDraft = $("#insertin").html();
@@ -442,7 +453,9 @@ function sendData() {
 				text: '단계 지정버튼을 눌러주세요!'
 			})
 		} else { countCheck++; }
+		
 		console.log(countCheck);
+		
 		if ($("#submitTitle").val() == "") {
 			Swal.fire({
 				icon: 'warning',
@@ -450,7 +463,17 @@ function sendData() {
 				text: '제목을 작성해주세요!'
 			})
 		} else { countCheck += 1; }
+		
+		if ($("#submitTitle").val().length > 50) {
+			Swal.fire({
+				icon: 'warning',
+				title: '제목 글자수 초과',
+				text: '50자 이하로 입력해주세요.'
+			})
+		} else { countCheck += 1; }
+		
 		console.log(countCheck);
+		
 		if (check) {
 			for (let i = 0; i < amts.length; i++) {
 				if (!(Number(amts[i].innerText) || amts[i].innerText === '')) {
@@ -505,7 +528,7 @@ function sendData() {
 		}
 		if (countCheck2 == 20) { countCheck += 1; }
 		console.log(countCheck);
-		if (countCheck == 3) {
+		if (countCheck == 4) {
 
 			let text = $("#title").text();
 			console.log(text);

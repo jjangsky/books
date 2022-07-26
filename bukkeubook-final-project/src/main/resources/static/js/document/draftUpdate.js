@@ -274,6 +274,14 @@ window.onload = function() {
 					})
 				} else{countCheck++;}
 				
+				if ($("#title").val().length > 50) {
+					Swal.fire({
+						icon: 'warning',
+						title: '제목 글자수 초과',
+						text: '50자 이하로 입력해주세요.'
+					})
+				} else{countCheck++;}
+				
 				if ($(".note-editable").text().length < 1 || $(".note-editable").text() == "" || $(".note-editable").text() == "  ") {
 					Swal.fire({
 						icon: 'warning',
@@ -282,7 +290,7 @@ window.onload = function() {
 					})
 				} else{countCheck++;}
 				
-				if(countCheck == 2) {
+				if(countCheck == 3) {
 					
 				$("#docStatus1").val("임시저장");
 				let cnt = $(".description").val();
@@ -316,8 +324,8 @@ window.onload = function() {
 		});
 	});
 
-	let docNo = $("#docNo1").val();
 	$("#deleteTemp").click(function() {
+		let docNo = $("#docNo1").val();
 		Swal.fire({
 			title: '해당 임시저장 문서를\n삭제합니다.',
 			text: "진행 하시겠습니까?",
@@ -370,6 +378,14 @@ function sendData() {
 					})
 				} else{countCheck++;}
 				
+				if ($("#title").val().length > 50) {
+					Swal.fire({
+						icon: 'warning',
+						title: '제목 글자수 초과',
+						text: '50자 이하로 입력해주세요.'
+					})
+				} else{countCheck++;}
+				
 				if ($(".note-editable").text().length < 1 || $(".note-editable").text() == "" || $(".note-editable").text() == "  ") {
 					Swal.fire({
 						icon: 'warning',
@@ -394,7 +410,7 @@ function sendData() {
 					})
 				} else{countCheck++;}
 				
-				if(countCheck == 5) {
+				if(countCheck == 6) {
 					let sendDraft = $(".draft").html();
 					console.log(sendDraft);
 					$("#draftcnt2").val(sendDraft);

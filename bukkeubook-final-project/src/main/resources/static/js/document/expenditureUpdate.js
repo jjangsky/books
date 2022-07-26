@@ -245,6 +245,7 @@ window.onload = function() {
 	});
 
 	$("#deleteTemp").click(function() {
+	let docNo = $("#docNo1").val();
 		Swal.fire({
 			title: '해당 임시저장 문서를\n삭제합니다.',
 			text: "진행 하시겠습니까?",
@@ -287,13 +288,24 @@ window.onload = function() {
 		}).then((result) => {
 			if (result.isConfirmed) {
 				let countCheck = 0;
-				if ($("#docTitle1").val().length < 1 || $("#docTitle1").val() == "" || $("#docTitle1").val() == "  ") {
+				let countCheck2 = 0;
+				if ($("#title").text().length < 1 || $("#title").text() == "" || $("#title").text() == "  ") {
 					Swal.fire({
 						icon: 'warning',
-						title: '제목 확인',
-						text: '제목 수정사항이 없습니다.'
+						title: '제목이 없습니다',
+						text: '문서의 제목을 입력해주세요.'
 					})
 				} else { countCheck++; }
+				
+				if ($("#title").text().length > 50) {
+					Swal.fire({
+						icon: 'warning',
+						title: '제목 글자수 초과',
+						text: '50자 이하로 입력해주세요.'
+					})
+				} else{countCheck++;}
+				
+				
 				console.log(countCheck);
 				if (check) {
 
@@ -305,9 +317,9 @@ window.onload = function() {
 					const resultamts = document.querySelectorAll('table#inserttbl tbody tr #amt');
 					const resultmemos = document.querySelectorAll('table#inserttbl tbody tr #memo');
 
-					console.log(cnts);
-					console.log(amts);
-					console.log(memos);
+					//console.log(cnts);
+					//console.log(amts);
+					//console.log(memos);
 
 
 
@@ -330,10 +342,11 @@ window.onload = function() {
 							})
 							break;
 						} else {
-							totalamt += Number(amts[i].innerText);
+							totalamt += amts[i].innerText;
+							countCheck2 += 1;
 						}
 					}
-
+					console.log(countCheck2);
 					for (let i = 0; i < cnts.length; i++) {
 						if (cnts[0].innerText.length < 1) {
 							//console.log(cnts[0].innerText);
@@ -351,20 +364,20 @@ window.onload = function() {
 								resultamts[i].innerText = Intl.NumberFormat().format(amts[i].innerText);
 
 							}
-							resultcnts[i].innerText = cnts[i].innerText;
-							resultmemos[i].innerText = memos[i].innerText;
+							resultcnts[i].innerText = cnts[i].innerText
+							resultmemos[i].innerText = memos[i].innerText
 
 							// console.log(totalamt);
 
 							document.getElementById("sumamt").innerText = Intl.NumberFormat().format(totalamt);
-
+							countCheck2 += 1;
 						}
 					}
-				} countCheck += 1;
-
+					console.log(countCheck2);
+				}
+				if (countCheck2 == 20) { countCheck += 1; }
 				console.log(countCheck);
-
-				if (countCheck == 2) {
+				if (countCheck == 3) {
 
 					$("#docStatus1").val("임시저장");
 					let sendDraft = $("#insertin").html();
@@ -423,7 +436,9 @@ function sendData() {
 				text: '단계 지정버튼을 눌러주세요!'
 			})
 		} else { countCheck++; }
+		
 		console.log(countCheck);
+		
 		if ($("#submitTitle").val() == "") {
 			Swal.fire({
 				icon: 'warning',
@@ -431,7 +446,17 @@ function sendData() {
 				text: '제목에 수정사항을 작성해주세요!'
 			})
 		} else { countCheck += 1; }
+		
 		console.log(countCheck);
+		
+		if ($("#submitTitle").val().length > 50) {
+			Swal.fire({
+				icon: 'warning',
+				title: '제목 글자수 초과',
+				text: '50자 이하로 입력해주세요.'
+			})
+		} else { countCheck += 1; }
+		
 		if (check) {
 			for (let i = 0; i < amts.length; i++) {
 				if (!(Number(amts[i].innerText) || amts[i].innerText === '')) {
@@ -486,7 +511,7 @@ function sendData() {
 		}
 		if (countCheck2 == 2) { countCheck += 1; }
 		console.log(countCheck);
-		if (countCheck == 3) {
+		if (countCheck == 4) {
 
 			let text = $("#title").text();
 			console.log(text);
