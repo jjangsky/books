@@ -66,15 +66,17 @@ table {
     background-color: #FEFCC6;
 }
 .list.btn{
-    margin-bottom: 100px;
+	margin-right:30px;
+    margin-bottom: 30px;
     padding: 8px 22px;
     float: right;
     background-color: #D9D9D9;
     border-radius: 10px;
 }
 .modify.btn{
-    margin-bottom: 100px;
-    padding: 8px 22px;
+	margin-right:30px;
+    margin-bottom: 60px;
+    padding: 8px 20px;
     float: right;
     background-color: #D9D9D9;
     border-radius: 10px;
@@ -90,4 +92,12 @@ table {
     width: 300px;
 }
 
+.shape.btn{
+	margin-right:130px;
+    margin-bottom: 30px;
+    padding: 8px 22px;
+    float: right;
+    background-color: #D9D9D9;
+    border-radius: 10px;
+}
 

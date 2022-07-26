@@ -13,24 +13,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bukkeubook.book.common.paging.SelectCriteria;
+import com.bukkeubook.book.secretary.model.dto.AppVacationAndEmpDTO;
 import com.bukkeubook.book.secretary.model.dto.BoardDTO;
 import com.bukkeubook.book.secretary.model.dto.join.BoardAndEmpAndBoardCateDTO;
+import com.bukkeubook.book.secretary.model.entity.AppVacationAndEmpCal;
 import com.bukkeubook.book.secretary.model.entity.Board;
 import com.bukkeubook.book.secretary.model.entity.BoardAndEmpAndBoardCate;
 import com.bukkeubook.book.secretary.model.repository.BasicBoardRepository;
 import com.bukkeubook.book.secretary.model.repository.SecretaryBoardRepository;
+import com.bukkeubook.book.secretary.model.repository.VacListRepository;
 
 @Service
 public class BoardService {
 	
 	private final SecretaryBoardRepository secretaryBoardRepository;
 	private final BasicBoardRepository basicBoardRepository;
+	private final VacListRepository vacListRepository;
 	private final ModelMapper modelMapper;
 	
 	@Autowired
-	public BoardService(SecretaryBoardRepository secretaryBoardRepository, ModelMapper modelMapper, BasicBoardRepository basicBoardRepository) {
+	public BoardService(SecretaryBoardRepository secretaryBoardRepository, ModelMapper modelMapper, BasicBoardRepository basicBoardRepository, VacListRepository vacListRepository) {
 		this.secretaryBoardRepository = secretaryBoardRepository;
 		this.basicBoardRepository = basicBoardRepository;
+		this.vacListRepository = vacListRepository;
 		this.modelMapper = modelMapper;
 	}
 
@@ -45,30 +50,46 @@ public class BoardService {
 
 	/* 총무부 전사게시판 수정하기 */
 	@Transactional
-	public void modifyBoardContent(BoardAndEmpAndBoardCateDTO board) {
+	public boolean modifyBoardContent(BoardAndEmpAndBoardCateDTO board) {
 		
-		Board boardUpdate = basicBoardRepository.findById(board.getNo()).get();
-		boardUpdate.setCateNo(board.getCateNo());
-		boardUpdate.setTitle(board.getTitle());
-		boardUpdate.setContent(board.getContent());
+		try {
+			Board boardUpdate = basicBoardRepository.findById(board.getNo()).get();
+			boardUpdate.setCateNo(board.getCateNo());
+			boardUpdate.setTitle(board.getTitle());
+			boardUpdate.setContent(board.getContent());
+		}catch(IllegalArgumentException exception) {
+            return false;
+		}
 		
+		return true;
 	}
 	
 	/* 전사게시판 등록하기 */
 	@Transactional
-	public void registBoardContent(BoardDTO board) {
+	public boolean registBoardContent(BoardDTO board) {
 		
-		basicBoardRepository.save(modelMapper.map(board, Board.class));
+		try {
+			basicBoardRepository.save(modelMapper.map(board, Board.class));
+		}catch(IllegalArgumentException exception) {
+            return false;
+		}
 		
+		return true;
 	}
 	
 	/* 전사게시판 삭제하기 */
 	@Transactional
-	public void deleteBoardContent(int boardNo, String boardYn) {
+	public boolean deleteBoardContent(int boardNo, String boardYn) {
 		
 		Board deleteBoard = basicBoardRepository.findById(boardNo).get();
-		deleteBoard.setBoardYn(boardYn);
 		
+		try {
+			deleteBoard.setBoardYn(boardYn);
+		}catch(IllegalArgumentException exception) {
+            return false;
+		}
+		
+		return true;
 	}
 
 	/* 총무부 전사게시판 검색 값 갯수 구하기 */
@@ -87,7 +108,7 @@ public class BoardService {
 			}
 			
 		} else {
-			count = (int) secretaryBoardRepository.count();
+			count = (int) secretaryBoardRepository.countByBoardYn("N");
 		}
 		
 		return count;
@@ -115,7 +136,7 @@ public class BoardService {
 				boardList = secretaryBoardRepository.findByBoardYnAndCate_CateNameContaining("N", searchValue, paging);
 			}
 		}else {
-			boardList = secretaryBoardRepository.findAll(paging).toList();
+			boardList = secretaryBoardRepository.findByBoardYn("N", paging);
 		}
 		
 		return boardList.stream().map(list -> modelMapper.map(list, BoardAndEmpAndBoardCateDTO.class)).collect(Collectors.toList());
@@ -128,6 +149,14 @@ public class BoardService {
 		List<BoardAndEmpAndBoardCate> boardList = secretaryBoardRepository.findByBoardYn("N");
 		
 		return boardList.stream().map(board -> modelMapper.map(board, BoardAndEmpAndBoardCateDTO.class)).collect(Collectors.toList());
+	}
+
+
+	public List<AppVacationAndEmpDTO> findVacList() {
+		
+		List<AppVacationAndEmpCal> vacList = vacListRepository.findByVacStatus("승인");
+		
+		return vacList.stream().map(list -> modelMapper.map(list, AppVacationAndEmpDTO.class)).collect(Collectors.toList());
 	}
 
 

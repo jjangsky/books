@@ -44,6 +44,9 @@
                 <th class="th1">출고자</th>
                 <th class="th1">직급</th>
               </tr>
+              <tr th:if="${#lists.isEmpty(outputList)}">
+                 <td colspan="6">검색 결과가 없습니다.</td>
+              </tr>
               <tr class="tr1" th:each="outputList : ${ outputList }" th:onclick="'location.href = \'' + @{/book/outputDetail/(no=${outputList.relNo})} + '\''">
                 <td th:text="${ outputList.relNo }"></td>
                 <td th:text="${ outputList.relDate }"></td>
@@ -99,13 +102,22 @@
 	</script>
 	<script>
 		const outputSuccessmessage = "[[${outputSuccessMessage}]]"
+		const outputFailMessage = "[[${outputFailMessage}]]"
 	
 		console.log(outputSuccessmessage)
-		if(outputSuccessmessage){
+		if(outputSuccessmessage == "성공"){
 			Swal.fire({
                 icon: 'success',
                 title: 'Success!',
                 text: '출고신청이 성공적으로 완료되었습니다!',
+            })
+			console.log(outputSuccessmessage)
+		}
+		if(outputFailMessage == "실패"){
+			Swal.fire({
+                icon: 'warning',
+                title: 'Warning!',
+                text: '출고신청에 실패했습니다. 다시 시도 해 주세요.',
             })
 			console.log(outputSuccessmessage)
 		}

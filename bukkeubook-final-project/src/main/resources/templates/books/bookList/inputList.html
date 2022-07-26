@@ -46,6 +46,9 @@
                 <th class="th1">직급</th>
                 <th class="th1">구분</th>
               </tr>
+              <tr th:if="${#lists.isEmpty(inputList)}">
+                 <td colspan="6">검색 결과가 없습니다.</td>
+              </tr>
               <tr class="tr1" th:each="inputList : ${ inputList }" th:onclick="'location.href = \'' + @{/book/inputDetail/(no=${inputList.stCode})} + '\''">
                 <td th:text="${ inputList.stCode }"></td>
                 <td th:text="${ inputList.stDate }"></td>
@@ -100,15 +103,21 @@
 	</script>
 	<script>
 		const inputSuccessmessage = "[[${inputSuccessMessage}]]"
+		const inputFailMessage = "[[${inputFailMessage}]]"
 	
-		console.log(inputSuccessmessage)
-		if(inputSuccessmessage){
+		if(inputSuccessmessage == '성공'){
 			Swal.fire({
                 icon: 'success',
                 title: 'Success!',
                 text: '입고등록이 성공적으로 완료되었습니다!',
             })
-			console.log(inputSuccessmessage)
+		}
+		if(inputFailMessage == '실패'){
+			Swal.fire({
+                icon: 'warning',
+                title: 'Warning!',
+                text: '입고신청에 실패했습니다. 다시 시도 해 주세요.',
+            })
 		}
 	</script>
 	<!-- <script>

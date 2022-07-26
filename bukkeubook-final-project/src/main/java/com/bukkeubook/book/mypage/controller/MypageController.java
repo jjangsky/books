@@ -66,10 +66,15 @@ public class MypageController {
 		System.out.println(newCalendar);
 		
 		
-		mypageService.registNewCalendar(newCalendar);
+		boolean cal = mypageService.registNewCalendar(newCalendar);
 		
-		rttr.addFlashAttribute("registSuccessMessage", "일정을 성공적으로 등록하셨습니다.");
-		mv.setViewName("redirect:/mypage/calendar");
+		if(cal) {
+			rttr.addFlashAttribute("registSuccessMessage", "일정을 성공적으로 등록하셨습니다.");
+			mv.setViewName("redirect:/mypage/calendar");
+		}else {
+			rttr.addFlashAttribute("failMessage", "작업 실패");
+			mv.setViewName("redirect:/mypage/calendar");
+		}
 		
 		return mv;
 	}
@@ -105,10 +110,15 @@ public class MypageController {
 		
 		System.out.println(newCalendar);
 		
-		mypageService.modifyMyCalendar(newCalendar);
+		boolean cal = mypageService.modifyMyCalendar(newCalendar);
 		
-		rttr.addFlashAttribute("updateSuccessMessage", "일정을 성공적으로 수정하셨습니다.");
-		mv.setViewName("redirect:/mypage/calendar");
+		if(cal) {
+			rttr.addFlashAttribute("updateSuccessMessage", "일정을 성공적으로 수정하셨습니다.");
+			mv.setViewName("redirect:/mypage/calendar");
+		}else {
+			rttr.addFlashAttribute("failMessage", "작업 실패");
+			mv.setViewName("redirect:/mypage/calendar");
+		}
 		
 		return mv;
 	}
@@ -118,10 +128,15 @@ public class MypageController {
 	public ModelAndView deleteCalendar(ModelAndView mv, String no, HttpServletRequest request, RedirectAttributes rttr, Locale locale) {
 		
 		int calCode = Integer.parseInt(request.getParameter("no"));
-		mypageService.deleteCalendar(calCode);
+		boolean cal = mypageService.deleteCalendar(calCode);
 		
-		rttr.addFlashAttribute("deleteSuccessMessage", "일정을 성공적으로 삭제하셨습니다.");
-		mv.setViewName("redirect:/mypage/calendar");
+		if(cal) {
+			rttr.addFlashAttribute("deleteSuccessMessage", "일정을 성공적으로 삭제하셨습니다.");
+			mv.setViewName("redirect:/mypage/calendar");
+		}else {
+			rttr.addFlashAttribute("failMessage", "작업 실패");
+			mv.setViewName("redirect:/mypage/calendar");
+		}
 		
 		return mv;
 	}

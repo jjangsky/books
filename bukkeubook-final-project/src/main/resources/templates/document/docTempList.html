@@ -21,6 +21,15 @@
 	                text: '성공적으로 완료되었습니다!',
 	            })
 		}
+		
+		const failMessage = "[[${ insertFail }]]";
+		if(failMessage){
+			 Swal.fire({
+	                icon: 'warning',
+	                title: '실패',
+	                text: '다시 시도해주세요!',
+	            })
+		}
 	</script>
 
         <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
@@ -34,7 +43,10 @@
                 <th class="th1">작성자</th>
                 <th class="th1">문서종류</th>
               </tr>
-              <tr class="hover" th:each="temp : ${ tempDocList }" th:onclick="'location.href = \'' + @{|/document/tempInfo/${temp.docNo}|} + '\''">
+              <tr th:if="${#lists.isEmpty(tempDocList)}">
+              	<td class="td1" colspan="6">임시저장된 서류가 존재하지 않습니다.</td>
+              </tr>
+              <tr class="hover" th:each="temp : ${ tempDocList }" th:onclick="'location.href = \'' + @{|/document/tempInfo/${temp.docNo}|} + '\''" style="cursor: pointer;">
                 <td class="td1" th:text="${tempStat.count}"></th>
                 <td class="td1" th:text="${temp.docNo}"></th>
                 <td class="td1" th:text="${temp.docTitle}" style="width:300px;"></th>

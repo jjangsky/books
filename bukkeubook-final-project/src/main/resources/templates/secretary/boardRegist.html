@@ -44,7 +44,7 @@
               </td>
             </tr>
           </table>
-          <button class="btn btn-success" style="margin-left:10%"  type="button" onclick="location.href='/secretary/board'">목록으로</button>
+          <button class="btn btn-success" style="margin-left:10%"  type="button" id='resetBtn'>목록으로</button>
           <button class="btn btn-info" style="margin-left:65%"  type="button" id="registBtn">등록하기</button>
          </form>	
       </div>
@@ -74,6 +74,23 @@
         		            text: '옳바르지 않은 값 혹은 빈 값을 입력하였습니다.', 
         		        });
                 	}
+                }
+			})
+		})
+		
+		$("#resetBtn").click(function(){ 
+			Swal.fire({
+                title: '게시판 목록으로 이동 하시겠습니까??',
+                text: "작성된 내용은 일괄적으로 삭제됩니다.",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '승인',
+                cancelButtonText: '취소'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                	location.href='/secretary/board';
                 }
 			})
 		})

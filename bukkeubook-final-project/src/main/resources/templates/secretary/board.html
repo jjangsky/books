@@ -41,7 +41,7 @@
               <tr>
                 <th class="th1">번호</th>
                 <th class="th1">카테고리</th>
-                <th class="th1">제목</th>
+                <th class="th1" style="width:700px">제목</th>
                 <th class="th1">작성일</th>
                 <th class="th1">작성자</th>
                 <th class="th1">조회수</th>
@@ -67,12 +67,20 @@
 	
 		<script>
 				const successMessage = "[[${ successMessage }]]";
+				const failMessage = "[[${ failMessage }]]";
 					if(successMessage){
 						Swal.fire({
 			                icon: 'success',
 			                title: 'Success!',
 			                text: '성공적으로 완료되었습니다!',
 	         	  		 })
+	       		    }else if(failMessage){
+	       		    	Swal.fire({
+			                icon: 'error',
+			                title: 'Error!',
+			                text: '작업에 실패하셨습니다.',
+	         	  		 })
+	       		    	
 	       		    }
 		</script>
 	

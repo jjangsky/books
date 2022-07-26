@@ -45,6 +45,9 @@
                 <th class="th1">가격</th>
                 <th class="th1">훼손수량</th>
               </tr>
+              <tr th:if="${#lists.isEmpty(damageList)}">
+                 <td colspan="7">검색 결과가 없습니다.</td>
+              </tr>
               <tr class="tr1" th:each="damageList : ${ damageList }">
                 <td th:text="${ damageList.no }"></td>
                 <td th:text="${ damageList.name }"></td>
@@ -120,12 +123,20 @@
 	</script>
 	<script>
 		const updateSuccessMessage = "[[${updateSuccessMessage}]]"
+		const updateFailMessage = "[[${updateFailMessage}]]"
 		
-		if(updateSuccessMessage){
+		if(updateSuccessMessage == '성공'){
 			Swal.fire({
                 icon: 'success',
                 title: 'Success!',
                 text: '훼손도서 수정이 성공적으로 완료되었습니다!',
+            })
+		}
+		if(updateFailMessage == '실패'){
+			Swal.fire({
+                icon: 'warning',
+                title: 'Warning!',
+                text: '훼손도서 수정에 실패했습니다. 다시 시도 해 주세요.',
             })
 		}
 	 </script>

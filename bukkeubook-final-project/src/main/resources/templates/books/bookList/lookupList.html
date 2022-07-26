@@ -52,6 +52,9 @@
                 <th class="th1">창고재고</th>
                 <th class="th1">매장재고</th>
               </tr>
+              <tr th:if="${#lists.isEmpty(bookList)}">
+                 <td colspan="7">검색 결과가 없습니다.</td>
+              </tr>
               <tr class="tr1" th:each="book : ${ bookList }" th:onclick="'location.href = \'' + @{/book/bookInfo/(no=${book.no})} + '\''">
               	
             	<td th:text="${ book.no }"></td>
@@ -131,8 +134,9 @@
 		});
 		
 		const insertSuccessmessage = "[[${insertSuccessMessage}]]"
-		console.log(insertSuccessmessage);
+		const insertFailMessage = "[[${insertFailMessage}]]"
 		const updateSuccessMessage = "[[${updateSuccessMessage}]]"
+		const updateFailMessage = "[[${updateFailMessage}]]"
 		if(insertSuccessmessage){
 			Swal.fire({
                 icon: 'success',
@@ -144,6 +148,18 @@
 	            icon: 'success',
 	            title: 'Success!',
 	            text: '수정이 성공적으로 완료되었습니다!',
+	        })
+		} else if(updateFailMessage){
+			Swal.fire({
+	            icon: 'warning',
+	            title: 'Warning!',
+	            text: '수정이 실패 했습니다. 다시 요청 해 주세요.',
+	        })
+		} else if(insertFailMessage){
+			Swal.fire({
+	            icon: 'warning',
+	            title: 'Warning!',
+	            text: '등록에 실패 했습니다. 다시 요청 해 주세요.',
 	        })
 		}
 		

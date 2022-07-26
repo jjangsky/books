@@ -32,6 +32,9 @@ public interface AttendAndEmpRepository extends JpaRepository<AttendAndEmp, Inte
 
 	List<AttendAndEmp> findByAttDateBetween(Date startDate, Date endDate, Pageable paging);
 
+	List<AttendAndEmp> findByEmp_EmpNoAndAttDateBetween(String searchValue, Date startDate, Date endDate,
+			Pageable paging);
+
 
 
 

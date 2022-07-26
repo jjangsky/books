@@ -25,23 +25,23 @@ public interface DocService {
 
 	List<EmpDTO> findEmp(int dept);
 
-	void insertNewtempDocument(TempStoreDocumentDTO newDoc);
+	boolean insertNewtempDocument(TempStoreDocumentDTO newDoc);
 
 	List<DocumentAndEmpAndFormCateDTO> findTempDocList(int tempEmpNo, String docStatus);
 
 	DocumentAndEmpAndFormCateDTO findOneTempDoc(int selectedDocNo, int tempEmpNo, String docStatus);
 
-	void updateTempDocument(TempStoreDocumentDTO updateDoc);
+	boolean updateTempDocument(TempStoreDocumentDTO updateDoc);
 
-	void deleteTempDoc(int docNo);
+	boolean deleteTempDoc(int docNo);
 
-	void insertNewDocOneAcc(SubmitDocumentDTO newDoc, AppRootDTO appRoot, ApproverDTO approver);
+	boolean insertNewDocOneAcc(SubmitDocumentDTO newDoc, AppRootDTO appRoot, ApproverDTO approver);
 	
-	void insertNewDocThreeAcc(SubmitDocumentDTO newDoc, AppRootDTO appRoot, List<SubmitApprover> approverList);
+	boolean insertNewDocThreeAcc(SubmitDocumentDTO newDoc, AppRootDTO appRoot, List<SubmitApprover> approverList);
 
-	void submitTempDocOneAcc(SubmitDocumentDTO tempDoc, AppRootDTO appRoot, ApproverDTO approver);
+	boolean submitTempDocOneAcc(SubmitDocumentDTO tempDoc, AppRootDTO appRoot, ApproverDTO approver);
 
-	void submitTempDocTwoAcc(SubmitDocumentDTO tempDoc, AppRootDTO appRoot, List<SubmitApprover> approverList);
+	boolean submitTempDocTwoAcc(SubmitDocumentDTO tempDoc, AppRootDTO appRoot, List<SubmitApprover> approverList);
 
 	List<InboxListDTO> findInboxAllList(int empNo);
 
@@ -51,11 +51,11 @@ public interface DocService {
 
 	DocWriteInfoDTO findWriterInfo(int empNo);
 
-	void insertNewVacationApp(AppVacationDTO vacation);
+	boolean insertNewVacationApp(AppVacationDTO vacation);
 
 	List<AppVacationDTO> findByEmpNoVacationList(int empNo);
 
-	void insertNewCancelVacation(CancelVacationDTO cancVaca);
+	boolean insertNewCancelVacation(CancelVacationDTO cancVaca);
 
 	List<Integer> vacationInfo(int empNo);
 
@@ -67,11 +67,11 @@ public interface DocService {
 
 	CancelVacationDTO findByvacCancNo(int vacCancNo);
 
-	void updateDocStatusApprove(int empNo, TempStoreDocumentDTO doc, String statusApp);
+	boolean updateDocStatusApprove(int empNo, TempStoreDocumentDTO doc, String statusApp);
 
 	List<String> checkDoc(int docNo, int empNo);
 
-	void updateDocStatusRefuse(int empNo, TempStoreDocumentDTO doc, String statusApp);
+	boolean updateDocStatusRefuse(int empNo, TempStoreDocumentDTO doc, String statusApp);
 
 	List<String> findSignName(int empNo);
 

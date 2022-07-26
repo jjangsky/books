@@ -178,9 +178,18 @@ public class DocumentController {		// 전자결재 컨트롤러
 		newDoc.setEmpNo1(empNo);
 		System.out.println(newDoc);
 		
-		docService.insertNewtempDocument(newDoc);
+		boolean isInserted = docService.insertNewtempDocument(newDoc);
 		
-		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		if(isInserted) {
+
+			rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+			
+		} else {
+			
+			rttr.addFlashAttribute("insertFail", "임시저장을 성공하였습니다.");
+			
+		}
+		
 		mv.setViewName("redirect:/document/docTempList");
 		
 		return mv;
@@ -219,9 +228,18 @@ public class DocumentController {		// 전자결재 컨트롤러
 		int empNo = customUser.getEmpNo();
 		updateDoc.setEmpNo1(empNo);
 		
-		docService.updateTempDocument(updateDoc);
+		boolean check = docService.updateTempDocument(updateDoc);
 		
-		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		if(check) {
+
+			rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+			
+		} else {
+			
+			rttr.addFlashAttribute("insertFail", "임시저장을 성공하였습니다.");
+			
+		}
+		
 		mv.setViewName("redirect:/document/docTempList");
 		
 		return mv;
@@ -237,9 +255,18 @@ public class DocumentController {		// 전자결재 컨트롤러
 		
 		System.out.println("for          Controller           " + docNo);
 		
-		docService.deleteTempDoc(docNo);
+		boolean check = docService.deleteTempDoc(docNo);
 		
-		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		if(check) {
+
+			rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+			
+		} else {
+			
+			rttr.addFlashAttribute("insertFail", "임시저장을 성공하였습니다.");
+			
+		}
+		
 		mv.setViewName("redirect:/document/docTempList");
 		
 		return mv;
@@ -262,6 +289,8 @@ public class DocumentController {		// 전자결재 컨트롤러
 		String appStatus = "대기";
 		String docStatus = "대기";
 		int empNo = customUser.getEmpNo();
+		boolean check = true;
+		
 		/* 일단 문서 인서트 */
 		newDoc.setDocTitle2(submitTitle);
 		newDoc.setDocStatus2(docStatus);
@@ -282,7 +311,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 			ApproverDTO approver = new ApproverDTO();
 			approver.setEmpNo(appr);
 			approver.setAppStatus(appStatus);
-			docService.insertNewDocOneAcc(newDoc,appRoot,approver);
+			check = docService.insertNewDocOneAcc(newDoc,appRoot,approver);
 			
 		} else if(approver1 != "" && approver2 != "" && approver3 == "") {
 			/* 결재자가 두명일 때 */
@@ -299,7 +328,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 			approverList.add(appro2);
 			
 			
-			docService.insertNewDocThreeAcc(newDoc,appRoot,approverList);
+			check = docService.insertNewDocThreeAcc(newDoc,appRoot,approverList);
 			
 		} else if (approver1 != "" && approver2 != "" && approver3 != "") {
 			/* 결재자가 세명일 때 */
@@ -321,11 +350,20 @@ public class DocumentController {		// 전자결재 컨트롤러
 			appro3.setAppStatus2(appStatus);
 			approverList.add(appro3);
 			
-			docService.insertNewDocThreeAcc(newDoc,appRoot,approverList);
+			check = docService.insertNewDocThreeAcc(newDoc,appRoot,approverList);
 			
 		}
 		
-		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		if(check) {
+
+			rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+			
+		} else {
+			
+			rttr.addFlashAttribute("insertFail", "임시저장을 성공하였습니다.");
+			
+		}
+		
 		mv.setViewName("redirect:/document/reqApprovalList");
 		
 		return mv;
@@ -347,6 +385,8 @@ public class DocumentController {		// 전자결재 컨트롤러
 		System.out.println(submitTitle);
 		String appStatus = "대기";
 		int emoNo = customUser.getEmpNo();
+		boolean check = true;
+		
 		/* 일단 문서 인서트 */
 		tempDoc.setDocTitle2(submitTitle);
 		tempDoc.setEmpNo2(emoNo);
@@ -366,7 +406,8 @@ public class DocumentController {		// 전자결재 컨트롤러
 			ApproverDTO approver = new ApproverDTO();
 			approver.setEmpNo(appr);
 			approver.setAppStatus(appStatus);
-			docService.submitTempDocOneAcc(tempDoc,appRoot,approver);
+			
+			check = docService.submitTempDocOneAcc(tempDoc,appRoot,approver);
 			
 		} else if(approver1 != "" && approver2 != "" && approver3 == "") {
 			/* 결재자가 두명일 때 */
@@ -383,7 +424,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 			approverList.add(appro);
 			approverList.add(appro2);
 			
-			docService.submitTempDocTwoAcc(tempDoc,appRoot,approverList);
+			check = docService.submitTempDocTwoAcc(tempDoc,appRoot,approverList);
 			
 		} else if (approver1 != "" && approver2 != "" && approver3 != "") {
 			/* 결재자가 세명일 때 */
@@ -406,11 +447,19 @@ public class DocumentController {		// 전자결재 컨트롤러
 			approverList.add(appro2);
 			approverList.add(appro3);
 			
-			docService.submitTempDocTwoAcc(tempDoc,appRoot,approverList);
+			check = docService.submitTempDocTwoAcc(tempDoc,appRoot,approverList);
 		
 		}
 		
-		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		if(check) {
+
+			rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+			
+		} else {
+			
+			rttr.addFlashAttribute("insertFail", "임시저장을 성공하였습니다.");
+			
+		}
 		mv.setViewName("redirect:/document/reqApprovalList");
 		
 		return mv;
@@ -530,9 +579,19 @@ public class DocumentController {		// 전자결재 컨트롤러
 		vacation.setVacStatus(vacStatus);
 		vacation.setEmpNo(empNo);
 		
-		docService.insertNewVacationApp(vacation);
+		boolean check = docService.insertNewVacationApp(vacation);
 		
 		System.out.println("Controller         " + vacation);
+		
+		if(check) {
+
+			rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+			
+		} else {
+			
+			rttr.addFlashAttribute("insertFail", "임시저장을 성공하였습니다.");
+			
+		}
 		
 		mv.setViewName("redirect:/document/allVacationList");
 		
@@ -572,9 +631,19 @@ public class DocumentController {		// 전자결재 컨트롤러
 		
 		System.out.println(cancVaca);
 		
-		docService.insertNewCancelVacation(cancVaca);
+		boolean check = docService.insertNewCancelVacation(cancVaca);
 		
-		mv.setViewName("redirect:/document/allVacationList");
+		if(check) {
+
+			rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+			
+		} else {
+			
+			rttr.addFlashAttribute("insertFail", "임시저장을 성공하였습니다.");
+			
+		}
+		
+		mv.setViewName("redirect:/document/allCancelVacationList");
 		
 		return mv;
 		
@@ -601,13 +670,23 @@ public class DocumentController {		// 전자결재 컨트롤러
 		System.out.println("statusApp   " + statusApp);
 		
 		int empNo = customUser.getEmpNo();
+		boolean check = true;
 		
 		if("승인".equals(statusApp)) {
-			docService.updateDocStatusApprove(empNo,doc,statusApp);
+			check = docService.updateDocStatusApprove(empNo,doc,statusApp);
 		} else {
-			docService.updateDocStatusRefuse(empNo,doc,statusApp);
+			check = docService.updateDocStatusRefuse(empNo,doc,statusApp);
 		}
-		rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+		
+		if(check) {
+
+			rttr.addFlashAttribute("insertSuccess", "임시저장을 성공하였습니다.");
+			
+		} else {
+			
+			rttr.addFlashAttribute("insertFail", "임시저장을 성공하였습니다.");
+			
+		}
 		mv.setViewName("redirect:/document/docInboxList");
 		
 		return mv;

@@ -47,15 +47,22 @@ public class MyInfoModifyService {
 
 	/* 마이페이지 개인정보 수정하기 */
 	@Transactional
-	public void modifyInfoEmp(int memberCode, EmpDTO emp) {
+	public boolean modifyInfoEmp(int memberCode, EmpDTO emp) {
 		
-		EmpAndDept myInfo = employeeRepository.findById(memberCode).get();
-		myInfo.setEmpEmail(emp.getEmpEmail());
-		myInfo.setEmpAddress(emp.getEmpAddress());
-		myInfo.setEmpDAddress(emp.getEmpDAddress());
-		myInfo.setEmpPhone1(emp.getEmpPhone1());
-		myInfo.setEmpPhone2(emp.getEmpPhone2());
-		myInfo.setEmpPhone3(emp.getEmpPhone3());
+		try {
+			EmpAndDept myInfo = employeeRepository.findById(memberCode).get();
+			myInfo.setEmpEmail(emp.getEmpEmail());
+			myInfo.setEmpAddress(emp.getEmpAddress());
+			myInfo.setEmpDAddress(emp.getEmpDAddress());
+			myInfo.setEmpPhone1(emp.getEmpPhone1());
+			myInfo.setEmpPhone2(emp.getEmpPhone2());
+			myInfo.setEmpPhone3(emp.getEmpPhone3());
+			
+		}catch(IllegalArgumentException exception) {
+            return false;
+		}
+		
+		return true;
 		
 	}
 	

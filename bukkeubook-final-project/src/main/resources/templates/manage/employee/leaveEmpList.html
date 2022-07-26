@@ -10,21 +10,22 @@
       <link rel="stylesheet" href="../css/style.css">
       <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
       <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
-      
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
   </head>
-<body>
+  <body>
 	<div th:replace="/common/topSideBar.html"></div>
-	        <h2 class="mb-4" id="main-text">사원관리</h2>
+	    <h2 class="mb-4" id="main-text">사원관리</h2>
         <hr><br><br>
         <h5 class="mb-4" id="sub-text">퇴사사원조회</h5>
         <br>
-
           <table id="sampleTable">
               <tr>
                 <th class="th1">사원번호</th>
                 <th class="th1">사원명</th>
                 <th class="th1">부서</th>
                 <th class="th1">직급</th>
+                <th class="th1">퇴사일자</th>
                 <th class="th1">상세보기</th>
               </tr>
               <tr th:each="emp : ${ leaveEmpList }" class="hover">
@@ -32,9 +33,21 @@
                 <td th:text="${ emp.empName }"></td>
                 <td th:text="${ emp.dept.deptName }"></td>
                 <td th:text="${ emp.empJobCode }"></td>
+                <td th:text="${ emp.empEndDate }"></td>
                 <td><button type="button" class="select btn" th:onclick="'location.href = \'' + @{/manage/oneLeaveEmp/{empNo}(empNo=${emp.empNo})} + '\''">확인</button></td>
               </tr>
           </table>
-        </div>
-</body>
+          
+      <script>
+      	const leaveUpdateSuccessMessage = "[[${leaveUpdateSuccessMessage}]]" 
+      		
+      		if(leaveUpdateSuccessMessage){
+      			Swal.fire({
+      	            icon: 'success',
+      	            title: 'Success!',
+      	            text: '퇴사처리가 성공적으로 완료되었습니다!',
+      	        })
+      		}
+     </script>
+  </body>
 </html>

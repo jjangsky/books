@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.member.model.dto.UserImpl;
+import com.bukkeubook.book.secretary.model.dto.AppVacationAndEmpDTO;
 import com.bukkeubook.book.secretary.model.dto.BoardDTO;
 import com.bukkeubook.book.secretary.model.dto.join.BoardAndEmpAndBoardCateDTO;
 import com.bukkeubook.book.secretary.model.service.BoardService;
@@ -135,10 +136,15 @@ public class BoardController {
 		
 		System.out.println(board);
 		
-		boardService.modifyBoardContent(board);
+		boolean boardList = boardService.modifyBoardContent(board);
 		
-		rttr.addFlashAttribute("successMessage", "정상적으로 처리되었습니다.");
-		mv.setViewName("redirect:/secretary/board");
+		if(boardList) {
+			rttr.addFlashAttribute("successMessage", "정상적으로 처리되었습니다.");
+			mv.setViewName("redirect:/secretary/board");
+		}else {
+			rttr.addFlashAttribute("failMessage", "실패");
+			mv.setViewName("redirect:/secretary/board");
+		}
 		
 		
 		return mv;
@@ -166,10 +172,15 @@ public class BoardController {
 		board.setHits(0);  				// 초기 조회수
 		board.setBoardYn("N");  		// 삭제 여부
 		
-		boardService.registBoardContent(board);
+		boolean boardList = boardService.registBoardContent(board);
 		
-		rttr.addFlashAttribute("successMessage", "게시글을 성공적으로 등록하셨습니다.");
-		mv.setViewName("redirect:/secretary/board");
+		if(boardList) {
+			rttr.addFlashAttribute("successMessage", "게시글을 성공적으로 등록하셨습니다.");
+			mv.setViewName("redirect:/secretary/board");
+		}else {
+			rttr.addFlashAttribute("failMessage", "실패");
+			mv.setViewName("redirect:/secretary/board");
+		}
 		
 		
 		return mv;
@@ -182,9 +193,27 @@ public class BoardController {
 		int boardNo = Integer.parseInt(request.getParameter("no"));
 		String boardYn = "Y";
 		
-		boardService.deleteBoardContent(boardNo, boardYn);
-		rttr.addFlashAttribute("successMessage", "게시글을 성공적으로 삭제하셨습니다.");
-		mv.setViewName("redirect:/secretary/board");
+		boolean boardList = boardService.deleteBoardContent(boardNo, boardYn);
+		
+		if(boardList) {
+			rttr.addFlashAttribute("successMessage", "게시글을 성공적으로 삭제하셨습니다.");
+			mv.setViewName("redirect:/secretary/board");
+		}else {
+			rttr.addFlashAttribute("failMessage", "실패");
+			mv.setViewName("redirect:/secretary/board");
+		}
+		
+		return mv;
+	}
+	
+	@GetMapping("/vacListSelect")
+	public ModelAndView findVacList(ModelAndView mv) {
+		
+		List<AppVacationAndEmpDTO> vacList = boardService.findVacList();
+		System.out.println(vacList);
+		
+		mv.addObject("vacList", vacList);
+		mv.setViewName("secretary/vacList");
 		
 		return mv;
 	}

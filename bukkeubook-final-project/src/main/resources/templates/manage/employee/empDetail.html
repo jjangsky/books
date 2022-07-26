@@ -35,8 +35,8 @@
               <tr class="deemp2">
                 <td>사원명</td>
                 <td th:text="${ emp.empName }"></td>
-               <td rowspan="5"><img th:src="@{/images/mypage/{imageFile}(imageFile=${profile[0].photoSavedName})}" width="200px"/></td>
-                <td rowspan="5"><img src="@{/images/manage/employee/{signFile}(signFile=${empSign.signSavedName})}" width="200px"></td> 
+                <td rowspan="5"><img th:src="@{/images/mypage/{imageFile}(imageFile=${profile[0].photoSavedName})}" width="200px"/></td>
+                <td rowspan="5"><img th:src="@{/images/sign/{signFile}(signFile=${mySign.signSavedName})}" width="200px"></td> 
               </tr>
                <tr class="deemp2">
                 <td>부서명</td>
@@ -79,6 +79,10 @@
               <tr class="deemp" >
                 <td>상세주소</td>
                 <td colspan="3" th:text="${ emp.empDAddress }"></td>
+              </tr>
+              <tr class="deemp" >
+                <td>연봉</td>
+                <td colspan="3" th:text="${ emp.empTotalSal }"></td>
               </tr>
             </tbody>
           </table><br>

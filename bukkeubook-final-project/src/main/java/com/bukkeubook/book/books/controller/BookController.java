@@ -43,9 +43,12 @@ public class BookController extends HttpServlet{
 		this.bookService = bookService;
 	}
 	
+	/* 재고 조회 페이지 출력 */
 	@GetMapping("/lookupList")
 	public ModelAndView searchPage(HttpServletRequest request, ModelAndView mv) {
-
+//		500 테스트용
+//		String test = "";
+//		String test2 = test/3;
 		String currentPage = request.getParameter("currentPage");
 		int pageNo = 1;
 
@@ -86,6 +89,7 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
+	/* 도서 상세 페이지 출력 */
 	@GetMapping("/bookInfo")
 	public ModelAndView bookInfo(HttpServletRequest request, String no, ModelAndView mv){
 		
@@ -98,6 +102,7 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
+	/* 선택한 도서 수정 페이지 출력 */
 	@GetMapping("/bookInfoUpdate")
 	public ModelAndView updateBookInfo(BookDTO bookDTO, String no, ModelAndView mv) {
 		
@@ -108,15 +113,23 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
+	/* 선택한 도서정보 수정 */
 	@PostMapping("/bookInfoUpdate2")
 	public ModelAndView modifyBookInfo(BookDTO bookDTO, ModelAndView mv, RedirectAttributes rttr) {
 		
-		bookService.modifyBookInfo(bookDTO);
-		rttr.addFlashAttribute("updateSuccessMessage", "성공");
+		boolean access = bookService.modifyBookInfo(bookDTO);
+		
+		if(access == false) {
+			rttr.addFlashAttribute("updateSuccessMessage", "성공");
+		} else {
+			rttr.addFlashAttribute("updateFailMessage", "실패");
+		}
+		
 		mv.setViewName("redirect:/book/lookupList");
 		return mv;
 	};
 	
+	/* 신규 도서 추가 페이지 출력 */
 	@GetMapping("/newBook")
 	public ModelAndView newBookCode(ModelAndView mv) {
 		String bookCode = bookService.newBookCode();
@@ -125,16 +138,20 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
+	/* 신규 도서 추가 */
 	@PostMapping("/newBook2")
 	public ModelAndView insertBook(BookDTO bookDTO, ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request) {
-//		String cate = request.getParameter("cate");
-//		System.out.println(cate);
-		bookService.insertBook(bookDTO);
-		rttr.addFlashAttribute("insertSuccessMessage", "성공");
+		boolean access = bookService.insertBook(bookDTO);
+		if(access == true) {
+			rttr.addFlashAttribute("insertSuccessMessage", "성공");
+		} else {
+			rttr.addFlashAttribute("insertFailMessage", "실패");
+		}
 		mv.setViewName("redirect:/book/lookupList");
 		return mv;
 	};
 	
+	/* 출고 내역 조회 */
 	@GetMapping("/outputList")
 	public ModelAndView outputList(HttpServletRequest request, ModelAndView mv) {
 		String currentPage = request.getParameter("currentPage");
@@ -174,6 +191,7 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
+	/* 출고 내역 상세조회 */
 	@GetMapping("/outputDetail")
 	public ModelAndView outputDetail(HttpServletRequest request, String no, ModelAndView mv){
 		int no2 = Integer.valueOf(request.getParameter("no"));
@@ -185,6 +203,7 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
+	/* 입고 내역 조회 */
 	@GetMapping("/inputList")
 	public ModelAndView inputList(HttpServletRequest request, ModelAndView mv) {
 		String currentPage = request.getParameter("currentPage");
@@ -223,6 +242,7 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
+	/* 입고 내역 상세조회 */
 	@GetMapping("/inputDetail")
 	public ModelAndView inputDetail(HttpServletRequest request, String no, ModelAndView mv){
 		int no2 = Integer.valueOf(request.getParameter("no"));
@@ -234,6 +254,7 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
+	/* 출고 기능 페이지 출력 */
 	@GetMapping("/output")
 	public ModelAndView output(HttpServletRequest request, ModelAndView mv){
 		String currentPage = request.getParameter("currentPage");
@@ -273,6 +294,7 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
+	/* 입고 기능 페이지 출력 */
 	@GetMapping("/input")
 	public ModelAndView input(HttpServletRequest request, ModelAndView mv){
 		String currentPage = request.getParameter("currentPage");
@@ -312,10 +334,14 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
+	/* 출고 신청 */
 	@PostMapping("/outputReceipt")
 	public ModelAndView outputReceipt(@AuthenticationPrincipal UserImpl user, HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
 		int rownum = Integer.valueOf(request.getParameter("rownum"));
 		int empNo = user.getEmpNo();
+		boolean access1 = false;
+		boolean access2 = false;
+		
 		for(int i = 1; i <= 1; i++) {
 			
 			RelListDTO relList = new RelListDTO();
@@ -333,29 +359,33 @@ public class BookController extends HttpServlet{
 				relBkList.setBkNo(no);
 				relBkList.setRelBkAmount(amount);
 				
-				bookService.outputReceipt2(relBkList);
+				access1 = bookService.outputReceipt2(relBkList);
 				
 				BookDTO bookDTO = new BookDTO();
 				bookDTO.setNo(no);
 				bookDTO.setWhSt(amount);
-				bookService.outputReceipt3(bookDTO, amount);
-				
-				
+				access2 = bookService.outputReceipt3(bookDTO, amount);
 			}
 		}
-		
-		rttr.addFlashAttribute("outputSuccessMessage", "성공");
+		if(access1 == true && access2 == true) {
+			rttr.addFlashAttribute("outputSuccessMessage", "성공");
+		} else {
+			rttr.addFlashAttribute("outputFailMessage", "실패");
+		}
 		mv.setViewName("redirect:/book/outputList");
 		return mv;
 		
 	}
 	
+	/* 입고 신청 */
 	@PostMapping("/inputReceipt")
 	public ModelAndView inputReceipt(@AuthenticationPrincipal UserImpl customUser, HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
 		int empNo = customUser.getEmpNo();
-		
 		int rownum = Integer.valueOf(request.getParameter("rownum"));
+		System.out.println("여기여기여기여기여기여기여기" + rownum);
 		String selectInput = request.getParameter("selectInput");
+		boolean access1 = false;
+		boolean access2 = false;
 		
 		for(int i = 1; i <= 1; i++) {
 			
@@ -370,25 +400,33 @@ public class BookController extends HttpServlet{
 			
 			for(int j = 1; j <= rownum; j++) {
 				String no = request.getParameter("no"+ j);
-				int amount = Integer.valueOf(request.getParameter("amount"+ j));
+				int amount = 0;
+				amount = Integer.valueOf(request.getParameter("amount"+ j));
 				stockBookList.setBkNo(no);
 				stockBookList.setStockBkAmount(amount);
 				stockBookList.setStCode(stCode);
 				System.out.println(no);
 				System.out.println(amount);
-				bookService.inputReceipt2(stockBookList);
+				access1 = bookService.inputReceipt2(stockBookList);
 				
 				BookDTO bookDTO = new BookDTO();
 				bookDTO.setNo(no);
 				bookDTO.setWhSt(amount);
-				bookService.inputReceipt3(bookDTO, amount, selectInput);
+				access2 = bookService.inputReceipt3(bookDTO, amount, selectInput);
+					
+					
 			}
 		}
-		rttr.addFlashAttribute("inputSuccessMessage", "성공");
+		if(access1 == true && access2 == true) {
+			rttr.addFlashAttribute("inputSuccessMessage", "성공");
+		} else {
+			rttr.addFlashAttribute("inputFailMessage", "실패");
+		}
 		mv.setViewName("redirect:/book/inputList");
 		return mv;
 	}
 	
+	/* 훼손 도서 조회 페이지 출력 */
 	@GetMapping("/damageList")
 	public ModelAndView damageList(HttpServletRequest request, ModelAndView mv) {
 		String currentPage = request.getParameter("currentPage");
@@ -428,6 +466,7 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
+	/* 훼손 도서 상세 페이지 */
 	@GetMapping("/damageAmount")
 	public ModelAndView damBookInfo(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
 		String no = request.getParameter("bkNo");
@@ -438,15 +477,23 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
+	/* 훼손 도서 수량 수정 */
 	@GetMapping("/damAmountUpdate")
 	public ModelAndView damAmountUpdate(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
 		String no = request.getParameter("no");
 		int amount = Integer.valueOf(request.getParameter("amount"));
 		int updateAmount = Integer.valueOf(request.getParameter("updateAmount"));
+		boolean access1 = false;
+		boolean access2 = false;
 		
-		DamBookDTO bookList = bookService.findByNo(no, updateAmount);
-		bookService.findBookByNo(no, updateAmount, amount);
-		rttr.addFlashAttribute("updateSuccessMessage", "성공");
+		access1 = bookService.findByNo(no, updateAmount);
+		access2 = bookService.findBookByNo(no, updateAmount, amount);
+		
+		if(access1 == true && access2 == true) {
+			rttr.addFlashAttribute("updateSuccessMessage", "성공");
+		} else {
+			rttr.addFlashAttribute("updateFailMessage", "실패");
+		}
 		mv.setViewName("redirect:/book/damageList");
 		return mv;
 	}
@@ -455,22 +502,6 @@ public class BookController extends HttpServlet{
 	@ResponseBody
 	private List<BookDTO> getSearchList(@RequestParam("searchCondition") String searchCondition,
 			@RequestParam("searchValue") String searchValue, Model model) throws Exception{
-		
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println("ajax 동작함");
-		System.out.println("searchCondition : " + searchCondition);
-		System.out.println("searchValue : " + searchValue);
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
 		
 		return bookService.searchBookList(searchCondition, searchValue);
 	}

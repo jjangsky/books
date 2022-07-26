@@ -71,7 +71,7 @@ window.onload = function(){
 	});
 	
 	$("#back").click(function() {
-				window.history.back();
+		window.history.back();
 	})
 	
 	$("#apply").click(function() {

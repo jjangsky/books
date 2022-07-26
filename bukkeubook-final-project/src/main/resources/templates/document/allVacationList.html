@@ -11,6 +11,25 @@
 </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
+	<script>
+		const successMessage = "[[${ insertSuccess }]]";
+		if(successMessage){
+			 Swal.fire({
+	                icon: 'success',
+	                title: '성공!',
+	                text: '성공적으로 완료되었습니다!',
+	            })
+		}
+		
+		const failMessage = "[[${ insertFail }]]";
+		if(failMessage){
+			 Swal.fire({
+	                icon: 'warning',
+	                title: '실패',
+	                text: '다시 시도해주세요!',
+	            })
+		}
+	</script>
 	<h2 class="mb-4" id="main-text">휴가서류</h2>
         <hr><br><br>
 
@@ -26,7 +45,10 @@
                 <th class="th1">문서상태</th>
                 <th class="th1">작성일자</th>
               </tr>
-              <tr class="hover" th:each="vaca : ${ vacaList }" th:onclick="'location.href = \'' + @{|/document/vacationDetail/${ vaca.vacNo }|} + '\''">
+              <tr th:if="${#lists.isEmpty(vacaList)}">
+              	<td class="td1" colspan="6">신청하신 서류가 존재하지 않습니다.</td>
+              </tr>
+              <tr class="hover" th:each="vaca : ${ vacaList }" th:onclick="'location.href = \'' + @{|/document/vacationDetail/${ vaca.vacNo }|} + '\''" style="cursor: pointer;">
                 <td class="td1" th:text="${vacaStat.count}"></td>
                 <td class="td1" th:text="${vaca.vacNo}"></td>
                 <td class="td1" th:text="${vaca.vacStartDate}"></td>
