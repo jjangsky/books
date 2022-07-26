@@ -84,7 +84,7 @@
 					</tr>
 				</table>
 				<br>
-				<input type="hidden" id="rownum" name="rownum" value="0">
+				<input type="hidden" id="rn" name="rn" value="0">
 			    <button class="btn" type="button" onclick="checkComplete()">등록</button>
 			    <button class="btn" type="button" onclick="checkCancel()">취소</button>
 	       	</form>
@@ -93,6 +93,7 @@
     <script th:inline="javascript">
     	
     		var existData = [];
+    		var n = 0;
     	
     		function getSearchList(){
     			$.ajax({
@@ -147,6 +148,9 @@
 	    		            	})
 	    		            } else if(success == 1){
 	    		            	console.log("추가함"); 
+	    			            n += 1;
+	    			            console.log("n : " + n);
+	    			            
 	    			            existData.push(td.eq(0).text());
 	    			            
 	    			            const newRow = table.insertRow();
@@ -160,10 +164,10 @@
 	    			            const newCell7 = newRow.insertCell(6);
 
 	    			            var index = newRow.rowIndex;
-	    			            console.log("index : " + index);
-	    			            var no = "no" + index;
-	    			            var amount = "amount" + index;
-	    			            var orderAmount = "orderAmount" + index;
+	    			            console.log("index : " + n);
+	    			            var no = "no" + n;
+	    			            var amount = "amount" + n;
+	    			            var orderAmount = "orderAmount" + n;
 	    			            
 	    			            newCell1.innerHTML = '<input type="checkbox" name="del">';
 	    			            newCell2.innerHTML = td.eq(0).text() + '<input type="hidden" name="' + no + '" value="' + td.eq(0).text() + '">';
@@ -172,9 +176,6 @@
 	    			            newCell5.innerHTML = td.eq(4).text();
 	    			            newCell6.innerHTML = td.eq(5).text();
 	    			            newCell7.innerHTML = '<input id="' + orderAmount + '" type="number" name="' + amount + '" value="1" min="1">';
-	    			            
-	    			            rownum = document.getElementById("rownum");
-	    		   	            rownum.value = index;
 	    			            
 	    			            $('#' + orderAmount).blur(function(){
 	    							if( $('#' + orderAmount).val() < 0){
@@ -252,6 +253,8 @@
             } else if(success == 1){
             	console.log("추가함"); 
 	            existData.push(td.eq(0).text());
+	            n += 1;
+	            console.log("n : " + n);
 	            
 	            const newRow = table.insertRow();
 	            
@@ -264,10 +267,10 @@
 	            const newCell7 = newRow.insertCell(6);
 
 	            var index = newRow.rowIndex;
-	            console.log("index : " + index);
-	            var no = "no" + index;
-	            var amount = "amount" + index;
-	            var orderAmount = "orderAmount" + index;
+	            console.log("index : " + n);
+	            var no = "no" + n;
+	            var amount = "amount" + n;
+	            var orderAmount = "orderAmount" + n;
 	            
 	            newCell1.innerHTML = '<input type="checkbox" name="del">';
 	            newCell2.innerHTML = td.eq(0).text() + '<input type="hidden" name="' + no + '" value="' + td.eq(0).text() + '">';
@@ -276,9 +279,6 @@
 	            newCell5.innerHTML = td.eq(4).text();
 	            newCell6.innerHTML = td.eq(5).text();
 	            newCell7.innerHTML = '<input id="' + orderAmount + '" type="number" name="' + amount + '" value="1" min="1">';
-	            
-	            rownum = document.getElementById("rownum");
-   	            rownum.value = index;
 	            
    	          $('#' + orderAmount).blur(function(){
 					if( $('#' + orderAmount).val() < 0){
@@ -395,6 +395,7 @@
             		cancelButtonText: '취소'
             	}).then((result) => {
             		if(result.isConfirmed){
+            			$('#rn').val(n);
             			$('#registInfo').submit();
             		}
             	});
