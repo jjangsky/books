@@ -1,33 +1,24 @@
 package com.bukkeubook.book.manage.controller;
 
-import java.net.http.HttpRequest;
 import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.bukkeubook.book.books.model.dto.BookDTO;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.manage.model.dto.AppVacationDTO;
-import com.bukkeubook.book.manage.model.dto.DayOffDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.AppVacationAndEmpDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.CancelVacationAndAppVacationDTO;
-import com.bukkeubook.book.manage.model.dto.joinDTO.DayOffAndEmpAndDeptDTO;
-import com.bukkeubook.book.manage.model.entity.AppVacation;
-import com.bukkeubook.book.manage.model.entity.DayOff;
 import com.bukkeubook.book.manage.model.service.EmpAnnualService;
 import com.bukkeubook.book.manage.model.service.EmpDayOffService;
 
@@ -117,7 +108,7 @@ public class EmpAnnualController {
 		empDayOffService.findDayOffEmpNo(empNo, vacNo, vacStartDate, vacEndDate);
 
 		rttr.addFlashAttribute("updateSuccessMessage", "성공");
-		mv.setViewName("redirect:/manage/empDayOff/empDayOffDetail");
+		mv.setViewName("redirect:/empAnnual/restSelect");
 		return mv;
 
 	}
@@ -203,5 +194,19 @@ public class EmpAnnualController {
 		
 		return mv;
 	}
-
+	
+	
+	/*****************************************************************************************/
+	/* 휴가 신청 반려 사유 */
+	@GetMapping("/reasonAdd/{reasonAdds}/{no}")
+	public ModelAndView reasonAdd(@PathVariable String reasonAdds, @PathVariable String no, ModelAndView mv, RedirectAttributes rttr) {
+		String delayReson = reasonAdds;
+		int vacNo = Integer.valueOf(no);
+		
+		empAnnualService.findByVacNo(delayReson, vacNo);
+		
+		rttr.addFlashAttribute("successMessage", "성공");
+		mv.setViewName("redirect:/empAnnual/restSelect");
+		return mv;
+	}
 }

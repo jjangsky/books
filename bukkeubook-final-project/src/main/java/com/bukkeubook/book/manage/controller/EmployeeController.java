@@ -10,7 +10,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.bukkeubook.book.books.model.dto.BookDTO;
 import com.bukkeubook.book.common.paging.Pagenation;
 import com.bukkeubook.book.common.paging.SelectCriteria;
 import com.bukkeubook.book.manage.model.dto.EmpDTO;
@@ -51,7 +49,7 @@ private final MyInfoModifyService myInfoModifyService;
 	/* 사원조회 , 페이징, 검색기능 */
 	@GetMapping("/empList")
 	public ModelAndView searchPage(HttpServletRequest request, ModelAndView mv) {  //ModelAndView 뷰 리졸버의 역할 _리턴할 페이지 설정 , 보내는객체
-		System.out.println("ddddddddddddddddddddddddddddddddddddd");
+//		System.out.println("ddddddddddddddddddddddddddddddddddddd");
 		String currentPage = request.getParameter("currentPage");
 		int pageNo = 1;
 
@@ -417,21 +415,6 @@ private final MyInfoModifyService myInfoModifyService;
 			mv.setViewName("redirect:/manage/empList");
 			return mv;
 		}
-		
-//		/* 사원 퇴사처리 */
-//		@PostMapping("empLeave")
-//		public ModelAndView modifyEmpLeave(ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request) {
-//			
-//			EmpDTO leaveEmp = new EmpDTO();
-//			
-//			leaveEmp.setEmpEndYn(request.getParameter("empEndYn"));
-//			
-//			empService.modifyEmpLeave(leaveEmp);
-//			
-//			rttr.addFlashAttribute("updateSuccessMessage", "성공");
-//			mv.setViewName("redirect:/manage/leaveEmpList");
-//			return mv;
-//		}
 		
 		/* 사원 퇴사처리 */
 		@PostMapping("/empLeave")

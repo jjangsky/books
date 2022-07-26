@@ -37,17 +37,21 @@ public class AppVacationAndEmp implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "EMP_NO")
 	private EmpAndDept emp;
+	
+	@Column(name = "VAC_COMPANION")
+	private String vacCompanion;			// 휴가반려사유
 
 	public AppVacationAndEmp() {
 		super();
 	}
 
-	public AppVacationAndEmp(int vacNo, Date vacStartDate, Date vacEndDate, EmpAndDept emp) {
+	public AppVacationAndEmp(int vacNo, Date vacStartDate, Date vacEndDate, EmpAndDept emp, String vacCompanion) {
 		super();
 		this.vacNo = vacNo;
 		this.vacStartDate = vacStartDate;
 		this.vacEndDate = vacEndDate;
 		this.emp = emp;
+		this.vacCompanion = vacCompanion;
 	}
 
 	public int getVacNo() {
@@ -82,6 +86,14 @@ public class AppVacationAndEmp implements Serializable{
 		this.emp = emp;
 	}
 
+	public String getVacCompanion() {
+		return vacCompanion;
+	}
+
+	public void setVacCompanion(String vacCompanion) {
+		this.vacCompanion = vacCompanion;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -89,8 +101,9 @@ public class AppVacationAndEmp implements Serializable{
 	@Override
 	public String toString() {
 		return "AppVacationAndEmp [vacNo=" + vacNo + ", vacStartDate=" + vacStartDate + ", vacEndDate=" + vacEndDate
-				+ ", emp=" + emp + "]";
+				+ ", emp=" + emp + ", vacCompanion=" + vacCompanion + "]";
 	}
 
 	
+
 }

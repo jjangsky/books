@@ -71,10 +71,10 @@ public class EmpDayOffService {
 		return modelMapper.map(dayOffList, DayOffAndEmpAndDeptDTO.class);
 	}
 
-//  empNo          사원번호
-//  doffAmount     연차횟수
-//  doffRemain     잔여연차횟수
-//  doffUse        사용연차횟수
+// empNo          사원번호
+// doffAmount     연차횟수
+// doffRemain     잔여연차횟수
+// doffUse        사용연차횟수
 	
 	@Transactional
 	public void findDayOffEmpNo(int empNo, int vacNo, String vacStartDate, String vacEndDate) throws ParseException {

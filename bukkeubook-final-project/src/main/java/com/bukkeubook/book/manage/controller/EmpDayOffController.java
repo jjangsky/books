@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bukkeubook.book.manage.model.dto.DayOffDTO;
 import com.bukkeubook.book.manage.model.dto.joinDTO.DayOffAndEmpAndDeptDTO;
 import com.bukkeubook.book.manage.model.service.EmpDayOffService;
 
@@ -42,12 +41,7 @@ public class EmpDayOffController {
 		
 		int number = Integer.valueOf(empNo);
 		
-//		System.out.println("컨트롤러에서       " + empNo);
-//		System.out.println("컨트롤러에서       " + number);
-		
 		DayOffAndEmpAndDeptDTO emp  = empDayOffService.searchEmpDayOffDetail(number);
-		
-//		System.out.println("컨트롤러에서       " + emp);
 		
 		mv.addObject("emp", emp);
 		mv.setViewName("/manage/empAnnual/empDayOffDetail");

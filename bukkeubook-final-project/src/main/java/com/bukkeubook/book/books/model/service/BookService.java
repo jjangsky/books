@@ -371,7 +371,6 @@ public class BookService {
 		return bookList.stream().map(book -> modelMapper.map(book, BookDTO.class)).collect(Collectors.toList());
 	}
 
-	/****************************************************************/
 	@Transactional
 	public DamBookDTO findByNo(String no, int updateAmount) {
 		DamBook damBookList = damBookRepository.findBybkNo(no);
@@ -390,7 +389,7 @@ public class BookService {
 		int whst = book.getWhSt();		
 		book.setWhSt(whst - updateAmount);
 	}
-	/****************************************************************/
+	
 	public List<BookDTO> searchBookList(String searchCondition, String searchValue) {
 		List<Book> bookList = new ArrayList<Book>();
 		if(searchValue != null) {

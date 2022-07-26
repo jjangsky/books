@@ -430,7 +430,6 @@ public class BookController extends HttpServlet{
 		return mv;
 	}
 	
-	/***********************************************************************************************************/
 	@GetMapping("/damageAmount")
 	public ModelAndView damBookInfo(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr) {
 		String no = request.getParameter("bkNo");
@@ -453,7 +452,6 @@ public class BookController extends HttpServlet{
 		mv.setViewName("redirect:/book/damageList");
 		return mv;
 	}
-	/***********************************************************************************************************/
 	
 	@GetMapping("/getSearchList")
 	@ResponseBody
