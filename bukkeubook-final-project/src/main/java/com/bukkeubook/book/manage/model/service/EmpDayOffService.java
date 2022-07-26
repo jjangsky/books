@@ -94,7 +94,7 @@ public class EmpDayOffService {
 		
 		int dayOffUseRemain = dayOff.getDoffRemain() - day;
 		dayOff.setDoffRemain(dayOffUseRemain);
-		
+
 		int UseDoffUse = dayOff.getDoffUse() + day;
 		dayOff.setDoffUse(UseDoffUse);
 		
