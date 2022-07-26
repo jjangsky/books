@@ -1,6 +1,6 @@
 package com.bukkeubook.book.mypage.model.service;
 
-import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,14 +80,29 @@ public class AttendService {
 		return true;
 	}
 	
+	/* 퇴근 시간 리셋용 */
+	public void resetCheckOut(AttendDTO attend, int memberInfo, long noTime) {
+		
+		Attend modifyCheckOut = attendRepository.findByEmpNoAndAttDateLike(memberInfo, attend.getAttDate());
+		
+		java.sql.Date noToday = new java.sql.Date(noTime);
+		modifyCheckOut.setAttEnd(noToday);
+		
+		
+	}
+	
 	/* 마이페이지에서 퇴근 등록하기 */
 	@Transactional
-	public boolean modifyCheckOut(AttendDTO attend, int memberInfo, long time) {
+	public boolean modifyCheckOut(AttendDTO attend, int memberInfo, long time, long noTime) {
 		
 		
 		Attend modifyCheckOut = attendRepository.findByEmpNoAndAttDateLike(memberInfo, attend.getAttDate());
 		
 		java.sql.Date today = new java.sql.Date(time);
+		java.sql.Date noToday = new java.sql.Date(noTime);
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		System.out.println(sdf2.format(today)); 
+		modifyCheckOut.setAttEnd(noToday);
 		
 		try {
 			modifyCheckOut.setAttEnd(today);
@@ -106,6 +121,8 @@ public class AttendService {
 		
 		return attendList1.stream().map(attend -> modelMapper.map(attend, AttendDTO.class)).collect(Collectors.toList());
 	}
+	
+	
 
 	
 	
