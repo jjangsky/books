@@ -133,10 +133,10 @@ public class EmpAnnualController {
 		int totalCount = empAnnualService.selectCancelTotalCount(searchCondition, searchValue);
 
 		/* 한 페이지에 보여 줄 게시물 수 */
-		int limit = 8;
+		int limit = 4;
 
 		/* 한 번에 보여질 페이징 버튼의 갯수 */
-		int buttonAmount = 2;
+		int buttonAmount = 5;
 
 		/* 페이징 처리를 위한 로직 호출 후 페이징 처리에 관한 정보를 담고 있는 인스턴스를 반환받는다. */
 		SelectCriteria selectCriteria = null;
@@ -190,7 +190,7 @@ public class EmpAnnualController {
 		empDayOffService.findDayOffEmpNo(vacCancNo, vacNo, empNo, vacStartDate, vacEndDate);
 		
 		rttr.addFlashAttribute("updateSuccessMessage", "성공");
-		mv.setViewName("redirect:/manage/empDayOff/empDayOffDetail");
+		mv.setViewName("redirect:/empAnnual/restCancelSelect");
 		
 		return mv;
 	}

@@ -15,6 +15,18 @@
 </head>
 <body>
 	<div th:replace="/common/topSideBar.html"></div>
+	
+	<script>
+		const successMessage = "[[${ updateSuccessMessage }]]";
+		if(successMessage){
+			 Swal.fire({
+	                icon: 'success',
+	                title: '성공!',
+	                text: '성공적으로 완료되었습니다!',
+	            })
+		}
+	</script>
+	
     <h2 class="mb-4" id="main-text">사원관리</h2>
     <hr><br><br>
     <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/empAnnual/restCancelSelect">휴가 취소 조회</a></h5>

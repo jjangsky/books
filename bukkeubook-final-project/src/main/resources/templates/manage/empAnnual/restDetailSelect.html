@@ -66,7 +66,7 @@
 	     </form>
     <script th:inline="javascript"> 
 
-    $(".updateBtn").click(function(){
+     $(".updateBtn").click(function(){
         Swal.fire({
             title: '승인 하시겠습니까?',
             text: "승인 버튼을 누르면 승인이 됩니다.",
@@ -78,9 +78,9 @@
             cancelButtonText: '취소'
         }).then((result) => {
         	$("#appVactoDayOff").submit();
-        } );
-      } );
-
+        });
+    } ); 
+    
     $('.backBtn').click(function(){
 	    window.history.back(); 
 	    });
