@@ -45,6 +45,9 @@
                 <th class="th1">만료일</th>
                 <th class="th1">작성자</th>
               </tr>
+              <tr th:if="${#lists.isEmpty(contList)}">
+               		    <td class="td1" colspan="6">검색 결과가 존재하지 않습니다.</td>
+        	  	</tr>
               <tr class="tr1" th:each="cont : ${ contList }" th:onclick="'location.href = \'' + @{/cont/findDetailCont/(no=${cont.contNo})} + '\''">
                 <td th:text="${ cont.contNo }"></td>
                 <td th:text="${ cont.contDate }"></td>

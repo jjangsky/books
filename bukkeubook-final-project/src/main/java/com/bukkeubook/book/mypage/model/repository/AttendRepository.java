@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.bukkeubook.book.manage.model.dto.AttendDTO;
 import com.bukkeubook.book.manage.model.entity.AppVacation;
 import com.bukkeubook.book.manage.model.entity.Attend;
 
@@ -32,6 +33,7 @@ public interface AttendRepository extends JpaRepository<Attend, Integer>{
 	List<Attend> findByEmpNoAndAttDateBetween(int memberCode, Date startDate, Date endDate, Pageable paging);
 
 	Attend findByEmpNoAndAttDateLike(int memberInfo, Date attDate);
+
 
 
 

@@ -38,29 +38,30 @@
               <tr class="deemp2">
                 <td>사원명</td>
                 <td colspan="3">
-                   <input type="text" th:value="${ emp.empName }" name="empName" readonly>
+                   <input type="text" th:value="${ emp.empName }" name="empName" maxlength="5">
                 </td>
               </tr>
                <tr class="deemp2">
                 <td>부서명</td>
                 <td colspan="3">
-                본 부서코드 : <input type="text" name="deptCode1" th:value="${ emp.deptCode }" readonly style="width:70px;">
+                본 부서코드 : <input type="text" name="deptCode" th:value="${ emp.deptCode }" readonly style="width:70px;">
                 변경 : 
-                 <select class="sel3" name="deptCode" >
+                 <select class="sel3" name="deptCode2" >
                   <option value="">None</option>
-                  <option value="1">재무부</option>
-                  <option value="2">인사부</option>
-                  <option value="3">총무부</option>
-                  <option value="4">도서물류부</option>
+                  <option value="1">사장</option>
+                  <option value="2">재무부</option>
+                  <option value="3">인사부</option>
+                  <option value="4">총무부</option>
+                  <option value="5">도서물류부</option>
                 </select> 
                 </td>
               </tr>
               <tr class="deemp2">
                 <td>직급</td>
                 <td colspan="3">
-                   본 직급 : <input type="text" name="empJobCode1" th:value="${ emp.empJobCode }" readonly style="width:70px;">
+                   본 직급 : <input type="text" name="empJobCode" th:value="${ emp.empJobCode }" readonly style="width:70px;">
                    변경 : 
-                   <select class="sel3" name="empJobCode">
+                   <select class="sel3" name="empJobCode2">
                     <option value="">None</option>
                     <option value="사장">사장</option>
                     <option value="부장">부장</option>
@@ -92,9 +93,9 @@
               </tr>
               <tr class="deemp" >
                 <td>연락처</td>
-           	    <td><input type="text" th:value="${ emp.empPhone1 }" name="empPhone1" maxlength="3"></td>
-                <td><input type="text" th:value="${ emp.empPhone2 }" name="empPhone2" maxlength="4"></td>
-                <td><input type="text" th:value="${ emp.empPhone3 }" name="empPhone3" maxlength="4"></td>
+           	    <td><input type="text" th:value="${ emp.empPhone1 }" name="empPhone1" maxlength="3" id="empPhone1"></td>
+                <td><input type="text" th:value="${ emp.empPhone2 }" name="empPhone2" maxlength="4" id="empPhone2"></td>
+                <td><input type="text" th:value="${ emp.empPhone3 }" name="empPhone3" maxlength="4" id="empPhone3"></td>
               </tr>
               <tr class="deemp">
                 <td>이메일</td>
@@ -113,13 +114,13 @@
               </tr>
              <tr class="deemp" >
                 <td>연봉</td>
-                <td colspan="3"><input type="number" th:value="${ emp.empTotalSal }" name="empTotalSal" maxlength="20"></td>
+                <td colspan="3"><input type="number" th:value="${ emp.empTotalSal }" name="empTotalSal" maxlength="10"></td>
               </tr>
             </tbody>
           </table><br>
           <div id="space">
           	<input type="button" id="updateBtn" class="modify btn" value="수정하기"></input>
-          	<button type="button" class="list btn backBtn" >목록으로</button>
+          	<button type="button" class="list btn backBtn" >취소</button>
           </div>
          </div>
         </form>
@@ -273,7 +274,7 @@
              })
          });
      });
-
+			
         $("#leavebtn").click(function(){
             Swal.fire({
                   title: '퇴사를 진행 하시겠습니까?',
@@ -306,7 +307,29 @@
                   }
               })
         });
-        
+	
+        const empPhone1 = /^[0-9]{3}$/;
+        $('#empPhone1').blur(function(){
+			if(tagExp.test($('.price').val())){
+				Swal.fire({
+                    icon: 'error',
+                    title: '태그쓰지마세요',
+                    text: '',
+                }).then(function(){
+                	$('#empPhone1').val('');
+	    			$('#empPhone1').focus();
+                })
+			} else if(!priceExp.test($('#empPhone1').val()) && $('#empPhone1').val() != ''){
+				Swal.fire({
+                    icon: 'error',
+                    title: '입력 오류!',
+                    text: '숫자만 입력 해 주세요.',
+                }).then(function(){
+                	$('#empPhone1').val('');
+	    			$('#empPhone1').focus();
+                })
+			}
+		});    
    </script>
 
     <script>    

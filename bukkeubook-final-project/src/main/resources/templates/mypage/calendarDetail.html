@@ -43,6 +43,7 @@
           <button class="btn btn-info leftMar500p" type="submit" th:onclick="'location.href = \'' +  @{/mypage/calendar/update/(no=${detailCal.code})} + '\''">수정하기</button>
           <button class="btn btn-dark leftMar20p" id="deletebtn" type="button">삭제하기</button> 
       </div>
+      <br><br>
 	        
 	       <script th:inline="javascript">
 		        $().ready(function () {

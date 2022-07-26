@@ -153,7 +153,7 @@ private final MyInfoModifyService myInfoModifyService;
 		
 		int number = Integer.valueOf(empNo);
 		
-		EmpDTO emp = empService.findEmpByEmpNo(number);
+		EmpAndDeptDTO emp = empService.findEmpByEmpNo(number);
 		System.out.println("1231231523" + emp);
 
 		/* 프로필 사진 조회 */
@@ -174,12 +174,29 @@ private final MyInfoModifyService myInfoModifyService;
 	}
 	
 	   @PostMapping("/empDetailUpdate")
-	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, HttpServletRequest request, EmpDTO emp) {
+	   public ModelAndView modifyEmp(ModelAndView mv, RedirectAttributes rttr, EmpDTO emp, @RequestParam String deptCode2, @RequestParam String empJobCode2 ) {
+		  
+		  /* 기존 정보 */
+		 System.out.println(emp);
+		 System.out.println(" deptCode2      :     " + deptCode2);
+		 
+		 if ((deptCode2 == "" || deptCode2 == null)&&(empJobCode2 == "" || empJobCode2 == null)) {
+			 empService.modifyEmp(emp);
+		 } else if((empJobCode2 == "" || empJobCode2 == null) && (deptCode2 != null)){
+			 int deptCode = Integer.valueOf(deptCode2);
+			 emp.setDeptCode(deptCode);
+			 empService.modifyEmp(emp);
+		 } else if((deptCode2 == "" || deptCode2 == null) && (empJobCode2 != null)) {
+			 emp.setEmpJobCode(empJobCode2);
+			 empService.modifyEmp(emp);
+		 } else {
+			 int deptCode = Integer.valueOf(deptCode2);
+			 emp.setDeptCode(deptCode);
+			 emp.setEmpJobCode(empJobCode2);
+			 empService.modifyEmp(emp);
+		 }
 		   
-		   int empNo = Integer.valueOf(request.getParameter("empNo"));
 		   
-	      empService.modifyEmp(emp); 
-	      
 	      rttr.addFlashAttribute("updateSuccessMessage", "직원정보 수정 성공");
 	      mv.setViewName("redirect:/manage/empList");
 	      return mv;

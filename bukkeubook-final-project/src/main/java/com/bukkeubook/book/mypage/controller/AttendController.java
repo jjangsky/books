@@ -122,7 +122,7 @@ public class AttendController {
 		
 		if(att){
 			rttr.addFlashAttribute("successMessage", "출근 등록이 정상적으로 처리 되었습니다.");
-			mv.setViewName("redirect:/main");
+			mv.setViewName("redirect:/attend/findPage");
 		}else {
 			rttr.addFlashAttribute("failMessage", "작업 실패");
 			mv.setViewName("redirect:/main");
@@ -140,6 +140,7 @@ public class AttendController {
 		
 		Date today = new Date();
 		long time = today.getTime();
+		long noTime = today.getTime() - 900000000;
 		java.sql.Date startDate = new java.sql.Date(time);
 		
 		attend.setAttDate(startDate);
@@ -148,11 +149,13 @@ public class AttendController {
 		
 		System.out.println(attend);
 		
-		boolean att = attendService.modifyCheckOut(attend, memberInfo);
+		attendService.resetCheckOut(attend, memberInfo, noTime);
+		
+		boolean att = attendService.modifyCheckOut(attend, memberInfo, time, noTime);
 		
 		if(att) {
 			rttr.addFlashAttribute("successMessage", "퇴근 등록이 정상적으로 처리 되었습니다.");
-			mv.setViewName("redirect:/main");
+			mv.setViewName("redirect:/attend/findPage");
 		}else {
 			rttr.addFlashAttribute("failMessage", "작업 실패");
 			mv.setViewName("redirect:/main");
