@@ -103,15 +103,21 @@
 	</script>
 	<script>
 		const inputSuccessmessage = "[[${inputSuccessMessage}]]"
+		const inputFailMessage = "[[${inputFailMessage}]]"
 	
-		console.log(inputSuccessmessage)
-		if(inputSuccessmessage){
+		if(inputSuccessmessage == '성공'){
 			Swal.fire({
                 icon: 'success',
                 title: 'Success!',
                 text: '입고등록이 성공적으로 완료되었습니다!',
             })
-			console.log(inputSuccessmessage)
+		}
+		if(inputFailMessage == '실패'){
+			Swal.fire({
+                icon: 'warning',
+                title: 'Warning!',
+                text: '입고신청에 실패했습니다. 다시 시도 해 주세요.',
+            })
 		}
 	</script>
 	<!-- <script>

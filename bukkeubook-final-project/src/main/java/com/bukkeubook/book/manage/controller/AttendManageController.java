@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bukkeubook.book.common.paging.AttendPagenation;
 import com.bukkeubook.book.common.paging.AttendSelectCriteria;
-import com.bukkeubook.book.common.paging.DatePagenation;
 import com.bukkeubook.book.manage.model.dto.joinDTO.AttendAndEmpDTO;
 import com.bukkeubook.book.manage.model.service.AttendManageService;
 

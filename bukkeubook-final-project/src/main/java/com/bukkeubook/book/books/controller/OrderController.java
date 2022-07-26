@@ -116,42 +116,40 @@ public class OrderController {
 	@PostMapping("/regist")
 	public ModelAndView registOrder(HttpServletRequest request, ModelAndView mv, RedirectAttributes rttr, @AuthenticationPrincipal UserImpl customUser) {
 		
-		int rownum = Integer.valueOf(request.getParameter("rownum"));
+		int rownum = Integer.valueOf(request.getParameter("rn"));
 		int empNo = customUser.getEmpNo();
 		
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
+		System.out.println("rownum은 : " + rownum);
+		
 		
 		for(int i = 1; i <= rownum; i++) {
 			OrderListDTO order = new OrderListDTO();
 			
-			String no = request.getParameter("no" + i);
-			int amount = Integer.valueOf(request.getParameter("amount" + i));
-			
+			if(request.getParameter("no" + i) == null) {
+				System.out.println("null이네");
+			} else {
+				
+				String no = request.getParameter("no" + i);
+				int amount = Integer.valueOf(request.getParameter("amount" + i));
+				
 //			java.sql.Date currentDate = new SimpleDateFormat("yyMMddhhmmss").format(new java.sql.Date(System.currentTimeMillis())); 
+				
+				order.setOrderDate(new java.sql.Date(System.currentTimeMillis()));
+				order.setOrderApprYn("대기");
+				order.setOrderAmount(amount);
+				order.setCntNo(3);
+				order.setBkNo(no);
+				order.setEmpNo(empNo);
+				
+				System.out.println(i + "번째 : " + order);
+				
+				Boolean reg =  orderService.registOrder(order);
+			}
 			
-			order.setOrderDate(new java.sql.Date(System.currentTimeMillis()));
-			order.setOrderApprYn("대기");
-			order.setOrderAmount(amount);
-			order.setCntNo(3);
-			order.setBkNo(no);
-			order.setEmpNo(empNo);
 			
-			System.out.println(i + "번째 : " + order);
-			
-			orderService.registOrder(order);
 		}
 		
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		
-		rttr.addFlashAttribute("registSuccessMessage", "발주 등록에 성공하셨습니다");
+		rttr.addFlashAttribute("successMessage", "발주 등록에 성공하셨습니다");
 		mv.setViewName("redirect:/order/selectHistory");
 		
 		return mv;

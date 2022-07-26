@@ -34,7 +34,6 @@
         <div id="textTable" style="text-align:-webkit-center">
           <table id="sampleTable">
               <tr>
-                <th class="th1"></th>
                 <th class="th1">거래처번호</th>
                 <th class="th1">거래처명</th>
                 <th class="th1">대표자</th>
@@ -47,7 +46,6 @@
               		<th colspan="4">조회된 거래처가 없습니다.</th>
               </tr>
               <tr class="tr1 trs" th:each="client : ${ clientList }">
-	           	   <td><input type="checkbox" name="inactive"></td>
 	               <td th:text="${ client.cntNo }" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
 	               <td th:text="${ client.cntName }" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
 	               <td th:text="${ client.cntRepName }" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>

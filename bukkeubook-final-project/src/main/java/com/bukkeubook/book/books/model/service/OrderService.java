@@ -82,9 +82,15 @@ public class OrderService {
 	}
 
 	@Transactional
-	public void registOrder(OrderListDTO order) {
+	public Boolean registOrder(OrderListDTO order) {
 		
-		simpleOrderRepository.save(modelMapper.map(order, OrderList.class));
+		try{
+			simpleOrderRepository.save(modelMapper.map(order, OrderList.class));
+		} catch(IllegalArgumentException e){
+			return false;
+		}
+		
+		return true;
 	}
 
 	public List<BookDTO> searchOrderList(String searchCondition, String searchValue) {

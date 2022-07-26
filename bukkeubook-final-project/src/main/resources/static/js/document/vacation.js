@@ -131,7 +131,7 @@ function sendData() {
 
 			let startArr = start.split('-');
 			let endArr = end.split('-');
-
+			let today = new Date();
 
 			let startDateCompare = new Date(startArr[0], parseInt(startArr[1]) - 1, parseInt(startArr[2]));
 			let endDateCompare = new Date(endArr[0], parseInt(endArr[1]) - 1, parseInt(endArr[2]));
@@ -154,7 +154,15 @@ function sendData() {
 			let endDate = $("#endDate").val();
 
 			console.log(getDateDiff(startDate,endDate));
-
+			
+			if(today > startDateCompare){
+				Swal.fire({
+					icon: 'warning',
+					title: '신청날짜 확인',
+					text: '금일 이후로 다시 작성해주세요.'
+				})
+			} else { countCheck++; }
+			
 			if(getDateDiff(startDate,endDate) > $("#dayoffRemain").val()){
 				console.log("nooooooooo");
 				Swal.fire({
@@ -222,7 +230,7 @@ function sendData() {
 				})
 			} else { countCheck++; }
 
-			if (countCheck == 8) {
+			if (countCheck == 9) {
 				$("#submitReport").submit();
 			}
 

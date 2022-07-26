@@ -86,7 +86,7 @@
                 <th class="th1">창고보유재고</th>
                 <th class="th1">매장보유재고</th>
                 <th class="th1">입고수량</th>
-                <th class="th1"><!-- <button onclick="AllDel()" class="productBtn delBtn">전체삭제</button> --></th>
+                <th class="th1"><button type="button" onclick="AllDel()" class="productBtn delBtn">전체삭제</button></th>
               </tr>
           </table><br><br>
         <div id="newBookDiv">
@@ -94,12 +94,13 @@
           <button type="button" class="productBtn newBookBtn" id="formCheck">등록완료</button>
           <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
          </div>       
-        </form>
         </div> <!------------------------ 본문 종료---------------------------->
+        </form>
 	
 	<br><br>
 	
-	<script>	
+	<script>
+		var n = 0;
 		var existData = [];
 		$('#findBtn').click(function(){
 		
@@ -176,7 +177,8 @@
 		            } else if(success == 1){
 		            	console.log("추가함"); 
 			            existData.push(td.eq(0).text());
-		   	        if(whSt.substr(0 , 1) > 0){
+			            n += 1;
+		   	        /* if(whSt.substr(0 , 1) > 0){ */
 		   	            
 		   	            
 		   	            
@@ -190,10 +192,9 @@
 		   	            const newCell6 = newRow.insertCell(5);
 		   	            const newCell7 = newRow.insertCell(6);
 		   	            const newCell8 = newRow.insertCell(7);
-		   	            
-		   	            var index = newRow.rowIndex;
-		   	            var no = "no" + index;
-		   	            var amount = "amount" + index;
+		   	       		var index = newRow.rowIndex;
+		   	            var no = "no" + n;
+		   	            var amount = "amount" + n;
 		   	            
 		   	            var test = document.getElementById("bottomTable").getElementsByTagName("tr")[1].getElementsByTagName("td")[0];
 		   	            
@@ -206,8 +207,8 @@
 		   	            newCell7.innerHTML = '<input type="number" class="outputValue" id="out" name="' + amount + '" value="0" min="0">';
 		   	            newCell8.innerHTML = '<input class="productBtn delBtn" type="button" value="삭제" onclick="SomeDeleteRowFunction(this)">';
 		   	            
-		   	            rownum = document.getElementById("rownum");
-		   	            rownum.value = index;
+		   	          /*   rownum = document.getElementById("rownum");
+		   	            rownum.value = index; */
 		   	            
 		   	            $('.outputValue').blur(function(){
 		   	    			const test1 = $('.outputValue').val();
@@ -297,14 +298,8 @@
 				        	});
 			            });
 			            
-		   	        } else {
-		   	        	Swal.fire({
-		   	                icon: 'warning',
-		   	                title: '재고수량을 확인 해 주세요!',
-		   	                text: '수량이 1ea 이상인 도서만 출고 가능합니다.',
-		   	           		 });
-		   	   		   }	
-		            }
+		   	        }
+		            /* } */
 		   		});	
 		   				}
 		   			})
@@ -381,6 +376,10 @@
 	              })
 	 			  return false;
  	  		}
+	  		/* const table3 = document.getElementById('bottomTable');
+	  		var tableRows = table3.rows.length - 1; */
+	  		/* $('#rownum').val(tableRows); */
+	  		$('#rownum').val(n);
 	  		$("#inputForm").submit();
 		})
 		    /* 행 전체삭제 */
@@ -392,9 +391,10 @@
 			
 		    /* 선택한 행 삭제 */
 		    function SomeDeleteRowFunction(o){
-		      var p=o.parentNode.parentNode;
-		         p.parentNode.removeChild(p);
-		    }   
+		      /* var p=o.parentNode.parentNode;
+		         p.parentNode.removeChild(p); */
+		    	o.closest("tr").remove();
+		    }
 		    
     	  $().ready(function () {
 		    $(".backBtn").click(function () {

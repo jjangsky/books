@@ -55,38 +55,12 @@
                 <td th:text="${ appVac.vacStartDate }"></td>
                 <td th:text="${ appVac.vacEndDate }"></td>
                 <td><button type="button" class="detail contents" th:onclick="'location.href = \'' + @{/empAnnual/restDetailSelect/(vacNo=${appVac.vacNo})} + '\''">상세보기</button></td>
+              </tr>  
           </table><br><br>
           <div th:replace="manage/empAnnual/restPaging.html"></div>
           <br><br>
 
       </div> <!-- 헤더 포함 본문 종료 div-->
-<!--        <script th:inline="javascript">  
-     $().ready(function () {
-		    $(".backBtn").click(function () {
-		        Swal.fire({
-		            title: '작성내용이 모두 사라집니다.',
-		            text: "진행 하시겠습니까?",
-		            icon: 'warning',
-		            showCancelButton: true,
-		            confirmButtonColor: '#c5bfbf',
-		            cancelButtonColor: '#c5bfbf',
-		            confirmButtonText: '승인',
-		            cancelButtonText: '취소'
-		        }).then((result) => {
-		            if (result.isConfirmed) {
-		                window.history.back();
-		            }
-		        })
-		    });
-		});
-		
-        $(".updateBtn").click(function () {
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: '수정이 성공적으로 완료되었습니다!',
-            });
-        });
-        </script>  --> 
+
 </body>
 </html>
