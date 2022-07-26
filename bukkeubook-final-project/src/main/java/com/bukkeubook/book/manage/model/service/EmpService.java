@@ -23,6 +23,7 @@ import com.bukkeubook.book.manage.model.entity.Emp;
 import com.bukkeubook.book.manage.model.entity.EmpAndDept;
 import com.bukkeubook.book.manage.model.entity.MemberRole;
 import com.bukkeubook.book.manage.model.entity.ProfPhoto;
+import com.bukkeubook.book.manage.model.repository.EmpAndDeptRepository;
 import com.bukkeubook.book.manage.model.repository.EmpRepository;
 import com.bukkeubook.book.manage.model.repository.MemberRoleRepository;
 import com.bukkeubook.book.manage.model.repository.OriginalEmpRepository;
@@ -35,9 +36,10 @@ public class EmpService {
 	private final OriginalEmpRepository originEmpRepository;
 	private final ProfilePhotoRepository profilePhotoRepository;
 	private final MemberRoleRepository roleRepository;
+	private final EmpAndDeptRepository empAndDeptRepository;
 	private final ModelMapper modelMapper;		//앤티티를 디티오로 변환 or 디티오를 엔티티로 변환
 	@Autowired
-	public EmpService(EmpRepository empRepository, ModelMapper modelMapper
+	public EmpService(EmpAndDeptRepository empAndDeptRepository, EmpRepository empRepository, ModelMapper modelMapper
 					 ,OriginalEmpRepository originEmpRepository, ProfilePhotoRepository profilePhotoRepository
 					 ,MemberRoleRepository roleRepository) {
 		this.empRepository = empRepository;
@@ -45,6 +47,7 @@ public class EmpService {
 		this.originEmpRepository = originEmpRepository;
 		this.profilePhotoRepository = profilePhotoRepository;
 		this.roleRepository = roleRepository;
+		this.empAndDeptRepository = empAndDeptRepository;
 	}
 
 	/* 사원조회 & 검색기능 & 페이징 */
@@ -148,56 +151,34 @@ public class EmpService {
 	}	
 	
 	/* 사원정보 수정 */
-	public EmpDTO findEmpByEmpNo(int empNo) {
+	public EmpAndDeptDTO findEmpByEmpNo(int empNo) {
 		System.out.println("확인1111111111111");
 
-		Emp emp = originEmpRepository.findById(empNo).get();
+		EmpAndDept emp = empAndDeptRepository.findById(empNo).get();
 		System.out.println("확인222222222222222");
 
 		
 		System.out.println("레포지토리      " + emp);
 		
-		return modelMapper.map(emp, EmpDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
+		return modelMapper.map(emp, EmpAndDeptDTO.class); //앤티티를 넣어달라고 요청 -> modelMapper
 	}
 	
 	@Transactional
-	public void modifyEmp(EmpDTO newEmp) {
+	public void modifyEmp(EmpDTO emp) {
 		
-		Emp foundemp = originEmpRepository.findById(newEmp.getEmpNo()).get();
+		Emp findEmp = originEmpRepository.findById(emp.getEmpNo()).get();
 		
-		foundemp.setEmpName(newEmp.getEmpName());
-		foundemp.setDeptCode(newEmp.getDeptCode());
-		foundemp.setEmpJobCode(newEmp.getEmpJobCode());
-		foundemp.setEmpPhone1(newEmp.getEmpPhone1());
-		foundemp.setEmpPhone2(newEmp.getEmpPhone2());
-		foundemp.setEmpPhone3(newEmp.getEmpPhone3());
-		foundemp.setEmpEmail(newEmp.getEmpEmail());
-		foundemp.setEmpAddress(newEmp.getEmpAddress());
-		foundemp.setEmpDAddress(newEmp.getEmpDAddress());
-		foundemp.setEmpTotalSal(newEmp.getEmpTotalSal());
+		findEmp.setDeptCode(emp.getDeptCode());
+		findEmp.setEmpAddress(emp.getEmpAddress());
+		findEmp.setEmpDAddress(emp.getEmpDAddress());
+		findEmp.setEmpEmail(emp.getEmpEmail());
+		findEmp.setEmpTotalSal(emp.getEmpTotalSal());
+		findEmp.setEmpPhone1(emp.getEmpPhone1());
+		findEmp.setEmpPhone2(emp.getEmpPhone2());
+		findEmp.setEmpPhone3(emp.getEmpPhone3());
+		findEmp.setEmpJobCode(emp.getEmpJobCode());
 		
 	}
-//
-//	@Transactional
-//	public void modifyEmp(EmpDTO emp) {
-//		
-//		Emp emp1 = originEmpRepository.findById(emp.getEmpNo()).get();
-//		
-//		emp1.setEmpName(emp1.getEmpName());
-//		emp1.setDeptCode(emp1.getDeptCode());
-//		emp1.setEmpJobCode(emp1.getEmpJobCode());
-//		emp1.setEmpPhone1(emp1.getEmpPhone1());
-//		emp1.setEmpPhone2(emp1.getEmpPhone2());
-//		emp1.setEmpPhone3(emp1.getEmpPhone3());
-//		emp1.setEmpEmail(emp1.getEmpEmail());
-//		emp1.setEmpAddress(emp1.getEmpAddress());
-//		emp1.setEmpDAddress(emp1.getEmpDAddress());
-//		emp1.setEmpPwd(emp1.getEmpPwd());
-//		emp1.setEmpTotalSal(emp1.getEmpTotalSal());
-//		
-//		originEmpRepository.save(emp1);
-//		return;
-//	}
 	
 	/* 방금 가입한 사원 조회 */
 	public List<EmpAndDeptDTO> selectLastEmp() {
@@ -292,6 +273,8 @@ public class EmpService {
 		 emp = originEmpRepository.findByEmpEndDate(emp);
 		
 	}
+
+	
 
 
 }

@@ -34,13 +34,13 @@
                         <td>업종</td>
                         <td><input id="cntCate" type="text" name="cntCate" th:value="${ client.cntCate }" maxlength="30"></td>
                         <td>사업자등록번호</td>
-                        <td><input id="cntRegNo" type="text" name="cntRegNo" th:value="${ client.cntRegNo}"></td>
+                        <td th:text="${ client.cntRegNo}"></td>
                     </tr>
                     <tr>
                         <td>업태</td>
                         <td><input id="cntType" type="text" name="cntType" th:value="${ client.cntType }" maxlength="30"></td>
                         <td>법인등록번호</td>
-                        <td><input id="corpRegNo" type="text" name="corpRegNo" th:value="${ client.corpRegNo }"></td>
+                        <td th:text="${ client.corpRegNo }"></td>
                     </tr>
                     <tr>
                         <td>대표자</td>
