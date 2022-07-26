@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
 <link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
@@ -59,8 +60,10 @@
                 <th class="th1">휴가 시작일</th>
                 <th class="th1">휴가 종료일</th>
                 <th class="th1">신청 일자</th>
- 
               </tr>
+ 				<tr th:if="${#lists.isEmpty(vacationList)}">
+               		    <td class="td1" colspan="4">검색 결과가 존재하지 않습니다.</td>
+        	  	</tr>
               <tr class="hover" th:each="vac : ${ vacationList }">
                 <td th:text="${ vac.vacNo }"></td>
                 <td th:text="${ vac.vacStartDate }"></td>
@@ -72,7 +75,8 @@
         </div> 
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
        	  <div th:replace="/mypage/annualPaging.html"></div> 
-	
+		<br><br>
+			
 	<script>
 	/* 검색 시작일이 검색 종료일보다 값이 큰 경우 경곰*/
     $("#searchbtn1").click(function(){ 

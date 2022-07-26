@@ -53,6 +53,9 @@
                 <th class="th1">출근시간</th>
                 <th class="th1">퇴근시간</th>
               </tr>
+              <tr th:if="${#lists.isEmpty(attendList)}">
+               		    <td class="td1" colspan="5">검색 결과가 존재하지 않습니다.</td>
+        	  	</tr>
               <tr class="hover" th:each="att : ${ attendList }">
                 <td th:text="${ att.attDate }"></td>
                 <td th:text="${ att.emp.empNo }"></td>

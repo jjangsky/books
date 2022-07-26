@@ -47,6 +47,14 @@ public class MypageController {
 		List<CalendarDTO> calendar = mypageService.findMyCalendar(memberCode);
 		System.out.println(calendar);
 		
+			
+		/* 캘린더 API 조회값 범위 수정하기 */
+		for(int i = 0; i<calendar.size(); i++) {
+			long endTime = calendar.get(i).getEnd().getTime() + 86400000;
+			java.sql.Date end = new java.sql.Date(endTime);
+			calendar.get(i).setEnd(end);
+		}
+		
 		mv.addObject("calendar", calendar);
 		mv.setViewName("mypage/calendar");
 		
@@ -64,6 +72,15 @@ public class MypageController {
 		int memberInfo = customUser.getEmpNo();
 		newCalendar.setEmpNo(memberInfo);
 		System.out.println(newCalendar);
+		
+		System.out.println(newCalendar.getStart());
+		System.out.println(newCalendar.getEnd());
+		
+		if(!newCalendar.getStart().toString().equals(newCalendar.getEnd().toString())) {
+			long endTime = newCalendar.getEnd().getTime() + 86390000;
+			java.sql.Date end = new java.sql.Date(endTime);
+			newCalendar.setEnd(end);
+		}
 		
 		
 		boolean cal = mypageService.registNewCalendar(newCalendar);

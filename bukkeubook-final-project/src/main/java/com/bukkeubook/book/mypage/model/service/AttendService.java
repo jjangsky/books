@@ -1,5 +1,6 @@
 package com.bukkeubook.book.mypage.model.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -81,12 +82,15 @@ public class AttendService {
 	
 	/* 마이페이지에서 퇴근 등록하기 */
 	@Transactional
-	public boolean modifyCheckOut(AttendDTO attend, int memberInfo) {
+	public boolean modifyCheckOut(AttendDTO attend, int memberInfo, long time) {
+		
 		
 		Attend modifyCheckOut = attendRepository.findByEmpNoAndAttDateLike(memberInfo, attend.getAttDate());
 		
+		java.sql.Date today = new java.sql.Date(time);
+		
 		try {
-			modifyCheckOut.setAttEnd(attend.getAttDate());
+			modifyCheckOut.setAttEnd(today);
 		}catch(IllegalArgumentException exception) {
             return false;
 		}

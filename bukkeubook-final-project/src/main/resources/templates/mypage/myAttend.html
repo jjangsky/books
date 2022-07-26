@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
 <link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
@@ -21,8 +22,7 @@
    			 
         <div class="checkdiv">
           
-          	<!--<p>[[${ attend[0].attDate}]]</p>
-          	<p>[[${ currentDate } ]]</p> -->
+          	
           	
 			<th:block th:unless="${ attend1[0].attDate.toString == currentDate.toString }">
 			  <div style='position: absolute; top: 20px; left: 20%; '>
@@ -70,16 +70,19 @@
                 <th class="th1">출근 시간</th>
                 <th class="th1">퇴근 시간</th>
               </tr>
+              <tr th:if="${#lists.isEmpty(attend)}">
+               		    <td class="td1" colspan="4">검색 결과가 존재하지 않습니다.</td>
+        	  </tr>
               <tr class="hover" th:each="att : ${ attend }">
                 <td th:text="${ att.attDate }"></td>
                 <td th:text="${#dates.format(att.attStart, 'HH:mm:ss')}"></td>
                 <td th:text="${#dates.format(att.attEnd, 'HH:mm:ss')}"></td>
-
               </tr>
           </table>
         </div> <!------------------------ 본문 종료---------------------------->
          <br><br><br><br><br><br><br><br><br><br>
        	   <div th:replace="/mypage/attendPaging.html"></div> 
+       	   <br><br>
        
         <script>
         
@@ -184,8 +187,14 @@
                 })
             });
         });
-		
-		
+        const successMessage = "[[${ successMessage }]]";
+        if(successMessage){
+			Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '성공적으로 완료되었습니다!',
+            })
+        }
         </script>
 	    
 </body>
