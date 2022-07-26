@@ -26,7 +26,7 @@
             <th class="th1">부서명</th>
             <th class="th1">부서대표번호</th>
           </tr>
-          <tr class="trs" th:each="dept : ${ deptList }" th:onclick="'location.href = \'' + @{/dept/chartDetail/(deptCode=${dept.deptCode})} + '\''">
+          <tr class="trs" th:each="dept : ${ deptList }" th:onclick="'location.href = \'' + @{/deptCommon/chartDetail/(deptCode=${dept.deptCode})} + '\''">
             <td th:text="${ dept.deptCode }"></td>
             <td th:text="${ dept.deptName }"></td>
             <td th:text="${ dept.deptRepPhone }"></td>
@@ -37,7 +37,7 @@
     <script th:inline="javascript">
     
 	    $(".trs").on( "mouseover", function() {
-			$(this).css( "background-color", "#FEFCC6" );
+			$(this).css( "background-color", "#eeeeee" );
 			$(this).children("td").css( "cursor", "pointer" );
 		});
 		$(".trs").on( "mouseleave", function() {
