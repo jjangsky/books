@@ -165,19 +165,23 @@ public class EmpAnnualService {
 	
 	/* 휴가 신청 */
 	@Transactional
-	public void findByVacNo(String delayReson, int vacNo) {
+	public Boolean findByVacNo(String delayReson, int vacNo) {
 		
 		System.out.println("ServiceServiceServiceServiceService");
 		System.out.println(delayReson);
 		System.out.println(vacNo);
-		
-		String vacStatus = "반려";
-		AppVacation appvac = appVacationRepository2.findById(vacNo).get();
-		
-		System.out.println(appvac);
-		
-		appvac.setVacCompanion(delayReson);
-		appvac.setVacStatus(vacStatus);
+		try {
+			String vacStatus = "반려";
+			AppVacation appvac = appVacationRepository2.findById(vacNo).get();
+			
+			System.out.println(appvac);
+			
+			appvac.setVacCompanion(delayReson);
+			appvac.setVacStatus(vacStatus);
+		} catch (IllegalArgumentException exception) {
+			return false;
+		}
+		return true;
 	}
 
 

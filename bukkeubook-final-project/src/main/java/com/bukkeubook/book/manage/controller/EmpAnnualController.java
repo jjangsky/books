@@ -203,9 +203,12 @@ public class EmpAnnualController {
 		String delayReson = reasonAdds;
 		int vacNo = Integer.valueOf(no);
 		
-		empAnnualService.findByVacNo(delayReson, vacNo);
-		
-		rttr.addFlashAttribute("successMessage", "성공");
+		Boolean check = empAnnualService.findByVacNo(delayReson, vacNo);
+		if(check) {
+			rttr.addFlashAttribute("successMessage", "성공");
+		} else {
+			rttr.addFlashAttribute("failMessage", "실패");
+		}
 		mv.setViewName("redirect:/empAnnual/restSelect");
 		return mv;
 	}
