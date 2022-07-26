@@ -29,48 +29,47 @@
           <tbody>
             <tr>
               <td class="deemp3">휴가 취소 번호</td>
-              <td><input name="vacCancNo" th:value="${ cancelVacDetail.vacCancNo }"></td>
+              <td><input name="vacCancNo" th:value="${ cancelVacDetail.vacCancNo }" readonly style="border:none"></td>
             </tr>
             <tr>
               <td class="deemp3">휴가 번호</td>
-              <td><input name="vacNo" th:value="${ cancelVacDetail.vacNo }"></td>
+              <td><input name="vacNo" th:value="${ cancelVacDetail.vacNo }" readonly style="border:none"></td>
             </tr>
             <tr>
               <td class="deemp3">휴가 취소 신청 일자</td>
-              <td><input name="vacCancDate" th:value="${ cancelVacDetail.vacCancDate }"></td>
+              <td><input name="vacCancDate" th:value="${ cancelVacDetail.vacCancDate }" readonly style="border:none"></td>
             </tr>
             <tr>
               <td class="deemp3">부서</td>
-              <td><input name="deptName" th:value="${ cancelVacDetail.appvacEMP.empAndDept.dept.deptName }"></td>
+              <td><input name="deptName" th:value="${ cancelVacDetail.appvacEMP.empAndDept.dept.deptName }" readonly style="border:none"></td>
             </tr>
             <tr>
               <td class="deemp3">사원번호</td>
-              <td><input name="empNo" th:value="${ cancelVacDetail.empNo }"></td>
+              <td><input name="empNo" th:value="${ cancelVacDetail.empNo }" readonly style="border:none"></td>
             </tr>
             <tr>
               <td class="deemp3">사원명</td>
-              <td><input name="empName" th:value="${ cancelVacDetail.appvacEMP.empAndDept.empName }"></td>
+              <td><input name="empName" th:value="${ cancelVacDetail.appvacEMP.empAndDept.empName }" readonly style="border:none"></td>
             </tr>
             <tr>
               <td class="deemp3">휴가 신청 시작일</td>
-              <td><input name="vacStartDate" th:value="${ cancelVacDetail.appvacEMP.vacStartDate }"></td>
+              <td><input name="vacStartDate" th:value="${ cancelVacDetail.appvacEMP.vacStartDate }" readonly style="border:none"></td>
             </tr>
             <tr>
               <td class="deemp3">휴가 신청 종료일</td>
-              <td><input name="vacEndDate" th:value="${ cancelVacDetail.appvacEMP.vacEndDate }"></td>
+              <td><input name="vacEndDate" th:value="${ cancelVacDetail.appvacEMP.vacEndDate }" readonly style="border:none"></td>
             </tr>
-
-            <tr>
+<!--             <tr>
               <td class="deemp3">반려 사유</td>
               <td id="cancleReason" name="vacCancReason" th:value="${ cancelVacDetail.vacCancReason }"></td>
-            </tr>
+            </tr> -->
           </tbody>
           </table>
         </div>
         <br><br>
 	        <button type="button" class="access btn updateBtn">승인</button>
 	        <button type="button" class="cancle btn backBtn">목록으로</button>
-	        <button type="button" class="cancle btn" onclick="delayClick()">반려</button>
+	        <button type="button" class="cancle btn cancelBtn">반려</button>
         </form>
         <script>
 	    $(".updateBtn").click(function(){
@@ -85,6 +84,7 @@
 	            cancelButtonText: '취소'
 	        }).then((result) => {
 	        	$("#cancelVactoDayOff").submit();
+	        	location.href="/empAnnual/restCancelSelect/" + "/" + vacCancNo;
 	        } );
 	      } );
 
@@ -92,21 +92,21 @@
 		    window.history.back(); 
 		    });
 	    
-          function delayClick() {
-            var cancleReason = document.getElementById("cancleReason");
-            let text;
-            if(confirm("반려하시겠습니까?")) {
-              let delayReson = prompt("반려 사유를 입력해주세요");
-              if(delayReson.length == 0) {
-                alert("사유를 입력하지 않아 반려 등록이 취소되었습니다.")
-              } else {
-                alert("반려 사유가 등록되었습니다.")
-                cancleReason.innerText = delayReson;
-              }
-            } else {
-              alert("반려가 취소되었습니다.")
-            }
-          }
+	    $(".cancelBtn").click(function(){
+	        Swal.fire({
+	            title: '반려 하시겠습니까?',
+	            text: "반려 버튼을 누르면 반려 처리가 승인이 됩니다.",
+	            icon: 'warning',
+	            showCancelButton: true,
+	            confirmButtonColor: '#c5bfbf',
+	            cancelButtonColor: '#c5bfbf',
+	            confirmButtonText: '반려',
+	            cancelButtonText: '취소'
+	        }).then((result) => {
+	        	$("#cancelVactoDayOff").submit();
+	        	location.href="/empAnnual/restCancelSelect/" + "/" + vacCancNo;
+	        } );
+	      } );
         </script>
 </body>
 </html>

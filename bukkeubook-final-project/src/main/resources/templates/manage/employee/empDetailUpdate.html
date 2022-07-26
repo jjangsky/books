@@ -48,11 +48,10 @@
                 변경 : 
                  <select class="sel3" name="deptCode" >
                   <option value="">None</option>
-                  <option value="1"></option>
-                  <option value="2">① 재무부</option>
-                  <option value="3">② 인사부</option>
-                  <option value="4">③ 총무부</option>
-                  <option value="5">④ 도서물류부</option>
+                  <option value="1">재무부</option>
+                  <option value="2">인사부</option>
+                  <option value="3">총무부</option>
+                  <option value="4">도서물류부</option>
                 </select> 
                 </td>
               </tr>
@@ -179,7 +178,24 @@
                }
             }).open();
          }
-       
+	
+         $().ready(function () {
+             $(".updateBtn").click(function () {
+                 Swal.fire({
+                     title: '수정 하시겠습니까?',
+                     icon: 'warning',
+                     showCancelButton: true,
+                     confirmButtonColor: '#3085d6',
+                     cancelButtonColor: '#d33',
+                     confirmButtonText: '승인',
+                     cancelButtonText: '취소'
+                 }).then((result) => {
+                	 location.href="/manage/empDetailUpdate";
+					
+                 })
+             });
+         });
+         
         $("#probtn").click(function(){
             Swal.fire({
                   title: '프로필 사진을 변경 하시겠습니까?',
