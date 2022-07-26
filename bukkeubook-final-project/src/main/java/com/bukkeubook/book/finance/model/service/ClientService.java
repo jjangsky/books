@@ -85,9 +85,7 @@ public class ClientService {
 
 		foundClient.setCntName(client.getCntName());
 		foundClient.setCntCate(client.getCntCate());
-		foundClient.setCntRegNo(client.getCntRegNo());
 		foundClient.setCntType(client.getCntType());
-		foundClient.setCorpRegNo(client.getCorpRegNo());
 		foundClient.setCntRepName(client.getCntRepName());
 		foundClient.setCntAddress(client.getCntAddress());
 		foundClient.setCntPhone(client.getCntPhone());
