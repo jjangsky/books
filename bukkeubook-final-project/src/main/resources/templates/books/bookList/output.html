@@ -94,6 +94,7 @@
 		
 	</script>
 	<script th:inline="javascript">
+		var n = 0;
 		var existData = [];
 		$('#inputFind').blur(function(){
 			const tagExp = /(<([^>]+)>)/gi;
@@ -205,7 +206,7 @@
 		            } else if(success == 1){
 		            	console.log("추가함"); 
 			            existData.push(td.eq(0).text());
-		            
+			            n += 1;
 		   	        if(whSt.substr(0 , 1) > 0){
 		   	            
 		   	            
@@ -222,12 +223,10 @@
 		   	            const newCell8 = newRow.insertCell(7);
 		   	            
 		   	            var index = newRow.rowIndex;
-		   	            var no = "no" + index;
-		   	            var amount = "amount" + index;
-		   	            console.log(bookNo);
+		   	            var no = "no" + n;
+		   	            var amount = "amount" + n;
 		   	            
 		   	            var test = document.getElementById("bottomTable").getElementsByTagName("tr")[1].getElementsByTagName("td")[0];
-		   	            console.log(test);
 		   	            
 		   	            newCell1.innerHTML = td.eq(0).text()  + '<input type="hidden" name="' + no + '" value="' + td.eq(0).text() + '">';
 		   	            newCell2.innerHTML = td.eq(1).text();
@@ -238,8 +237,8 @@
 		   	            newCell7.innerHTML = '<input type="number" class="outputValue" name="' + amount + '" value="0" min="0">';
 		   	            newCell8.innerHTML = '<input class="productBtn delBtn" type="button" value="삭제" onclick="SomeDeleteRowFunction(this)">';
 		   	            
-		   	            rownum = document.getElementById("rownum");
-		   	            rownum.value = index;
+		   	            /* rownum = document.getElementById("rownum");
+		   	            rownum.value = index; */
 		   	            
 		   	            $('.outputValue').blur(function(){
 		   	    			const test1 = $('.outputValue').val();
@@ -459,9 +458,9 @@
 	              })
 	 			  return false;
  	  		}
- 	  		const table3 = document.getElementById('bottomTable');
-	  		var tableRows = table3.rows.length - 1;
-	  		$('#rownum').val(tableRows);
+ 	  		/* const table3 = document.getElementById('bottomTable');
+	  		var tableRows = table3.rows.length - 1; */
+	  		$('#rownum').val(n);
  	  		$("#outputForm").submit();
          });
 		

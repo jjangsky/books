@@ -353,18 +353,23 @@ public class BookController extends HttpServlet{
 			int relNo = bookService.outputReceipt(relList);
 			
 			for(int j = 1; j <= rownum; j++) {
-				String no = request.getParameter("no"+ j);
-				int amount = Integer.valueOf(request.getParameter("amount"+ j));
-				relBkList.setRelNo(relNo);
-				relBkList.setBkNo(no);
-				relBkList.setRelBkAmount(amount);
-				
-				access1 = bookService.outputReceipt2(relBkList);
-				
-				BookDTO bookDTO = new BookDTO();
-				bookDTO.setNo(no);
-				bookDTO.setWhSt(amount);
-				access2 = bookService.outputReceipt3(bookDTO, amount);
+				if(request.getParameter("no"+ j) == null) {
+					System.out.println("rownum입니다." + rownum);
+				} else {
+					String no = request.getParameter("no"+ j);
+					int amount = Integer.valueOf(request.getParameter("amount"+ j));
+					System.out.println("no입니다." + no);
+					relBkList.setRelNo(relNo);
+					relBkList.setBkNo(no);
+					relBkList.setRelBkAmount(amount);
+					
+					access1 = bookService.outputReceipt2(relBkList);
+					
+					BookDTO bookDTO = new BookDTO();
+					bookDTO.setNo(no);
+					bookDTO.setWhSt(amount);
+					access2 = bookService.outputReceipt3(bookDTO, amount);
+				}
 			}
 		}
 		if(access1 == true && access2 == true) {
@@ -399,20 +404,25 @@ public class BookController extends HttpServlet{
 			int stCode = bookService.inputReceipt(stockList);
 			
 			for(int j = 1; j <= rownum; j++) {
-				String no = request.getParameter("no"+ j);
-				int amount = 0;
-				amount = Integer.valueOf(request.getParameter("amount"+ j));
-				stockBookList.setBkNo(no);
-				stockBookList.setStockBkAmount(amount);
-				stockBookList.setStCode(stCode);
-				System.out.println(no);
-				System.out.println(amount);
-				access1 = bookService.inputReceipt2(stockBookList);
 				
-				BookDTO bookDTO = new BookDTO();
-				bookDTO.setNo(no);
-				bookDTO.setWhSt(amount);
-				access2 = bookService.inputReceipt3(bookDTO, amount, selectInput);
+				if(request.getParameter("no"+ j) == null) {
+					System.out.println("null입니다.");
+				} else {
+					String no = request.getParameter("no"+ j);
+					int amount = 0;
+					amount = Integer.valueOf(request.getParameter("amount"+ j));
+					stockBookList.setBkNo(no);
+					stockBookList.setStockBkAmount(amount);
+					stockBookList.setStCode(stCode);
+					System.out.println(no);
+					System.out.println(amount);
+					access1 = bookService.inputReceipt2(stockBookList);
+					
+					BookDTO bookDTO = new BookDTO();
+					bookDTO.setNo(no);
+					bookDTO.setWhSt(amount);
+					access2 = bookService.inputReceipt3(bookDTO, amount, selectInput);
+				}
 					
 					
 			}
