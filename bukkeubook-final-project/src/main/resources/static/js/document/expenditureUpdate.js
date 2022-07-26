@@ -222,6 +222,15 @@ window.onload = function() {
 	$("#title").keyup(function() {
 		let title = $("#title").text();
 		// console.log(title.length);
+		
+		if(title.length > 50){
+			Swal.fire({
+				icon: 'warning',
+				title: '제목 글자수 초과',
+				text: '50자 이하로 입력해주세요.'
+			})
+		}
+		
 		$("#title2").text(title);
 		$("#docTitle1").val(title);
 		$("#submitTitle").val(title);

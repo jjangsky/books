@@ -1,26 +1,26 @@
 window.onload = function() {
-	
-	$(function(){
+
+	$(function() {
 		//let empNo = $("#empNo1").val();
 		$.ajax({
-			url:"/document/empInfo/",
-			success: function(data){
+			url: "/document/empInfo/",
+			success: function(data) {
 				console.log(data.empName);
 				console.log(data.deptName);
 				console.log(data.docNo);
 				console.log(data);
-				
+
 				$("#writer2").text(data.empName);
 				$("#dept2").text(data.deptName);
 				$("#docnumber").text(data.docNo);
 			},
-			error: function(error){
+			error: function(error) {
 				console.log(error);
 			}
 		});
 	});
 
-	$("#clear").click(function(){
+	$("#clear").click(function() {
 		$("#account1").val("");
 		$("#acco1").val("");
 		$("#deptName1").val("");
@@ -43,22 +43,22 @@ window.onload = function() {
 		$("#deptCode3 option:eq(0)").prop("selected", true);
 	})
 
-	$("#empList").change(function(){
+	$("#empList").change(function() {
 		let appro = $(this).val();
 		let account = $("#empList option:selected").text();
 		let deptName = $("#deptCode option:selected").text();
 		console.log(appro);
 		console.log(account);
 		console.log(deptName);
-		
+
 		let approver1 = deptName + "<br>" + account
 		$("#account1").val(appro);
 		$("#acco1").val(account);
 		$("#deptName1").val(deptName);
 		$("#selacc1").html(approver1);
 	});
-	
-	$("#empList2").change(function(){
+
+	$("#empList2").change(function() {
 		let appro = $(this).val();
 		let account = $("#empList2 option:selected").text();
 		let deptName = $("#deptCode2 option:selected").text();
@@ -71,8 +71,8 @@ window.onload = function() {
 		$("#deptName2").val(deptName);
 		$("#selacc2").html(approver1);
 	});
-	
-	$("#empList3").change(function(){
+
+	$("#empList3").change(function() {
 		let appro = $(this).val();
 		let account = $("#empList3 option:selected").text();
 		let deptName = $("#deptCode3 option:selected").text();
@@ -121,15 +121,15 @@ window.onload = function() {
 				//console.log(data);
 				//console.table(data);
 
-				
+
 				const $empList = $("#empList");
 
 				$empList.text("");
-				
+
 				$empList.append($("<option>").val("").text("----"));
 
 				for (let index in data) {
-					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
+					let jobEmp = data[index].empName + "  " + data[index].empJobCode;
 					$empList.append($("<option>").val(data[index].empNo).text(jobEmp));
 				}
 			},
@@ -152,11 +152,11 @@ window.onload = function() {
 				const $empList = $("#empList2");
 
 				$empList.text("");
-				
+
 				$empList.append($("<option>").val("").text("----"));
 
 				for (let index in data) {
-					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
+					let jobEmp = data[index].empName + "  " + data[index].empJobCode;
 					$empList.append($("<option>").val(data[index].empNo).text(jobEmp));
 				}
 			},
@@ -179,11 +179,11 @@ window.onload = function() {
 				const $empList = $("#empList3");
 
 				$empList.text("");
-				
+
 				$empList.append($("<option>").val("").text("----"));
 
 				for (let index in data) {
-					let jobEmp = data[index].empName +"  "+data[index].empJobCode ;
+					let jobEmp = data[index].empName + "  " + data[index].empJobCode;
 					$empList.append($("<option>").val(data[index].empNo).text(jobEmp));
 				}
 			},
@@ -248,6 +248,15 @@ window.onload = function() {
 	$("#title").keyup(function() {
 		let title = $("#title").val();
 		// console.log(title);
+
+		if (title.length > 50) {
+			Swal.fire({
+				icon: 'warning',
+				title: '제목 글자수 초과',
+				text: '50자 이하로 입력해주세요.'
+			})
+		}
+
 		$("#title2").text(title);
 	});
 
@@ -263,7 +272,7 @@ window.onload = function() {
 			cancelButtonText: '취소'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				
+
 				let countCheck = 0;
 
 				if ($("#title").val().length < 1 || $("#title").val() == "" || $("#title").val() == "  ") {
@@ -272,37 +281,37 @@ window.onload = function() {
 						title: '제목이 없습니다',
 						text: '문서의 제목을 입력해주세요.'
 					})
-				} else{countCheck++;}
-				
+				} else { countCheck++; }
+
 				if ($("#title").val().length > 50) {
 					Swal.fire({
 						icon: 'warning',
 						title: '제목 글자수 초과',
 						text: '50자 이하로 입력해주세요.'
 					})
-				} else{countCheck++;}
-				
+				} else { countCheck++; }
+
 				if ($(".note-editable").text().length < 1 || $(".note-editable").text() == "" || $(".note-editable").text() == "  ") {
 					Swal.fire({
 						icon: 'warning',
 						title: '내용이 없습니다',
 						text: '문서의 내용을 입력해주세요.'
 					})
-				} else{countCheck++;}
-				
-				if(countCheck == 3) {
-					
-				$("#docStatus1").val("임시저장");
-				let cnt = $(".description").val();
-				console.log(cnt)
-				$("#cnttt1").val(cnt);
+				} else { countCheck++; }
 
-				let sendDraft = $(".draft").html();
-				console.log(sendDraft);
-				$("#draftcnt1").val(sendDraft);
-				$("#temp").submit();
-				
-				}				
+				if (countCheck == 3) {
+
+					$("#docStatus1").val("임시저장");
+					let cnt = $(".description").val();
+					console.log(cnt)
+					$("#cnttt1").val(cnt);
+
+					let sendDraft = $(".draft").html();
+					console.log(sendDraft);
+					$("#draftcnt1").val(sendDraft);
+					$("#temp").submit();
+
+				}
 			}
 		});
 	});
@@ -349,80 +358,80 @@ window.onload = function() {
 function sendData() {
 
 	Swal.fire({
-			title: '결재 상신',
-			text: "작성하신 문서를 상신 하시겠습니까?",
-			icon: 'question',
-			showCancelButton: true,
-			confirmButtonColor: '#c5bfbf',
-			cancelButtonColor: '#c5bfbf',
-			confirmButtonText: '확인',
-			cancelButtonText: '취소'
-		}).then((result) => {
-			if (result.isConfirmed) {
-				
-				let countCheck = 0;
-			
-				if ($("#title").val().length < 1 || $("#title").val() == "" || $("#title").val() == "  ") {
-					Swal.fire({
-						icon: 'warning',
-						title: '제목이 없습니다',
-						text: '문서의 제목을 입력해주세요.'
-					})
-				} else{countCheck++;}
-				
-				if ($("#title").val().length < 5 || $("#title").val().length < 5) {
-					Swal.fire({
-						icon: 'warning',
-						title: '글자 수 부족',
-						text: '문서의 제목을 5글자 이상 입력해주세요.'
-					})
-				} else{countCheck++;}
-				
-				if ($("#title").val().length > 50) {
-					Swal.fire({
-						icon: 'warning',
-						title: '제목 글자수 초과',
-						text: '50자 이하로 입력해주세요.'
-					})
-				} else{countCheck++;}
-				
-				if ($(".note-editable").text().length < 1 || $(".note-editable").text() == "" || $(".note-editable").text() == "  ") {
-					Swal.fire({
-						icon: 'warning',
-						title: '내용이 없습니다',
-						text: '문서의 내용을 입력해주세요.'
-					})
-				} else{countCheck++;}
-				
-				if ($(".note-editable").text().length < 10) {
-					Swal.fire({
-						icon: 'warning',
-						title: '글자 수 부족',
-						text: '문서의 내용을 10글자 이상 입력해주세요.'
-					})
-				} else{countCheck++;}
-				
-				if ($("#stepNo").val() == "") {
-					Swal.fire({
-						icon: 'warning',
-						title: '결재단계 확인',
-						text: '단계 지정버튼을 눌러주세요!'
-					})
-				} else{countCheck++;}
-				
-				if(countCheck == 6) {
-					let sendDraft = $(".draft").html();
-					console.log(sendDraft);
-					$("#draftcnt2").val(sendDraft);
-					$("#docStatus2").val("대기");
-					let cnt = $(".description").val();
-					console.log(cnt)
-					$("#cnttt2").val(cnt);
-					$("#docTitle2").val($("#title").val());
-					$("#submitReport").submit();
-				}
-				
+		title: '결재 상신',
+		text: "작성하신 문서를 상신 하시겠습니까?",
+		icon: 'question',
+		showCancelButton: true,
+		confirmButtonColor: '#c5bfbf',
+		cancelButtonColor: '#c5bfbf',
+		confirmButtonText: '확인',
+		cancelButtonText: '취소'
+	}).then((result) => {
+		if (result.isConfirmed) {
+
+			let countCheck = 0;
+
+			if ($("#title").val().length < 1 || $("#title").val() == "" || $("#title").val() == "  ") {
+				Swal.fire({
+					icon: 'warning',
+					title: '제목이 없습니다',
+					text: '문서의 제목을 입력해주세요.'
+				})
+			} else { countCheck++; }
+
+			if ($("#title").val().length < 5 || $("#title").val().length < 5) {
+				Swal.fire({
+					icon: 'warning',
+					title: '글자 수 부족',
+					text: '문서의 제목을 5글자 이상 입력해주세요.'
+				})
+			} else { countCheck++; }
+
+			if ($("#title").val().length > 50) {
+				Swal.fire({
+					icon: 'warning',
+					title: '제목 글자수 초과',
+					text: '50자 이하로 입력해주세요.'
+				})
+			} else { countCheck++; }
+
+			if ($(".note-editable").text().length < 1 || $(".note-editable").text() == "" || $(".note-editable").text() == "  ") {
+				Swal.fire({
+					icon: 'warning',
+					title: '내용이 없습니다',
+					text: '문서의 내용을 입력해주세요.'
+				})
+			} else { countCheck++; }
+
+			if ($(".note-editable").text().length < 10) {
+				Swal.fire({
+					icon: 'warning',
+					title: '글자 수 부족',
+					text: '문서의 내용을 10글자 이상 입력해주세요.'
+				})
+			} else { countCheck++; }
+
+			if ($("#stepNo").val() == "") {
+				Swal.fire({
+					icon: 'warning',
+					title: '결재단계 확인',
+					text: '단계 지정버튼을 눌러주세요!'
+				})
+			} else { countCheck++; }
+
+			if (countCheck == 6) {
+				let sendDraft = $(".draft").html();
+				console.log(sendDraft);
+				$("#draftcnt2").val(sendDraft);
+				$("#docStatus2").val("대기");
+				let cnt = $(".description").val();
+				console.log(cnt)
+				$("#cnttt2").val(cnt);
+				$("#docTitle2").val($("#title").val());
+				$("#submitReport").submit();
 			}
+
+		}
 	})
 
 }

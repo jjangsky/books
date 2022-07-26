@@ -1,5 +1,25 @@
 window.onload = function() {
 	
+	$("#salBase").keyup(function(){
+		let sal = $("#salBase").val();
+		
+		if(!(Number(sal))){
+			Swal.fire({
+				icon: 'warning',
+				title: '입력 오류',
+				text: '급여는 숫자만 입력이 가능합니다.'
+			})
+		}
+		
+		if(Number(sal) < 0){
+			Swal.fire({
+				icon: 'warning',
+				title: '입력 오류',
+				text: '급여는 음수입력이 불가능합니다.'
+			})
+		}
+	})
+	
 	$("#totalSal2").blur(function(){
 		let totalSal = $("#totalSal").val();
 		let salary = Math.round(totalSal / 12);
