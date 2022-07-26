@@ -48,7 +48,7 @@
                 변경 : 
                  <select class="sel3" name="deptCode2" >
                   <option value="">None</option>
-                  <option value="1">사장</option>
+                  <option value="1">임원</option>
                   <option value="2">재무부</option>
                   <option value="3">인사부</option>
                   <option value="4">총무부</option>
@@ -118,16 +118,23 @@
               </tr>
             </tbody>
           </table><br>
+          
           <div id="space">
-          	<input type="button" id="updateBtn" class="modify btn" value="수정하기"></input>
-          	<button type="button" class="list btn backBtn" >취소</button>
+          	<input type="button" id="updateBtn" class="modify btn" value="수정완료"></input>
+          	<button type="button" class="list btn backBtn" style="margin-right: 0px;">목록으로</button>
+          	<!-- 직원 퇴사처리 --> 
+	        
           </div>
          </div>
         </form>
-        
+        <form action="/manage/empLeave" method="post" id="leaveform">
+	          <input type="hidden" th:value="${ emp.empNo }" name="empNo" readonly style="border:none;">
+	          <input type="button" id="leavebtn" class="modify btn" value="퇴사처리" style="background: red; color: white;">
+        </form>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
   		<div>
         <div class="inline">
-        <div class="container mt-3 leftMar20" style="margin-left:15%;">
+        <div class="container mt-3 leftMar20" style="margin-left:330px;">
             <div class="card" style="width:400px">
              <img class="card-img-top" th:src="@{/images/mypage/{imageFile}(imageFile=${profile[0].photoSavedName})}" alt="Card image" style="width:50%; height: 250px; margin-left: 25%;">
               <div class="card-body">
@@ -141,7 +148,6 @@
             </div>
         </div>
         </div>
-        
         <!--  서명 수정 부분 -->
         <div class="inline">
             <div class="container mt-3 ">
@@ -157,13 +163,9 @@
                   </div>
                 </div>
             </div>
+      	  <br><br><br><br><br><br>
          </div>
        </div> 
-       <!-- 직원 퇴사처리 --> 
-       <form action="/manage/empLeave" method="post" id="leaveform">
-          <input type="hidden" th:value="${ emp.empNo }" name="empNo" readonly style="border:none;">
-          <input type="button" id="leavebtn" class="modify btn" value="퇴사처리">
-       </form>
        
      <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
       <script>

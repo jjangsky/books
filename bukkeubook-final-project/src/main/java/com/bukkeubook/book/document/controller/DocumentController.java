@@ -560,7 +560,8 @@ public class DocumentController {		// 전자결재 컨트롤러
 	public ModelAndView insertNewVacationApp(ModelAndView mv, RedirectAttributes rttr 
 										   , AppVacationDTO vacation,@RequestParam String startDate
 										   , @RequestParam String endDate,@RequestParam String date
-										   ,@AuthenticationPrincipal UserImpl customUser) {
+										   , @RequestParam String num1,@RequestParam String num2
+										   , @RequestParam String num3,@AuthenticationPrincipal UserImpl customUser) {
 		
 		System.out.println("Controller         " + vacation);
 		System.out.println("Controller         " + endDate);
@@ -578,7 +579,7 @@ public class DocumentController {		// 전자결재 컨트롤러
 		vacation.setVacAppNo(vacAppNo);
 		vacation.setVacStatus(vacStatus);
 		vacation.setEmpNo(empNo);
-		
+		vacation.setVacEmer(num1+num2+num3);
 		boolean check = docService.insertNewVacationApp(vacation);
 		
 		System.out.println("Controller         " + vacation);

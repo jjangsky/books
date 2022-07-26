@@ -63,9 +63,9 @@
               	<td th:text="${ pay.salMonth }"></td>
              	<td th:text="${ pay.empInfo.dept.deptName }"> 
                 <td th:text="${ pay.empInfo.empName  }"></td>
-                <td th:text="${ pay.salBase }"></td>
-                <td th:text="${ pay.salTotalMinus }"></td>
-                <td th:text="${ pay.salRealAmount }"></td>
+                <td th:text="${ #numbers.formatInteger(pay.salBase, 3, 'COMMA') + '원' }"></td>
+                <td th:text="${ #numbers.formatInteger(pay.salTotalMinus, 3, 'COMMA') + '원' }"></td>
+                <td th:text="${ #numbers.formatInteger(pay.salRealAmount, 3, 'COMMA') + '원' }"></td>
                 <td><button type="button" class="select btn" th:onclick="'location.href = \'' + @{/empPay/oneEmpPay/{salNo}(salNo=${pay.salNo})} + '\''">확인</button></td>
               </tr>
              </tbody>

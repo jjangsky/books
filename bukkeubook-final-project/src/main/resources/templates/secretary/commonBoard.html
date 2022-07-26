@@ -44,7 +44,6 @@
                 <th class="th1" style="width:700px">제목</th>
                 <th class="th1">작성일</th>
                 <th class="th1">작성자</th>
-                <th class="th1">조회수</th>
               </tr>
               <tr th:if="${#lists.isEmpty(boardList)}">
                		    <td class="td1" colspan="6">검색 결과가 존재하지 않습니다.</td>
@@ -55,7 +54,6 @@
                 <td th:text="${ board.title }"></td>
             	<td th:text="${ board.date }"></td>
             	<td th:text="${ board.emp.empName }"></td>
-            	<td th:text="${ board.hits }"></td>
               </tr>
           </table>
           <br>
