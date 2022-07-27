@@ -16,16 +16,33 @@
 <body>
 <div th:replace="/common/topSideBar.html"></div>
 
-	<script>
+	<script th:inline="javascript">
 		const successMessage = "[[${ updateSuccessMessage }]]";
-		if(successMessage){
+		if(successMessage=='성공'){
 			 Swal.fire({
 	                icon: 'success',
 	                title: '성공!',
 	                text: '성공적으로 완료되었습니다!',
 	            })
 		}
-	</script>
+		const failMessage = "[(${failMessage})]";
+	    const successMessage2 = "[(${successMessage})]";
+	    console.log(successMessage2);
+			if(successMessage2=='성공'){
+				Swal.fire({
+	                icon: 'success',
+	                title: 'Success!',
+	                text: '반려처리가 성공적으로 완료되었습니다!',
+	            })
+			}
+			if(failMessage=='실패'){
+				Swal.fire({
+	                icon: 'warning',
+	                title: 'Error!',
+	                text: '요청이 실패했습니다. 다시 시도 해 주세요.',
+	            })
+			}    
+    </script>
 
     <h2 class="mb-4" id="main-text">사원관리</h2>
     <hr><br><br>
